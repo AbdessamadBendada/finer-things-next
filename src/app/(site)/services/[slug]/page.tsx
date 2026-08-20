@@ -15,7 +15,12 @@ export function generateStaticParams() {
   return SERVICE_SLUGS.map((slug) => ({ slug }));
 }
 
-export const dynamicParams = false;
+/**
+ * Deliberately not `dynamicParams = false`: on the Cloudflare adapter that
+ * flag makes the worker 404 the prerendered pages themselves. The route
+ * already calls `notFound()` for any slug that is not in the registry, so
+ * unknown paths still 404 — this only changes which layer decides.
+ */
 
 export async function generateMetadata({ params }: RouteParams): Promise<Metadata> {
   const { slug } = await params;

@@ -8,4 +8,6 @@ tools/legacy-import/extracted/
 tests/visual/__baseline__/
 src/shared/config/image-registry.ts
 .next/
+.open-next/
+.wrangler/
 pnpm-lock.yaml

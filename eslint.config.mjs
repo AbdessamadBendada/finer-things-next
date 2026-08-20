@@ -11,6 +11,8 @@ const eslintConfig = [
   {
     ignores: [
       '.next/**',
+      '.open-next/**',
+      '.wrangler/**',
       'legacy/**',
       'tools/legacy-import/extracted/**',
       'tests/visual/__baseline__/**',

@@ -18,7 +18,10 @@
     "parity:report": "playwright show-report",
     "verify": "pnpm typecheck && pnpm lint && pnpm build && pnpm test && pnpm parity",
     "prepare": "husky",
-    "test": "playwright test tests/forms"
+    "test": "playwright test tests/forms",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:preview": "opennextjs-cloudflare preview",
+    "cf:deploy": "opennextjs-cloudflare deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
@@ -30,9 +33,9 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.2",
     "@playwright/test": "^1.62.1",
     "@types/node": "^20",
-    "@types/parse5": "^7.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
@@ -44,7 +47,8 @@
     "parse5": "^8.0.1",
     "prettier": "^3.9.6",
     "sharp": "^0.35.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.124.0"
   },
   "packageManager": "pnpm@11.3.0",
   "engines": {

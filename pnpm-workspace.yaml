@@ -1,3 +1,13 @@
+# pnpm 10+ refuses to run a dependency's install scripts unless it is listed
+# here. It writes placeholders ("set this to true or false") on first install;
+# leaving them unanswered is what broke the Cloudflare deploy — workerd and
+# esbuild download their binaries in postinstall, so wrangler could not start.
 allowBuilds:
-  sharp: false
+  # The Workers runtime and its bundler. Required to build or deploy.
+  esbuild: true
+  workerd: true
+  # Used by tools/legacy-import/build-image-registry.mjs to read image sizes.
+  # Not used at runtime: on Cloudflare the image loader is Cloudflare Images.
+  sharp: true
+  # ESLint's resolver; it falls back to a JS implementation without this.
   unrs-resolver: false

@@ -31,15 +31,65 @@ edge function to configure.
 
 ## Cloudflare Workers
 
-```
-pnpm add -D @opennextjs/cloudflare
-NEXT_PUBLIC_IMAGE_LOADER=cloudflare
+Already configured: `wrangler.jsonc`, `open-next.config.ts` and the
+`cf:*` scripts are committed.
+
+**Dashboard settings** — the defaults Cloudflare detects are wrong for this
+project and will fail:
+
+| Setting                | Value                                    |
+| ---------------------- | ---------------------------------------- |
+| Build command          | `pnpm run cf:build`                      |
+| Deploy command         | `pnpm run cf:deploy`                     |
+| Build output directory | _(leave empty — wrangler.jsonc decides)_ |
+
+Locally:
+
+```bash
+pnpm cf:build      # next build + the OpenNext worker bundle
+pnpm cf:preview    # run the worker locally on workerd
+pnpm cf:deploy     # push it to Cloudflare
 ```
 
-The custom loader in `src/shared/config/image-loader.cloudflare.ts` routes
-images through `/cdn-cgi/image/`, so Cloudflare Images does the resizing
-instead of the Next optimizer. Enable Images on the zone. Server Actions run on
-OpenNext's Node runtime; there is no middleware to port.
+Images route through `/cdn-cgi/image/` via
+`src/shared/config/image-loader.cloudflare.ts`, since the Next optimizer does
+not run on Workers — `NEXT_PUBLIC_IMAGE_LOADER=cloudflare` is set in
+`wrangler.jsonc`. **Enable Images on the zone**, or images 404.
+
+### Two things that will bite you
+
+**1. pnpm's `allowBuilds`.** pnpm 10+ refuses to run a dependency's install
+scripts unless it is listed in `pnpm-workspace.yaml`, and it writes literal
+placeholders on first install:
+
+```yaml
+allowBuilds:
+  esbuild: set this to true or false # unanswered = ignored
+  workerd: set this to true or false
+```
+
+Left unanswered, `workerd` never downloads its binary, wrangler cannot start,
+and the deploy fails _after_ a green build with
+`ERR_PNPM_IGNORED_BUILDS`. They are answered in the committed file; if you add
+a dependency with install scripts, answer it there too.
+
+**2. `dynamicParams = false`.** Setting it on the `[slug]` routes makes the
+worker return 404 for the prerendered project and service pages. The routes
+call `notFound()` for unknown slugs anyway, so the flag is deliberately absent.
+
+### Verifying before you deploy
+
+```bash
+pnpm cf:build && pnpm cf:preview
+```
+
+Then check a dynamic route, a redirect and a form — those are the three things
+that behave differently on Workers than in `next start`:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' http://localhost:8788/projects/marsa-al-arab  # 200
+curl -s -o /dev/null -w '%{http_code}\n' http://localhost:8788/about.html              # 308
+```
 
 ## Self-hosted (Node or Docker)
 

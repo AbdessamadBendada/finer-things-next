@@ -55,3 +55,7 @@ next-env.d.ts
 # `legacy/` is the real source of truth and IS committed, so anyone can
 # regenerate them with `pnpm parity:baseline`. See docs/PARITY.md.
 /tests/visual/__baseline__/
+
+# cloudflare / opennext build output
+/.open-next/
+/.wrangler/
