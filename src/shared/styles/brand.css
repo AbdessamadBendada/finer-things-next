@@ -119,6 +119,16 @@
     color 0.3s ease;
 }
 
+/* Below 860px the masthead logo is smaller than the button, so matching
+   their top edges is no longer enough to put them on the same optical
+   line. Trimming the button's height brings its centre back onto the
+   mark's. */
+@media (max-width: 860px) {
+  [data-page='home'] .hero-nav-btn {
+    padding: 8px 20px;
+  }
+}
+
 /* Over the photography, before the header docks. */
 [data-page='home'] .head.hero-nav .hero-nav-btn {
   background: transparent;
@@ -198,4 +208,20 @@
 [data-page='home'] .head.menu-active .menu-toggle {
   color: var(--ink);
   z-index: 9001;
+}
+
+/* ---------------- Wordmark / masthead alignment ----------------
+   The wordmark shrinks into the masthead logo, so it has to finish in
+   exactly the place that logo occupies — otherwise it lands a few pixels
+   low, reads as misaligned against the navigation beside it, and shows a
+   small jump at the hand-off.
+
+   The masthead logo sits at top:18px at every breakpoint (the header's
+   padding). The wordmark was ported at 24px, and 20px on smaller screens.
+
+   Addressed by id rather than class on purpose: the page stylesheets load
+   after this file and set `.word` at equal specificity, so a class here
+   would lose. `#word` outranks them without needing a doubled selector. */
+[data-page='home'] #word {
+  top: 18px;
 }

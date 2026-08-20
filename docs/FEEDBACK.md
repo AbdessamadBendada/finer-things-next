@@ -136,6 +136,32 @@ Template — copy per comment:
   two solid buttons would compete for the same attention. One line in
   `brand.css` makes it solid if she prefers that.
 
+### 5. The logo doesn't line up with the button at the end of the shrink
+
+- **Page:** `/?nav=contact`
+- **Asked:** "the logo at its final glance doesn't align with the button, it
+  looks soooo off"
+- **Status:** ✅ Done
+- **Done:** the wordmark finished at `top: 24px` while the masthead logo and
+  the button both sit at `top: 18px`, so it landed 6px low. It now finishes
+  exactly where the docked logo lives. On screens under 860px the button was
+  also taller than the logo, so its padding is trimmed to bring both onto the
+  same centre line.
+
+  |      | before  | after   |
+  | ---- | ------- | ------- |
+  | 1440 | 6px off | **0px** |
+  | 860  | 3px off | **0px** |
+  | 390  | 3px off | **0px** |
+
+- **Note:** this also removed a jump nobody had reported — the wordmark used
+  to shift 6px at the moment it handed off to the masthead. Now 0.
+
+  The rule is written as `[data-page='home'] #word` rather than a class: page
+  stylesheets load after `brand.css` and set `.word` at equal specificity, so
+  a class-based override here silently lost. Worth remembering for the next
+  intentional override.
+
 ---
 
 ## Cross-cutting notes
