@@ -92,6 +92,36 @@ Template — copy per comment:
   be made three times. When one wins, `useHeroNav.ts` and the `?nav=` block in
   `brand.css` collapse into it.
 
+### 3. The nav treatments need work (round 2 on comment 2)
+
+- **Page:** `/` (home), all three variants
+- **Asked:** the variants are all liked, but: the burger is small, not aligned
+  with the logo, **"doesn't show at all"**, and has no X when the menu is open.
+  The links are small and not aligned with the logo in all three — with a
+  reference screenshot of the docked masthead. And: "can we use the burger in
+  the whole page?"
+- **Read as:** burger stays for the whole _home page_ rather than the whole
+  _site_ — confirmed. Other pages keep their text links.
+- **Status:** ✅ Done
+- **Done:**
+  - **"Doesn't show at all" was a real bug.** The burger was tied to the
+    pre-hand-off state, so it vanished the moment you scrolled past the hero.
+    Persistence and the logo hand-off are now separate: the burger stays the
+    whole way down, and the logo still appears when the wordmark docks.
+  - Burger enlarged to a 30×14 icon in a 34px hit area, optically centred.
+  - It now resolves into an **X** when open, with `aria-label` switching
+    between "Open menu" and "Close menu", and inverting to ink over the paper
+    menu.
+  - Nav links **11.5px → 13px**, tracking eased to 0.16em, nudged onto the
+    wordmark's optical line. Docked logo and links now centre within 1px.
+- **Note:** the other two variants deliberately hand back to the normal links
+  once the header docks — a lone "Contact" below the fold would leave no way
+  to reach anything else. Only the burger persists, as asked.
+
+  Also: I broke this myself between rounds. Silencing a lint rule with
+  `useSyncExternalStore` stopped the variant being read after hydration, so
+  all three briefly did nothing. Caught by measuring rather than looking.
+
 ---
 
 ## Cross-cutting notes

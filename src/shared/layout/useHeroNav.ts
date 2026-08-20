@@ -1,6 +1,6 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Which navigation treatment the home hero shows before the wordmark has
@@ -30,14 +30,23 @@ const isVariant = (value: string | null): value is HeroNavVariant =>
  * winner becomes the default.
  */
 export function useHeroNav(): HeroNavVariant {
-  return useSyncExternalStore(
-    // The query string cannot change without a navigation, so there is
-    // nothing to subscribe to.
-    () => () => {},
-    () => {
-      const value = new URLSearchParams(window.location.search).get('nav');
-      return isVariant(value) ? value : 'none';
-    },
-    () => 'none',
-  );
+  const [variant, setVariant] = useState<HeroNavVariant>('none');
+
+  useEffect(() => {
+    const value = new URLSearchParams(window.location.search).get('nav');
+    if (!isVariant(value)) return;
+    /*
+     * The query string is an external, non-reactive source: it cannot be read
+     * during render without a hydration mismatch, and `useSyncExternalStore`
+     * does not re-read after hydration when nothing ever notifies — which left
+     * the variant stuck on 'none'.
+     *
+     * One setState, once, on mount. Temporary: this hook is deleted when a
+     * variant is chosen.
+     */
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setVariant(value);
+  }, []);
+
+  return variant;
 }

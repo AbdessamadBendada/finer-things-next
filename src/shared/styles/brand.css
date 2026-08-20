@@ -52,14 +52,12 @@
    Three treatments are live behind `?nav=` so they can be compared on
    one deploy — see shared/layout/useHeroNav.ts. When one is chosen,
    this block and that hook collapse into the winner.
-
-   In every variant the header carries navigation but no logo: the hero
-   wordmark is the logo until it finishes shrinking into this bar.
    ================================================================ */
 
+/* Before the hand-off: visible from the first frame, but with no bar of
+   its own — the photography should still read as edge to edge. The hero
+   wordmark is the logo until it docks. */
 [data-page='home'] .head.hero-nav {
-  /* Visible from the first frame, but with no bar of its own — the
-     photography should still read as edge to edge. */
   transform: none;
   opacity: 1;
   background: transparent;
@@ -79,48 +77,108 @@
 [data-page='home'] .head.hero-nav .menu-toggle,
 [data-page='home'] .head.hero-nav .hero-nav-link {
   color: var(--paper);
+}
+
+/* ---------------- Navigation type ----------------
+   Raised from 11.5px after review: the links read as too small beside
+   the mark. 13px still sits in the site's editorial scale rather than
+   looking like UI chrome. */
+[data-page='home'] .head .links a,
+[data-page='home'] .head .hero-nav-link {
+  font-size: 0.8125rem;
+  letter-spacing: 0.16em;
   opacity: 0.86;
   transition: opacity 0.3s ease;
 }
 
-[data-page='home'] .head.hero-nav .links a:hover,
-[data-page='home'] .head.hero-nav .menu-toggle:hover,
-[data-page='home'] .head.hero-nav .hero-nav-link:hover {
+[data-page='home'] .head .links a:hover,
+[data-page='home'] .head .hero-nav-link:hover,
+[data-page='home'] .head .menu-toggle:hover {
   opacity: 1;
+}
+
+/* The wordmark's letterforms sit slightly below the middle of its box,
+   so centring the two boxes leaves the links looking high. This drops
+   them onto the mark's optical line. */
+[data-page='home'] .head .links,
+[data-page='home'] .head .hero-nav-link,
+[data-page='home'] .head .menu-toggle {
+  transform: translateY(1px);
 }
 
 /* ?nav=contact — a single way to act, nothing else. */
 [data-page='home'] .hero-nav-link {
-  font:
-    400 0.68rem/1 var(--font-body),
-    sans-serif;
-  letter-spacing: 0.18em;
+  font-family: var(--font-body), sans-serif;
+  font-weight: 400;
+  line-height: 1;
   text-transform: uppercase;
   text-decoration: none;
 }
 
-/* ?nav=burger — shown at every width, not just below 860px. */
-[data-page='home'] .head.hero-nav-burger .menu-toggle {
-  display: block;
+/* ---------------- ?nav=burger ----------------
+   Shown at every width, and for the whole page: it does not hand back to
+   text links once the header docks, so there is always one way in. */
+[data-page='home'] .head.nav-burger .menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  margin-right: -6px; /* optical: the icon's ink is narrower than its box */
 }
 
 [data-page='home'] .menu-toggle-burger .burger {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 26px;
-  height: 12px;
+  position: relative;
+  display: block;
+  width: 30px;
+  height: 14px;
 }
 
 [data-page='home'] .menu-toggle-burger .burger span {
+  position: absolute;
+  left: 0;
   display: block;
-  height: 1px;
+  width: 100%;
+  height: 1.5px;
   background: currentColor;
-  transition: transform 0.4s var(--ease);
+  transition:
+    transform 0.4s var(--ease),
+    opacity 0.25s ease,
+    width 0.4s var(--ease);
 }
 
-/* The middle rule is shorter — a small refinement that keeps the icon
-   from reading as a generic app control. */
+[data-page='home'] .menu-toggle-burger .burger span:nth-child(1) {
+  top: 0;
+}
+
+/* The middle rule is shorter — it keeps the icon from reading as a
+   generic app control. */
 [data-page='home'] .menu-toggle-burger .burger span:nth-child(2) {
+  top: 6.25px;
   width: 68%;
+}
+
+[data-page='home'] .menu-toggle-burger .burger span:nth-child(3) {
+  top: 12.5px;
+}
+
+/* Open: the three rules resolve into a cross. */
+[data-page='home'] .menu-toggle-burger[aria-expanded='true'] .burger span:nth-child(1) {
+  transform: translateY(6.25px) rotate(45deg);
+}
+
+[data-page='home'] .menu-toggle-burger[aria-expanded='true'] .burger span:nth-child(2) {
+  width: 0;
+  opacity: 0;
+}
+
+[data-page='home'] .menu-toggle-burger[aria-expanded='true'] .burger span:nth-child(3) {
+  transform: translateY(-6.25px) rotate(-45deg);
+}
+
+/* The menu covers the page in paper, so the icon has to invert with it. */
+[data-page='home'] .head.menu-active .menu-toggle {
+  color: var(--ink);
+  z-index: 9001;
 }

@@ -76,16 +76,30 @@ export function SiteHeader({
   // has finished shrinking into it. Inert on every other page.
   const visible = useWordmark(logo === 'wordmark');
 
-  // Before the handoff the header carries navigation but no logo — the hero
-  // wordmark *is* the logo until it finishes shrinking into this bar.
-  const showsHeroNav = heroNav !== 'none' && !visible;
+  /**
+   * Two separate things, which used to be conflated:
+   *
+   * `variantActive` — this page is running a hero-nav variant at all. The
+   *   burger persists the whole way down the page, so this does not stop at
+   *   the hand-off; that is what made it vanish on scroll.
+   * `beforeHandoff` — the wordmark still holds the logo's place, so the
+   *   masthead shows navigation but no logo of its own.
+   */
+  const variantActive = heroNav !== 'none';
+  const beforeHandoff = variantActive && !visible;
+
+  // Only the burger is meant to stay for the whole page. A lone "Contact"
+  // below the fold would leave no way to reach anything else, so the other
+  // variants hand back to the normal navigation once the header docks.
+  const navTreatment = heroNav === 'burger' || beforeHandoff ? heroNav : 'none';
 
   const headerClass = [
     'head',
     scrollThreshold !== undefined && scrolled ? 'scrolled' : '',
     visible ? 'show' : '',
     open ? 'menu-active' : '',
-    showsHeroNav ? `hero-nav hero-nav-${heroNav}` : '',
+    beforeHandoff ? 'hero-nav' : '',
+    navTreatment !== 'none' ? `nav-${navTreatment}` : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -93,7 +107,7 @@ export function SiteHeader({
   return (
     <>
       <header className={headerClass} id="head">
-        {showsHeroNav ? (
+        {beforeHandoff ? (
           // Placeholder keeps the nav pinned right while the wordmark holds
           // the logo's place. Hidden from assistive tech: the wordmark below
           // already carries the site name.
@@ -108,13 +122,13 @@ export function SiteHeader({
           </Link>
         )}
 
-        {showsHeroNav && heroNav === 'contact' && (
+        {navTreatment === 'contact' && (
           <Link href="/contact" className="hero-nav-link">
             Contact
           </Link>
         )}
 
-        {links.length > 0 && !(showsHeroNav && heroNav !== 'links') && (
+        {links.length > 0 && navTreatment !== 'burger' && navTreatment !== 'contact' && (
           <ul className="links">
             {links.map((link) => (
               <li key={`${link.href}-${link.label}`}>
@@ -129,18 +143,18 @@ export function SiteHeader({
         {menu && (
           <button
             className={
-              showsHeroNav && heroNav === 'burger'
-                ? 'menu-toggle menu-toggle-burger'
-                : 'menu-toggle'
+              navTreatment === 'burger' ? 'menu-toggle menu-toggle-burger' : 'menu-toggle'
             }
             id="menuToggle"
             type="button"
             aria-expanded={open}
             aria-controls="mobileMenu"
-            aria-label={showsHeroNav && heroNav === 'burger' ? 'Open menu' : undefined}
+            aria-label={
+              navTreatment === 'burger' ? (open ? 'Close menu' : 'Open menu') : undefined
+            }
             onClick={toggle}
           >
-            {showsHeroNav && heroNav === 'burger' ? (
+            {navTreatment === 'burger' ? (
               <span className="burger" aria-hidden="true">
                 <span />
                 <span />
