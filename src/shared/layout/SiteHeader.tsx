@@ -9,6 +9,7 @@ import { useScrollHeader } from '@/shared/motion/useScrollHeader';
 import { useWordmark } from '@/shared/motion/useWordmark';
 
 import { isAnchorLink, type NavLink } from './navigation';
+import type { HeroNavVariant } from './useHeroNav';
 
 type SiteHeaderProps = {
   /** Desktop navigation. */
@@ -27,6 +28,11 @@ type SiteHeaderProps = {
   scrollThreshold?: number;
   /** Extra element rendered in place of navigation (the legal "Contact" link). */
   trailing?: ReactNode;
+  /**
+   * Home only, and temporary: which navigation to show while the hero
+   * wordmark is still on screen. See useHeroNav.
+   */
+  heroNav?: HeroNavVariant;
 };
 
 function NavAnchor({ href, label, current, className }: NavLink & { className?: string }) {
@@ -60,6 +66,7 @@ export function SiteHeader({
   logo = 'mark',
   scrollThreshold,
   trailing,
+  heroNav = 'none',
 }: SiteHeaderProps) {
   const menuRef = useRef<HTMLElement>(null);
   const { open, toggle } = useMobileMenu(menuRef);
@@ -69,11 +76,16 @@ export function SiteHeader({
   // has finished shrinking into it. Inert on every other page.
   const visible = useWordmark(logo === 'wordmark');
 
+  // Before the handoff the header carries navigation but no logo — the hero
+  // wordmark *is* the logo until it finishes shrinking into this bar.
+  const showsHeroNav = heroNav !== 'none' && !visible;
+
   const headerClass = [
     'head',
     scrollThreshold !== undefined && scrolled ? 'scrolled' : '',
     visible ? 'show' : '',
     open ? 'menu-active' : '',
+    showsHeroNav ? `hero-nav hero-nav-${heroNav}` : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -81,7 +93,12 @@ export function SiteHeader({
   return (
     <>
       <header className={headerClass} id="head">
-        {logo === 'wordmark' ? (
+        {showsHeroNav ? (
+          // Placeholder keeps the nav pinned right while the wordmark holds
+          // the logo's place. Hidden from assistive tech: the wordmark below
+          // already carries the site name.
+          <span className="logo logo-placeholder" aria-hidden="true" />
+        ) : logo === 'wordmark' ? (
           <Link href="/" className="logo" aria-label="Finer Things home">
             <Media src="/assets/finer-things-logo.png" alt="" priority />
           </Link>
@@ -91,7 +108,13 @@ export function SiteHeader({
           </Link>
         )}
 
-        {links.length > 0 && (
+        {showsHeroNav && heroNav === 'contact' && (
+          <Link href="/contact" className="hero-nav-link">
+            Contact
+          </Link>
+        )}
+
+        {links.length > 0 && !(showsHeroNav && heroNav !== 'links') && (
           <ul className="links">
             {links.map((link) => (
               <li key={`${link.href}-${link.label}`}>
@@ -105,14 +128,29 @@ export function SiteHeader({
 
         {menu && (
           <button
-            className="menu-toggle"
+            className={
+              showsHeroNav && heroNav === 'burger'
+                ? 'menu-toggle menu-toggle-burger'
+                : 'menu-toggle'
+            }
             id="menuToggle"
             type="button"
             aria-expanded={open}
             aria-controls="mobileMenu"
+            aria-label={showsHeroNav && heroNav === 'burger' ? 'Open menu' : undefined}
             onClick={toggle}
           >
-            {open ? 'Close' : 'Menu'}
+            {showsHeroNav && heroNav === 'burger' ? (
+              <span className="burger" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+            ) : open ? (
+              'Close'
+            ) : (
+              'Menu'
+            )}
           </button>
         )}
       </header>

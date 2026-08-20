@@ -27,9 +27,19 @@ export function useWordmark(enabled: boolean) {
     const word = document.querySelector<HTMLElement>('#word');
     if (!word) return;
 
-    // Mobile gives the wordmark the full width minus the gutter; desktop 70%.
+    /**
+     * Starting width of the wordmark, before it shrinks into the masthead.
+     *
+     * 28% on desktop — reduced from 70% after review: the mark dominated the
+     * photography. It still shrinks to the ~161px header logo, a 2.4x change,
+     * so the hand-off remains legible.
+     *
+     * Narrow screens keep a much larger share, because 28% of a phone is
+     * smaller than the header logo it is shrinking *into* — the animation
+     * would run backwards.
+     */
     const startWidth = () =>
-      window.innerWidth <= 860 ? window.innerWidth - 44 : window.innerWidth * 0.7;
+      window.innerWidth <= 860 ? window.innerWidth * 0.65 : window.innerWidth * 0.28;
 
     let start = startWidth();
 

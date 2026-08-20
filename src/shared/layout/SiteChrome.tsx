@@ -7,6 +7,7 @@ import { chromeFor, withCurrent, type FooterVariant } from '@/shared/config/navi
 
 import { SiteFooter } from './SiteFooter';
 import { SiteHeader } from './SiteHeader';
+import { useHeroNav } from './useHeroNav';
 
 /**
  * The masthead and footer, rendered once per route group.
@@ -27,6 +28,7 @@ export function SiteChrome({
 }) {
   const pathname = usePathname();
   const chrome = chromeFor(pathname);
+  const heroNav = useHeroNav();
   const slug =
     pathname === '/' ? 'home' : (pathname.split('/').filter(Boolean).at(-1) ?? 'home');
 
@@ -37,6 +39,7 @@ export function SiteChrome({
         menu={chrome?.menu ? withCurrent(chrome.menu, pathname) : undefined}
         logo={chrome?.logo}
         scrollThreshold={chrome?.scrollThreshold}
+        heroNav={variant === 'home' ? heroNav : 'none'}
         trailing={
           variant === 'minimal' ? (
             <a className="back" href="/contact">

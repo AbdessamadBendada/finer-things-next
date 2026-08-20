@@ -41,3 +41,86 @@
 [data-page='terms'] .head .logo img {
   mix-blend-mode: normal;
 }
+
+/* ================================================================
+   HOME HERO NAVIGATION — under review
+
+   The hero originally showed nothing but the wordmark until you
+   scrolled. That suits the brand, but a visitor who arrives wanting
+   to do something has no way to start.
+
+   Three treatments are live behind `?nav=` so they can be compared on
+   one deploy — see shared/layout/useHeroNav.ts. When one is chosen,
+   this block and that hook collapse into the winner.
+
+   In every variant the header carries navigation but no logo: the hero
+   wordmark is the logo until it finishes shrinking into this bar.
+   ================================================================ */
+
+[data-page='home'] .head.hero-nav {
+  /* Visible from the first frame, but with no bar of its own — the
+     photography should still read as edge to edge. */
+  transform: none;
+  opacity: 1;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+  color: var(--paper);
+}
+
+/* Holds the logo's place so navigation stays pinned right. */
+[data-page='home'] .head.hero-nav .logo-placeholder {
+  display: block;
+  width: clamp(132px, 11.2vw, 162px);
+  height: 1px;
+}
+
+[data-page='home'] .head.hero-nav .links a,
+[data-page='home'] .head.hero-nav .menu-toggle,
+[data-page='home'] .head.hero-nav .hero-nav-link {
+  color: var(--paper);
+  opacity: 0.86;
+  transition: opacity 0.3s ease;
+}
+
+[data-page='home'] .head.hero-nav .links a:hover,
+[data-page='home'] .head.hero-nav .menu-toggle:hover,
+[data-page='home'] .head.hero-nav .hero-nav-link:hover {
+  opacity: 1;
+}
+
+/* ?nav=contact — a single way to act, nothing else. */
+[data-page='home'] .hero-nav-link {
+  font:
+    400 0.68rem/1 var(--font-body),
+    sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* ?nav=burger — shown at every width, not just below 860px. */
+[data-page='home'] .head.hero-nav-burger .menu-toggle {
+  display: block;
+}
+
+[data-page='home'] .menu-toggle-burger .burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 12px;
+}
+
+[data-page='home'] .menu-toggle-burger .burger span {
+  display: block;
+  height: 1px;
+  background: currentColor;
+  transition: transform 0.4s var(--ease);
+}
+
+/* The middle rule is shorter — a small refinement that keeps the icon
+   from reading as a generic app control. */
+[data-page='home'] .menu-toggle-burger .burger span:nth-child(2) {
+  width: 68%;
+}
