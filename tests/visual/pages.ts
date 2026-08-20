@@ -1,6 +1,21 @@
 import type { Page } from '@playwright/test';
 
-/** Every route, paired with the legacy document it must match. */
+/**
+ * Where a page's baseline comes from.
+ *
+ * `legacy` — capture from the original document. The page is still a faithful
+ *   port and must not drift from it.
+ * `current` — capture from this build. The page has been deliberately
+ *   redesigned, so the original is no longer the target; the baseline now
+ *   guards against *regression* rather than proving fidelity.
+ *
+ * Move a page to `current` only after reviewing its diff and accepting the
+ * change. That review is the point: it is what catches the layout you moved
+ * by accident while editing a line of copy.
+ */
+export type BaselineSource = 'legacy' | 'current';
+
+/** Every route, with the reference its baseline is captured from. */
 export const PARITY_PAGES = [
   { name: 'home', legacy: '/index.html', route: '/', settle: 7000 },
   { name: 'our-work', legacy: '/our-work.html', route: '/our-work' },
@@ -26,7 +41,19 @@ export const PARITY_PAGES = [
   { name: 'contact', legacy: '/contact.html', route: '/contact' },
   { name: 'privacy', legacy: '/privacy.html', route: '/privacy' },
   { name: 'terms', legacy: '/terms.html', route: '/terms' },
-] as const;
+] as const satisfies ReadonlyArray<{
+  name: string;
+  legacy: string;
+  route: string;
+  settle?: number;
+  baseline?: BaselineSource;
+}>;
+
+export type ParityPage = (typeof PARITY_PAGES)[number];
+
+/** Defaults to the original: a page has to opt out of being checked against it. */
+export const baselineSourceFor = (page: ParityPage): BaselineSource =>
+  'baseline' in page ? (page.baseline as BaselineSource) : 'legacy';
 
 export const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },

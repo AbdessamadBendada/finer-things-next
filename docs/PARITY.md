@@ -72,6 +72,35 @@ above that floor.
 into decoration. If a change is intentional, regenerate that baseline
 deliberately and say so in the commit.
 
+## Changing the design on purpose
+
+The gate was built to prove the migration was faithful. Once you start
+redesigning, that question changes: a page you have deliberately changed
+should no longer be measured against the original.
+
+Each page in `tests/visual/pages.ts` declares where its baseline comes from:
+
+```ts
+{ name: 'about', legacy: '/about.html', route: '/about' }                        // vs the original
+{ name: 'about', legacy: '/about.html', route: '/about', baseline: 'current' }   // vs the last approved build
+```
+
+The default is `legacy`, so a page has to opt out of being checked against the
+original — nothing silently stops being verified.
+
+**The workflow for a design or copy change:**
+
+1. Make the change and review it with `pnpm dev`.
+2. Run `pnpm parity`. It will fail on that page — that is correct.
+3. Open `pnpm parity:report` and look at the diff. **Confirm only what you
+   intended moved.** This is the step that earns its keep: it catches the
+   layout you shifted by accident while editing a line of copy.
+4. Set `baseline: 'current'` on that page and regenerate. From then on it is
+   protected against regression instead of against the original.
+
+Pages you have not touched keep being checked against `legacy/`, so the
+migration stays verified while the redesign proceeds page by page.
+
 ## When a failure is legitimate
 
 A copy edit, a design change, or a new section will fail parity, correctly.

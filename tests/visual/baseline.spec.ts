@@ -3,19 +3,23 @@ import path from 'node:path';
 
 import { test } from '@playwright/test';
 
-import { LEGACY_ORIGIN } from '../../playwright.config';
-import { PARITY_PAGES, VIEWPORTS, settlePage, snapshotName } from './pages';
+import { LEGACY_ORIGIN, NEXT_ORIGIN } from '../../playwright.config';
+import { PARITY_PAGES, VIEWPORTS, baselineSourceFor, settlePage, snapshotName } from './pages';
 
 const BASELINE_DIR = path.resolve('tests/visual/__baseline__');
 
 /**
- * Captures the reference screenshots from the original static site.
+ * Captures the reference screenshots.
  *
  *   pnpm parity:baseline
  *
- * Run this once against the untouched legacy site. The images it writes are
- * the definition of "correct" for the migration, so they should be committed
- * and only ever regenerated deliberately.
+ * Most pages are captured from the original documents: they are faithful
+ * ports and must not drift. A page marked `baseline: 'current'` is captured
+ * from this build instead, because it has been deliberately redesigned and
+ * the original is no longer what it should look like.
+ *
+ * Regenerating is always a deliberate act — the images it writes become the
+ * definition of "correct" until someone changes them again.
  */
 test.describe('legacy baseline', () => {
   test.skip(!process.env.PARITY_BASELINE, 'Set PARITY_BASELINE=1 to regenerate baselines.');
@@ -23,8 +27,14 @@ test.describe('legacy baseline', () => {
   for (const page of PARITY_PAGES) {
     for (const viewport of VIEWPORTS) {
       test(`${page.name} @ ${viewport.name}`, async ({ page: browserPage }) => {
+        const source = baselineSourceFor(page);
+        const url =
+          source === 'legacy'
+            ? `${LEGACY_ORIGIN}${page.legacy}`
+            : `${NEXT_ORIGIN}${page.route}`;
+
         await browserPage.setViewportSize({ width: viewport.width, height: viewport.height });
-        await browserPage.goto(`${LEGACY_ORIGIN}${page.legacy}`, { waitUntil: 'load' });
+        await browserPage.goto(url, { waitUntil: 'load' });
 
         await settlePage(browserPage, 'settle' in page ? page.settle : undefined);
 
