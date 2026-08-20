@@ -1,0 +1,88 @@
+/*
+ * Shared canvas for the 404 and error screens.
+ *
+ * These are the only two pages with no legacy counterpart, so they are built
+ * from the site's own palette and type scale rather than invented from
+ * scratch — the visitor should not feel they have left the brand.
+ */
+
+.status {
+  --paper: #f3f0ea;
+  --ink: #29281f;
+  --soft: rgba(41, 40, 31, 0.66);
+  --clay: #b56d43;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 22px;
+  min-height: 100vh;
+  padding: 120px 44px;
+  background: var(--paper);
+  color: var(--ink);
+  font:
+    300 1rem/1.7 var(--font-body),
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.eyebrow {
+  font-size: 0.67rem;
+  letter-spacing: 0.23em;
+  text-transform: uppercase;
+  color: var(--clay);
+}
+
+.title {
+  max-width: 16ch;
+  font:
+    500 clamp(2.8rem, 7vw, 5.6rem) / 0.95 var(--font-display),
+    Georgia,
+    serif;
+  letter-spacing: -0.04em;
+}
+
+.title em {
+  font-style: normal;
+  color: var(--clay);
+}
+
+.copy {
+  max-width: 52ch;
+  color: var(--soft);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 14px;
+}
+
+.links a,
+.links button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--clay);
+  padding-bottom: 4px;
+  transition: opacity 0.3s ease;
+}
+
+.links a:hover,
+.links button:hover {
+  opacity: 0.55;
+}
+
+@media (max-width: 760px) {
+  .status {
+    padding: 100px 24px;
+  }
+}

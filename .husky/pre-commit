@@ -1,0 +1,3 @@
+# Fast checks only — the full gate (including visual parity) is `pnpm verify`,
+# which belongs in CI rather than in the way of every commit.
+pnpm lint-staged

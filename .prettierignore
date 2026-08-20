@@ -1,0 +1,11 @@
+# The ported page stylesheets are kept byte-comparable with the legacy
+# documents so they stay diffable; reformatting them would destroy that.
+src/features/*/styles/*.module.css
+
+# Generated or reference-only.
+legacy/
+tools/legacy-import/extracted/
+tests/visual/__baseline__/
+src/shared/config/image-registry.ts
+.next/
+pnpm-lock.yaml

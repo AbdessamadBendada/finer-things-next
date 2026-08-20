@@ -1,0 +1,43 @@
+/* ================================================================
+   BRAND — intentional departures from the legacy documents
+
+   Everything else in the style layers reproduces the original site.
+   This file is where we knowingly diverge, so the difference is
+   visible in one place rather than buried in a page stylesheet.
+
+   Loaded after chrome.css, and hand-maintained: the generators never
+   write here.
+   ================================================================ */
+
+/*
+ * One logo on every page.
+ *
+ * The original used the logo image only on the home page and set the words
+ * "Finer Things" as text on the other eleven — a brand shipping two different
+ * marks. The masthead now renders the image everywhere, so it needs the
+ * sizing the home page used to keep to itself.
+ *
+ * The parity baselines for the eleven inner pages were regenerated when this
+ * landed; they intentionally no longer match the legacy screenshots.
+ */
+[data-page] .head .logo {
+  display: block;
+  width: clamp(132px, 11.2vw, 162px);
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 0;
+}
+
+[data-page] .head .logo img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+/* The legal mastheads sit on paper from the first pixel, so the mark needs no
+   blend treatment there. */
+[data-page='privacy'] .head .logo img,
+[data-page='terms'] .head .logo img {
+  mix-blend-mode: normal;
+}

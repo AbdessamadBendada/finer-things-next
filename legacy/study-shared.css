@@ -1,0 +1,84 @@
+/* ================================================================
+   FINER THINGS LUXURY STUDIES — SHARED FOUNDATION
+   Fonts, typography policy, wordmarks, and cross-page safeguards.
+   Page composition and page-specific motion remain in each document.
+   ================================================================ */
+
+@font-face {
+  font-family: "Goudy Local";
+  src: url("assets/fonts/goudy-old-style.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Rodetta Local";
+  src: url("assets/fonts/rodetta.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-display: "Goudy Local";
+  --font-wordmark: "Rodetta Local";
+  --font-body: "Jost";
+}
+
+body {
+  font-synthesis: none;
+}
+
+.serif {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+/* Rodetta stays on complete wordmarks so its connected script is intact. */
+.logo,
+.head .logo,
+.footer-brand,
+.ft-top .brand,
+.word {
+  font-family: var(--font-wordmark), var(--font-display), Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* Shared Roman-display and clipping policy. */
+h1,
+h2,
+h3,
+.serif {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+h1 em,
+h2 em,
+h3 em {
+  padding-inline: .035em;
+  font-style: normal;
+}
+
+.hero-line,
+.word-mask,
+.title-mask,
+.cta-line,
+.line-in,
+.mask {
+  padding: .16em .07em .2em;
+  margin: -.16em -.07em -.2em;
+}
+
+@media (max-width: 560px) {
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -.035em;
+  }
+
+  .wrap {
+    min-width: 0;
+  }
+}

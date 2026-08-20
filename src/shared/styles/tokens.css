@@ -1,0 +1,48 @@
+/* ================================================================
+   DESIGN TOKENS
+
+   One brand palette for the whole site.
+
+   The legacy documents each declared their own `:root` block, and it turned
+   out every one of them held the *same* values under different names —
+   `--clay` on some pages, `--brass` on others; `--stone` here, `--paper-2`
+   there. That was duplication, not intent, so the palette is defined once
+   and the historical names are kept as aliases below.
+
+   Change a brand colour here and it changes everywhere.
+   ================================================================ */
+
+:root {
+  /* Surfaces */
+  --paper: #f3f0ea;
+  --stone: #ded9cc;
+  --ink: #29281f;
+
+  /* Text */
+  --soft: rgba(41, 40, 31, 0.66);
+
+  /* Accents */
+  --clay: #b56d43;
+  --oxblood: #7d342c;
+  --tan: #be9973;
+
+  /* Structure */
+  --line: rgba(166, 152, 120, 0.34);
+
+  /* Motion — the site's single easing curve and its two speeds. */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-duration: 1.25s;
+  --transition-duration: 0.4s;
+
+  /* ---- Aliases kept so the ported page stylesheets read unchanged ----
+     Each legacy document invented its own name for the same value. Rather
+     than rewrite thousands of `var()` references — and risk a typo becoming
+     a silent visual bug — the old names point at the canonical ones.
+
+     New code should use the canonical tokens above. */
+  --paper-2: var(--stone);
+  --brass: var(--clay);
+  --red: var(--oxblood);
+  --ink-soft: var(--soft);
+  --olive: var(--tan);
+}

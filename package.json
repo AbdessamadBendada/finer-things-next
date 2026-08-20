@@ -1,0 +1,62 @@
+{
+  "name": "finer-things-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "migrate:images": "node tools/legacy-import/build-image-registry.mjs",
+    "migrate:pages": "node tools/legacy-import/convert.mjs",
+    "legacy": "node tools/legacy-server.mjs",
+    "parity:baseline": "PARITY_BASELINE=1 playwright test tests/visual/baseline.spec.ts",
+    "parity": "playwright test tests/visual/parity.spec.ts",
+    "parity:report": "playwright show-report",
+    "verify": "pnpm typecheck && pnpm lint && pnpm build && pnpm test && pnpm parity",
+    "prepare": "husky",
+    "test": "playwright test tests/forms"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-hook-form": "^7.85.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^20",
+    "@types/parse5": "^7.0.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-boundaries": "^7.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
+    "parse5": "^8.0.1",
+    "prettier": "^3.9.6",
+    "sharp": "^0.35.3",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@11.3.0",
+  "engines": {
+    "node": ">=20.9"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mjs}": [
+      "prettier --write"
+    ]
+  }
+}

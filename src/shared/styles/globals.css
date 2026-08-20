@@ -1,0 +1,177 @@
+/* ================================================================
+   FINER THINGS — GLOBAL FOUNDATION
+
+   Ported from legacy/study-shared.css plus the document-level rules
+   hoisted out of the twelve page stylesheets. Everything here is
+   deliberately global: fonts, the reset, and the typography policy
+   that every page inherits.
+
+   Page composition lives in each feature's *.module.css, scoped under
+   a `.page` wrapper. See docs/ARCHITECTURE.md.
+   ================================================================ */
+
+@import './tokens.css';
+@import './primitives.css';
+@import './chrome.css';
+@import './brand.css';
+
+/* ---------------- FONTS ----------------
+   All three families are self-hosted. Jost was previously fetched from
+   Google Fonts on every page load; serving it from our own origin removes
+   a render-blocking third-party request and lets the CSP forbid external
+   origins outright (docs/SECURITY.md). The family names are unchanged so
+   the ported page stylesheets reference them exactly as before. */
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/assets/fonts/jost-latin.woff2') format('woff2');
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+    U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/assets/fonts/jost-latin-ext.woff2') format('woff2');
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Goudy Local';
+  src: url('/assets/fonts/goudy-old-style.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rodetta Local';
+  src: url('/assets/fonts/rodetta.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-display: 'Goudy Local';
+  --font-wordmark: 'Rodetta Local';
+  --font-body: 'Jost';
+}
+
+/* Colour tokens live in tokens.css; chrome lives in chrome.css. */
+
+/* ---------------- RESET ---------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  font-synthesis: none;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------------- PAGE CANVAS ----------------
+   Each page carries its own palette, so the document background cannot be a
+   single constant. The wrapper paints the canvas; this table keeps the
+   overscroll area matching it. Keyed on the stable `data-page` attribute
+   because the wrapper's own class name is hashed by CSS Modules. */
+
+body {
+  background: #f3f0ea;
+}
+
+body:has([data-page='home']),
+body:has([data-page='marsa-al-arab']),
+body:has([data-page='waldorf-astoria-osaka']) {
+  background: #29281f;
+}
+
+/* ---------------- TYPOGRAPHY POLICY ----------------
+   Verbatim from legacy/study-shared.css, with one mechanical change: every
+   selector is prefixed with `[data-page]`.
+
+   Why: each page stylesheet is now nested under a `.page` wrapper, which adds
+   one class of specificity to all of its rules. Without a matching increase
+   here, rules that this foundation used to win — `.head .logo` beating the
+   page's own `.logo`, which is what keeps the wordmark in Rodetta — would
+   start losing. The attribute selector carries exactly the same weight as a
+   class, so the original relationship is preserved rule for rule.
+   See docs/adr/0001-css-modules.md. */
+
+[data-page] .serif {
+  font-family: var(--font-display), Georgia, serif;
+}
+
+/* Rodetta stays on complete wordmarks so its connected script is intact. */
+[data-page] .logo,
+[data-page] .head .logo,
+[data-page] .footer-brand,
+[data-page] .ft-top .brand,
+[data-page] .word {
+  font-family: var(--font-wordmark), var(--font-display), Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+[data-page] h1,
+[data-page] h2,
+[data-page] h3,
+[data-page] .serif {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+[data-page] h1 em,
+[data-page] h2 em,
+[data-page] h3 em {
+  padding-inline: 0.035em;
+  font-style: normal;
+}
+
+[data-page] .hero-line,
+[data-page] .word-mask,
+[data-page] .title-mask,
+[data-page] .cta-line,
+[data-page] .line-in,
+[data-page] .mask {
+  padding: 0.16em 0.07em 0.2em;
+  margin: -0.16em -0.07em -0.2em;
+}
+
+@media (max-width: 560px) {
+  [data-page] h1,
+  [data-page] h2,
+  [data-page] h3 {
+    letter-spacing: -0.035em;
+  }
+
+  [data-page] .wrap {
+    min-width: 0;
+  }
+}

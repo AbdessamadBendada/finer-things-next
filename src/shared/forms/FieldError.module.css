@@ -1,0 +1,24 @@
+/*
+ * Error typography, built from the tokens the pages already define:
+ * the eyebrow scale for size and tracking, and whichever accent colour the
+ * current page sets. Nothing here introduces a new design decision.
+ */
+
+.fieldError {
+  margin-top: 8px;
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--clay, var(--brass, #b56d43));
+}
+
+/*
+ * Status lines are rendered up-front so assistive technology has a live
+ * region to announce into, but an empty one must not occupy space — the
+ * newsletter footer grew by 74px before this existed.
+ */
+:global(.status:empty) {
+  display: none;
+}

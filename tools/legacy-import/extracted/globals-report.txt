@@ -1,0 +1,41 @@
+# Rules hoisted out of page stylesheets (html / body / * selectors).
+# Reconcile these by hand into src/shared/styles/globals.css.
+
+* {margin:0;padding:0;box-sizing:border-box}
+    pages: home
+
+html {scroll-behavior:smooth}
+    pages: home, our-work, projects, marsa-al-arab, waldorf-astoria-osaka, bespoke-accessories, styling-curation, finer-living, about, contact, privacy, terms
+
+body {background:var(--ink);overflow-x:hidden}
+    pages: home, marsa-al-arab, waldorf-astoria-osaka
+
+* {box-sizing:border-box;margin:0;padding:0}
+    pages: our-work, projects, marsa-al-arab, waldorf-astoria-osaka, bespoke-accessories, styling-curation, finer-living, about, contact, privacy, terms
+
+body {background:var(--paper);overflow-x:hidden}
+    pages: our-work, projects, bespoke-accessories, styling-curation, finer-living, about, contact
+
+body.menu-open {overflow:hidden}
+    pages: our-work, projects, marsa-al-arab, waldorf-astoria-osaka, bespoke-accessories, styling-curation, finer-living, about, contact
+
+@media(prefers-reduced-motion:reduce) { html {scroll-behavior:auto} }
+    pages: our-work, projects, marsa-al-arab, waldorf-astoria-osaka, bespoke-accessories, styling-curation, finer-living, about, contact, privacy, terms
+
+body {background:var(--paper)}
+    pages: privacy, terms
+
+
+# Body backgrounds (drive the body:has() table in globals.css):
+  home: #29281F
+  our-work: #F3F0EA
+  projects: #F3F0EA
+  marsa-al-arab: #29281F
+  waldorf-astoria-osaka: #29281F
+  bespoke-accessories: #F3F0EA
+  styling-curation: #F3F0EA
+  finer-living: #F3F0EA
+  about: #F3F0EA
+  contact: #F3F0EA
+  privacy: #F3F0EA
+  terms: #F3F0EA

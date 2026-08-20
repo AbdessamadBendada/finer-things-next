@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Format check
+        run: pnpm format:check
+
+      - name: Build
+        run: pnpm build
+
+      - uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Forms
+        run: pnpm test
+
+      # Baselines are captured from legacy/ in the same job, because font
+      # rasterisation differs between platforms — a committed set would fail
+      # here. See docs/PARITY.md.
+      - name: Capture parity baselines
+        run: pnpm parity:baseline
+
+      - name: Visual parity
+        run: pnpm parity
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: parity-diffs
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
