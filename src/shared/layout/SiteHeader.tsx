@@ -123,7 +123,7 @@ export function SiteHeader({
         )}
 
         {navTreatment === 'contact' && (
-          <Link href="/contact" className="hero-nav-link">
+          <Link href="/contact" className="btn hero-nav-btn">
             Contact
           </Link>
         )}

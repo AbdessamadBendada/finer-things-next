@@ -74,8 +74,7 @@
 }
 
 [data-page='home'] .head.hero-nav .links a,
-[data-page='home'] .head.hero-nav .menu-toggle,
-[data-page='home'] .head.hero-nav .hero-nav-link {
+[data-page='home'] .head.hero-nav .menu-toggle {
   color: var(--paper);
 }
 
@@ -83,8 +82,7 @@
    Raised from 11.5px after review: the links read as too small beside
    the mark. 13px still sits in the site's editorial scale rather than
    looking like UI chrome. */
-[data-page='home'] .head .links a,
-[data-page='home'] .head .hero-nav-link {
+[data-page='home'] .head .links a {
   font-size: 0.8125rem;
   letter-spacing: 0.16em;
   opacity: 0.86;
@@ -92,7 +90,6 @@
 }
 
 [data-page='home'] .head .links a:hover,
-[data-page='home'] .head .hero-nav-link:hover,
 [data-page='home'] .head .menu-toggle:hover {
   opacity: 1;
 }
@@ -101,18 +98,38 @@
    so centring the two boxes leaves the links looking high. This drops
    them onto the mark's optical line. */
 [data-page='home'] .head .links,
-[data-page='home'] .head .hero-nav-link,
 [data-page='home'] .head .menu-toggle {
   transform: translateY(1px);
 }
 
-/* ?nav=contact — a single way to act, nothing else. */
-[data-page='home'] .hero-nav-link {
-  font-family: var(--font-body), sans-serif;
-  font-weight: 400;
+/* ---------------- ?nav=contact ----------------
+   A button rather than a link: the one thing in the masthead is meant to
+   be pressed, and a lone text link at this size reads as a label.
+
+   It borrows the site's own button, scaled down for a masthead — the hero
+   already carries a full-size CTA further down the page, and two identical
+   buttons on one screen would compete. */
+[data-page='home'] .hero-nav-btn {
+  padding: 11px 24px;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
   line-height: 1;
-  text-transform: uppercase;
-  text-decoration: none;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Over the photography, before the header docks. */
+[data-page='home'] .head.hero-nav .hero-nav-btn {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(243, 240, 234, 0.55);
+}
+
+[data-page='home'] .head.hero-nav .hero-nav-btn:hover {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
 }
 
 /* ---------------- ?nav=burger ----------------

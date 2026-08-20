@@ -122,6 +122,20 @@ Template — copy per comment:
   `useSyncExternalStore` stopped the variant being read after hydration, so
   all three briefly did nothing. Caught by measuring rather than looking.
 
+### 4. Make the contact variant a button, not a link
+
+- **Page:** `/?nav=contact`
+- **Asked:** "can we make the contact link in the one with just the contact a
+  button rather than just a link?"
+- **Status:** ✅ Done
+- **Done:** it now uses the site's own `.btn`, scaled down for a masthead
+  (111×35px). Outlined over the photography — paper rule, paper text,
+  transparent fill — and inverting to solid paper on hover.
+- **Note:** outlined rather than solid on purpose. The hero already carries a
+  full-size solid CTA ("Let's tell your story") lower down the same screen;
+  two solid buttons would compete for the same attention. One line in
+  `brand.css` makes it solid if she prefers that.
+
 ---
 
 ## Cross-cutting notes
