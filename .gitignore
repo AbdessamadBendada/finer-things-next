@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...but the template is committed: it documents every variable and holds no
+# secrets. README and docs/DEPLOYMENT.md both tell you to copy it.
+!.env.example
 
 # vercel
 .vercel
