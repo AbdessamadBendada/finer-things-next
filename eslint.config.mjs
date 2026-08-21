@@ -105,6 +105,41 @@ const eslintConfig = [
     },
   },
 
+  /**
+   * No em dashes in anything the site renders.
+   *
+   * A house style rule, asked for in review: the copy uses commas, colons and
+   * full stops instead. It is enforced here rather than trusted to memory
+   * because an em dash is easy to introduce without noticing, and easy to
+   * reintroduce when transcribing supplied copy that contains one.
+   *
+   * Scoped to string literals and JSX text, so prose in comments is not
+   * affected. En dashes are left alone; only the em dash was objected to.
+   */
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'Literal[value=/\\u2014/]',
+          message:
+            'No em dashes in site copy. Use a comma, a colon or a full stop. See docs/FEEDBACK.md.',
+        },
+        {
+          selector: 'TemplateElement[value.raw=/\\u2014/]',
+          message:
+            'No em dashes in site copy. Use a comma, a colon or a full stop. See docs/FEEDBACK.md.',
+        },
+        {
+          selector: 'JSXText[value=/\\u2014/]',
+          message:
+            'No em dashes in site copy. Use a comma, a colon or a full stop. See docs/FEEDBACK.md.',
+        },
+      ],
+    },
+  },
+
   {
     files: ['tools/**/*.mjs', 'tests/**/*.ts', '*.config.{ts,mjs}'],
     rules: { 'no-console': 'off' },

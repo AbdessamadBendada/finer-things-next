@@ -28,7 +28,7 @@ export function FinerLivingPage() {
             <div className="hero-bottom">
               <p className="hero-intro">
                 A curated selection of timeless pieces where exceptional craftsmanship meets
-                modern luxury—each chosen for its story and enduring quality.
+                modern luxury, each chosen for its story and enduring quality.
               </p>
               <span className="scroll-cue">Explore the collection ↓</span>
             </div>

@@ -46,7 +46,7 @@ export function MarsaAlArabPage() {
               </h2>
               <p className="intro-copy rise">
                 The selected imagery moves from the hotel lobby and guest suites to The Bombay
-                Club and Iliana—distinct spaces within one Dubai destination.
+                Club and Iliana, distinct spaces within one Dubai destination.
               </p>
             </div>
           </div>

@@ -25,7 +25,7 @@ export function OurWorkPage() {
             </h1>
             <div className="hero-foot">
               <p>
-                Bespoke accessories, thoughtful styling and a considered collection—three ways
+                Bespoke accessories, thoughtful styling and a considered collection: three ways
                 of giving a place character through the details that surround us.
               </p>
               <span className="scroll-cue">Explore our work ↓</span>

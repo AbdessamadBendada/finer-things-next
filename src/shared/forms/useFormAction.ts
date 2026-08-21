@@ -119,7 +119,7 @@ export function useFormAction<Values extends FieldValues>({
         const silent = Object.entries(errors).filter(([, error]) => !error?.message);
         setBlocked(
           silent.length
-            ? 'Please review the form — one of the answers could not be accepted.'
+            ? 'Please review the form. One of the answers could not be accepted.'
             : null,
         );
       },

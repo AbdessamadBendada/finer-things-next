@@ -19,7 +19,7 @@ export function AboutPage() {
               </span>
             </h1>
             <p className="hero-intro">
-              Behind Finer Things are Alex and Malika—a shared perspective shaped by
+              Behind Finer Things are Alex and Malika, a shared perspective shaped by
               hospitality, travel, storytelling and a discerning eye for detail.
             </p>
           </div>

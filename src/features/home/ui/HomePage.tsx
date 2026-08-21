@@ -119,7 +119,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
             <span className="idx">03</span>
             <h3 className="serif">Finer Living</h3>
             <span className="desc">
-              Finer Living — the ready-made collection of European-crafted pieces.
+              Finer Living - the ready-made collection of European-crafted pieces.
             </span>
           </Link>
         </div>
@@ -133,7 +133,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
               <h2 className="rise serif">A journey through places with soul.</h2>
               <p className="intro rise">
                 Discover our best work across the world’s finest hotels and residences. Move
-                through selected projects as an editorial sequence—each chapter revealing its
+                through selected projects as an editorial sequence, each chapter revealing its
                 atmosphere, objects and material character.
               </p>
             </div>

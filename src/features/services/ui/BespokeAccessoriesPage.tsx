@@ -28,8 +28,8 @@ export function BespokeAccessoriesPage() {
             </h1>
             <div className="hero-bottom">
               <p className="hero-intro">
-                Objects shaped around the identity of a place—from material, colour and scale to
-                finish, stitching and every detail guests touch.
+                Objects shaped around the identity of a place, from material, colour and scale
+                to finish, stitching and every detail guests touch.
               </p>
               <span className="scroll-cue">Discover the details ↓</span>
             </div>
@@ -46,7 +46,7 @@ export function BespokeAccessoriesPage() {
               </h2>
               <p className="manifesto-note rise">
                 We translate a property’s architecture, heritage and sense of place into
-                distinctive accessories—considered as part of the experience, never added as an
+                distinctive accessories, considered as part of the experience, never added as an
                 afterthought.
               </p>
             </div>
