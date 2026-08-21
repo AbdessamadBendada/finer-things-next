@@ -34,6 +34,7 @@ export const IMAGE_REGISTRY = {
   '/assets/favicon.png': { width: 844, height: 1000 },
   '/assets/finer-things-family.webp': { width: 1170, height: 1463 },
   '/assets/finer-things-logo.png': { width: 1080, height: 242 },
+  '/assets/founder-alex-lahmer.webp': { width: 1600, height: 2400 },
   '/assets/hero1.webp': { width: 1500, height: 1363 },
   '/assets/hero2.webp': { width: 1414, height: 1899 },
   '/assets/hero3.webp': { width: 600, height: 578 },

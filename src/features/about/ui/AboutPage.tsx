@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { Media } from '@/shared/ui/Media';
 import { AboutShell } from './AboutShell';
+import { SiteCta } from '@/shared/layout/SiteCta';
 
 export function AboutPage() {
   return (
@@ -12,15 +12,18 @@ export function AboutPage() {
             <div className="eyebrow">About Finer Things</div>
             <h1>
               <span className="hero-line">
-                <span>One family.</span>
+                <span>Values rooted in</span>
               </span>
               <span className="hero-line">
-                <span>One point of view.</span>
+                <span>
+                  <em>family</em>
+                </span>
               </span>
             </h1>
             <p className="hero-intro">
-              Behind Finer Things are Alex and Malika, a shared perspective shaped by
-              hospitality, travel, storytelling and a discerning eye for detail.
+              Finer Things is a family-owned boutique that brings hospitality experience,
+              sourcing, production and styling together to create distinctive bespoke
+              accessories and designs for world’s finest hotels and residences.
             </p>
           </div>
           <figure className="hero-portrait">
@@ -31,43 +34,35 @@ export function AboutPage() {
             <figcaption className="hero-caption">Alex & Malika</figcaption>
           </figure>
         </section>
-        {/* WHO WE ARE */}
-        <section className="statement" id="story">
-          <div className="wrap statement-grid">
-            <div className="eyebrow rise">Our story</div>
-            <div>
-              <h2 className="rise" data-word-reveal="">
-                {'Finer Things began with a belief that the right details give a place its '}
-                <em>character.</em>
-              </h2>
-              <p className="statement-note rise">
-                The family-owned boutique brings hospitality experience, sourcing, production
-                and styling together to create distinctive decorative accessories and considered
-                spaces for hospitality and residential projects.
-              </p>
-            </div>
-          </div>
-        </section>
-        {/* ALEX'S HOSPITALITY EXPERIENCE */}
-        <section className="experience">
+        {/* MEET THE FOUNDER */}
+        <section className="experience" id="story">
           <div className="wrap experience-grid">
             <figure className="experience-image rise" data-drift="-20">
               <Media
-                src="/assets/0676_Marsa_Al_Arab_Lobby_5_b2051520.webp"
-                alt="Distinctive decorative details at Marsa Al Arab"
+                src="/assets/founder-alex-lahmer.webp"
+                alt="Alex Lahmer, founder of Finer Things, in a leather workshop"
               />
             </figure>
             <div className="experience-copy">
-              <div className="eyebrow rise">A hospitality perspective</div>
+              <div className="eyebrow rise">Meet the founder</div>
               <h2 className="rise">
-                {'Experience from inside '}
-                <em>the guest journey.</em>
+                {'He designs the details he once '}
+                <em>bought.</em>
               </h2>
               <p className="rise">
-                Alex spent more than two decades opening and operating hotels, resorts and
-                residences around the world. That experience brings a global perspective to
-                every project and an understanding of how distinctive touchpoints shape the way
-                a stay is remembered.
+                For two decades, Alex Lahmer stood on the other side of the table, opening and
+                operating the world’s finest hotels, receiving the products everyone else
+                designed. He saw which materials survived a thousand guests and which didn’t,
+                which pieces guests photographed and which they ignored. He can tell you a
+                hundred stories about wrong materials, wrong sizes, wrong finishes.
+              </p>
+              <p className="rise">
+                Finer Things exists so their clients never become one of those stories.
+              </p>
+              <p className="rise">
+                Today Alex designs the details he once purchased, combining materials few dare
+                to put together, and giving every piece a function, a story, and the one place
+                it was made for.
               </p>
               <div className="experience-fact rise">
                 <strong>20+</strong>
@@ -76,33 +71,28 @@ export function AboutPage() {
             </div>
           </div>
         </section>
-        {/* TWO PERSPECTIVES */}
-        <section className="perspectives">
-          <div className="wrap">
-            <div className="perspectives-head">
-              <div className="eyebrow rise">Alex & Malika</div>
+        {/* MEET MALIKA — copy and portrait are placeholders, see docs/FEEDBACK.md */}
+        <section className="experience experience-reverse">
+          <div className="wrap experience-grid">
+            <figure className="experience-image rise portrait-placeholder" data-drift="-20">
+              <span>Portrait to follow</span>
+            </figure>
+            <div className="experience-copy">
+              <div className="eyebrow rise">Meet the co-founder</div>
               <h2 className="rise">
-                {'Two perspectives, '}
-                <em>one family.</em>
+                {'The eye that gives a space its '}
+                <em>final character.</em>
               </h2>
-            </div>
-            <div className="people">
-              <article className="person rise">
-                <span className="role">Hospitality & storytelling</span>
-                <h3>Alex</h3>
-                <p>
-                  Alex brings the operational understanding of international hospitality and a
-                  particular fondness for styling, storytelling and bespoke touchpoints.
-                </p>
-              </article>
-              <article className="person rise">
-                <span className="role">Character & detail</span>
-                <h3>Malika</h3>
-                <p>
-                  Malika brings the discerning eye that gives every space its final character,
-                  complementing experience with instinct and attention to detail.
-                </p>
-              </article>
+              <p className="rise" data-placeholder="true">
+                Placeholder copy, to be replaced with Malika’s own words. Malika brings the
+                discerning eye that turns a set of considered objects into a room that feels
+                composed, choosing what belongs together and what belongs somewhere else.
+              </p>
+              <p className="rise" data-placeholder="true">
+                Placeholder copy. Her instinct for colour, texture and proportion runs through
+                every project, and it is the reason a Finer Things space reads as one point of
+                view rather than a collection of good pieces.
+              </p>
             </div>
           </div>
         </section>
@@ -176,26 +166,7 @@ export function AboutPage() {
           </div>
         </section>
         {/* CLOSING INVITATION */}
-        <section className="closing" id="contact">
-          <div className="wrap">
-            <div className="eyebrow rise">Start a project</div>
-            <h2 className="rise">
-              <span className="cta-line">
-                <span>Tell us about the place</span>
-              </span>
-              <span className="cta-line">
-                <span>and the story behind it.</span>
-              </span>
-            </h2>
-            <p className="rise">
-              We would love to hear about your property, its character and the details you want
-              people to remember.
-            </p>
-            <Link className="btn rise" href="/contact">
-              Begin a conversation
-            </Link>
-          </div>
-        </section>
+        <SiteCta />
       </main>
     </AboutShell>
   );

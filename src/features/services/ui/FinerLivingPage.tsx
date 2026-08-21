@@ -1,5 +1,6 @@
 import { Media } from '@/shared/ui/Media';
 import { FinerLivingShell } from './FinerLivingShell';
+import { SiteCta } from '@/shared/layout/SiteCta';
 
 export function FinerLivingPage() {
   return (
@@ -247,30 +248,7 @@ export function FinerLivingPage() {
           </div>
         </section>
         {/* PROJECT CTA */}
-        <section className="closing" id="contact">
-          <div className="wrap">
-            <div className="eyebrow rise">Finer Living</div>
-            <h2 className="rise">
-              <span className="cta-line">
-                <span>Discover objects with</span>
-              </span>
-              <span className="cta-line">
-                <span>a story of their own.</span>
-              </span>
-            </h2>
-            <p className="rise">
-              Explore the full Finer Living collection and its considered material world.
-            </p>
-            <a
-              className="btn rise"
-              href="https://finerlivingcollection.com/"
-              target="_blank"
-              rel="noopener"
-            >
-              Explore the collection
-            </a>
-          </div>
-        </section>
+        <SiteCta />
       </main>
     </FinerLivingShell>
   );

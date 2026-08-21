@@ -309,9 +309,14 @@ body.menu-open [data-page] .menu-toggle {
    two classes plus two elements, in a file that loads after this one. Beating
    that on specificity alone would take a selector nobody could read, and it
    would have to be repeated for every new page. One policy, one line. */
-[data-page] h1 em,
-[data-page] h2 em,
-[data-page] h3 em {
+/*
+ * Stated as the policy itself rather than as a list of the selectors that
+ * happened to break it. Enumerating them missed three rounds running: first
+ * `em`, then the hero lines and `.outcome`, then bare spans on the project
+ * stories and contact. Anything inside a heading takes the heading's colour,
+ * so a new page cannot reintroduce a tint without deleting this rule.
+ */
+[data-page] :is(h1, h2, h3) * {
   color: inherit !important;
 }
 
@@ -379,4 +384,541 @@ body.menu-open [data-page] .menu-toggle {
     transform 1.15s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 0.8s ease;
   transition-delay: calc(var(--word-index) * 62ms);
+}
+
+/* ================================================================
+   REVIEW ROUND 3 — Our Work and About
+
+   New sections asked for in review: the materials grid, the
+   finishing details, the process timeline, and the founder
+   portraits. Plus one shared closing CTA in place of nine.
+
+   Same specificity note as above: page modules load after this file
+   and nest their rules under `.page`, so anything competing with an
+   existing page rule needs an id or extra weight. New class names
+   invented here have no page rule to fight, so a plain
+   `[data-page] .thing` is enough for those.
+   ================================================================ */
+
+/* ---------------- One closing CTA, everywhere ----------------
+   Nine pages each styled `.closing` themselves, and they had drifted: the
+   same panel with four different vertical rhythms. One treatment now, so the
+   CTA is identical in look as well as in words.
+
+   Contact is excluded on purpose. Its `.closing` is a dark "Stay connected"
+   panel, a different section that happens to share the class name. */
+[data-page]:not([data-page='contact']) .closing {
+  background: #e5e0d5;
+  text-align: center;
+  padding: clamp(115px, 17vh, 175px) 0;
+}
+
+[data-page]:not([data-page='contact']) .closing h2 {
+  max-width: 20ch;
+  margin-inline: auto;
+}
+
+[data-page]:not([data-page='contact']) .closing p {
+  max-width: 46ch;
+  margin: 22px auto 0;
+  color: var(--ink-soft);
+}
+
+[data-page]:not([data-page='contact']) .closing .btn {
+  margin-top: clamp(32px, 4vh, 44px);
+}
+
+/* ---------------- Our Work: the opening statement ----------------
+   The eyebrow beside it is gone, so the statement takes the full column
+   rather than sitting in the right-hand half of a two-up grid. Review asked
+   for it to land in two lines, which needs the width the eyebrow was using.
+
+   By id: the page rule is `.page :global(.intro-grid)`, which a class here
+   would tie with and lose to. */
+[data-page='our-work'] .intro .intro-grid {
+  display: block;
+}
+
+[data-page='our-work'] .intro .intro-grid h2 {
+  max-width: 30ch;
+}
+
+[data-page='our-work'] .intro .intro-grid .intro-note {
+  max-width: 68ch;
+}
+
+/* ---------------- Material cards ----------------
+   Photograph, name, and copy that arrives on hover. The name and a scrim are
+   always on screen so the grid reads at a glance; hover deepens the scrim and
+   lifts the paragraph in.
+
+   Touch has no hover, so below the hover breakpoint the paragraph is simply
+   always shown. Nothing here is interactive, so nothing is unreachable. */
+[data-page] .material-grid {
+  display: grid;
+  gap: clamp(14px, 1.6vw, 22px);
+  margin-top: clamp(48px, 7vh, 78px);
+  grid-template-columns: repeat(var(--material-columns, 3), 1fr);
+}
+
+[data-page] .material-grid[data-columns='2'] {
+  --material-columns: 2;
+}
+
+@media (max-width: 900px) {
+  [data-page] .material-grid {
+    --material-columns: 2;
+  }
+}
+
+@media (max-width: 620px) {
+  [data-page] .material-grid,
+  [data-page] .material-grid[data-columns='2'] {
+    --material-columns: 1;
+  }
+}
+
+[data-page] .material-card {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--ink);
+  isolation: isolate;
+}
+
+[data-page] .material-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 1.1s var(--ease);
+}
+
+[data-page] .material-card:hover img,
+[data-page] .material-card:focus-within img {
+  transform: scale(1.07);
+}
+
+/* The scrim. Always present so the name is legible, deeper on hover so the
+   paragraph has something to sit on. */
+[data-page] .material-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(20, 19, 14, 0) 38%, rgba(20, 19, 14, 0.72));
+  transition: background 0.55s ease;
+}
+
+[data-page] .material-card:hover::after,
+[data-page] .material-card:focus-within::after {
+  background: linear-gradient(180deg, rgba(20, 19, 14, 0.24) 0%, rgba(20, 19, 14, 0.86));
+}
+
+[data-page] .material-copy {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 2;
+  padding: clamp(20px, 2.4vw, 30px);
+  color: var(--paper);
+}
+
+[data-page] .material-copy h3 {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.1vw, 2rem);
+  line-height: 1.05;
+  color: var(--paper);
+}
+
+[data-page] .material-copy p {
+  margin: 12px 0 0;
+  max-width: 42ch;
+  font-size: 0.88rem;
+  line-height: 1.62;
+  color: rgba(243, 240, 234, 0.86);
+}
+
+/* Hover-capable pointers get the reveal; everything else keeps the copy on
+   screen, which is what makes this work on a phone.
+
+   The collapse is a grid row going 0fr to 1fr rather than an opacity fade.
+   Fading alone left the paragraph occupying its height while invisible, and
+   because the paragraphs are different lengths every name sat at a different
+   distance from the bottom of its card. The row of names read as crooked. */
+[data-page] .material-reveal {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+[data-page] .material-reveal > p {
+  min-height: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-page] .material-reveal {
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition:
+      grid-template-rows 0.55s var(--ease),
+      opacity 0.4s ease;
+  }
+
+  [data-page] .material-card:hover .material-reveal,
+  [data-page] .material-card:focus-within .material-reveal {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-page] .material-card img,
+  [data-page] .material-reveal {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ---------------- The process, as rows ----------------
+   Rebuilt in the language of the "Chosen for more than appearance" rows on
+   /services/finer-living: a hairline that draws itself in on reveal, a small
+   numeral, and the step set at heading scale. Same rhythm, same hover.
+
+   Two columns rather than three: those rows carry a title and a description,
+   and the process steps are titles only. */
+[data-page='our-work'] .process-steps {
+  list-style: none;
+  margin: clamp(48px, 7vh, 78px) 0 0;
+  padding: 0;
+}
+
+[data-page='our-work'] .process-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 35px;
+  align-items: start;
+  padding: 36px 0;
+  transition: background 0.45s ease;
+}
+
+[data-page='our-work'] .process-step::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: rgba(41, 40, 31, 0.19);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* `.rise` is given `in` when it reveals, exactly as the scope rows are. */
+[data-page='our-work'] .process-step.in::before {
+  transform: scaleX(1);
+}
+
+[data-page='our-work'] .process-step:last-child {
+  border-bottom: 1px solid rgba(41, 40, 31, 0.19);
+}
+
+[data-page='our-work'] .process-number {
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  color: var(--clay);
+}
+
+[data-page='our-work'] .process-label {
+  font:
+    500 clamp(1.6rem, 2.7vw, 2.7rem) / 1.04 var(--font-display),
+    serif;
+  /* Wide enough that all but the longest step sits on one line, rather than
+     stacking three words deep inside a column with room to spare. */
+  max-width: 46ch;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-page='our-work'] .process-step:hover {
+    background: rgba(243, 240, 234, 0.22);
+  }
+
+  [data-page='our-work'] .process-label {
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  [data-page='our-work'] .process-step:hover .process-label {
+    transform: translateX(9px);
+  }
+}
+
+@media (max-width: 720px) {
+  [data-page='our-work'] .process-step {
+    grid-template-columns: 42px 1fr;
+    gap: 17px;
+    padding: 26px 0;
+  }
+}
+
+/* ---------------- About: the founder portraits ----------------
+   The second block mirrors the first so the two founders alternate rather
+   than stack identically. */
+[data-page='about'] .experience-reverse .experience-grid {
+  direction: rtl;
+}
+
+[data-page='about'] .experience-reverse .experience-grid > * {
+  direction: ltr;
+}
+
+/* Malika's portrait has not been supplied. A labelled panel in the exact
+   shape the photograph will take, so the layout is already correct and the
+   gap is obviously deliberate rather than a broken image. */
+[data-page='about'] .portrait-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 2 / 3;
+  background: repeating-linear-gradient(
+    -45deg,
+    #e5e0d5,
+    #e5e0d5 12px,
+    #ded8cb 12px,
+    #ded8cb 24px
+  );
+}
+
+[data-page='about'] .portrait-placeholder span {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------------- Section heading rhythm ----------------
+   The note under a section heading was sitting flush against the last line of
+   it, so the two read as one block. */
+[data-page] .continuity-head .continuity-note {
+  margin-top: clamp(18px, 2.4vh, 26px);
+}
+
+/* ---------------- Highlighted words in headings ----------------
+   Review asked for `narrative`, `story` and `family` to be highlighted, and
+   separately for headlines to be a single colour. Those two pull against each
+   other, because colour was the only thing `em` did.
+
+   Italic is not available to replace it: the site ships one upright file per
+   family and `font-synthesis: none`, so `font-style: italic` renders
+   identically to the text around it. That is why `em` currently does nothing
+   at all on these headings.
+
+   So the emphasis is a hairline rule under the word instead. It reads as
+   deliberate editorial emphasis, and it keeps the headline one colour.
+   Set on the ink at low alpha so it never competes with the letterforms. */
+[data-page] h1 em,
+[data-page] h2 em,
+[data-page] h3 em {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  text-decoration-color: rgba(41, 40, 31, 0.32);
+}
+
+/* Over photography the rule has to lift with the text it belongs to. */
+[data-page] .hero h1 em,
+[data-page] .experience-copy h2 em,
+[data-page] .film-copy h3 em {
+  text-decoration-color: rgba(243, 240, 234, 0.42);
+}
+
+/* ---------------- Hero headlines have to fit their own lines ----------------
+   The heroes are written as two deliberate lines, one `.hero-line` each, and
+   the page stylesheets cap the headline at 12ch (Our Work) and 9ch (About).
+   Those caps were measured for the copy that used to be there, "One story." /
+   "Three expressions.", and the new lines are roughly twice as long. Each
+   `.hero-line` was wrapping inside itself, so a two-line headline came out as
+   four or five lines with a word or two on each. It read as broken.
+
+   Wide enough for the longest line, and scaled down so that width still fits
+   the column. `main` is in the selector purely for weight: the page rule is
+   `.page :global(.hero h1)`, which an equally specific selector here would
+   tie with and lose to, since page modules load after this file.
+
+   These override the page stylesheets' own breakpoints too, so the narrow
+   sizes have to be restated rather than inherited. */
+[data-page='our-work'] main .hero h1 {
+  max-width: 20ch;
+  font-size: clamp(2.9rem, 6.6vw, 6.6rem);
+}
+
+[data-page='about'] main .hero h1 {
+  max-width: 17ch;
+  font-size: clamp(2.9rem, 5.9vw, 6.1rem);
+}
+
+@media (max-width: 860px) {
+  [data-page='our-work'] main .hero h1 {
+    max-width: 16ch;
+    font-size: clamp(2.5rem, 8.4vw, 3.9rem);
+  }
+
+  [data-page='about'] main .hero h1 {
+    max-width: 14ch;
+    font-size: clamp(2.5rem, 8.2vw, 3.8rem);
+  }
+}
+
+/* On a phone the `ch` cap becomes the limiter rather than the column, so it
+   has to be wide enough for the longest line and the type sized to suit.
+   Measured at 390px: "We turn the ordinary" is the longest line on the site
+   and needs the full 21ch to stay on one row. */
+@media (max-width: 520px) {
+  [data-page='our-work'] main .hero h1,
+  [data-page='about'] main .hero h1 {
+    max-width: 21ch;
+    font-size: clamp(1.9rem, 8vw, 2.9rem);
+  }
+}
+
+/* The Our Work hero's second line was indented by .42em. That was a flourish
+   for the old copy, "One story." over "Three expressions.", where a short
+   second line reads as a deliberate stagger. With two long lines it just
+   breaks the left edge: the headline started in one place, its second line in
+   another, and the paragraph below in a third. Flush left, all three. */
+[data-page='our-work'] main .hero h1 .hero-line:nth-child(2) > span {
+  margin-left: 0;
+}
+
+/* ================================================================
+   SECTION HEADS STACK
+
+   Review: "do not make the heading in the left and the subheading
+   in the right, try to make them one on top of the other."
+
+   Every page opened its sections with a two-column head, the eyebrow
+   or heading in a narrow left column and the copy in a wider right
+   one. Beyond the split itself, it is what squeezed the headings:
+   a heading confined to 0.5fr of the page wraps onto four and five
+   lines. Stacking them fixes the alignment and gives the type room
+   in the same move.
+
+   `main` is in the selector for weight only, the same trick used
+   above. The home page has no `<main>`, so its two heads are
+   addressed by their sections' ids.
+   ================================================================ */
+[data-page] main .scope-head,
+[data-page] main .continuity-head,
+[data-page] main .statement-grid,
+[data-page] main .intro-grid,
+[data-page] main .gallery-head,
+[data-page] main .manifesto-grid,
+[data-page] main .materials-top,
+[data-page='home'] #work .svc-head,
+[data-page='home'] #collection .featured-head {
+  display: block;
+}
+
+/* Stacked, the eyebrow needs air beneath it and the note needs air above,
+   where the columns used to provide the separation. */
+[data-page] main .scope-head > *:first-child,
+[data-page] main .continuity-head > *:first-child,
+[data-page] main .statement-grid > *:first-child,
+[data-page] main .intro-grid > *:first-child,
+[data-page] main .gallery-head > *:first-child,
+[data-page] main .manifesto-grid > *:first-child,
+[data-page] main .materials-top > *:first-child {
+  margin-bottom: clamp(18px, 2.4vh, 28px);
+}
+
+[data-page] main .scope-head p,
+[data-page] main .gallery-head p,
+[data-page] main .manifesto-grid p,
+[data-page] main .materials-top p,
+[data-page='home'] #collection .featured-head .intro {
+  margin-top: clamp(18px, 2.4vh, 26px);
+}
+
+/* ================================================================
+   NO HEADING RUNS TO FOUR LINES
+
+   Review: headings must not stack up four and five lines deep.
+
+   Stacking the section heads (above) gave them the full column, but
+   several were also capped well under it: the Our Work section
+   headings sat at 504px inside a 1280px column and broke into five
+   lines of three words. The caps below are measured against the
+   text they actually carry, so each lands in two or three lines with
+   the column properly used.
+   ================================================================ */
+
+/* 144 characters, so three lines is the honest target rather than two. */
+[data-page='home'] #purpose-title {
+  max-width: 46ch;
+  font-size: clamp(1.9rem, 3.4vw, 3.6rem);
+}
+
+/* Both Our Work section headings: "…attention to quality is paramount" at 75
+   characters and "…in pursuit of perfection" at 48. Two lines each. */
+[data-page='our-work'] main .continuity-head h2 {
+  max-width: 34ch;
+  font-size: clamp(2.2rem, 3.9vw, 4rem);
+}
+
+/* 106 characters. Three lines. */
+[data-page='projects'] main .intro h2 {
+  max-width: 32ch;
+  font-size: clamp(2.2rem, 3.9vw, 4rem);
+}
+
+/* Written as two masked lines, "Perhaps it begins" over "with a place.", and
+   each was wrapping inside itself. Same fault as the heroes. */
+[data-page='contact'] main .copy h1 {
+  max-width: 19ch;
+  font-size: clamp(2.6rem, 5.4vw, 5.4rem);
+}
+
+/* ---------------- The same rule on a phone ----------------
+   At 390px there is about 342px of column, so the limit is the viewport
+   rather than any `max-width`: these headings were simply set too large for
+   the text they carry. Sizes below are measured against each heading's own
+   character count.
+
+   Two of them are long statements, 144 and 106 characters. Those cannot
+   reach three lines on a phone at heading scale: it would take type smaller
+   than the body copy around them. They are brought to five and four lines
+   respectively, which is as far as the width honestly allows. */
+@media (max-width: 560px) {
+  /* 144 characters. */
+  [data-page='home'] #purpose-title {
+    font-size: clamp(1.3rem, 5.6vw, 1.7rem);
+  }
+
+  /* 72 characters, three lines. */
+  [data-page='our-work'] main .intro-grid h2 {
+    font-size: clamp(1.5rem, 6.7vw, 2rem);
+  }
+
+  /* Two masked lines that were each wrapping, as the heroes were. */
+  [data-page='projects'] main .hero h1 {
+    max-width: 18ch;
+    font-size: clamp(1.9rem, 9.5vw, 2.6rem);
+  }
+
+  /* 106 characters, four lines. */
+  [data-page='projects'] main .intro-grid h2 {
+    font-size: clamp(1.35rem, 6vw, 1.8rem);
+  }
+
+  /* 56 characters, three lines. */
+  [data-page='waldorf-astoria-osaka'] main .intro-grid h2 {
+    font-size: clamp(1.9rem, 8.6vw, 2.4rem);
+  }
+
+  /* 60 characters, three lines. */
+  [data-page='styling-curation'] main .manifesto-grid h2 {
+    font-size: clamp(1.8rem, 8vw, 2.2rem);
+  }
 }

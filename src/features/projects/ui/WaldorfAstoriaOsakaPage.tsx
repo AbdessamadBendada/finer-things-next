@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Media } from '@/shared/ui/Media';
 import { WaldorfAstoriaOsakaShell } from './WaldorfAstoriaOsakaShell';
+import { SiteCta } from '@/shared/layout/SiteCta';
 
 export function WaldorfAstoriaOsakaPage() {
   return (
@@ -168,18 +169,7 @@ export function WaldorfAstoriaOsakaPage() {
             </div>
           </div>
         </Link>
-        <section className="closing" id="contact">
-          <div className="wrap">
-            <div className="ey rise">Start a project</div>
-            <h2 className="rise">Let’s create details that belong to the place.</h2>
-            <p className="rise">
-              Tell us about the property, its story and the experience you want to shape.
-            </p>
-            <Link className="btn rise" href="/contact">
-              Begin a conversation
-            </Link>
-          </div>
-        </section>
+        <SiteCta />
       </main>
     </WaldorfAstoriaOsakaShell>
   );

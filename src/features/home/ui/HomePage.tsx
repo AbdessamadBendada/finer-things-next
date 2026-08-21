@@ -4,6 +4,7 @@ import { FooterBrand } from '@/shared/layout/SiteFooter';
 import Link from 'next/link';
 import { HeroCollage } from './HeroCollage';
 import { HomeShell } from './HomeShell';
+import { SiteCta } from '@/shared/layout/SiteCta';
 
 /**
  * The newsletter form arrives as a slot rather than an import: `shared` and
@@ -301,19 +302,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         </div>
       </section>
       {/* 9. CLOSING */}
-      <section className="closing" id="contact">
-        <div className="wrap">
-          <h2 className="rise serif">{"Let's tell your story."}</h2>
-          <p className="rise">
-            {
-              "Tell us about your property, the building's past, the land's soul and the seal on the family crest. We'll craft the details that make guests feel it."
-            }
-          </p>
-          <Link href="/contact" className="btn rise">
-            Start a project
-          </Link>
-        </div>
-      </section>
+      <SiteCta />
       {/* 10. FOOTER */}
       <footer>
         <div className="wrap">

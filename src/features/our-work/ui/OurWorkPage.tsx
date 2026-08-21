@@ -1,5 +1,8 @@
-import Link from 'next/link';
 import { Media } from '@/shared/ui/Media';
+import { SiteCta } from '@/shared/layout/SiteCta';
+
+import { DETAILS, MATERIALS, PROCESS_STEPS } from '../content/materials.content';
+import { MaterialCards } from './MaterialCards';
 import { OurWorkShell } from './OurWorkShell';
 
 export function OurWorkPage() {
@@ -14,39 +17,42 @@ export function OurWorkPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="eyebrow">Our Work</div>
             <h1>
               <span className="hero-line">
-                <span>One story.</span>
+                <span>We turn the ordinary</span>
               </span>
               <span className="hero-line">
-                <span>Three expressions.</span>
+                <span>into extraordinary</span>
               </span>
             </h1>
             <div className="hero-foot">
               <p>
-                Bespoke accessories, thoughtful styling and a considered collection: three ways
-                of giving a place character through the details that surround us.
+                Finer Things is a full-service boutique that creates bespoke, one-of-a-kind
+                accessories for the luxury hotels and residences creating a new level of
+                experience.
               </p>
               <span className="scroll-cue">Explore our work ↓</span>
             </div>
           </div>
         </section>
+
         <section className="intro">
           <div className="wrap intro-grid">
-            <div className="eyebrow rise">What we do</div>
             <div>
               <h2 className="rise" data-word-reveal="">
-                {'From the first narrative to the final placement, every detail belongs to '}
-                <em>one vision.</em>
+                {'From first sketch to final installation we craft your '}
+                <em>narrative</em>
+                {' together'}
               </h2>
               <p className="intro-note rise">
-                Finer Things brings sourcing, production, styling and project rollout together,
-                supporting hospitality and residential projects with a distinct point of view.
+                We work with 100s of artisans across the globe that bring a wealth of experience
+                and knowledge to the table, combining traditional techniques with innovative
+                designs to create products that stand the test of time.
               </p>
             </div>
           </div>
         </section>
+
         <section className="services" id="services">
           <article className="service">
             <div className="service-media">
@@ -58,7 +64,7 @@ export function OurWorkPage() {
             <div className="wrap service-content">
               <div className="service-top">
                 <span className="service-number">01</span>
-                <span className="eyebrow">Our Work</span>
+                <span className="eyebrow">What we do</span>
               </div>
               <h2>
                 {'Bespoke '}
@@ -66,15 +72,14 @@ export function OurWorkPage() {
               </h2>
               <div className="service-bottom">
                 <p>
-                  Distinctive accessories shaped around each property’s identity, with material,
-                  colour, form, texture, finish and stitching considered together.
+                  The details guests touch. Every hanger, tray and bill folder individually
+                  designed and produced for one property only, in leather, marble, wood and
+                  brass that carry its story.
                 </p>
-                <Link className="service-link" href="/services/bespoke-accessories">
-                  Discover bespoke accessories →
-                </Link>
               </div>
             </div>
           </article>
+
           <article className="service">
             <div className="service-media">
               <Media
@@ -85,7 +90,7 @@ export function OurWorkPage() {
             <div className="wrap service-content">
               <div className="service-top">
                 <span className="service-number">02</span>
-                <span className="eyebrow">Our Work</span>
+                <span className="eyebrow">What we do</span>
               </div>
               <h2>
                 {'Styling '}
@@ -93,15 +98,13 @@ export function OurWorkPage() {
               </h2>
               <div className="service-bottom">
                 <p>
-                  Objects, books, materials and florals considered together for guest rooms,
-                  public spaces, restaurants, residences and libraries.
+                  Books, objects, art and florals found with 100+ artisans around the world and
+                  arranged so every lobby and suite feels as unique as their story.
                 </p>
-                <Link className="service-link" href="/services/styling-curation">
-                  Discover styling & curation →
-                </Link>
               </div>
             </div>
           </article>
+
           <article className="service">
             <div className="service-media">
               <Media
@@ -112,7 +115,7 @@ export function OurWorkPage() {
             <div className="wrap service-content">
               <div className="service-top">
                 <span className="service-number">03</span>
-                <span className="eyebrow">Our Work</span>
+                <span className="eyebrow">What we do</span>
               </div>
               <h2>
                 {'Finer '}
@@ -120,62 +123,76 @@ export function OurWorkPage() {
               </h2>
               <div className="service-bottom">
                 <p>
-                  A curated selection of timeless pieces where exceptional craftsmanship meets
-                  modern luxury, each chosen for its story and enduring quality.
+                  The ready-made collection by Finer Things where european craftsmanship meets
+                  design: wood, marble and glass, in stock and fast to ship.
                 </p>
-                <Link className="service-link" href="/services/finer-living">
-                  Discover Finer Living →
-                </Link>
               </div>
             </div>
           </article>
         </section>
-        <section className="continuity">
+
+        <section className="continuity" id="materials">
           <div className="wrap">
             <div className="continuity-head">
-              <div className="eyebrow rise">The connecting thread</div>
+              <div className="eyebrow rise">Our materials</div>
               <div>
                 <h2 className="rise">
-                  {'Different expressions, '}
-                  <em>one point of view.</em>
+                  {'At the heart of every accessory lies a '}
+                  <em>story</em>
                 </h2>
                 <p className="continuity-note rise">
-                  Each part of the work is guided by narrative, attention to detail and the
-                  character of the materials and spaces involved.
+                  From the selection of luxurious materials to the meticulous craftsmanship that
+                  goes into the creation of our products, we ensure that our accessories are of
+                  highest quality and stand the test of time.
                 </p>
               </div>
             </div>
-            <div className="thread">
-              <article className="thread-item rise">
-                <span>01</span>
-                <h3>Story</h3>
-                <p>A clear narrative gives every decision its direction.</p>
-              </article>
-              <article className="thread-item rise">
-                <span>02</span>
-                <h3>Detail</h3>
-                <p>The smallest touchpoints shape how a space is experienced.</p>
-              </article>
-              <article className="thread-item rise">
-                <span>03</span>
-                <h3>Craft</h3>
-                <p>Quality materials and artisanal craftsmanship bring character to life.</p>
-              </article>
-            </div>
+            <MaterialCards cards={MATERIALS} columns={3} />
           </div>
         </section>
-        <section className="closing" id="contact">
+
+        <section className="continuity details-section">
           <div className="wrap">
-            <div className="eyebrow rise">Start a project</div>
-            <h2 className="rise">Which part of your story can we help bring to life?</h2>
-            <p className="rise">
-              Tell us about the property, its character and the details you have in mind.
-            </p>
-            <Link className="btn rise" href="/contact">
-              Begin a conversation
-            </Link>
+            <div className="continuity-head">
+              <div className="eyebrow rise">The details</div>
+              <div>
+                <h2 className="rise">
+                  {'At Finer Things we believe that an utmost attention to quality is '}
+                  <em>paramount</em>
+                </h2>
+              </div>
+            </div>
+            <MaterialCards cards={DETAILS} columns={2} />
           </div>
         </section>
+
+        <section className="continuity process-section" id="process">
+          <div className="wrap">
+            <div className="continuity-head">
+              <div className="eyebrow rise">Our process</div>
+              <div>
+                <h2 className="rise">
+                  {'New level of experience in pursuit of '}
+                  <em>perfection</em>
+                </h2>
+                <p className="continuity-note rise">
+                  We refined our process and production to guarantee uniqueness, meticulous
+                  craftsmanship and highest quality in every piece.
+                </p>
+              </div>
+            </div>
+            <ol className="process-steps">
+              {PROCESS_STEPS.map((step, index) => (
+                <li className="process-step rise" key={step}>
+                  <span className="process-number">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="process-label">{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <SiteCta />
       </main>
     </OurWorkShell>
   );
