@@ -86,6 +86,27 @@ body {
   font-synthesis: none;
 }
 
+/*
+ * Opening the menu locks the page, which takes the scrollbar away with it.
+ * Where the scrollbar is a classic one that occupies layout — Windows, Linux,
+ * and macOS with "Show scroll bars: Always" — losing it widens the viewport by
+ * its width, and every `position: fixed` element pinned to the right edge
+ * jumps outward. The burger is one of them: it slid ~15px at the exact moment
+ * it became the X, so clicking the burger and then going straight for the X
+ * missed unless you moved the cursor.
+ *
+ * `useMobileMenu` measures that width before locking and publishes it as
+ * `--scrollbar-gap`; brand.css spends it on the burger itself. Deliberately on
+ * the icon and not on `.head` / `.mobile-menu`: pulling those in by the gap
+ * holds the burger just as still, but un-covers a strip of the page exactly
+ * where the scrollbar was. They stay full bleed.
+ *
+ * The measurement is 0 wherever scrollbars are overlays, which makes the whole
+ * thing inert there — and that matters, because the declarative fix does not
+ * have that property: `scrollbar-gutter: stable` reserves a gutter *even when
+ * the scrollbar overlays*, which narrowed every page by 15px and failed all
+ * 36 parity snapshots.
+ */
 body.menu-open {
   overflow: hidden;
 }

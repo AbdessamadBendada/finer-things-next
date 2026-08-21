@@ -16,6 +16,40 @@ import { useEffect, type RefObject } from 'react';
  */
 const GRACE_PERIOD = 2200;
 
+/**
+ * How much of an element must be on screen before the watchdog will arm for
+ * it. Matches the threshold the real reveal observers use, and that is the
+ * whole point: the fallback must never be able to fire *before* the animation
+ * it is backstopping.
+ */
+const VISIBLE_RATIO = 0.3;
+
+/**
+ * The previous test armed anything within 180px of the fold — ported from
+ * `legacy/study-shared.js`, which the inner pages used.
+ *
+ * That made the watchdog a second, competing trigger rather than a fallback.
+ * The home page's purpose statement sits ~108px below the fold at rest, so on
+ * every load it armed while off screen and force-revealed itself 2.2s later —
+ * the whole word-by-word animation played out before the reader had scrolled
+ * anywhere near it. The reference document has no watchdog at all; its
+ * statement is driven purely by an IntersectionObserver.
+ *
+ * So: require the element to be as visible as its own observer would demand.
+ * Content you can actually see still never stays blank, and content you
+ * cannot see is left for the animation that was designed for it. An element
+ * taller than the viewport is measured against the viewport instead, since it
+ * can never show 30% of itself.
+ */
+function isVisibleEnough(target: HTMLElement): boolean {
+  const rect = target.getBoundingClientRect();
+  const visible = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+  if (visible <= 0) return false;
+
+  const reference = Math.min(rect.height, window.innerHeight);
+  return reference <= 0 || visible / reference >= VISIBLE_RATIO;
+}
+
 const GROUPS: ReadonlyArray<readonly [string, readonly string[]]> = [
   [
     '.rise, .place, .shot, .story-figure, .story-small, .story-detail, .experience-image, .world-image, .person, .principle, .family-editorial-portrait, .title-mask',
@@ -40,16 +74,13 @@ export function useFailOpenReveal(root: RefObject<HTMLElement | null>) {
 
     const check = () => {
       queued = false;
-      const leeway = Math.min(180, window.innerHeight * 0.2);
 
       for (const [selector, classes] of GROUPS) {
         element.querySelectorAll<HTMLElement>(selector).forEach((target) => {
           if (classes.every((name) => target.classList.contains(name))) return;
           if (pending.has(target)) return;
 
-          const rect = target.getBoundingClientRect();
-          const offscreen = rect.bottom < -leeway || rect.top > window.innerHeight + leeway;
-          if (offscreen) return;
+          if (!isVisibleEnough(target)) return;
 
           pending.add(target);
           timers.push(

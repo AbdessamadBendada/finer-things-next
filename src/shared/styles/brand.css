@@ -43,126 +43,61 @@
 }
 
 /* ================================================================
-   HOME HERO NAVIGATION — under review
+   SITE NAVIGATION — the burger menu
 
-   The hero originally showed nothing but the wordmark until you
-   scrolled. That suits the brand, but a visitor who arrives wanting
-   to do something has no way to start.
+   The only navigation on the site: one menu, every page, every width.
 
-   Three treatments are live behind `?nav=` so they can be compared on
-   one deploy — see shared/layout/useHeroNav.ts. When one is chosen,
-   this block and that hook collapse into the winner.
+   The review asked whether the bare hero left a visitor with no way to
+   act. Three treatments were compared behind `?nav=` — a burger, the
+   full link row, and a lone Contact button. The burger won, and it was
+   promoted from a home-page experiment to the site's whole navigation:
+   the desktop link row is gone, so there is one list to keep correct
+   instead of twelve, and the masthead stays out of the photography's
+   way on every page rather than only on home.
+
+   These rules are scoped `[data-page]` — every page, deliberately —
+   and they override the generated per-page `.menu-toggle` rules in
+   chrome.css, which hid the toggle above 860px and styled it as the
+   word "Menu". brand.css loads after chrome.css, so equal specificity
+   is enough; do not raise it without re-checking that file.
    ================================================================ */
 
-/* Before the hand-off: visible from the first frame, but with no bar of
-   its own — the photography should still read as edge to edge. The hero
-   wordmark is the logo until it docks. */
-[data-page='home'] .head.hero-nav {
-  transform: none;
-  opacity: 1;
-  background: transparent;
-  backdrop-filter: none;
-  border-bottom-color: transparent;
-  color: var(--paper);
-}
-
-/* Holds the logo's place so navigation stays pinned right. */
-[data-page='home'] .head.hero-nav .logo-placeholder {
-  display: block;
-  width: clamp(132px, 11.2vw, 162px);
-  height: 1px;
-}
-
-[data-page='home'] .head.hero-nav .links a,
-[data-page='home'] .head.hero-nav .menu-toggle {
-  color: var(--paper);
-}
-
-/* ---------------- Navigation type ----------------
-   Raised from 11.5px after review: the links read as too small beside
-   the mark. 13px still sits in the site's editorial scale rather than
-   looking like UI chrome. */
-[data-page='home'] .head .links a {
-  font-size: 0.8125rem;
-  letter-spacing: 0.16em;
-  opacity: 0.86;
-  transition: opacity 0.3s ease;
-}
-
-[data-page='home'] .head .links a:hover,
-[data-page='home'] .head .menu-toggle:hover {
-  opacity: 1;
-}
-
-/* The wordmark's letterforms sit slightly below the middle of its box,
-   so centring the two boxes leaves the links looking high. This drops
-   them onto the mark's optical line. */
-[data-page='home'] .head .links,
-[data-page='home'] .head .menu-toggle {
-  transform: translateY(1px);
-}
-
-/* ---------------- ?nav=contact ----------------
-   A button rather than a link: the one thing in the masthead is meant to
-   be pressed, and a lone text link at this size reads as a label.
-
-   It borrows the site's own button, scaled down for a masthead — the hero
-   already carries a full-size CTA further down the page, and two identical
-   buttons on one screen would compete. */
-[data-page='home'] .hero-nav-btn {
-  padding: 11px 24px;
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  transition:
-    background 0.3s ease,
-    color 0.3s ease;
-}
-
-/* Below 860px the masthead logo is smaller than the button, so matching
-   their top edges is no longer enough to put them on the same optical
-   line. Trimming the button's height brings its centre back onto the
-   mark's. */
-@media (max-width: 860px) {
-  [data-page='home'] .hero-nav-btn {
-    padding: 8px 20px;
-  }
-}
-
-/* Over the photography, before the header docks. */
-[data-page='home'] .head.hero-nav .hero-nav-btn {
-  background: transparent;
-  color: var(--paper);
-  border: 1px solid rgba(243, 240, 234, 0.55);
-}
-
-[data-page='home'] .head.hero-nav .hero-nav-btn:hover {
-  background: var(--paper);
-  color: var(--ink);
-  border-color: var(--paper);
-}
-
-/* ---------------- ?nav=burger ----------------
-   Shown at every width, and for the whole page: it does not hand back to
-   text links once the header docks, so there is always one way in. */
-[data-page='home'] .head.nav-burger .menu-toggle {
+/* Shown at every width and on every page. chrome.css sets `display: none`
+   here and reveals it only under 860px; this is the rule that retires that
+   breakpoint entirely. */
+[data-page] .menu-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 34px;
   height: 34px;
   padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
   margin-right: -6px; /* optical: the icon's ink is narrower than its box */
 }
 
-[data-page='home'] .menu-toggle-burger .burger {
+/* The wordmark's letterforms sit slightly below the middle of its box, so
+   centring the two boxes leaves the icon looking high. */
+[data-page] .head .menu-toggle {
+  transform: translateY(1px);
+}
+
+[data-page] .menu-toggle:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 6px;
+}
+
+[data-page] .burger {
   position: relative;
   display: block;
   width: 30px;
   height: 14px;
 }
 
-[data-page='home'] .menu-toggle-burger .burger span {
+[data-page] .burger span {
   position: absolute;
   left: 0;
   display: block;
@@ -175,39 +110,160 @@
     width 0.4s var(--ease);
 }
 
-[data-page='home'] .menu-toggle-burger .burger span:nth-child(1) {
+[data-page] .burger span:nth-child(1) {
   top: 0;
 }
 
-/* The middle rule is shorter — it keeps the icon from reading as a
-   generic app control. */
-[data-page='home'] .menu-toggle-burger .burger span:nth-child(2) {
+/* The middle rule is shorter — it keeps the icon from reading as a generic
+   app control. */
+[data-page] .burger span:nth-child(2) {
   top: 6.25px;
   width: 68%;
 }
 
-[data-page='home'] .menu-toggle-burger .burger span:nth-child(3) {
+[data-page] .burger span:nth-child(3) {
   top: 12.5px;
 }
 
 /* Open: the three rules resolve into a cross. */
-[data-page='home'] .menu-toggle-burger[aria-expanded='true'] .burger span:nth-child(1) {
+[data-page] .menu-toggle[aria-expanded='true'] .burger span:nth-child(1) {
   transform: translateY(6.25px) rotate(45deg);
 }
 
-[data-page='home'] .menu-toggle-burger[aria-expanded='true'] .burger span:nth-child(2) {
+[data-page] .menu-toggle[aria-expanded='true'] .burger span:nth-child(2) {
   width: 0;
   opacity: 0;
 }
 
-[data-page='home'] .menu-toggle-burger[aria-expanded='true'] .burger span:nth-child(3) {
+[data-page] .menu-toggle[aria-expanded='true'] .burger span:nth-child(3) {
   transform: translateY(-6.25px) rotate(-45deg);
 }
 
-/* The menu covers the page in paper, so the icon has to invert with it. */
-[data-page='home'] .head.menu-active .menu-toggle {
+/* ---------------- The menu panel ----------------
+   One menu, so one set of rules for it.
+
+   These used to be generated per page, and the two legal pages were left out
+   of them entirely — they were the pages that had no menu. Rendering the
+   burger everywhere without this made `.mobile-menu` an unstyled static block
+   on Privacy and Terms, which pushed the whole document down. The parity gate
+   caught it. Styling the panel once, for every page, is what stops that class
+   of bug rather than patching the two pages. */
+[data-page] .mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 8999;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 24px 54px;
+  background: rgba(243, 240, 234, 0.97);
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  visibility: hidden;
+  overflow-y: auto;
+  transition:
+    opacity 0.45s ease,
+    visibility 0.45s ease;
+}
+
+/* Centred by auto margins rather than `justify-content`, which clips the
+   first link out of reach when the list is taller than a short viewport. */
+[data-page] .mobile-menu a:first-of-type {
+  margin-top: auto;
+}
+
+[data-page] .mobile-menu a:last-of-type {
+  margin-bottom: auto;
+}
+
+[data-page] .mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+[data-page] .mobile-menu a {
+  display: block;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
   color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.6rem, 12vw, 4.2rem);
+  line-height: 1;
+}
+
+[data-page] .mobile-menu a:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* ---------------- Home, before the hand-off ----------------
+   The home masthead starts hidden and slides in once the hero wordmark has
+   shrunk into it. The burger has to be reachable from the first frame, so
+   the header is shown immediately but with no bar of its own — the
+   photography still reads edge to edge, and the wordmark below is the only
+   mark on screen. */
+[data-page='home'] .head.hero-nav {
+  transform: none;
+  opacity: 1;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+  color: var(--paper);
+}
+
+/* Holds the logo's place so the burger stays pinned right. */
+[data-page='home'] .head.hero-nav .logo-placeholder {
+  display: block;
+  width: clamp(132px, 11.2vw, 162px);
+  height: 1px;
+}
+
+[data-page='home'] .head.hero-nav .menu-toggle {
+  color: var(--paper);
+}
+
+/* ---------------- Open beats everything ----------------
+   These come last on purpose. `[data-page='home'] .head.hero-nav .menu-toggle`
+   and `[data-page] .head.menu-active .menu-toggle` have identical specificity,
+   so source order alone decides — and with the hero rule last, opening the
+   menu on the home hero left the X in paper on a paper panel, all but
+   invisible. Anything added below this point must not reintroduce that. */
+/* The masthead is the one thing that stays above the open menu — it holds the
+   X that closes it. `.head` carries a z-index on every page and so is its own
+   stacking context, which means raising the button alone is not enough: the
+   header itself has to clear the panel. The per-page values differ (9000 on
+   home, 100 on the inner pages, 10 on the legal ones), so this is set here
+   rather than assumed. */
+[data-page] .head.menu-active {
   z-index: 9001;
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+}
+
+/* The menu covers the page in paper, so the icon has to invert with it. */
+[data-page] .head.menu-active .menu-toggle {
+  color: var(--ink);
+}
+
+/* Holds the burger still while the page is locked.
+   `useMobileMenu` publishes the width of the scrollbar it is about to remove.
+   Losing that scrollbar widens the viewport, which carries the masthead's
+   right padding edge outward and takes the burger with it — so the X lands
+   somewhere the cursor is not.
+
+   The correction goes on the icon, not on the boxes. Pulling `.head` and
+   `.mobile-menu` in by the gap instead would hold the burger just as still,
+   but it un-covers a strip of the page exactly where the scrollbar used to
+   be: the panel is meant to be full bleed. So both keep `right: 0`, stay
+   edge to edge, and only the icon moves back.
+
+   More right margin pushes the icon left, so the gap is *added* to the -6px
+   optical nudge. `body.menu-open [data-page] …` for weight: the base rule is
+   `[data-page] .menu-toggle`, which a two-class selector would tie with and
+   lose to. Defaults to 0, so this is inert where scrollbars overlay. */
+body.menu-open [data-page] .menu-toggle {
+  margin-right: calc(-6px + var(--scrollbar-gap, 0px));
 }
 
 /* ---------------- Wordmark / masthead alignment ----------------
@@ -224,4 +280,103 @@
    would lose. `#word` outranks them without needing a doubled selector. */
 [data-page='home'] #word {
   top: 18px;
+}
+
+/* ================================================================
+   REVIEW ROUND 2 — copy and colour changes
+
+   Layout and colour corrections asked for in review. They live here
+   rather than in the page stylesheets for the usual reason: those are
+   ported from `legacy/` and are kept diffable against it.
+
+   Note the load order problem. Page modules load *after* this file and
+   nest every rule under `.page`, which buys them a class of
+   specificity. A plain `[data-page] .thing` here ties and therefore
+   loses. Where the element has an id, that is used instead — it
+   outranks them cleanly. Where it does not, the weight is stated
+   explicitly and the reason recorded.
+   ================================================================ */
+
+/* ---------------- Headlines are one colour ----------------
+   Every page tinted the italic half of its headlines with an accent —
+   oxblood on home and about, brass in the home break, salmon on the project
+   stories. Three different accents across one site read as multicoloured
+   rather than considered, so the tint is gone: the italic carries the
+   emphasis on its own and the headline is a single colour.
+
+   `!important` deliberately. This is a site-wide policy that has to hold on
+   twelve pages, and the rules it overrides are `.page :global(.x h2 em)` —
+   two classes plus two elements, in a file that loads after this one. Beating
+   that on specificity alone would take a selector nobody could read, and it
+   would have to be repeated for every new page. One policy, one line. */
+[data-page] h1 em,
+[data-page] h2 em,
+[data-page] h3 em {
+  color: inherit !important;
+}
+
+/* ---------------- Our Work: heading above subheading ----------------
+   Was a two-column split — eyebrow left, paragraph right — which left the
+   pair reading as two unrelated things. Stacked, so the paragraph belongs to
+   the heading above it.
+
+   Scoped by the section's id: the page rule is `.page :global(.svc-head)`,
+   which a class-based override here would tie with and lose to. */
+[data-page='home'] #work .svc-head {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* ---------------- Featured: no rule above the filmstrip ----------------
+   The hairline sat between the section's copy and the first project and cut
+   the two apart. Addressed by id for the same specificity reason. */
+[data-page='home'] #filmstripScroll {
+  border-top: 0;
+}
+
+/* ---------------- The footer carries the mark, not the words ----------------
+   Every footer set "Finer Things" as type while the masthead carried the
+   logo — the same brand in two different marks, which is what adr/0007
+   settled for the header.
+
+   The one logo asset is dark artwork and every footer is dark, so it is
+   painted as a mask in `currentColor` rather than dropped in as an image.
+   That way it inherits each footer's own ink and there is no second,
+   inverted copy of the file to keep in sync. */
+[data-page] .footer-mark {
+  width: clamp(150px, 13vw, 186px);
+  aspect-ratio: 1080 / 242;
+  background: currentColor;
+  mask: url('/assets/finer-things-logo.png') left center / contain no-repeat;
+}
+
+/* The home footer's mark sits above a tagline and wants a little more air
+   under it than the inline type it replaced. */
+[data-page='home'] .ft-top .footer-mark {
+  margin-bottom: 18px;
+}
+
+/* ---------------- Purpose statement: a slower word reveal ----------------
+   The home page's second section reveals its headline a word at a time. The
+   timing was already the original's exactly — 0.8s travel, 45ms between
+   words — and review asked for the same thing, only slower.
+
+   Roughly 1.4x: the words still arrive as one sentence rather than a queue,
+   but each has time to land. For ~20 words that is about 2.4s end to end,
+   against 1.7s before.
+
+     transform   0.8s  -> 1.15s
+     opacity     0.55s -> 0.8s
+     stagger     45ms  -> 62ms
+
+   Scoped to the statement's own id. The rule it overrides is
+   `.page :global(.reveal-word>span)`, in a stylesheet that loads after this
+   one, so a class-based selector here would tie and lose. Home's is the only
+   headline being retimed — the other pages' word reveals are untouched. */
+[data-page='home'] #purpose-title .reveal-word > span {
+  transition:
+    transform 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.8s ease;
+  transition-delay: calc(var(--word-index) * 62ms);
 }

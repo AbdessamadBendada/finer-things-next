@@ -29,6 +29,23 @@ function FooterLink({ href, label, current }: NavLink) {
   );
 }
 
+/**
+ * The wordmark, where the footer used to set the words "Finer Things" as type.
+ *
+ * Rendered as a masked box rather than an `<img>`: the only logo asset is dark
+ * artwork, and every footer is dark. The mask paints the mark in
+ * `currentColor`, so it takes each footer's own ink and stays legible without
+ * a second, inverted copy of the file to keep in sync. Styled in brand.css.
+ *
+ * `role="img"` with a label because the box has no text of its own — the
+ * footer would otherwise lose the brand name for a screen reader.
+ */
+export function FooterBrand({ className }: { className: string }) {
+  return (
+    <div className={`${className} footer-mark`} role="img" aria-label={FOOTER_COPY.brand} />
+  );
+}
+
 function Separated({ links }: { links: readonly NavLink[] }) {
   return links.map((link, index) => (
     <span key={link.href}>
@@ -70,7 +87,7 @@ export function SiteFooter({
     return (
       <footer>
         <div className="wrap footer-row">
-          <div className="footer-brand">{FOOTER_COPY.brand}</div>
+          <FooterBrand className="footer-brand" />
           <nav className="footer-links" aria-label="Footer navigation">
             {(config?.variant === 'row' ? config.links : []).map((link) => (
               <FooterLink key={link.href} {...link} />
@@ -92,7 +109,7 @@ export function SiteFooter({
       <div className="wrap">
         <div className="footer-top">
           <div>
-            <div className="footer-brand">{FOOTER_COPY.brand}</div>
+            <FooterBrand className="footer-brand" />
             <p className="footer-tag">{FOOTER_COPY.tagline}</p>
           </div>
           <div className="footer-links">

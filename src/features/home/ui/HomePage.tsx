@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { Media } from '@/shared/ui/Media';
+import { FooterBrand } from '@/shared/layout/SiteFooter';
 import Link from 'next/link';
 import { HeroCollage } from './HeroCollage';
 import { HomeShell } from './HomeShell';
@@ -52,8 +53,8 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         </div>
         <div className="brandwords">
           <span>Bespoke</span>
-          <span>Styling</span>
-          <span>Heritage</span>
+          <span>Unique</span>
+          <span>Story</span>
         </div>
       </div>
       {/* PURPOSE */}
@@ -72,8 +73,8 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="wrap svc-head">
           <div className="ey rise">Our Work</div>
           <p className="rise">
-            From first narrative to final placement, we bring sourcing, production, styling and
-            project rollout together in one design studio.
+            Curated touch points and distinct design elements are essential for every guest’s
+            journey. At Finer Things, this is where your story begins.
           </p>
         </div>
         <div className="svc-row rise">
@@ -87,8 +88,8 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
             <span className="idx">01</span>
             <h3 className="serif">Bespoke Accessories</h3>
             <span className="desc">
-              Made around each property’s identity—from material, colour and scale to finish,
-              stitching and every detail guests touch.
+              Design and production of bespoke accessories, the finer things guests can see,
+              touch and feel.
             </span>
           </Link>
         </div>
@@ -103,8 +104,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
             <span className="idx">02</span>
             <h3 className="serif">Styling & Curation</h3>
             <span className="desc">
-              Books, objects, art and florals sourced with remarkable artisans for guest rooms,
-              public spaces, restaurants, residences and libraries.
+              Styling and curation that give spaces character and soul.
             </span>
           </Link>
         </div>
@@ -119,8 +119,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
             <span className="idx">03</span>
             <h3 className="serif">Finer Living</h3>
             <span className="desc">
-              The collection by Finer Things, where European craftsmanship shapes marble, wood,
-              leather, metal and glass into considered objects for daily living.
+              Finer Living — the ready-made collection of European-crafted pieces.
             </span>
           </Link>
         </div>
@@ -133,8 +132,9 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
               <div className="ey rise">Featured / Selected work</div>
               <h2 className="rise serif">A journey through places with soul.</h2>
               <p className="intro rise">
-                Move through selected projects as an editorial sequence—each chapter revealing
-                its atmosphere, objects and material character.
+                Discover our best work across the world’s finest hotels and residences. Move
+                through selected projects as an editorial sequence—each chapter revealing its
+                atmosphere, objects and material character.
               </p>
             </div>
             <Link href="/projects" className="more rise">
@@ -290,21 +290,19 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
               understands the details that make a stay unforgettable. Malika brings the
               discerning eye that gives every space its final character.
             </p>
-            <p className="family-note rise">Inspired, always, by family.</p>
           </div>
           <figure className="family-editorial-portrait rise">
             <Media
               src="/assets/finer-things-family.webp"
-              alt="Alex and Malika, founders of Finer Things"
+              alt="Malika and Alex, founders of Finer Things"
             />
-            <figcaption>Alex & Malika</figcaption>
+            <figcaption>Malika and Alex</figcaption>
           </figure>
         </div>
       </section>
       {/* 9. CLOSING */}
       <section className="closing" id="contact">
         <div className="wrap">
-          <div className="ey rise">Start a project</div>
           <h2 className="rise serif">{"Let's tell your story."}</h2>
           <p className="rise">
             {
@@ -328,7 +326,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
           </div>
           <div className="ft-top">
             <div>
-              <div className="brand serif">Finer Things</div>
+              <FooterBrand className="brand serif" />
               <p className="tag">
                 Bespoke details for the world’s finest spaces. Across the globe.
               </p>

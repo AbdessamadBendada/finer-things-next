@@ -63,6 +63,8 @@ second stylesheet, it belongs in a shared layer.
   that will bite you
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — how it fits together
 - [docs/ADDING-A-FEATURE.md](docs/ADDING-A-FEATURE.md) — the recipe
+- [docs/FEEDBACK.md](docs/FEEDBACK.md) — review comments, what was done, and
+  what we argued against
 
 ## Before launch
 

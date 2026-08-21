@@ -17,28 +17,54 @@ export type BaselineSource = 'legacy' | 'current';
 
 /** Every route, with the reference its baseline is captured from. */
 export const PARITY_PAGES = [
-  { name: 'home', legacy: '/index.html', route: '/', settle: 7000 },
-  { name: 'our-work', legacy: '/our-work.html', route: '/our-work' },
-  { name: 'projects', legacy: '/projects.html', route: '/projects' },
-  { name: 'marsa-al-arab', legacy: '/marsa-al-arab.html', route: '/projects/marsa-al-arab' },
+  /*
+   * Everything except the two legal pages now compares against the last
+   * approved build rather than the original.
+   *
+   * Round 1 redesigned the home hero. Round 2 went site-wide: the footer sets
+   * the logo where it used to set the words "Finer Things", and headlines are
+   * one colour where each page used to tint its italic half with a different
+   * accent. Both were asked for, and both mean these pages are deliberately no
+   * longer the legacy documents.
+   *
+   * Privacy and Terms carry neither change, so they stay verified against the
+   * original — see docs/FEEDBACK.md and PARITY.md.
+   */
+  { name: 'home', legacy: '/index.html', route: '/', settle: 7000, baseline: 'current' },
+  { name: 'our-work', legacy: '/our-work.html', route: '/our-work', baseline: 'current' },
+  { name: 'projects', legacy: '/projects.html', route: '/projects', baseline: 'current' },
+  {
+    name: 'marsa-al-arab',
+    legacy: '/marsa-al-arab.html',
+    route: '/projects/marsa-al-arab',
+    baseline: 'current',
+  },
   {
     name: 'waldorf-astoria-osaka',
     legacy: '/waldorf-astoria-osaka.html',
     route: '/projects/waldorf-astoria-osaka',
+    baseline: 'current',
   },
   {
     name: 'bespoke-accessories',
     legacy: '/bespoke-accessories.html',
     route: '/services/bespoke-accessories',
+    baseline: 'current',
   },
   {
     name: 'styling-curation',
     legacy: '/styling-curation.html',
     route: '/services/styling-curation',
+    baseline: 'current',
   },
-  { name: 'finer-living', legacy: '/finer-living.html', route: '/services/finer-living' },
-  { name: 'about', legacy: '/about.html', route: '/about' },
-  { name: 'contact', legacy: '/contact.html', route: '/contact' },
+  {
+    name: 'finer-living',
+    legacy: '/finer-living.html',
+    route: '/services/finer-living',
+    baseline: 'current',
+  },
+  { name: 'about', legacy: '/about.html', route: '/about', baseline: 'current' },
+  { name: 'contact', legacy: '/contact.html', route: '/contact', baseline: 'current' },
   { name: 'privacy', legacy: '/privacy.html', route: '/privacy' },
   { name: 'terms', legacy: '/terms.html', route: '/terms' },
 ] as const satisfies ReadonlyArray<{

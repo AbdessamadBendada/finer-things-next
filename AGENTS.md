@@ -61,6 +61,9 @@ affected baseline explicitly and say so in the commit message. Do not raise
 
 - **Header, footer, navigation** — `shared/layout/` + `shared/config/navigation.ts`.
   One edit changes every page. Never copy chrome markup into a page.
+  Navigation is a **burger and nothing else**, on every page and at every
+  width, driven by the single `SITE_MENU`. There is no desktop link row and no
+  per-page link set; if you are adding a second navigation, stop.
 - **Colours** — `shared/styles/tokens.css`. One palette.
 - **Shared visual pieces** (`.wrap`, `.rise`, `.btn`, `.eyebrow`) —
   `shared/styles/primitives.css`.
@@ -72,6 +75,23 @@ in a shared layer instead.
 
 ## Things that will bite you
 
+- **Intentional design changes go in `brand.css`** — never in a page
+  stylesheet or `chrome.css`, both of which are generated from `legacy/` and
+  would overwrite them. And note the load order: page modules load _after_
+  `brand.css`, so a rule there at equal specificity **loses silently**. Reach
+  for the element's id (`#word`) or an extra attribute rather than a doubled
+  class.
+- **`chrome.css` says it is generated. It no longer is.** The banner tells you
+  to change `build-chrome.mjs` and re-run it. Don't: the generator now emits
+  ~113 lines against the file's ~570, so running it would delete most of the
+  stylesheet. It has been hand-maintained since the import (as
+  `tools/legacy-import/` warns below). Treat `chrome.css` as source, and edit
+  it by hand — carefully, and only for chrome that genuinely varies per page.
+- **Never hand-write `-webkit-` prefixes.** Lightning CSS adds them from the
+  browser targets. Writing both halves of a pair makes it keep only the
+  prefixed one: `backdrop-filter` next to `-webkit-backdrop-filter` shipped as
+  `-webkit-` alone, and the menu's blur silently did nothing in every
+  non-WebKit browser. Write the standard property and let the build prefix it.
 - **Chrome styling must live in `chrome.css`.** The masthead and footer are
   rendered by the layout, _outside_ the page wrapper, so a rule scoped to
   `.page` cannot reach them — it just silently does nothing. This has already

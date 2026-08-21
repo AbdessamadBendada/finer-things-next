@@ -14,7 +14,6 @@
    aligns its footer row to the baseline, the project stories space
    their links a little tighter.
    ================================================================ */
-
 [data-page='home'] .head {
   position: fixed;
   top: 0;
@@ -116,177 +115,6 @@
   backdrop-filter: blur(16px) saturate(1.1);
   -webkit-backdrop-filter: blur(16px) saturate(1.1);
   border-bottom: 1px solid rgba(166, 152, 120, 0.38);
-}
-[data-page='home'] .head .logo {
-  display: block;
-  width: clamp(132px, 11.2vw, 162px);
-  color: var(--ink);
-  text-decoration: none;
-  line-height: 0;
-}
-[data-page='home'] .head .logo img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-}
-[data-page='home'] .head .links {
-  display: flex;
-  gap: 34px;
-  list-style: none;
-}
-[data-page='home'] .head .links a {
-  color: var(--ink);
-  text-decoration: none;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.85;
-  transition: opacity 0.3s;
-}
-[data-page='home'] .head .links a:hover {
-  opacity: 0.5;
-}
-[data-page='home'] .menu-toggle {
-  display: none;
-  border: 0;
-  background: none;
-  color: var(--ink);
-  font:
-    500 0.63rem var(--font-body),
-    sans-serif;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-[data-page='our-work'] .menu-toggle,
-[data-page='projects'] .menu-toggle,
-[data-page='bespoke-accessories'] .menu-toggle,
-[data-page='styling-curation'] .menu-toggle,
-[data-page='finer-living'] .menu-toggle,
-[data-page='about'] .menu-toggle {
-  font:
-    400 0.68rem/1 var(--font-body),
-    sans-serif;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  opacity: 0.86;
-  display: none;
-  color: inherit;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
-[data-page='marsa-al-arab'] .menu-toggle,
-[data-page='waldorf-astoria-osaka'] .menu-toggle,
-[data-page='contact'] .menu-toggle {
-  font: 400 0.67rem var(--font-body);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  opacity: 0.86;
-  display: none;
-  border: 0;
-  background: none;
-  color: inherit;
-}
-[data-page='home'] .mobile-menu {
-  position: fixed;
-  inset: 0;
-  z-index: 8999;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 100px 24px 54px;
-  background: rgba(243, 240, 234, 0.97);
-  backdrop-filter: blur(18px);
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.45s ease,
-    visibility 0.45s ease;
-}
-[data-page='our-work'] .mobile-menu,
-[data-page='projects'] .mobile-menu,
-[data-page='bespoke-accessories'] .mobile-menu,
-[data-page='styling-curation'] .mobile-menu,
-[data-page='finer-living'] .mobile-menu,
-[data-page='about'] .mobile-menu {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  display: flex;
-  visibility: hidden;
-  flex-direction: column;
-  justify-content: center;
-  padding: 100px 24px 54px;
-  background: rgba(243, 240, 234, 0.98);
-  opacity: 0;
-  transition:
-    opacity 0.4s,
-    visibility 0.4s;
-}
-[data-page='marsa-al-arab'] .mobile-menu,
-[data-page='waldorf-astoria-osaka'] .mobile-menu,
-[data-page='contact'] .mobile-menu {
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 100px 24px 54px;
-  background: rgba(243, 240, 234, 0.98);
-  opacity: 0;
-  transition: 0.4s;
-}
-[data-page='home'] .mobile-menu.open {
-  opacity: 1;
-  visibility: visible;
-}
-[data-page='our-work'] .mobile-menu.open,
-[data-page='projects'] .mobile-menu.open,
-[data-page='marsa-al-arab'] .mobile-menu.open,
-[data-page='waldorf-astoria-osaka'] .mobile-menu.open,
-[data-page='bespoke-accessories'] .mobile-menu.open,
-[data-page='styling-curation'] .mobile-menu.open,
-[data-page='finer-living'] .mobile-menu.open,
-[data-page='about'] .mobile-menu.open,
-[data-page='contact'] .mobile-menu.open {
-  visibility: visible;
-  opacity: 1;
-}
-[data-page='home'] .mobile-menu a {
-  display: block;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--line);
-  text-decoration: none;
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2.6rem, 12vw, 4.2rem);
-  line-height: 1;
-}
-[data-page='our-work'] .mobile-menu a,
-[data-page='projects'] .mobile-menu a,
-[data-page='bespoke-accessories'] .mobile-menu a,
-[data-page='styling-curation'] .mobile-menu a,
-[data-page='finer-living'] .mobile-menu a,
-[data-page='about'] .mobile-menu a {
-  padding: 17px 0;
-  border-bottom: 1px solid var(--line);
-  font:
-    500 clamp(2.7rem, 12vw, 4rem)/1 var(--font-display),
-    serif;
-  text-decoration: none;
-}
-[data-page='marsa-al-arab'] .mobile-menu a,
-[data-page='waldorf-astoria-osaka'] .mobile-menu a,
-[data-page='contact'] .mobile-menu a {
-  padding: 17px 0;
-  border-bottom: 1px solid var(--line);
-  font: 500 clamp(2.7rem, 12vw, 4rem)/1 var(--font-display);
-  text-decoration: none;
 }
 [data-page='home'] .wrap {
   max-width: 1280px;
@@ -451,97 +279,6 @@
   background: rgba(243, 240, 234, 0.84);
   border-color: var(--line);
   backdrop-filter: blur(16px) saturate(1.1);
-}
-[data-page='our-work'] .head.menu-active,
-[data-page='projects'] .head.menu-active {
-  color: var(--ink);
-  background: rgba(243, 240, 234, 0.85);
-  border-color: var(--line);
-  backdrop-filter: blur(16px) saturate(1.1);
-}
-[data-page='marsa-al-arab'] .head.menu-active,
-[data-page='waldorf-astoria-osaka'] .head.menu-active {
-  color: var(--ink);
-  background: rgba(243, 240, 234, 0.86);
-  border-color: var(--line);
-  backdrop-filter: blur(16px);
-}
-[data-page='bespoke-accessories'] .head.menu-active,
-[data-page='styling-curation'] .head.menu-active,
-[data-page='finer-living'] .head.menu-active {
-  color: var(--ink);
-  background: rgba(243, 240, 234, 0.84);
-  border-color: var(--line);
-  backdrop-filter: blur(16px) saturate(1.1);
-}
-[data-page='our-work'] .logo,
-[data-page='projects'] .logo,
-[data-page='bespoke-accessories'] .logo,
-[data-page='styling-curation'] .logo,
-[data-page='finer-living'] .logo,
-[data-page='about'] .logo {
-  font:
-    600 italic 1.4rem/1 var(--font-display),
-    serif;
-  text-decoration: none;
-}
-[data-page='marsa-al-arab'] .logo,
-[data-page='waldorf-astoria-osaka'] .logo {
-  font:
-    600 italic 1.4rem var(--font-display),
-    serif;
-  text-decoration: none;
-}
-[data-page='contact'] .logo,
-[data-page='privacy'] .logo,
-[data-page='terms'] .logo {
-  font: 600 italic 1.4rem var(--font-display);
-  text-decoration: none;
-}
-[data-page='our-work'] .links,
-[data-page='projects'] .links,
-[data-page='marsa-al-arab'] .links,
-[data-page='waldorf-astoria-osaka'] .links,
-[data-page='bespoke-accessories'] .links,
-[data-page='styling-curation'] .links,
-[data-page='finer-living'] .links,
-[data-page='about'] .links,
-[data-page='contact'] .links {
-  display: flex;
-  gap: 34px;
-  list-style: none;
-}
-[data-page='our-work'] .links a,
-[data-page='projects'] .links a,
-[data-page='bespoke-accessories'] .links a,
-[data-page='styling-curation'] .links a,
-[data-page='finer-living'] .links a,
-[data-page='about'] .links a {
-  font:
-    400 0.68rem/1 var(--font-body),
-    sans-serif;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  opacity: 0.86;
-}
-[data-page='marsa-al-arab'] .links a,
-[data-page='waldorf-astoria-osaka'] .links a,
-[data-page='contact'] .links a {
-  font: 400 0.67rem var(--font-body);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  opacity: 0.86;
-}
-[data-page='our-work'] .links a:hover,
-[data-page='projects'] .links a:hover,
-[data-page='bespoke-accessories'] .links a:hover,
-[data-page='styling-curation'] .links a:hover,
-[data-page='finer-living'] .links a:hover,
-[data-page='about'] .links a:hover,
-[data-page='contact'] .links a:hover {
-  opacity: 0.48;
 }
 [data-page='our-work'] .footer-top,
 [data-page='projects'] .footer-top,
@@ -718,34 +455,11 @@
   font-size: 0.72rem;
   color: rgba(243, 240, 234, 0.42);
 }
-[data-page='privacy'] .back,
-[data-page='terms'] .back {
-  font-size: 0.66rem;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
 [data-page='privacy'] .footer-row a,
 [data-page='terms'] .footer-row a {
   text-underline-offset: 3px;
 }
-
 @media (max-width: 860px) {
-  [data-page='home'] .head .links {
-    display: none;
-  }
-  [data-page='home'] .menu-toggle,
-  [data-page='our-work'] .menu-toggle,
-  [data-page='projects'] .menu-toggle,
-  [data-page='marsa-al-arab'] .menu-toggle,
-  [data-page='waldorf-astoria-osaka'] .menu-toggle,
-  [data-page='bespoke-accessories'] .menu-toggle,
-  [data-page='styling-curation'] .menu-toggle,
-  [data-page='finer-living'] .menu-toggle,
-  [data-page='about'] .menu-toggle,
-  [data-page='contact'] .menu-toggle {
-    display: block;
-  }
   [data-page='home'] .head {
     padding-inline: 22px;
   }
@@ -770,17 +484,6 @@
   [data-page='about'] .wrap,
   [data-page='contact'] .wrap {
     padding-inline: 24px;
-  }
-  [data-page='our-work'] .links,
-  [data-page='projects'] .links,
-  [data-page='marsa-al-arab'] .links,
-  [data-page='waldorf-astoria-osaka'] .links,
-  [data-page='bespoke-accessories'] .links,
-  [data-page='styling-curation'] .links,
-  [data-page='finer-living'] .links,
-  [data-page='about'] .links,
-  [data-page='contact'] .links {
-    display: none;
   }
   [data-page='our-work'] .footer-top,
   [data-page='projects'] .footer-top,
@@ -822,7 +525,6 @@
     display: block;
   }
 }
-
 @media (max-width: 760px) {
   [data-page='home'] .footer-newsletter {
     grid-template-columns: 1fr;
@@ -846,13 +548,11 @@
     display: grid;
   }
 }
-
 @media (max-width: 560px) {
   [data-page] .wrap {
     min-width: 0;
   }
 }
-
 @media (max-width: 520px) {
   [data-page='bespoke-accessories'] .footer-links,
   [data-page='styling-curation'] .footer-links,

@@ -12,11 +12,15 @@ export type NavLink = {
  * Every navigation set on the site, in one file.
  *
  * The legacy documents each hand-wrote their own header and footer, which is
- * why a change to the menu used to mean editing twelve files. The link sets
- * still differ per page — that was a real editorial decision, each page
- * pointing at what matters next — but the *data* now lives here and the
- * *markup* lives in SiteHeader / SiteFooter. Changing a label, adding a page
- * to the menu, or restyling the header is a single edit.
+ * why a change to the menu used to mean editing twelve files. The *data* now
+ * lives here and the *markup* lives in SiteHeader / SiteFooter, so changing a
+ * label or adding a page to the menu is a single edit.
+ *
+ * Navigation itself is now one set, not twelve: the burger menu is the only
+ * way through the site, so it has to be complete and identical on every page.
+ * The page you are on is marked with `aria-current` rather than dropped from
+ * the list — omitting it would make the site's only navigation change shape as
+ * you moved around it. Footers still vary, and those configs stay per page.
  */
 
 const HOME: NavLink = { href: ROUTES.home, label: 'Home' };
@@ -29,14 +33,24 @@ const PRIVACY: NavLink = { href: ROUTES.privacy, label: 'Privacy' };
 const TERMS: NavLink = { href: ROUTES.terms, label: 'Terms' };
 const LINKEDIN: NavLink = { href: '#', label: 'LinkedIn' };
 
+/**
+ * The site menu — the only navigation on the site.
+ *
+ * One list, every page, at every width. It is reached through the burger in
+ * the masthead; there is no second, desktop-only set of links to keep in sync.
+ */
+export const SITE_MENU = [
+  HOME,
+  OUR_WORK,
+  PROJECTS,
+  ABOUT,
+  FINER_LIVING,
+  CONTACT,
+] as const satisfies readonly NavLink[];
+
 export type ChromeConfig = {
-  /** Desktop header links. */
-  header: readonly NavLink[];
-  /** Full-screen menu below 860px. Omitted where the page has no menu. */
-  menu?: readonly NavLink[];
   /** Fraction of viewport height after which the header takes its scrolled state. */
   scrollThreshold?: number;
-  logo?: 'wordmark' | 'mark';
   footer: FooterConfig;
 };
 
@@ -50,27 +64,12 @@ export type FooterConfig =
 
 const CONNECT = [LINKEDIN, CONTACT, PRIVACY, TERMS] as const;
 
-/** Route path -> its chrome. */
+/** Route path -> its chrome. Navigation is `SITE_MENU`; this is the rest. */
 export const CHROME: Record<string, ChromeConfig> = {
-  [ROUTES.home]: {
-    header: [OUR_WORK, PROJECTS, ABOUT, CONTACT],
-    menu: [HOME, OUR_WORK, PROJECTS, ABOUT, FINER_LIVING, CONTACT],
-    logo: 'wordmark',
-    footer: { variant: 'home' },
-  },
+  [ROUTES.home]: { footer: { variant: 'home' } },
 
   [ROUTES.ourWork]: {
-    header: [{ href: '#services', label: 'Our Work' }, PROJECTS, ABOUT, CONTACT],
-    menu: [
-      HOME,
-      { href: '#services', label: 'Our Work' },
-      PROJECTS,
-      ABOUT,
-      FINER_LIVING,
-      CONTACT,
-    ],
     scrollThreshold: 0.72,
-    logo: 'wordmark',
     footer: {
       variant: 'full',
       explore: [HOME, PROJECTS, ABOUT, FINER_LIVING],
@@ -79,57 +78,36 @@ export const CHROME: Record<string, ChromeConfig> = {
   },
 
   [ROUTES.projects]: {
-    header: [OUR_WORK, PROJECTS, ABOUT, CONTACT],
-    menu: [HOME, OUR_WORK, PROJECTS, ABOUT, FINER_LIVING, CONTACT],
     scrollThreshold: 0.72,
-    logo: 'wordmark',
     footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.project('marsa-al-arab')]: {
-    header: [PROJECTS, OUR_WORK, CONTACT],
-    menu: [HOME, PROJECTS, OUR_WORK, ABOUT, CONTACT],
     scrollThreshold: 0.78,
-    logo: 'wordmark',
     footer: { variant: 'full', explore: [HOME, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.project('waldorf-astoria-osaka')]: {
-    header: [PROJECTS, OUR_WORK, CONTACT],
-    menu: [HOME, PROJECTS, OUR_WORK, ABOUT, CONTACT],
     scrollThreshold: 0.78,
-    logo: 'wordmark',
     footer: { variant: 'full', explore: [HOME, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.service('bespoke-accessories')]: {
-    header: [OUR_WORK, FINER_LIVING, CONTACT],
-    menu: [HOME, OUR_WORK, PROJECTS, ABOUT, FINER_LIVING, CONTACT],
     scrollThreshold: 0.72,
-    logo: 'wordmark',
     footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.service('styling-curation')]: {
-    header: [OUR_WORK, FINER_LIVING, CONTACT],
-    menu: [HOME, OUR_WORK, PROJECTS, ABOUT, FINER_LIVING, CONTACT],
     scrollThreshold: 0.72,
-    logo: 'wordmark',
     footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.service('finer-living')]: {
-    header: [OUR_WORK, FINER_LIVING, CONTACT],
-    menu: [HOME, OUR_WORK, PROJECTS, ABOUT, CONTACT],
     scrollThreshold: 0.72,
-    logo: 'wordmark',
     footer: { variant: 'full', explore: [HOME, OUR_WORK, FINER_LIVING], connect: CONNECT },
   },
 
   [ROUTES.about]: {
-    header: [OUR_WORK, PROJECTS, ABOUT, CONTACT],
-    menu: [HOME, OUR_WORK, PROJECTS, FINER_LIVING, CONTACT],
-    logo: 'wordmark',
     footer: {
       variant: 'full',
       explore: [HOME, OUR_WORK, PROJECTS, FINER_LIVING],
@@ -138,23 +116,12 @@ export const CHROME: Record<string, ChromeConfig> = {
   },
 
   [ROUTES.contact]: {
-    header: [OUR_WORK, PROJECTS, ABOUT, CONTACT],
-    menu: [HOME, OUR_WORK, PROJECTS, ABOUT, FINER_LIVING, CONTACT],
-    logo: 'wordmark',
     footer: { variant: 'row', links: [HOME, OUR_WORK, PROJECTS, ABOUT] },
   },
 
-  [ROUTES.privacy]: {
-    header: [],
-    logo: 'wordmark',
-    footer: { variant: 'minimal', links: [PRIVACY, TERMS, CONTACT] },
-  },
+  [ROUTES.privacy]: { footer: { variant: 'minimal', links: [PRIVACY, TERMS, CONTACT] } },
 
-  [ROUTES.terms]: {
-    header: [],
-    logo: 'wordmark',
-    footer: { variant: 'minimal', links: [PRIVACY, TERMS, CONTACT] },
-  },
+  [ROUTES.terms]: { footer: { variant: 'minimal', links: [PRIVACY, TERMS, CONTACT] } },
 };
 
 export const FOOTER_COPY = {

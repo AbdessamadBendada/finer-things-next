@@ -125,6 +125,18 @@ re-baselining whole pages and losing the comparison entirely.
 
 ## Known limitations
 
+- **A change confined to the hero can slip under the threshold.** The
+  tolerance is a fraction of the _whole_ page, and these pages are long — the
+  home page is 8383px tall. When the hero wordmark was cut from 70% of the
+  viewport to 28%, home still passed: the mark's ink is a few thousand pixels
+  against twelve million, well inside 1%.
+
+  So treat a pass as "nothing moved structurally", not "nothing changed".
+  For a deliberate change, look at the page — `pnpm dev` — rather than
+  relying on the gate to notice. Its job is catching the thing you did _not_
+  intend, and it is still good at that: a shifted section or a broken layout
+  moves everything below it and blows straight past the threshold.
+
 - **Photographic resampling.** `next/image` serves a resized variant, while
   the legacy site served the original file. The rendered result is
   indistinguishable, but the pixels differ slightly; this sits inside the

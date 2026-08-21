@@ -73,9 +73,9 @@ Template — copy per comment:
   arrives wanting to do something — contact, say — has no way to start, and
   shouldn't feel lost. Options raised: a burger top-right, or nav links.
 - **Read as:** an experiment to compare, not a decision already made.
-- **Status:** 🔄 In progress — awaiting a choice
-- **Done:** three treatments are live behind a query string, all on one page
-  so they can be compared on one deploy:
+- **Status:** ✅ Resolved — **the burger won**, see comment 6
+- **Done:** three treatments were live behind a query string, all on one page
+  so they could be compared on one deploy:
 
   | URL             | Treatment                                  |
   | --------------- | ------------------------------------------ |
@@ -161,6 +161,190 @@ Template — copy per comment:
   stylesheets load after `brand.css` and set `.word` at equal specificity, so
   a class-based override here silently lost. Worth remembering for the next
   intentional override.
+
+### 6. Keep only the burger, and use it across the whole site
+
+- **Page:** every page
+- **Asked:** "drop everything but the burger one, and I want the burger menu
+  to be the only menu on the whole website, not just the home page" — and make
+  it production ready.
+- **Status:** ✅ Done
+- **Done:**
+  - `?nav=` and `useHeroNav.ts` are gone, along with the links and contact
+    treatments and their CSS. The burger is no longer a variant; it is the
+    navigation.
+  - **The desktop link row is gone from all twelve pages.** `.links` is no
+    longer rendered anywhere, so the 860px breakpoint that used to swap the
+    row for a menu no longer exists — one navigation, one behaviour, every
+    width.
+  - **One menu, not twelve.** The per-page `menu`/`header` link sets collapsed
+    into a single `SITE_MENU`. The page you are on is marked with
+    `aria-current` instead of being dropped from the list: as the only way
+    through the site, the menu must not change shape as you move around it.
+  - **Privacy and Terms now have navigation at all.** They previously carried
+    a lone "Contact" link and no menu, which made them dead ends.
+  - Keyboard and focus behaviour a primary menu owes: Escape closes; opening
+    moves focus to the first link and closing returns it to the toggle; Tab is
+    trapped inside while open; a back/forward navigation closes it.
+- **Two real bugs this surfaced, both caught by measuring rather than looking:**
+  - The legal pages had **no `.mobile-menu` rules at all** — they were the
+    pages with no menu — so the new panel rendered as a static block and
+    pushed the whole document down. The parity gate failed on exactly those
+    two pages. Fixed by styling the panel **once** for every page rather than
+    patching the two.
+  - Opening the menu on the home hero left the **X in paper on a paper
+    panel**, all but invisible: the hero rule and the open-menu rule have
+    identical specificity, and the hero one came later. Source order now puts
+    the open state last, with a comment saying why.
+- **Note:** the burger is now the only route to any page, so it is gated on
+  every page at both desktop and mobile widths in `masthead.spec.ts`, not
+  spot-checked on one.
+
+### 7. The X shifts when the menu opens
+
+- **Page:** every page
+- **Asked:** locking the scroll on open is good, but the X moves as it happens
+  — "if you want to click on the burger and then immediately on the X you have
+  to move the cursor a bit."
+- **Status:** ✅ Done
+- **Cause:** `body.menu-open { overflow: hidden }` removes the scrollbar.
+  Where the scrollbar occupies layout — Windows, Linux, macOS set to "Show
+  scroll bars: Always" — losing it widens the viewport by ~15px, and every
+  `position: fixed` element pinned to the right edge jumps outward with it.
+  The burger is one, and it moves at the exact moment it becomes the X.
+- **Done:** `useMobileMenu` measures the scrollbar _before_ locking and
+  publishes it as `--scrollbar-gap`; `brand.css` spends it on the burger, which
+  moves back by exactly that much while locked. The two cancel, so the X stays
+  under the cursor.
+- **Corrected once, on review:** the first version spent the gap on `.head` and
+  `.mobile-menu`, pulling both in by the scrollbar width. That holds the burger
+  just as still, but it un-covers a strip of the page exactly where the
+  scrollbar was — the panel is meant to be full bleed. Rightly rejected. The
+  correction belongs on the icon, not on the boxes; both now keep `right: 0`
+  and the test asserts they still span the viewport.
+- **Rejected:** `scrollbar-gutter: stable`, the one-line declarative fix, which
+  is what I reached for first. It reserves the gutter **even where scrollbars
+  overlay**, so it narrowed every page by 15px and failed all 36 parity
+  snapshots. The measured gap is 0 on those platforms and does nothing, which
+  is the behaviour we want.
+- **Note on verification:** headless Chromium forces overlay scrollbars and
+  cannot be made to use classic ones, so this bug cannot be reproduced in the
+  test environment at all — "does it move?" passes there no matter what. The
+  test gates the compensation instead: that the measurement is published, and
+  that the rule spending it still outranks the per-page `.head` rules in
+  chrome.css. **Worth confirming by hand on a machine with classic
+  scrollbars.**
+
+---
+
+## Round 2 — 2026-08-21
+
+Copy and design changes on the home page, plus two that apply site-wide.
+
+### 8. Our Work: stack the heading and subheading
+
+- **Page:** `/` (home)
+- **Asked:** "can we make the our work heading and the subheading one on top of
+  the other not one in the left and one in the right it doesn't look good."
+  New copy supplied.
+- **Status:** ✅ Done
+- **Done:** `.svc-head` was a two-column split — eyebrow left, paragraph right.
+  It stacks now, so the paragraph reads as belonging to the heading above it.
+  Copy replaced with: "Curated touch points and distinct design elements are
+  essential for every guest's journey. At Finer Things, this is where your
+  story begins."
+
+### 9. New service descriptions
+
+- **Page:** `/` (home)
+- **Status:** ✅ Done
+- **Done:** all three replaced verbatim —
+  - Bespoke Accessories: "Design and production of bespoke accessories, the
+    finer things guests can see, touch and feel."
+  - Styling & Curation: "Styling and curation that give spaces character and
+    soul."
+  - Finer Living: "Finer Living — the ready-made collection of European-crafted
+    pieces."
+- **Note:** these are the home page's summaries only. The service pages
+  themselves still carry their own longer descriptions — say the word if those
+  should follow.
+
+### 10. Featured / Selected work: new subheading, and lose the rule
+
+- **Page:** `/` (home)
+- **Asked:** a new subheading, and "the line between the text in this section
+  and the actual project there is a line remove it".
+- **Read as:** the supplied text arrived merged with the existing sentence
+  ("…hotels and residences fromMove through elected projects…"), so it was
+  checked rather than guessed at. Confirmed: the new sentence leads and the
+  existing one follows.
+- **Status:** ✅ Done
+- **Done:** subheading now reads "Discover our best work across the world's
+  finest hotels and residences. Move through selected projects as an editorial
+  sequence—each chapter revealing its atmosphere, objects and material
+  character." The hairline was `border-top` on the filmstrip; it is gone.
+
+### 11. Headlines in one colour — whole website
+
+- **Page:** every page
+- **Asked:** "make the headlines in one color, they do not like it
+  multicolors."
+- **Read as:** checked — the tint removed entirely rather than unified to a
+  single accent. Confirmed.
+- **Status:** ✅ Done
+- **Done:** every page tinted the italic half of its headlines with an accent:
+  oxblood on home and about, brass in the home break, salmon on the project
+  stories. Three accents across one site read as multicoloured rather than
+  considered. The italic now carries the emphasis on its own and the headline
+  is a single colour.
+- **Note:** one rule in `brand.css`, not eleven edits across the page
+  stylesheets — so a new page inherits the policy instead of having to
+  remember it. It uses `!important` deliberately; the reason is recorded
+  beside it.
+
+### 12. Behind Finer Things
+
+- **Page:** `/` (home)
+- **Asked:** drop the closing "Inspired, always, by family", and caption the
+  portrait "Malika and Alex" rather than the other way round.
+- **Status:** ✅ Done
+- **Done:** both. The caption order now matches left-to-right in the
+  photograph, and the image's alt text was flipped to match.
+- **Note:** the paragraph above still reads "founded by Alex and Malika". That
+  was not part of the comment so it is untouched — flag it if it should follow
+  the caption.
+
+### 13. Final CTA: drop the first heading
+
+- **Page:** `/` (home)
+- **Asked:** "remove the first heading that says start a project."
+- **Read as:** the small eyebrow above "Let's tell your story.", not the button
+  of the same name at the foot of the section.
+- **Status:** ✅ Done
+
+### 14. The footer carries the logo, not the words — whole website
+
+- **Page:** every page with a footer
+- **Asked:** "in the footer in the whole website instead of Finer Things use
+  their logo."
+- **Status:** ✅ Done
+- **Done:** one `FooterBrand` component, used by all four footer shapes.
+- **Note:** the only logo asset is dark artwork and every footer is dark, so
+  the mark is painted as a CSS mask in `currentColor` rather than dropped in as
+  an image. It takes each footer's own ink, and there is no second inverted
+  copy of the file to keep in sync. Privacy and Terms have no footer brand at
+  all, so they are unaffected.
+
+### Parity consequence of this round
+
+Comments 11 and 14 are site-wide, so ten of the twelve pages have now
+deliberately diverged from the legacy documents. Following
+[PARITY.md](PARITY.md#changing-the-design-on-purpose): each diff was reviewed
+first — they showed the recoloured headline halves and the footer mark, and
+nothing else — and those pages then moved to `baseline: 'current'`. They are
+protected against regression from here, rather than against the original.
+
+**Privacy and Terms carry neither change and stay verified against `legacy/`.**
 
 ---
 
