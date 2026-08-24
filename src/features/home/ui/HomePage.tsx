@@ -277,7 +277,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         </div>
       </section>
       {/* FAMILY EDITORIAL PORTRAIT */}
-      <section className="family-editorial" aria-labelledby="family-editorial-title">
+      <section className="family-editorial" id="story" aria-labelledby="family-editorial-title">
         <div className="wrap family-editorial-grid">
           <div className="family-editorial-copy">
             <div className="ey rise">Our story</div>

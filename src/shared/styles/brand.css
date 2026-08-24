@@ -932,3 +932,58 @@ body.menu-open [data-page] .menu-toggle {
     font-size: clamp(1.8rem, 8vw, 2.2rem);
   }
 }
+
+/* ---------------- No section marker on the home story ----------------
+   `.family-editorial::before` drew a 3px oxblood rule, 84 to 170px wide,
+   pinned to the top-left of the "Behind Finer Things" section. Because it sits
+   on the *top* edge of that section it read as a stray line floating under the
+   filmstrip above it rather than as a marker belonging to anything. Removed at
+   review.
+
+   `content: none` rather than `display: none`, so the pseudo-element is never
+   generated at all. Addressed by id because the page rule is
+   `.page :global(.family-editorial::before)`, which a class-based selector
+   here would tie with and lose to. */
+[data-page='home'] #story::before {
+  content: none;
+}
+
+/* ---------------- "Behind Finer Things is / one family." in two lines -------
+   Review asked for two lines without reducing the type.
+
+   The cap was 11ch, but that was not the real constraint: at the section's
+   own size, 77px, "Behind Finer Things is" needs 699px on one line and the
+   copy column was only 618px wide. So the column had to give, not the
+   headline. The gap between copy and portrait comes down and the split moves
+   from 1.12/0.78 to 1.9/1, which leaves the copy about 729px and the portrait
+   about 384px, still above its 300px floor.
+
+   Below 860px the grid stacks and the copy has the full width, but a phone is
+   too narrow for 22 characters at this size: there the first line still takes
+   two rows. Shrinking it to fit was the one thing not to do.
+
+   The column has to be generous rather than merely sufficient, because the
+   type and the column stop growing at different points. `.wrap` is capped at
+   1280px, so above roughly 1500px the column is frozen while the heading is
+   still scaling on `5.35vw` up to its 87px ceiling. At 1728px the line needed
+   724px against 722px available and "is" dropped onto a line of its own,
+   missing by two pixels. Sized here for the widest case, which leaves about
+   23px spare there and far more below it. */
+[data-page='home'] #story .family-editorial-grid {
+  grid-template-columns: minmax(420px, 2fr) minmax(300px, 1fr);
+  gap: clamp(40px, 4.5vw, 72px);
+}
+
+[data-page='home'] #story .family-editorial-copy h2 {
+  max-width: 20ch;
+}
+
+/* The page stacks this grid at 860px. The rule above outranks that media
+   query, so the stacking has to be restated here or the copy column collapses
+   to its 420px floor on a tablet and the headline goes back to three lines. */
+@media (max-width: 860px) {
+  [data-page='home'] #story .family-editorial-grid {
+    grid-template-columns: 1fr;
+    gap: 58px;
+  }
+}
