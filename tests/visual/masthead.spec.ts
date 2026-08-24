@@ -28,20 +28,30 @@ test.describe('masthead', () => {
       const logo = browserPage.locator('.head .logo');
       await expect(logo).toHaveAttribute('href', '/');
 
-      const image = logo.locator('img');
-      await expect(image).toHaveCount(1);
-      await expect(image).toHaveAttribute('src', /finer-things-logo|_next\/image/);
+      // The mark is painted by a CSS mask in currentColor rather than served
+      // as an <img>, so that it takes the masthead's own colour.
+      const mark = logo.locator('.logo-mark');
+      await expect(mark).toHaveCount(1);
+      await expect(mark).toHaveCSS('mask-image', /finer-things-logo/);
 
-      // The optimizer serves a resized variant, so assert it decoded rather
-      // than pinning an intrinsic width.
-      await expect
-        .poll(() => image.evaluate((el: HTMLImageElement) => el.naturalWidth))
-        .toBeGreaterThan(0);
+      /*
+       * The property that actually matters, and the one that was broken: the
+       * mark has to be the same colour as the masthead around it. As a dark
+       * image with `mix-blend-mode: multiply` it stayed near-black over the
+       * photographic heroes, invisible beside a burger correctly drawn in
+       * paper.
+       */
+      const [markColour, headColour] = await browserPage.evaluate(() => [
+        getComputedStyle(document.querySelector('.head .logo-mark')!).backgroundColor,
+        getComputedStyle(document.querySelector('.head')!).color,
+      ]);
+      expect(markColour).toBe(headColour);
 
       // The mark must be a sensible size, not collapsed or full-bleed.
       const box = await logo.boundingBox();
       expect(box?.width).toBeGreaterThan(120);
       expect(box?.width).toBeLessThan(200);
+      expect(box?.height).toBeGreaterThan(20);
     });
   }
 

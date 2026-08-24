@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 
-import { Media } from '@/shared/ui/Media';
 import { useMobileMenu } from '@/shared/motion/useMobileMenu';
 import { useScrollHeader } from '@/shared/motion/useScrollHeader';
 import { useWordmark } from '@/shared/motion/useWordmark';
@@ -81,7 +80,9 @@ export function SiteHeader({ menu, scrollThreshold, heroHandoff = false }: SiteH
           <span className="logo logo-placeholder" aria-hidden="true" />
         ) : (
           <Link href="/" className="logo" aria-label="Finer Things home">
-            <Media src="/assets/finer-things-logo.png" alt="" priority />
+            {/* Painted by a CSS mask rather than served as an image, so the
+                mark takes the masthead's own colour. See brand.css. */}
+            <span className="logo-mark" aria-hidden="true" />
           </Link>
         )}
 
