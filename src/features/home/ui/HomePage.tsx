@@ -59,14 +59,18 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         </div>
       </div>
       {/* PURPOSE */}
-      <section className="purpose" aria-labelledby="purpose-title">
-        <div className="wrap">
-          <h2 id="purpose-title" data-word-reveal="">
-            {
-              'Guided by brave techniques and material combinations, Finer Things designs unique accessories that fill a stay with '
-            }
-            <span className="outcome">story, personality and soul.</span>
-          </h2>
+      <section className="purpose" id="purpose" aria-labelledby="purpose-title">
+        {/* The statement holds the screen while it is read. The pin is the
+            same device the filmstrip uses further down the page. */}
+        <div className="purpose-pin">
+          <div className="wrap">
+            <h2 id="purpose-title" data-word-reveal="">
+              {
+                'Guided by brave techniques and material combinations, Finer Things designs unique accessories that fill a stay with '
+              }
+              <span className="outcome">story, personality and soul.</span>
+            </h2>
+          </div>
         </div>
       </section>
       {/* 3. SERVICES */}

@@ -987,3 +987,143 @@ body.menu-open [data-page] .menu-toggle {
     gap: 58px;
   }
 }
+
+/* ================================================================
+   HOME SECTION TWO HOLDS THE SCREEN
+
+   Review: the statement and the Our Work block read as one
+   incoherent region, and the statement carried no weight.
+
+   Three things were wrong. The Our Work eyebrow and paragraph sat
+   44px left of everything around them. There were 200px of dead air
+   between the two. And the statement had been cut from 61px to 49px
+   when the "no heading over three lines" rule went in, which is what
+   took its presence away.
+
+   Rather than merge or repanel the sections, which the design does
+   not want, the statement is given the screen: full height, pinned
+   while it is read, and set on a wider measure so the type can come
+   back up. The pin is the same device the filmstrip already uses.
+   ================================================================ */
+
+/* ---------------- The 44px misalignment ----------------
+   `.svc-head` sets `padding: 9vh 0 4vh`, which overrides the horizontal
+   padding it inherits from `.wrap` and pulls the eyebrow and paragraph out of
+   line with the statement above and the row numbers below, both of which sit
+   on the wrap's edge. */
+[data-page='home'] #work .svc-head {
+  padding-inline: 44px;
+}
+
+@media (min-width: 861px) {
+  /* Two viewports: one of travel while the sentence is written, one that the
+     pin itself occupies. Started at three and it was too long, which is the
+     usual failure of this device: two full screens of scrolling to get
+     through one sentence reads as the page having stalled. The words finish
+     at 62% of the travel, so roughly 62svh writes the sentence and 38svh
+     holds it. This height is the dial if it wants to be shorter still. */
+  [data-page='home'] #purpose {
+    height: 200svh;
+    padding: 0;
+  }
+
+  [data-page='home'] .purpose-pin {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    min-height: 620px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* The type comes back up by using the whole measure rather than by breaking
+     the grid. Height alone could not have bought a pixel back, because the
+     line count is a horizontal problem: what was holding the statement at
+     49px was a 46ch cap applied when the "no heading over three lines" rule
+     went in, which left 66px of the column unused.
+
+     A wider measure was tried first and reverted. It did buy more size, 66px
+     at 1728, but it centred a 1500px block inside a 1280px grid and left the
+     statement starting 110px to the left of the eyebrow, the paragraph and
+     the row numbers below it. Trading one misalignment for a larger one is
+     not a fix for a section whose complaint was incoherence.
+
+     Sized from the measure rather than the viewport: 48 characters per line
+     is three lines for this 144-character sentence, and 0.431em is this
+     face's average character width. */
+  [data-page='home'] #purpose-title {
+    max-width: none;
+    font-size: clamp(2rem, calc((100vw - 88px) / 21), 3.6rem);
+  }
+
+  /* ---------------- Scroll-driven words ----------------
+     `.scroll-reveal` is added by usePurposeReveal, and only where the section
+     pins and motion is welcome. Nothing here hides text that the ordinary
+     reveal would otherwise show, because the class arrives with the driver.
+
+     The per-word delay is dropped: the pacing comes from the scroll now, and
+     stacking a 62ms stagger on top of it would leave the words trailing the
+     reader's hand. */
+  [data-page='home'] #purpose-title.scroll-reveal .reveal-word > span {
+    opacity: 0;
+    transform: translateY(115%);
+    transition:
+      transform 0.6s var(--ease),
+      opacity 0.4s ease;
+    transition-delay: 0s;
+  }
+
+  [data-page='home'] #purpose-title.scroll-reveal .reveal-word.is-in > span {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Below the pin breakpoint the section still fills the screen, but it scrolls
+   past like any other. Pinning a phone to read one sentence is a good way to
+   make a page feel broken. */
+@media (max-width: 860px) {
+  [data-page='home'] #purpose {
+    display: flex;
+    align-items: center;
+    min-height: 100svh;
+  }
+
+  [data-page='home'] .purpose-pin {
+    width: 100%;
+  }
+}
+
+/* ---------------- The hero CTA is outlined, not solid ----------------
+   It was solid paper on dark photography, which made it the brightest object
+   on the screen, louder than the headline and louder than the wordmark. The
+   page also closes with a solid ink CTA, so the opening invitation was
+   shouting over the firm ask at the end.
+
+   Outlined keeps the two things that make a control read as a control, a
+   border and padding, while giving the photography back its first frame. It
+   fills to solid paper on hover and on keyboard focus, so intent is rewarded
+   and the affordance is never in doubt.
+
+   Same treatment the masthead Contact button was given in round 1, and for
+   the same reason: two solid buttons on one screen compete.
+
+   Scoped through the section id, because the page rule is
+   `.page :global(.hero-copy .btn)` and a class-based selector here would tie
+   with it and lose. */
+[data-page='home'] #hero .btn {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(243, 240, 234, 0.55);
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+[data-page='home'] #hero .btn:hover,
+[data-page='home'] #hero .btn:focus-visible {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--paper);
+}

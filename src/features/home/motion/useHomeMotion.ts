@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 
 import { useFilmstrip } from './useFilmstrip';
 import { useIntroSequence } from './useIntroSequence';
+import { usePurposeReveal } from './usePurposeReveal';
 import { useTouchWipe } from './useTouchWipe';
 
 /** Composes the home page's choreography. */
@@ -36,6 +37,11 @@ export function useHomeMotion(root: RefObject<HTMLElement | null>): void {
     maskClass: 'reveal-word',
     indexProperty: '--word-index',
   });
+
+  // …and the purpose statement then hands its reveal over to the scroll, so
+  // the pinned sentence is read at the reader's own pace. Must come after
+  // useWordReveal: it takes over the words that hook creates.
+  usePurposeReveal(root);
 
   // Service rows arrive with a directional wipe, once each.
   useEffect(() => {
