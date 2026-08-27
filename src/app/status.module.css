@@ -21,8 +21,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100svh;
-  padding: 140px 44px;
+  /*
+   * The masthead is `position: fixed` and takes no space in the flow, so the
+   * page has to reserve it. Every other page inherits that padding from its
+   * own stylesheet; this one has none, so the message and the top images slid
+   * under the bar. `min-height` accounts for it too, or the footer is pushed
+   * below the fold on a page that should be exactly one screen.
+   */
+  --bar: 92px;
+  min-height: calc(100svh - var(--bar));
+  padding: calc(var(--bar) + 40px) 44px 80px;
   background: var(--paper);
   color: var(--ink);
   overflow: hidden;
@@ -41,7 +49,7 @@
   align-items: center;
   gap: 20px;
   text-align: center;
-  max-width: 34ch;
+  max-width: 38ch;
 }
 
 .eyebrow {
@@ -54,10 +62,10 @@
 .title {
   margin: 0;
   font:
-    500 clamp(2.6rem, 5.6vw, 4.6rem) / 0.98 var(--font-display),
+    600 clamp(3.1rem, 6.6vw, 5.6rem) / 0.96 var(--font-display),
     Georgia,
     serif;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.042em;
 }
 
 /*
@@ -77,6 +85,8 @@
 
 .copy {
   margin: 0;
+  max-width: 46ch;
+  font-size: 1.05rem;
   color: var(--soft);
 }
 
@@ -166,7 +176,8 @@
  */
 @media (max-width: 900px) {
   .status {
-    padding: 120px 24px;
+    --bar: 74px;
+    padding: calc(var(--bar) + 32px) 24px 64px;
   }
 
   .aside {
