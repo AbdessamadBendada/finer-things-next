@@ -39,6 +39,9 @@ const LINKEDIN: NavLink = { href: '#', label: 'LinkedIn' };
  * One list, every page, at every width. It is reached through the burger in
  * the masthead; there is no second, desktop-only set of links to keep in sync.
  */
+/** The row of links in the compact footer. */
+export const FOOTER_LINKS = [HOME, OUR_WORK, PROJECTS, ABOUT] as const;
+
 export const SITE_MENU = [
   HOME,
   OUR_WORK,
@@ -121,7 +124,7 @@ export const CHROME: Record<string, ChromeConfig> = {
   },
 
   [ROUTES.contact]: {
-    footer: { variant: 'row', links: [HOME, OUR_WORK, PROJECTS, ABOUT] },
+    footer: { variant: 'row', links: FOOTER_LINKS },
   },
 
   [ROUTES.privacy]: { footer: { variant: 'minimal', links: [PRIVACY, TERMS, CONTACT] } },

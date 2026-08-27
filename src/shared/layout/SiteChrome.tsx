@@ -8,6 +8,7 @@ import {
   SITE_MENU,
   chromeFor,
   withCurrent,
+  type ChromeConfig,
   type FooterVariant,
 } from '@/shared/config/navigation';
 
@@ -29,6 +30,7 @@ import { SiteHeader } from './SiteHeader';
 export function SiteChrome({
   variant,
   slug: slugOverride,
+  footer: footerOverride,
   children,
 }: {
   variant: FooterVariant;
@@ -42,6 +44,12 @@ export function SiteChrome({
    * and did nothing in dev, which is where it was being looked at.
    */
   slug?: string;
+  /**
+   * Footer contents, when the pathname cannot be looked up. Same reason as
+   * `slug`: the 404 renders under any URL, so `chromeFor()` finds nothing and
+   * its footer would come out empty.
+   */
+  footer?: ChromeConfig['footer'];
   children: ReactNode;
 }) {
   const pathname = usePathname();
@@ -63,7 +71,9 @@ export function SiteChrome({
 
       {/* The home page composes its own footer: it carries the newsletter and
           a layout nothing else shares. */}
-      {variant !== 'home' && <SiteFooter variant={variant} config={chrome?.footer} />}
+      {variant !== 'home' && (
+        <SiteFooter variant={variant} config={footerOverride ?? chrome?.footer} />
+      )}
     </div>
   );
 }

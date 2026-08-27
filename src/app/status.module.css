@@ -53,6 +53,7 @@
 .middle {
   position: relative;
   z-index: 2;
+  animation: middle-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -166,6 +167,54 @@
      copy stays at full contrast; these do not. */
   opacity: 0.72;
   filter: saturate(0.82);
+
+  /*
+   * They arrive rather than simply being there.
+   *
+   * Every other page on the site reveals its imagery; this was the one screen
+   * where four photographs appeared fully formed at load, which is what made
+   * them read as wallpaper. Each rises and fades in, staggered by position,
+   * then drifts on a long loop so the composition is never quite still.
+   *
+   * `--in` runs once; `--float` runs forever, and is offset per tile so they
+   * do not move as a block. The delays are set on the elements below.
+   */
+  animation:
+    aside-in 1.15s cubic-bezier(0.16, 1, 0.3, 1) both,
+    aside-float 9s ease-in-out infinite;
+}
+
+@keyframes middle-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes aside-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+  to {
+    opacity: 0.72;
+    transform: none;
+  }
+}
+
+/* Deliberately small. It should read as breathing, not as movement. */
+@keyframes aside-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -9px;
+  }
 }
 
 .aside img {
@@ -185,23 +234,33 @@
 .left[data-index='0'] {
   left: clamp(-40px, 1vw, 40px);
   top: 0;
+  animation-delay: 0.15s, 0.15s;
 }
 
 .left[data-index='1'] {
   left: clamp(10px, 7vw, 150px);
   top: calc(var(--w) * 4 / 3 + clamp(24px, 4vh, 60px));
   width: var(--w-sm);
+  animation-delay:
+    0.42s,
+    -3.4s;
 }
 
 .right[data-index='2'] {
   right: clamp(10px, 7vw, 150px);
   top: 0;
   width: var(--w-sm);
+  animation-delay:
+    0.28s,
+    -1.7s;
 }
 
 .right[data-index='3'] {
   right: clamp(-40px, 1vw, 40px);
   top: calc(var(--w-sm) * 4 / 3 + clamp(24px, 4vh, 60px));
+  animation-delay:
+    0.55s,
+    -5.1s;
 }
 
 /* Between 900 and 1200 there is room for the message and one image a side,
@@ -236,11 +295,29 @@
 
   .aside[data-index='0'] {
     display: block;
+    /* No float on the full-bleed backdrop: a drifting background behind the
+       message reads as a rendering fault rather than as motion. */
+    animation: aside-in 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
     inset: 0;
     width: 100%;
     height: 100%;
     aspect-ratio: auto;
     opacity: 0.16;
     filter: saturate(0.7);
+  }
+}
+
+/* House rule: motion is an enhancement, never a requirement. */
+@media (prefers-reduced-motion: reduce) {
+  .aside,
+  .aside[data-index='0'],
+  .middle {
+    animation: none;
+    opacity: 0.72;
+    transform: none;
+  }
+
+  .middle {
+    opacity: 1;
   }
 }
