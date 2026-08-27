@@ -87,6 +87,12 @@ in a shared layer instead.
   stylesheet. It has been hand-maintained since the import (as
   `tools/legacy-import/` warns below). Treat `chrome.css` as source, and edit
   it by hand — carefully, and only for chrome that genuinely varies per page.
+- **Never put a pseudo-element in a selector that shares a declaration block
+  with another selector.** Lightning CSS merges them into `:is(...)`, and a
+  pseudo-element inside `:is()` is invalid, so the browser drops the whole rule
+  silently. This killed the scrim behind the gallery captions: the words
+  appeared over bright marble with nothing behind them, and the CSS looked
+  correct. Give the rule its own block, or put the style on a real element.
 - **Never hand-write `-webkit-` prefixes.** Lightning CSS adds them from the
   browser targets. Writing both halves of a pair makes it keep only the
   prefixed one: `backdrop-filter` next to `-webkit-backdrop-filter` shipped as
@@ -110,6 +116,12 @@ in a shared layer instead.
   the files it produced are now hand-maintained source. **Do not re-run
   `pnpm migrate:pages`** — it would overwrite real work. It is kept for
   reference and reproducibility only.
+- **A parity pass does not mean nothing changed.** The tolerance is a fraction
+  of the whole page and these pages run to thousands of pixels, so a small
+  element can be removed entirely and the gate will still pass. Confirm design
+  changes by looking at them. See docs/PARITY.md.
+- **The parity baselines are gitignored**, so `git status` will never tell you
+  they are stale. Check mtimes.
 - **Motion must fail open.** Anything that starts hidden needs a selector in
   the `GROUPS` table in `useFailOpenReveal.ts`, so a broken observer can never
   leave a section blank.
@@ -129,6 +141,7 @@ in a shared layer instead.
 
 | Question                       | File                                                 |
 | ------------------------------ | ---------------------------------------------------- |
+| **Where is the project now?**  | **[docs/HANDOFF.md](docs/HANDOFF.md)** — read first  |
 | How is the code organised?     | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)         |
 | How do I add a page?           | [docs/ADDING-A-FEATURE.md](docs/ADDING-A-FEATURE.md) |
 | How does the animation work?   | [docs/MOTION.md](docs/MOTION.md)                     |
@@ -138,6 +151,23 @@ in a shared layer instead.
 | How do I deploy it?            | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)             |
 | How does the parity gate work? | [docs/PARITY.md](docs/PARITY.md)                     |
 | Why is it built this way?      | [docs/adr/](docs/adr/)                               |
+
+## Site-wide policies set in review
+
+Undo any of these and the client will notice. The reasoning is in
+docs/FEEDBACK.md.
+
+- **One navigation: the burger, every page, every width.** There is no desktop
+  link row. Do not add a second one.
+- **Headlines are a single colour.** The rule is written as a policy over every
+  descendant of a heading, not as a list of selectors, because enumerating them
+  missed cases three rounds running.
+- **Emphasis in a heading is a hairline underline.** Not colour, and not
+  italic: the site ships one upright font file per family with
+  `font-synthesis: none`, so `font-style: italic` renders identically to the
+  text around it.
+- **No em dashes in site copy.** Enforced by lint. Comments are exempt.
+- **One closing CTA** (`shared/layout/SiteCta.tsx`), on every page but Contact.
 
 ## Open decisions
 

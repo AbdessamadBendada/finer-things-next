@@ -348,6 +348,125 @@ protected against regression from here, rather than against the original.
 
 ---
 
+## Round 3 — 2026-08-21
+
+What we do and About, largely rebuilt. See the commit for detail.
+
+### 15. Rebuild the What we do page
+
+- **Page:** `/our-work`
+- **Asked:** new hero copy, new service descriptions, no CTA on the rows, and
+  three new sections: materials, the details, and the process.
+- **Status:** ✅ Done
+- **Note:** the client's own materials page lists seven materials, not five.
+  Exclusive Styles and Stitching moved to "The details" as asked, leaving five,
+  so the sixth card repeats Marble to fill two rows of three. It carries a
+  `placeholder` flag so it cannot ship unnoticed. Two errors on their page were
+  not carried over: the shells entry ends "the natural elegance of these
+  precious metals", which belongs to metal, and the colour list reads "azure
+  and, sienna".
+
+### 16. Meet the founder, and remove Two perspectives
+
+- **Page:** `/about`
+- **Status:** ✅ Done
+- **Done:** Alex's own words, with his photograph taken from their live site.
+  It replaces both the old "Our story" and the Alex experience block, which
+  said the same thing twice once the new copy landed. A co-founder section for
+  Malika follows with placeholder copy and a labelled panel in the exact shape
+  her portrait will take.
+
+### 17. One CTA for the whole site
+
+- **Asked:** "the CTA section should be the same all over the website."
+- **Status:** ✅ Done — `shared/layout/SiteCta.tsx`, nine pages.
+- **Note:** Contact is excluded deliberately. Its closing is a "Stay connected"
+  panel, and a "Start a project" button pointing at `/contact` from `/contact`
+  goes nowhere.
+
+### 18. Highlighted words
+
+- **Asked:** highlight `narrative`, `story` and `family`.
+- **Status:** ✅ Done, but not as asked.
+- **Note:** this pulled against comment 11, one colour for headlines, because
+  colour was the only thing `em` did. Italic could not replace it: the site
+  ships one upright file per family with `font-synthesis: none`, so
+  `font-style: italic` renders identically to regular text. The emphasis is a
+  hairline underline instead. **This is a judgment call and worth confirming
+  with the client.**
+
+---
+
+## Round 4 — 2026-08-24 to 27
+
+Layout and polish, plus one page rebuilt speculatively.
+
+### 19. No heading may run to four lines
+
+- **Asked:** headings must not stack four and five lines deep; make better use
+  of the space.
+- **Status:** ✅ Done
+- **Done:** audited every `h1`, `h2` and `h3` on all twelve pages by measuring
+  rendered height against line height, at three widths. Desktop and tablet went
+  from five offenders to **zero**; mobile from six to one.
+- **Note:** the remaining one is the home purpose statement at 144 characters.
+  Three lines on a 390px screen would need type smaller than the body copy
+  beside it. Shortening the copy is the only real fix.
+
+### 20. Section heads stack
+
+- **Asked:** "do not make the heading in the left and the subheading in the
+  right."
+- **Status:** ✅ Done
+- **Note:** the two-column split was also the main cause of comment 19. Fixing
+  the alignment fixed most of the wrapping in the same move.
+
+### 21. The home statement holds the screen
+
+- **Asked:** sections two and three read as incoherent and the statement
+  carried no weight. The client suggested full height with a scroll-stop.
+- **Status:** ✅ Done
+- **Done:** the section runs two viewports and pins while it is read, the same
+  device the filmstrip uses. The words arrive as the page is scrolled rather
+  than on a timer.
+- **Note:** the weight had been lost by my own doing, cutting the type from
+  61px to 49px to satisfy comment 19. It is back to 58px. A wider measure was
+  built first and reverted: it bought more size but left the statement starting
+  110px left of everything beneath it.
+
+### 22. The hero CTA takes too much focus
+
+- **Asked:** the client suggested an italic text link instead.
+- **Status:** ✅ Done, outlined rather than italic.
+- **Note:** an italic link cannot be built, for the reason in comment 18. It
+  would have been plain roman prose. Outlined keeps the border and padding that
+  make a control read as a control, and gives the photography back its first
+  frame.
+
+### 23. "Our Work" becomes "What we do"
+
+- **Status:** ✅ Done, in the interface only.
+- **Note:** the routes are unchanged, deliberately. The three row eyebrows were
+  dropped: they already said "What we do", so with the page renamed the phrase
+  would have appeared five times on one screen.
+
+### 24. The projects page, reimagined
+
+- **Asked:** the client dislikes `/projects` and pointed at the Style With Us
+  page on their own site, wanting it "chicer and more luxurious". Asked for it
+  on a separate route until approved.
+- **Status:** 🤔 Awaiting the client
+- **Done:** `/project-new`. A composed wall of photographs with credits on
+  hover, a single-screen hero, and the shared CTA. `/projects` is untouched;
+  reverting the commit removes it entirely.
+- **Note:** their reference page is thirty-one identical tiles with no
+  headline, no captions and no call to action. What works about it is that you
+  land straight in the work; what makes it read cheap is the flatness and the
+  missing credit. This keeps the first and fixes the second. We hold nineteen
+  images against their thirty-one, and the format lives on density.
+
+---
+
 ## Cross-cutting notes
 
 Things that came up more than once, or that change every page at once. Worth
