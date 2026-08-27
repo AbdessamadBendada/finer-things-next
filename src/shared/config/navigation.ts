@@ -155,4 +155,17 @@ export const chromeFor = (pathname: string): ChromeConfig | undefined => CHROME[
  */
 export const CHROME_ALIAS: Record<string, string> = {
   [ROUTES.projectNew]: 'projects',
+  /*
+   * The 404 sits at the app root, outside every route group, so its slug came
+   * out as `_not-found` and chrome.css has no rules for it: the masthead
+   * rendered completely unstyled, logo and burger stacked in the corner.
+   *
+   * `usePathname()` reports `/_not-found` whatever URL the visitor actually
+   * typed, so this one key covers every missing page, however deep. Verified
+   * against /nope and /some/deep/missing/page.
+   *
+   * It borrows Contact's chrome, the plainest of the twelve: a paper bar over
+   * a paper page, with no scroll behaviour to inherit.
+   */
+  '/_not-found': 'contact',
 };
