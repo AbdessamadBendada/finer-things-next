@@ -10,6 +10,9 @@ export const ROUTES = {
   home: '/',
   ourWork: '/our-work',
   projects: '/projects',
+  /* Under review: a gallery-led alternative to /projects. Kept as its own
+     route so the existing page is untouched until the client chooses. */
+  projectNew: '/project-new',
   about: '/about',
   contact: '/contact',
   privacy: '/privacy',

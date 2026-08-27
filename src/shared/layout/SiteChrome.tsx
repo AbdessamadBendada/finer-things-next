@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
 import {
+  CHROME_ALIAS,
   SITE_MENU,
   chromeFor,
   withCurrent,
@@ -35,7 +36,8 @@ export function SiteChrome({
   const pathname = usePathname();
   const chrome = chromeFor(pathname);
   const slug =
-    pathname === '/' ? 'home' : (pathname.split('/').filter(Boolean).at(-1) ?? 'home');
+    CHROME_ALIAS[pathname] ??
+    (pathname === '/' ? 'home' : (pathname.split('/').filter(Boolean).at(-1) ?? 'home'));
 
   return (
     <div data-page={slug}>
