@@ -39,7 +39,7 @@ export default async function ServiceRoute({ params }: RouteParams) {
       <service.Page />
       <BreadcrumbJsonLd
         trail={[
-          { name: 'Our Work', path: ROUTES.ourWork },
+          { name: 'What we do', path: ROUTES.ourWork },
           { name: service.name, path: service.seo.path },
         ]}
       />

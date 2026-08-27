@@ -31,7 +31,7 @@ export function OurWorkPage() {
                 accessories for the luxury hotels and residences creating a new level of
                 experience.
               </p>
-              <span className="scroll-cue">Explore our work ↓</span>
+              <span className="scroll-cue">Explore what we do ↓</span>
             </div>
           </div>
         </section>
@@ -64,7 +64,6 @@ export function OurWorkPage() {
             <div className="wrap service-content">
               <div className="service-top">
                 <span className="service-number">01</span>
-                <span className="eyebrow">What we do</span>
               </div>
               <h2>
                 {'Bespoke '}
@@ -90,7 +89,6 @@ export function OurWorkPage() {
             <div className="wrap service-content">
               <div className="service-top">
                 <span className="service-number">02</span>
-                <span className="eyebrow">What we do</span>
               </div>
               <h2>
                 {'Styling '}
@@ -115,7 +113,6 @@ export function OurWorkPage() {
             <div className="wrap service-content">
               <div className="service-top">
                 <span className="service-number">03</span>
-                <span className="eyebrow">What we do</span>
               </div>
               <h2>
                 {'Finer '}

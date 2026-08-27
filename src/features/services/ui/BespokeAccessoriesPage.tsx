@@ -15,7 +15,7 @@ export function BespokeAccessoriesPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="hero-kicker eyebrow">Our Work / 01</div>
+            <div className="hero-kicker eyebrow">What we do / 01</div>
             <h1>
               <span className="hero-line">
                 <span>Bespoke</span>

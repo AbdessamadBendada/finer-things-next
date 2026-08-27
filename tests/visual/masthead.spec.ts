@@ -112,7 +112,7 @@ test.describe('masthead', () => {
   });
 
   test('the menu is the same on every page, and marks the current one', async ({ page }) => {
-    const labels = ['Home', 'Our Work', 'Projects', 'About', 'Finer Living', 'Contact'];
+    const labels = ['Home', 'What we do', 'Projects', 'About', 'Finer Living', 'Contact'];
 
     for (const route of ['/', '/about', '/contact', '/privacy']) {
       await page.goto(`${NEXT_ORIGIN}${route}`, { waitUntil: 'domcontentloaded' });

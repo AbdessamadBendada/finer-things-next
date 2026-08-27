@@ -76,7 +76,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
       {/* 3. SERVICES */}
       <section className="svc" id="work">
         <div className="wrap svc-head">
-          <div className="ey rise">Our Work</div>
+          <div className="ey rise">What we do</div>
           <p className="rise">
             Curated touch points and distinct design elements are essential for every guest’s
             journey. At Finer Things, this is where your story begins.
@@ -327,7 +327,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
             <div className="ft-cols">
               <div>
                 <h4>Explore</h4>
-                <Link href="/our-work">Our Work</Link>
+                <Link href="/our-work">What we do</Link>
                 <Link href="/projects">Projects</Link>
                 <Link href="/about">About</Link>
                 <Link href="/services/finer-living">Finer Living</Link>

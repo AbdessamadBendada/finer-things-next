@@ -15,7 +15,7 @@ export function StylingCurationPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="hero-kicker eyebrow">Our Work / 02</div>
+            <div className="hero-kicker eyebrow">What we do / 02</div>
             <h1>
               <span className="hero-line">
                 <span>Styling</span>

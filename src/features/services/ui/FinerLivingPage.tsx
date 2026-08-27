@@ -15,7 +15,7 @@ export function FinerLivingPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="hero-kicker eyebrow">Our Work / 03</div>
+            <div className="hero-kicker eyebrow">What we do / 03</div>
             <h1>
               <span className="hero-line">
                 <span>Finer</span>

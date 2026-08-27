@@ -4,7 +4,7 @@ import { BreadcrumbJsonLd } from '@/shared/seo/JsonLd';
 import { buildMetadata } from '@/shared/seo/metadata';
 
 export const metadata = buildMetadata({
-  title: 'Our Work | Luxury Motion Study',
+  title: 'What we do | Luxury Motion Study',
   description: 'Bespoke accessories, styling and curation, and Finer Living by Finer Things.',
   path: ROUTES.ourWork,
 });
@@ -13,7 +13,7 @@ export default function OurWorkRoute() {
   return (
     <>
       <OurWorkPage />
-      <BreadcrumbJsonLd trail={[{ name: 'Our Work', path: ROUTES.ourWork }]} />
+      <BreadcrumbJsonLd trail={[{ name: 'What we do', path: ROUTES.ourWork }]} />
     </>
   );
 }

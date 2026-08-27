@@ -24,7 +24,7 @@ export type NavLink = {
  */
 
 const HOME: NavLink = { href: ROUTES.home, label: 'Home' };
-const OUR_WORK: NavLink = { href: ROUTES.ourWork, label: 'Our Work' };
+const OUR_WORK: NavLink = { href: ROUTES.ourWork, label: 'What we do' };
 const PROJECTS: NavLink = { href: ROUTES.projects, label: 'Projects' };
 const ABOUT: NavLink = { href: ROUTES.about, label: 'About' };
 const CONTACT: NavLink = { href: ROUTES.contact, label: 'Contact' };
@@ -78,6 +78,11 @@ export const CHROME: Record<string, ChromeConfig> = {
   },
 
   [ROUTES.projects]: {
+    scrollThreshold: 0.72,
+    footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
+  },
+
+  [ROUTES.projectNew]: {
     scrollThreshold: 0.72,
     footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
@@ -136,3 +141,18 @@ export const withCurrent = (links: readonly NavLink[], pathname: string): NavLin
   links.map((link) => (link.href === pathname ? { ...link, current: true } : link));
 
 export const chromeFor = (pathname: string): ChromeConfig | undefined => CHROME[pathname];
+
+/**
+ * Which page's chrome styling a route borrows.
+ *
+ * `chrome.css` carries a block of masthead and footer rules per page, keyed by
+ * `[data-page='…']`, and it only knows the twelve pages that came from
+ * `legacy/`. A thirteenth route would get no chrome styling at all and render
+ * an unstyled header. Rather than copy twenty rules for a page that is still
+ * under review, `/project-new` borrows the chrome of the page it may replace.
+ *
+ * Only the chrome is shared. The page's own look comes from its CSS module.
+ */
+export const CHROME_ALIAS: Record<string, string> = {
+  [ROUTES.projectNew]: 'projects',
+};
