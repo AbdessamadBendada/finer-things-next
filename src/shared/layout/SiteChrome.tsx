@@ -28,14 +28,26 @@ import { SiteHeader } from './SiteHeader';
  */
 export function SiteChrome({
   variant,
+  slug: slugOverride,
   children,
 }: {
   variant: FooterVariant;
+  /**
+   * Which page's chrome styling to use, when the pathname cannot say.
+   *
+   * The 404 is the case this exists for: it renders under whatever URL the
+   * visitor typed, so its slug came out as `nope` or `c` and chrome.css had no
+   * rules for it, leaving the masthead completely unstyled. Only in production
+   * does Next report `/_not-found`, so a pathname-keyed alias fixed the build
+   * and did nothing in dev, which is where it was being looked at.
+   */
+  slug?: string;
   children: ReactNode;
 }) {
   const pathname = usePathname();
   const chrome = chromeFor(pathname);
   const slug =
+    slugOverride ??
     CHROME_ALIAS[pathname] ??
     (pathname === '/' ? 'home' : (pathname.split('/').filter(Boolean).at(-1) ?? 'home'));
 

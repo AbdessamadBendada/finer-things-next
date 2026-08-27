@@ -43,8 +43,10 @@ const ASIDES = [
 ] as const;
 
 export default function NotFound() {
+  // The chrome slug is stated rather than derived: this page renders under
+  // whatever URL the visitor typed, so the pathname cannot identify it.
   return (
-    <SiteChrome variant="minimal">
+    <SiteChrome variant="minimal" slug="contact">
       <div className={styles.status} data-page="status">
         <div className={styles.asides} aria-hidden="true">
           {ASIDES.map((aside, index) => (

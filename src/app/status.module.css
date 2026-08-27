@@ -29,8 +29,17 @@
    * below the fold on a page that should be exactly one screen.
    */
   --bar: 92px;
+  /* One tile size, so the second in a column can be placed from the height of
+     the first rather than from a guessed offset. A 3:4 tile is 4/3 of its
+     width tall. */
+  --w: clamp(150px, 17vw, 260px);
+  --w-sm: clamp(120px, 13vw, 200px);
+  /* The gap below the bar is generous on purpose: the top two images used to
+     begin almost at its lower edge, which read as a collision rather than as
+     a composition. */
+  --gap: clamp(40px, 7vh, 96px);
   min-height: calc(100svh - var(--bar));
-  padding: calc(var(--bar) + 40px) 44px 80px;
+  padding: calc(var(--bar) + var(--gap)) 44px 80px;
   background: var(--paper);
   color: var(--ink);
   overflow: hidden;
@@ -49,7 +58,25 @@
   align-items: center;
   gap: 20px;
   text-align: center;
-  max-width: 38ch;
+  /*
+   * Sized so the heading falls in exactly two lines.
+   *
+   * In pixels rather than `ch`, because the column is a flex item and a `ch`
+   * cap resolved to `100%` against the parent: measured at the heading's own
+   * 99px, "This page has been" needs 666px on one row. `min()` keeps it inside
+   * a narrow viewport, where the heading wraps further and that is correct.
+   */
+  width: min(700px, 100%);
+}
+
+/* Between 1200 and 1400 the fixed 700px column runs almost into the images
+   either side: the column does not shrink but the space between them does.
+   Narrower here, which takes the heading to three lines and is the honest
+   trade at that width. */
+@media (max-width: 1400px) and (min-width: 1101px) {
+  .middle {
+    width: min(560px, 100%);
+  }
 }
 
 .eyebrow {
@@ -62,7 +89,7 @@
 .title {
   margin: 0;
   font:
-    600 clamp(3.1rem, 6.6vw, 5.6rem) / 0.96 var(--font-display),
+    600 clamp(3.1rem, 7.2vw, 6.2rem) / 0.98 var(--font-display),
     Georgia,
     serif;
   letter-spacing: -0.042em;
@@ -122,7 +149,9 @@
 /* ---------------- The work, either side ---------------- */
 .asides {
   position: absolute;
-  inset: 0;
+  /* Inset from the top by the bar and its gap, so percentage positions below
+     are measured from where the content actually starts. */
+  inset: calc(var(--bar) + var(--gap)) 0 0;
   z-index: 1;
   pointer-events: none;
 }
@@ -130,7 +159,7 @@
 .aside {
   position: absolute;
   margin: 0;
-  width: clamp(150px, 17vw, 260px);
+  width: var(--w);
   aspect-ratio: 3 / 4;
   overflow: hidden;
   /* Held back so they frame the message rather than compete with it. The
@@ -146,27 +175,47 @@
 }
 
 /* Staggered rather than aligned, so the four read as pieces placed around the
-   words instead of as a grid. */
+   words instead of as a grid.
+
+   The lower tile in each column is placed from the height of the upper one
+   plus a gap, not from a guessed offset. Both earlier attempts collided:
+   pinning top and bottom pulled the pair together once the block was inset
+   below the masthead, and fixed offsets held at one viewport and not at
+   another. Derived from the tile size, they cannot overlap at any width. */
 .left[data-index='0'] {
   left: clamp(-40px, 1vw, 40px);
-  top: 12%;
+  top: 0;
 }
 
 .left[data-index='1'] {
   left: clamp(10px, 7vw, 150px);
-  bottom: 8%;
-  width: clamp(120px, 13vw, 200px);
+  top: calc(var(--w) * 4 / 3 + clamp(24px, 4vh, 60px));
+  width: var(--w-sm);
 }
 
 .right[data-index='2'] {
   right: clamp(10px, 7vw, 150px);
-  top: 9%;
-  width: clamp(120px, 13vw, 200px);
+  top: 0;
+  width: var(--w-sm);
 }
 
 .right[data-index='3'] {
   right: clamp(-40px, 1vw, 40px);
-  bottom: 14%;
+  top: calc(var(--w-sm) * 4 / 3 + clamp(24px, 4vh, 60px));
+}
+
+/* Between 900 and 1200 there is room for the message and one image a side,
+   but not two: the lower pair began to run under the text. */
+@media (max-width: 1280px) {
+  .left[data-index='1'],
+  .right[data-index='3'] {
+    display: none;
+  }
+
+  .aside {
+    --w: clamp(130px, 14vw, 190px);
+    --w-sm: clamp(130px, 14vw, 190px);
+  }
 }
 
 /*
@@ -174,10 +223,11 @@
  * one image behind it. A 34ch column with photographs either side does not fit
  * on a phone, and shrinking them further would leave four unreadable stamps.
  */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .status {
     --bar: 74px;
-    padding: calc(var(--bar) + 32px) 24px 64px;
+    --gap: 32px;
+    padding: calc(var(--bar) + var(--gap)) 24px 64px;
   }
 
   .aside {
