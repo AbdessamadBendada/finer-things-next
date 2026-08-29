@@ -85,8 +85,8 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
-              src="/assets/0676_Marsa_Al_Arab_Lobby_5_b2051520.webp"
-              alt="Bespoke details at Marsa Al Arab"
+              src="/assets/new-cover-bespoke-accessories.webp"
+              alt="A stitched leather tray on a walnut table"
             />
           </div>
           <Link href="/services/bespoke-accessories">
@@ -101,8 +101,8 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
-              src="/assets/0662_Waldorf_Astoria_Osaka_13_c71bc2ac.webp"
-              alt="Curated interior at Waldorf Astoria Osaka"
+              src="/assets/new-cover-styling-curation.webp"
+              alt="Sculptural objects styled on a lacquered console"
             />
           </div>
           <Link href="/services/styling-curation">
@@ -116,8 +116,8 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
-              src="/assets/0698_Finer_Living_July_2025_edited_1_a006768d.webp"
-              alt="Finer Living crafted objects"
+              src="/assets/new-cover-finer-living.webp"
+              alt="An oak and brass footed bowl from the Finer Living collection"
             />
           </div>
           <Link href="/services/finer-living">
