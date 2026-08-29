@@ -7,11 +7,28 @@ import type { RegisteredImage } from '@/shared/config/image-registry';
  * loop seamless — see HeroCollage.
  */
 export const COLLAGE_STILLS: readonly RegisteredImage[] = [
-  '/assets/hero1.webp',
-  '/assets/hero2.webp',
-  '/assets/hero3.webp',
-  '/assets/hero4.webp',
-  '/assets/hero5.webp',
-  '/assets/hero6.webp',
-  '/assets/hero7.webp',
+  /*
+   * The client's own materials, in place of the stock textures that shipped
+   * with the mockup. They were the only generic photography left on the site.
+   *
+   * Ordered so neighbours contrast: the strip is always showing two or three
+   * cells at once, and putting the two pale materials together left a washed
+   * band sliding past. Dark leather, pale shell, wood, glass, horn, fabric,
+   * lacquer.
+   *
+   * Nine were supplied and seven are used. Resin and stitching are held back:
+   * stitching is a detail of leather rather than a material of its own, and
+   * resin reads as glass at the size a moving cell allows.
+   *
+   * Every cell is cropped to 9/16 by `.collage .cell`, so roughly the middle
+   * 56% of each square survives. That is less than the images it replaces
+   * lost, which were nearer square still.
+   */
+  '/assets/new-material-leather.webp',
+  '/assets/new-material-shell.webp',
+  '/assets/new-material-wood.webp',
+  '/assets/new-material-glass.webp',
+  '/assets/new-material-horn.webp',
+  '/assets/new-material-fabric.webp',
+  '/assets/new-material-lacquer.webp',
 ];
