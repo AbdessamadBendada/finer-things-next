@@ -153,15 +153,15 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
             <div className="filmstrip-track" id="filmstripTrack">
               <article className="film-card active" style={{ '--f': '0' } as CSSProperties}>
                 <Media
-                  src="/assets/0667_Marsa_Al_Arab_Lobby_9_dff7cff7.webp"
+                  src="/assets/new-work-marsa-lobby-05.webp"
                   className="film-image"
-                  alt="The lobby at Marsa Al Arab"
+                  alt="Sculptural objects styled on a lacquered lobby console"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
-                    src="/assets/0672_Marsa_Al_Arab_Lobby_10_4fff97ed.webp"
-                    alt="Lobby detail at Marsa Al Arab"
+                    src="/assets/new-work-marsa-lobby-08.webp"
+                    alt="A glass cloche and cut-glass vase on a marble lobby table"
                   />
                 </div>
                 <div className="film-copy">
@@ -178,15 +178,15 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
               </article>
               <article className="film-card" style={{ '--f': '1' } as CSSProperties}>
                 <Media
-                  src="/assets/0663_Marsa_Al_Arab_Suite1_7_a51be4a1.webp"
+                  src="/assets/new-work-bespoke-inlays.webp"
                   className="film-image"
-                  alt="A private suite at Marsa Al Arab"
+                  alt="Bespoke leather trays inlaid in a lit suite drawer"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
-                    src="/assets/0674_Marsa_Al_Arab_Suite1_1_49bd6513.webp"
-                    alt="Suite detail at Marsa Al Arab"
+                    src="/assets/new-work-marsa-suite2-02.webp"
+                    alt="Orchids in a gilt-edged ceramic bowl"
                   />
                 </div>
                 <div className="film-copy">
@@ -203,15 +203,15 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
               </article>
               <article className="film-card" style={{ '--f': '2' } as CSSProperties}>
                 <Media
-                  src="/assets/0661_Marsa_Al_Arab_Iliana_2_829970fd.webp"
+                  src="/assets/new-work-an-01344.webp"
                   className="film-image"
-                  alt="Iliana at Marsa Al Arab"
+                  alt="A floral centrepiece on a marble dining table at Iliana"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
-                    src="/assets/0689_Marsa_Al_Arab_Iliana_5_0c49bd95.webp"
-                    alt="Iliana detail at Marsa Al Arab"
+                    src="/assets/new-work-marsa-shelfs.webp"
+                    alt="Coral, crystal and a shell-inlaid box on lit marble shelves"
                   />
                 </div>
                 <div className="film-copy">
@@ -228,15 +228,15 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
               </article>
               <article className="film-card" style={{ '--f': '3' } as CSSProperties}>
                 <Media
-                  src="/assets/0670_Marsa_Al_Arab_Bombay_5_95764db5.webp"
+                  src="/assets/new-work-an-01515.webp"
                   className="film-image"
-                  alt="Bombay Club at Marsa Al Arab"
+                  alt="A brass drinks trolley set with crystal, the Burj Al Arab beyond"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
-                    src="/assets/0679_Marsa_Al_Arab_Bombay_3_09aae676.webp"
-                    alt="Bombay Club detail at Marsa Al Arab"
+                    src="/assets/new-work-marsa-corridor-03.webp"
+                    alt="Considered detail along the corridor at Marsa Al Arab"
                   />
                 </div>
                 <div className="film-copy">
@@ -253,15 +253,15 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
               </article>
               <article className="film-card" style={{ '--f': '4' } as CSSProperties}>
                 <Media
-                  src="/assets/0662_Waldorf_Astoria_Osaka_13_c71bc2ac.webp"
+                  src="/assets/new-work-waldorf-16.webp"
                   className="film-image"
-                  alt="Waldorf Astoria Osaka"
+                  alt="The entrance hall at Waldorf Astoria Osaka"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
-                    src="/assets/0686_Waldorf_Astoria_Osaka_16_948b5f8c.webp"
-                    alt="Waldorf Astoria Osaka detail"
+                    src="/assets/new-work-marsa-lobby-12.webp"
+                    alt="Styled detail at Waldorf Astoria Osaka"
                   />
                 </div>
                 <div className="film-copy">
