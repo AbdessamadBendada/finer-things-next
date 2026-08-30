@@ -51,6 +51,29 @@ export function OurWorkPage() {
               </p>
             </div>
           </div>
+
+          {/* The claim above had nothing behind it. Three workshops, run to the
+              full width, so the sentence is shown rather than only stated. */}
+          <div className="artisan-strip">
+            <figure className="artisan-shot rise">
+              <Media
+                src="/assets/new-artisan-wood-01.webp"
+                alt="Sawn walnut, oak and maple stacked in a joinery workshop"
+              />
+            </figure>
+            <figure className="artisan-shot rise">
+              <Media
+                src="/assets/new-artisan-ceramics-07.webp"
+                alt="A ceramicist throwing a cup on the wheel"
+              />
+            </figure>
+            <figure className="artisan-shot rise">
+              <Media
+                src="/assets/new-artisan-glass-06.webp"
+                alt="Metal moulds and tools racked along a workshop wall"
+              />
+            </figure>
+          </div>
         </section>
 
         <section className="services" id="services">

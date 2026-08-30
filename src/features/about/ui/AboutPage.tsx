@@ -129,6 +129,54 @@ export function AboutPage() {
             </div>
           </div>
         </section>
+        {/* THE ARTISANS */}
+        <section className="artisans" id="artisans">
+          <div className="wrap">
+            <div className="artisans-head">
+              <div className="eyebrow rise">The artisans</div>
+              <h2 className="rise">
+                {'Nothing here is made by '}
+                <em>us alone.</em>
+              </h2>
+              <p className="artisans-note rise">
+                Behind every piece is a workshop somewhere in the world: a ceramicist who has
+                kept the same moulds for forty years, a glassblower who works to the minute, a
+                joiner who knows which board to cut and which to leave. We spend as much time
+                finding them as we do designing, because the making is the difference between an
+                object and a piece worth keeping.
+              </p>
+            </div>
+
+            {/* Two tall figures either side of a wide one: the composition
+                carries the luxury, since the workshops themselves are honest
+                rather than glossy. */}
+            <div className="artisans-grid">
+              <figure className="artisan-figure rise" data-drift="-16">
+                <Media
+                  src="/assets/new-artisan-glass-30.webp"
+                  alt="A craftsman holding a worn wooden mould kept for decades"
+                />
+              </figure>
+              <figure className="artisan-figure artisan-wide rise" data-drift="12">
+                <Media
+                  src="/assets/new-artisan-wood-16.webp"
+                  alt="A workshop wall of labelled timber samples and finished boxes"
+                />
+              </figure>
+              <figure className="artisan-figure rise" data-drift="-8">
+                <Media
+                  src="/assets/new-artisan-ft-08.webp"
+                  alt="The open door of a kiln, its burner lit"
+                />
+              </figure>
+            </div>
+
+            <p className="artisans-foot rise">
+              Ceramics, glass, wood, leather and metal, worked by hand in small workshops across
+              Europe and beyond.
+            </p>
+          </div>
+        </section>
         {/* PRINCIPLES */}
         <section className="principles" id="principles">
           <div className="wrap">
