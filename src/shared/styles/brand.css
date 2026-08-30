@@ -1175,48 +1175,71 @@ body.menu-open [data-page] .menu-toggle {
   line-height: 1.85;
 }
 
-/* Two tall figures either side of a wide one. The uneven rhythm is what
-   stops three photographs of workshops reading as a stock triptych. */
-[data-page='about'] .artisans-grid {
+/* ---------------- The wall ----------------
+   Three rows of four, and one tile turning over every few seconds. The client
+   says "100s of artisans"; three photographs cannot carry that, and a wall
+   that keeps changing suggests a set too large to show at once.
+
+   Square tiles on purpose. The photography is a mix of portrait and landscape
+   from several workshops, and a square crop is the only shape that treats
+   them all equally. */
+[data-page='about'] .artisan-wall {
   display: grid;
-  grid-template-columns: 0.8fr 1.4fr 0.8fr;
-  gap: clamp(12px, 1.6vw, 24px);
-  align-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(8px, 1vw, 16px);
 }
 
-[data-page='about'] .artisan-figure {
+[data-page='about'] .artisan-tile {
   margin: 0;
   overflow: hidden;
-  aspect-ratio: 3 / 4;
-  /* `data-drift` is written by the page's scroll driver, so these move
-     against each other exactly as the portraits above them do. */
-  transform: translateY(var(--drift, 0));
-}
-
-/* Taller than a landscape crop, so the three figures share a horizon and the
-   row reads as one composition rather than as a wide image with two tall ones
-   parked beside it. */
-[data-page='about'] .artisan-wide {
   aspect-ratio: 1 / 1;
+  background: rgba(243, 240, 234, 0.06);
+  /* The fade is on the tile, not the image, so the swap happens behind a
+     surface that is already invisible. */
+  opacity: 1;
+  transition: opacity 0.9s ease;
 }
 
-[data-page='about'] .artisan-figure img {
+[data-page='about'] .artisan-tile.is-fading {
+  opacity: 0;
+}
+
+[data-page='about'] .artisan-tile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Held back, so the workshops sit under the type rather than shouting
-     over it. They lift on hover, which is the reward for looking. */
-  filter: brightness(0.82) saturate(0.86);
-  transform: scale(1.03);
+  filter: brightness(0.86) saturate(0.88);
   transition:
-    filter 0.8s ease,
-    transform 1.4s var(--ease);
+    filter 0.7s ease,
+    transform 1.3s var(--ease);
 }
 
+/* Hovering lifts one tile out of the dimming rather than pausing the wall.
+   Stopping the whole thing when a cursor passes over it feels broken; this
+   rewards attention without interrupting anything. */
 @media (hover: hover) and (pointer: fine) {
-  [data-page='about'] .artisan-figure:hover img {
-    filter: brightness(1) saturate(1);
-    transform: scale(1);
+  [data-page='about'] .artisan-tile:hover img {
+    filter: brightness(1.04) saturate(1);
+    transform: scale(1.04);
+  }
+}
+
+@media (max-width: 860px) {
+  [data-page='about'] .artisan-wall {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  [data-page='about'] .artisan-wall {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-page='about'] .artisan-tile,
+  [data-page='about'] .artisan-tile img {
+    transition: none;
   }
 }
 

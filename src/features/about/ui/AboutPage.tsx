@@ -1,5 +1,6 @@
 import { Media } from '@/shared/ui/Media';
 import { AboutShell } from './AboutShell';
+import { ArtisanWall } from './ArtisanWall';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
 export function AboutPage() {
@@ -147,29 +148,7 @@ export function AboutPage() {
               </p>
             </div>
 
-            {/* Two tall figures either side of a wide one: the composition
-                carries the luxury, since the workshops themselves are honest
-                rather than glossy. */}
-            <div className="artisans-grid">
-              <figure className="artisan-figure rise" data-drift="-16">
-                <Media
-                  src="/assets/new-artisan-glass-30.webp"
-                  alt="A craftsman holding a worn wooden mould kept for decades"
-                />
-              </figure>
-              <figure className="artisan-figure artisan-wide rise" data-drift="12">
-                <Media
-                  src="/assets/new-artisan-wood-16.webp"
-                  alt="A workshop wall of labelled timber samples and finished boxes"
-                />
-              </figure>
-              <figure className="artisan-figure rise" data-drift="-8">
-                <Media
-                  src="/assets/new-artisan-ft-08.webp"
-                  alt="The open door of a kiln, its burner lit"
-                />
-              </figure>
-            </div>
+            <ArtisanWall />
 
             <p className="artisans-foot rise">
               Ceramics, glass, wood, leather and metal, worked by hand in small workshops across
