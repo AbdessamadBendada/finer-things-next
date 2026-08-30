@@ -12,8 +12,8 @@ export function OurWorkPage() {
         <section className="hero">
           <div className="hero-bg">
             <Media
-              src="/assets/0687_Marsa_Al_Arab_Lobby_8_25ea7574.webp"
-              alt="Layered decorative details in the Marsa Al Arab lobby"
+              src="/assets/new-work-marsa-lobby-11.webp"
+              alt="Layered decorative details in a styled hotel lobby"
             />
           </div>
           <div className="wrap hero-content">
@@ -57,8 +57,8 @@ export function OurWorkPage() {
           <article className="service">
             <div className="service-media">
               <Media
-                src="/assets/0676_Marsa_Al_Arab_Lobby_5_b2051520.webp"
-                alt="Distinctive decorative objects at Marsa Al Arab"
+                src="/assets/new-cover-bespoke-accessories.webp"
+                alt="A stitched leather tray on a walnut table"
               />
             </div>
             <div className="wrap service-content">
@@ -82,8 +82,8 @@ export function OurWorkPage() {
           <article className="service">
             <div className="service-media">
               <Media
-                src="/assets/0680_Marsa_Al_Arab_Iliana_3_e20bcd92.webp"
-                alt="Ceramic installation and styled display at Iliana"
+                src="/assets/new-cover-styling-curation.webp"
+                alt="Sculptural objects styled on a lacquered console"
               />
             </div>
             <div className="wrap service-content">
@@ -106,8 +106,8 @@ export function OurWorkPage() {
           <article className="service">
             <div className="service-media">
               <Media
-                src="/assets/0698_Finer_Living_July_2025_edited_1_a006768d.webp"
-                alt="Sculptural wooden stools from the Finer Living collection"
+                src="/assets/new-cover-finer-living.webp"
+                alt="An oak and brass footed bowl from the Finer Living collection"
               />
             </div>
             <div className="wrap service-content">

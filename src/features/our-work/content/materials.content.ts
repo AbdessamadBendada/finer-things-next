@@ -5,66 +5,60 @@ export type MaterialCard = {
   copy: string;
   image: RegisteredImage;
   alt: string;
-  /** Marks a card standing in until the client supplies its own. */
-  placeholder?: true;
 };
 
 /**
- * The materials, paraphrased from finerthingsdesigns.com/pages/materials.
+ * The materials, from the photography the client supplied.
  *
- * Reworded rather than copied, with the meaning kept intact. Two small fixes
- * to the source, neither of which changes what is being said: the shells entry
- * on the live site ends "the natural elegance of these precious metals", which
- * belongs to the metal entry, and the colour list there reads "azure and,
- * sienna".
+ * This replaces a set paraphrased from their old website. It is a different
+ * list: no marble and no metal, and horn, lacquer, resin and fabric are new.
+ * The copy is written to the photographs rather than carried over, because
+ * four of the six cards previously described materials that are not in the
+ * set they sent.
  *
- * The imagery is the same material photography the home hero already uses, so
- * a visitor meets marble, leather and wood on the first screen and then reads
- * about them here.
+ * Nine were supplied and six are shown, which fills two even rows and retires
+ * the duplicate that stood in while only five existed. Stitching moved to the
+ * finishing details below, where it belongs: it is a choice made on leather
+ * rather than a material of its own. Fabric and glass are held back for the
+ * same reason space allows only six, and are the first candidates if this
+ * grows to nine.
  */
 export const MATERIALS: readonly MaterialCard[] = [
   {
-    name: 'Marble',
-    copy: 'Marble is the epitome of sophistication and refinement, blending the classic with the contemporary. It belongs beside leather: one versatile and culturally current, the other a byword for luxury and style. Our collection spans a range of colours and a variety of finishes.',
-    image: '/assets/hero7.webp',
-    alt: 'Stacked marble and stone samples in several colours and finishes',
-  },
-  {
     name: 'Lustrous Leather',
-    copy: 'Leather has been worked for centuries and is known for its durability and versatility. Long associated with luxury and style, it gives a refined and sophisticated finish. Our selection covers a wide range of choices and textures, for products that feel unique and elegant.',
-    image: '/assets/hero6.webp',
-    alt: 'Rolls of leather in tan, grey and deep brown',
+    copy: 'Worked for centuries and known for its durability, leather takes colour and texture like nothing else. Our selection runs from smooth full-grain to open suede, in a range wide enough that a piece can be matched to a room rather than approximated.',
+    image: '/assets/new-material-leather.webp',
+    alt: 'A rolled leather edge, close, with contrast saddle stitching',
   },
   {
     name: 'Wood',
-    copy: 'Our accessories are crafted from a variety of premium woods, among them rich walnut, smooth maple and sturdy oak. Available in a range of finishes, each design carries a sense of warmth and familiarity.',
-    image: '/assets/hero5.webp',
-    alt: 'Wood samples in varied grains and tones',
+    copy: 'Rich walnut, pale oak, smooth maple. Cut, turned and finished so the grain is part of the design rather than a surface it happens to have, and warm in the hand in a way no other material manages.',
+    image: '/assets/new-material-wood.webp',
+    alt: 'Cut lengths of walnut, oak and maple stacked on a workbench',
   },
   {
-    name: 'Metal',
-    copy: 'Our pieces are celebrated for their timeless character. Metallic finishes set against leather create a striking contrast while keeping the whole in balance. With multiple finishes available, we work towards the most harmonious pairing possible.',
-    image: '/assets/hero1.webp',
-    alt: 'Brushed metal swatches in brass, copper and steel',
+    name: 'Horn',
+    copy: 'No two plates are alike. Polished horn moves from honey through amber to near black in the space of a single piece, which is why we use it where a repeated pattern would flatten the work.',
+    image: '/assets/new-material-horn.webp',
+    alt: 'Polished horn plates, banded from honey through amber to black',
+  },
+  {
+    name: 'Lacquer',
+    copy: 'Built in many thin coats and polished between each one, until the surface reads as depth rather than shine. It suits the pieces that should be quiet in a room and hold the eye when it arrives.',
+    image: '/assets/new-material-lacquer.webp',
+    alt: 'The corner of a deep oxblood lacquered box, mirror-polished',
+  },
+  {
+    name: 'Resin',
+    copy: 'Poured, cured and cut, with pigment, gold leaf or nothing at all suspended inside. Resin takes the character we ask of it, which makes it the most exact of the materials we work in.',
+    image: '/assets/new-material-resin.webp',
+    alt: 'Cast resin panels, some clouded, some with gold leaf suspended inside',
   },
   {
     name: 'Elegant Shells',
-    copy: 'Discover the rare beauty of embellishment in textured and colourful shells, worked with care to bring out the natural elegance of the material.',
-    image: '/assets/hero2.webp',
-    alt: 'Polished mother of pearl shell discs',
-  },
-  /*
-   * Six cards make two even rows of three, and the client has supplied five.
-   * This repeats marble until the sixth arrives. It is flagged rather than
-   * quietly duplicated so it cannot ship unnoticed: search `placeholder` to
-   * find it. See docs/FEEDBACK.md.
-   */
-  {
-    name: 'Marble',
-    copy: 'Marble is the epitome of sophistication and refinement, blending the classic with the contemporary. It belongs beside leather: one versatile and culturally current, the other a byword for luxury and style. Our collection spans a range of colours and a variety of finishes.',
-    image: '/assets/hero7.webp',
-    alt: 'Stacked marble and stone samples in several colours and finishes',
-    placeholder: true,
+    copy: 'Mother of pearl, cut and laid by hand. The light in it changes as you move past, so a surface that is quiet from one chair is luminous from the next.',
+    image: '/assets/new-material-shell.webp',
+    alt: 'Cut mother-of-pearl tiles, iridescent against a pale ground',
   },
 ];
 
@@ -76,14 +70,14 @@ export const DETAILS: readonly MaterialCard[] = [
   {
     name: 'Exclusive Styles',
     copy: 'The Finer Things colour palette is infinite, with hundreds of colours available, ranging from tasteful neutrals and bold greyscales to hues of coral, fuchsia, azure and sienna. The plethora of shades creates an array of endless possibilities.',
-    image: '/assets/hero4.webp',
-    alt: 'Folded fabric swatches in coral, azure, fuchsia and neutral tones',
+    image: '/assets/new-material-fabric.webp',
+    alt: 'Linen and leather swatches in neutrals, olive and oxblood',
   },
   {
     name: 'Stitching',
     copy: 'With a range of options available, the smaller details can often be the most impactful. Whether it is a clean tone on tone leather or a contrasting colour, we create a piece that reflects your taste.',
-    image: '/assets/hero3.webp',
-    alt: 'Wooden spools of thread in several colours',
+    image: '/assets/new-material-stitching.webp',
+    alt: 'Contrast saddle stitching running along a leather edge',
   },
 ];
 

@@ -11,8 +11,8 @@ export function ContactPage() {
           <div className="wrap contact-grid">
             <figure className="image-wrap">
               <Media
-                src="/assets/0692_Get_in_touch_7b21b857.webp"
-                alt="An atmospheric Finer Things interior detail"
+                src="/assets/new-contact.webp"
+                alt="An artisan cutting leather by hand at a workbench"
               />
               <figcaption className="image-caption">Begin a conversation</figcaption>
             </figure>

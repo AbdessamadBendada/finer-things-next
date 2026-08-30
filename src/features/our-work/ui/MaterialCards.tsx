@@ -26,11 +26,7 @@ export function MaterialCards({
   return (
     <div className="material-grid" data-columns={columns}>
       {cards.map((card, index) => (
-        <figure
-          className="material-card rise"
-          key={`${card.name}-${index}`}
-          {...(card.placeholder ? { 'data-placeholder': 'true' } : {})}
-        >
+        <figure className="material-card rise" key={`${card.name}-${index}`}>
           <Media src={card.image} alt={card.alt} />
           <figcaption className="material-copy">
             <h3>{card.name}</h3>
