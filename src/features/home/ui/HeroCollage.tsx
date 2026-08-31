@@ -25,7 +25,16 @@ export function HeroCollage() {
                 src={src}
                 alt=""
                 priority={pass === 0 && index < 2}
-                sizes="(max-width: 860px) 60vw, 30vw"
+                /* The strip is rendered twice so the loop is seamless, which
+                   puts the second pass permanently outside the viewport: lazy
+                   loading never fetched it, and the cells arrived blank as the
+                   animation wrapped around. Both passes load eagerly. */
+                loading="eager"
+                /* Measured: a cell renders at 506px on a 1440 viewport, which
+                   is 35vw. An earlier attempt at 12vw was taken from a
+                   mid-animation reading and served 200px files into a 506px
+                   box, which is visibly soft. */
+                sizes="(max-width: 860px) 60vw, 35vw"
               />
             </div>
           )),

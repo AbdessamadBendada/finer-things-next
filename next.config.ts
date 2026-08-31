@@ -25,6 +25,18 @@ const nextConfig: NextConfig = {
     // Widths matched to the site's real breakpoints; avoids generating
     // variants nothing ever requests.
     deviceSizes: [560, 860, 1080, 1368, 1920, 2560],
+    /*
+     * The small end, and the reason images were arriving far too large.
+     *
+     * next/image picks the first candidate at or above the width `sizes`
+     * implies, and with no `imageSizes` the smallest available was 560. A
+     * collage cell asking for 30vw of a 1440 viewport needs about 432px, so
+     * it was served 1368 instead: roughly sixty times the pixels it could
+     * show, and the reveal animation ran while the file was still arriving.
+     *
+     * These are the widths the grids and cells on this site actually occupy.
+     */
+    imageSizes: [128, 200, 280, 360, 440],
     unoptimized: imageLoader === 'unoptimized',
     ...(imageLoader === 'cloudflare'
       ? {

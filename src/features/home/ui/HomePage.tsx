@@ -17,7 +17,11 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
       {/* HEADER */}
       {/* big shrinking wordmark */}
       <div className="word" id="word" aria-hidden="true">
-        <Media src="/assets/finer-things-logo.png" alt="" />
+        <Media
+          src="/assets/finer-things-logo.png"
+          alt=""
+          sizes="(max-width: 860px) 65vw, 28vw"
+        />
       </div>
       {/* 1. HERO */}
       <section className="hero" id="hero">
@@ -44,12 +48,14 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
             className="intro-logo-layer intro-logo-mark"
             alt=""
             aria-hidden="true"
+            sizes="(max-width: 860px) 80vw, 56vw"
           />
           <Media
             src="/assets/finer-things-logo.png"
             className="intro-logo-layer intro-logo-name"
             alt=""
             aria-hidden="true"
+            sizes="(max-width: 860px) 80vw, 56vw"
           />
         </div>
         <div className="brandwords">
@@ -85,6 +91,12 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
+              /* Eager: this row's image is revealed on hover, so it sits
+                 clipped to zero width and lazy loading never asks for it.
+                 The first hover then started the download from scratch and
+                 the wipe played over nothing. */
+              loading="eager"
+              sizes="100vw"
               src="/assets/new-cover-bespoke-accessories.webp"
               alt="A stitched leather tray on a walnut table"
             />
@@ -101,6 +113,12 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
+              /* Eager: this row's image is revealed on hover, so it sits
+                 clipped to zero width and lazy loading never asks for it.
+                 The first hover then started the download from scratch and
+                 the wipe played over nothing. */
+              loading="eager"
+              sizes="100vw"
               src="/assets/new-cover-styling-curation.webp"
               alt="Sculptural objects styled on a lacquered console"
             />
@@ -116,6 +134,12 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
+              /* Eager: this row's image is revealed on hover, so it sits
+                 clipped to zero width and lazy loading never asks for it.
+                 The first hover then started the download from scratch and
+                 the wipe played over nothing. */
+              loading="eager"
+              sizes="100vw"
               src="/assets/new-cover-finer-living.webp"
               alt="An oak and brass footed bowl from the Finer Living collection"
             />
