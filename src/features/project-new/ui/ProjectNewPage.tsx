@@ -23,8 +23,8 @@ export function ProjectNewPage() {
         <section className="gallery-hero">
           <div className="gallery-hero-bg">
             <Media
-              src="/assets/0667_Marsa_Al_Arab_Lobby_9_dff7cff7.webp"
-              alt="The lobby at Jumeirah Marsa Al Arab"
+              src="/assets/new-work-marsa-lobby-11.webp"
+              alt="Layered decorative details in the Marsa Al Arab lobby"
               priority
             />
           </div>
