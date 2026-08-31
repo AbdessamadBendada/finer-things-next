@@ -15,12 +15,14 @@ import { useEffect } from 'react';
 import { useFilmstrip } from './useFilmstrip';
 import { useIntroSequence } from './useIntroSequence';
 import { usePurposeReveal } from './usePurposeReveal';
+import { useServiceImageWarmup } from './useServiceImageWarmup';
 import { useTouchWipe } from './useTouchWipe';
 
 /** Composes the home page's choreography. */
 export function useHomeMotion(root: RefObject<HTMLElement | null>): void {
   useIntroSequence(root);
   useFilmstrip(root);
+  useServiceImageWarmup(root);
   useTouchWipe(root);
 
   useReveal(root, {

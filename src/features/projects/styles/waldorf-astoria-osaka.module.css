@@ -114,3 +114,6 @@
   .page :global(.chapter h2) {font-size:clamp(3.4rem,16vw,5.5rem)}
   .page h1, .page h2, .page h3 {letter-spacing:-.038em!important}
 }
+@media(max-height:500px) and (orientation:landscape) {
+  .page :global(.hero) {min-height:520px}
+}

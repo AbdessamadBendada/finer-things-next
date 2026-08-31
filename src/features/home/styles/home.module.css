@@ -261,6 +261,13 @@
 .page :global(.newsletter-form input::placeholder) {color:rgba(241,237,231,.42)}
 .page :global(.newsletter-form button) {padding:14px 0 14px 22px;background:none;border:0;color:var(--brass);font:500 .68rem 'Jost',sans-serif;
     letter-spacing:.17em;text-transform:uppercase;white-space:nowrap;cursor:pointer}
+@media(max-width:560px) {
+  .page :global(.newsletter-form) {margin-bottom:-1px}
+  .page :global(.newsletter-form input) {min-height:44px;font-size:1rem}
+  .page :global(.newsletter-form button) {min-height:44px;font-size:.75rem}
+  .page :global(.hero-copy .btn), .page :global(.closing .btn) {font-size:.75rem}
+  .page :global(.film-copy p) {font-size:.75rem}
+}
 @media(prefers-reduced-motion:reduce) {
   .page :global(.collage .track) {animation:none !important}
   .page :global(.cover) {display:none}
@@ -322,6 +329,10 @@
   .page :global(.hero-copy h1) {font-size:clamp(2.45rem,10vw,3.4rem)}
   .page :global(.purpose h2) {font-size:clamp(2.15rem,8.5vw,3.5rem)}
 }
+@media(max-height:500px) and (orientation:landscape) {
+  .page :global(.hero) {min-height:520px}
+  .page :global(.hero-copy) {bottom:28px}
+}
 .page :global(.reveal .hero-copy) {animation-delay:.7s}
 .page :global(.rise) {transform:translateY(20px);transition-duration:1.25s}
 .page :global(.ey) {letter-spacing:.23em}
@@ -342,4 +353,5 @@
 .page h1 em, .page h2 em, .page h3 em {padding-inline:.035em;font-style:normal}
 @media(max-width:560px) {
   .page h1, .page h2, .page h3 {letter-spacing:-.035em!important}
+  .page :global(.hero-copy .btn), .page :global(.closing .btn) {font-size:.75rem}
 }

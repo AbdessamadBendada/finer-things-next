@@ -7,6 +7,25 @@ It is based on production-build measurements across all 13 routes at 320x568,
 375x667, 390x844 and 844x390. It does not authorize a visual redesign: review
 each deliberate design change against the parity baseline.
 
+## Implementation status
+
+**Codex change — 2026-08-31:** the low-risk launch subset is implemented.
+The burger and header logo now expose 44px hit areas without changing their
+layout footprint; fixed chrome and the full-screen menu account for safe-area
+insets; short-landscape menus and heroes remain usable; the Home newsletter
+uses 16px input text; and Home now limits critical image work while warming
+service images before reveal. Automated mobile and masthead checks cover these
+behaviors, and the unchanged legacy screenshots pass at every route and
+viewport.
+
+The remaining items require either an approved visual change or real-device /
+deployed-preview evidence. Contact field typography and page-content targets
+were tested at the proposed sizes but reverted because they materially changed
+eight mobile parity snapshots. MOB-04 is likewise deferred. Before launch,
+test Contact focus zoom and safe areas on a physical iPhone, inspect an Android
+device, and record deployed mobile LCP before deciding whether to approve those
+design changes.
+
 ## Current baseline
 
 - All audited routes return 200.

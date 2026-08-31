@@ -165,6 +165,9 @@
   .page :global(.steps.line-in::before) {transform:scaleY(1)}
   .page :global(.step) {min-height:215px;border-left:0;border-bottom:1px solid rgba(41,40,31,.2)}
 }
+@media(max-height:500px) and (orientation:landscape) {
+  .page :global(.hero) {min-height:520px}
+}
 @media(prefers-reduced-motion:reduce) {
   .page :global(.hero-media) {animation:none;transform:none}
   .page :global(.hero-media img) {transform:none!important}

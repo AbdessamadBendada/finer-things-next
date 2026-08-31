@@ -94,6 +94,9 @@
   .page :global(.places-grid) {grid-template-columns:1fr 1fr}
   .page :global(.place:nth-child(n)) {width:100%;margin:0;aspect-ratio:4/5}
 }
+@media(max-height:500px) and (orientation:landscape) {
+  .page :global(.hero) {min-height:520px}
+}
 @media(prefers-reduced-motion:reduce) {
   .page :global(.rise), .page :global(.hero-line>span), .page :global(.hero-foot), .page :global(.word-mask>span) {opacity:1;transform:none;transition:none}
   .page :global(.hero-bg), .page :global(.hero-bg img), .page :global(.service-media img), .page :global(.place img) {animation:none;transform:none!important}

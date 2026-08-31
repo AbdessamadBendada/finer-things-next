@@ -474,6 +474,24 @@
   [data-page='contact'] .head {
     padding: 19px 24px;
   }
+  [data-page='home'] .head {
+    padding-top: max(18px, calc(10px + env(safe-area-inset-top)));
+    padding-right: max(22px, calc(14px + env(safe-area-inset-right)));
+    padding-left: max(22px, calc(14px + env(safe-area-inset-left)));
+  }
+  [data-page='our-work'] .head,
+  [data-page='projects'] .head,
+  [data-page='marsa-al-arab'] .head,
+  [data-page='waldorf-astoria-osaka'] .head,
+  [data-page='bespoke-accessories'] .head,
+  [data-page='styling-curation'] .head,
+  [data-page='finer-living'] .head,
+  [data-page='about'] .head,
+  [data-page='contact'] .head {
+    padding-top: max(19px, calc(11px + env(safe-area-inset-top)));
+    padding-right: max(24px, calc(16px + env(safe-area-inset-right)));
+    padding-left: max(24px, calc(16px + env(safe-area-inset-left)));
+  }
   [data-page='our-work'] .wrap,
   [data-page='projects'] .wrap,
   [data-page='marsa-al-arab'] .wrap,
@@ -541,6 +559,9 @@
   [data-page='privacy'] .head,
   [data-page='terms'] .head {
     padding: 19px 24px;
+    padding-top: max(19px, calc(11px + env(safe-area-inset-top)));
+    padding-right: max(24px, calc(16px + env(safe-area-inset-right)));
+    padding-left: max(24px, calc(16px + env(safe-area-inset-left)));
   }
   [data-page='privacy'] .footer-row,
   [data-page='terms'] .footer-row {

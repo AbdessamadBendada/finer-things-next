@@ -86,15 +86,10 @@ whatever the image actually occupies. Measured: 8x too wide on the home hero
 collage, 3.9x on the About portraits, 2.7x on the What we do service media.
 The fix is honest `sizes` values, per call site where they differ.
 
-**Three service-row images never load at all.** The `.wipe` images behind the
-What we do rows are revealed on hover, so they sit clipped to zero width and
-lazy loading never fetches them. The first hover starts the download from
-scratch and the wipe animates over nothing. They need to be eager, or
-prefetched on pointer-enter.
-
-Both were reported by the client as "the animation takes so long, and sometimes
-the image stays empty". Both are diagnosed with measurements and neither is
-fixed.
+The earlier empty service-row wipe is fixed: the clipped lazy images now warm
+when their row approaches the viewport, receives focus, or receives a pointer.
+The remaining over-fetch issue above was reported by the client as "the
+animation takes so long" and still needs per-call-site `sizes` work.
 
 **The home purpose statement runs four lines on mobile.** 144 characters at
 51px needs 421px and a phone gives 335. Three lines would need type smaller

@@ -25,6 +25,27 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-08-31: Harden mobile launch behavior without redesigning pages
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: expanded the burger and logo hit areas without moving the masthead;
+  added safe-area and short-landscape handling; reduced Home's initial image
+  competition; warmed clipped service imagery before reveal; and added focused
+  mobile regression coverage. Layout-changing content-control and typography
+  proposals were reverted after parity identified their impact.
+- Files: `src/shared/styles/brand.css`, `src/shared/styles/chrome.css`,
+  `src/features/home/`, relevant short-landscape feature styles,
+  `tests/visual/mobile-readiness.spec.ts`,
+  `docs/MOBILE-LAUNCH-ACTION-PLAN.md`, `docs/HANDOFF.md`
+- Verified: `pnpm verify` passed (typecheck, lint, production build, 8 form
+  tests and 36 visual-parity checks); 40 masthead checks and 5 focused
+  mobile-readiness checks also passed.
+- Follow-up: verify Contact focus behavior and notch/home-indicator clearance
+  on physical iPhone and Android devices; measure deployed mobile LCP; obtain
+  design approval before changing page-content target sizes or small text.
+
 ## 2026-08-31: Add mobile and SEO launch action plans
 
 **Codex change**

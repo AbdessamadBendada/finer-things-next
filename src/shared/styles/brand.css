@@ -79,14 +79,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
   background: none;
   color: inherit;
   cursor: pointer;
-  margin-right: -6px; /* optical: the icon's ink is narrower than its box */
+  /* Keep the original 34px layout footprint while exposing a 44px hit area.
+     The icon itself stays on the same masthead edge. */
+  margin: -5px -11px -5px -5px;
 }
 
 /* The wordmark's letterforms sit slightly below the middle of its box, so
@@ -175,6 +177,16 @@
     visibility 0.45s ease;
 }
 
+@supports (padding: env(safe-area-inset-top)) {
+  [data-page] .mobile-menu {
+    padding:
+      max(100px, calc(70px + env(safe-area-inset-top)))
+      max(24px, calc(16px + env(safe-area-inset-right)))
+      max(54px, calc(24px + env(safe-area-inset-bottom)))
+      max(24px, calc(16px + env(safe-area-inset-left)));
+  }
+}
+
 /* Centred by auto margins rather than `justify-content`, which clips the
    first link out of reach when the list is taller than a short viewport. */
 [data-page] .mobile-menu a:first-of-type {
@@ -204,6 +216,21 @@
 [data-page] .mobile-menu a:focus-visible {
   outline: 1px solid var(--ink);
   outline-offset: 4px;
+}
+
+/* A phone held sideways is height-constrained, not width-constrained. Keep
+   the complete menu comfortable to scan without turning six links into a
+   several-screen journey. */
+@media (max-height: 500px) and (orientation: landscape) {
+  [data-page] .mobile-menu {
+    padding-top: max(72px, calc(52px + env(safe-area-inset-top)));
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+
+  [data-page] .mobile-menu a {
+    padding-block: 8px;
+    font-size: clamp(2rem, 7vh, 2.7rem);
+  }
 }
 
 /* ---------------- Home, before the hand-off ----------------
@@ -273,7 +300,16 @@
    `[data-page] .menu-toggle`, which a two-class selector would tie with and
    lose to. Defaults to 0, so this is inert where scrollbars overlay. */
 body.menu-open [data-page] .menu-toggle {
-  margin-right: calc(-6px + var(--scrollbar-gap, 0px));
+  margin-right: calc(-11px + var(--scrollbar-gap, 0px));
+}
+
+/* The wordmark is already wide enough to tap comfortably. This expands its
+   vertical hit area without changing the masthead's measured height. */
+[data-page] .head .logo:not(.logo-placeholder) {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  margin-block: -7px;
 }
 
 /* ---------------- Wordmark / masthead alignment ----------------

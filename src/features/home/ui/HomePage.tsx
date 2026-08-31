@@ -91,11 +91,6 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
-              /* Eager: this row's image is revealed on hover, so it sits
-                 clipped to zero width and lazy loading never asks for it.
-                 The first hover then started the download from scratch and
-                 the wipe played over nothing. */
-              loading="eager"
               sizes="100vw"
               src="/assets/new-cover-bespoke-accessories.webp"
               alt="A stitched leather tray on a walnut table"
@@ -113,11 +108,6 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
-              /* Eager: this row's image is revealed on hover, so it sits
-                 clipped to zero width and lazy loading never asks for it.
-                 The first hover then started the download from scratch and
-                 the wipe played over nothing. */
-              loading="eager"
               sizes="100vw"
               src="/assets/new-cover-styling-curation.webp"
               alt="Sculptural objects styled on a lacquered console"
@@ -134,11 +124,6 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
         <div className="svc-row rise">
           <div className="wipe">
             <Media
-              /* Eager: this row's image is revealed on hover, so it sits
-                 clipped to zero width and lazy loading never asks for it.
-                 The first hover then started the download from scratch and
-                 the wipe played over nothing. */
-              loading="eager"
               sizes="100vw"
               src="/assets/new-cover-finer-living.webp"
               alt="An oak and brass footed bowl from the Finer Living collection"
