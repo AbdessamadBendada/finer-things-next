@@ -8,8 +8,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      // Placeholder legal text should not be indexed while it is still a draft.
-      disallow: [ROUTES.privacy, ROUTES.terms],
+      disallow: [
+        // Placeholder legal text, while it is still a draft.
+        ROUTES.privacy,
+        ROUTES.terms,
+        // The editorial projects index, superseded by the gallery.
+        ROUTES.projectsEditorial,
+      ],
     },
     sitemap: new URL('/sitemap.xml', SITE.url).toString(),
     host: SITE.url,

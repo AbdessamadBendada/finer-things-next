@@ -32,7 +32,19 @@ export const PARITY_PAGES = [
    */
   { name: 'home', legacy: '/index.html', route: '/', settle: 7000, baseline: 'current' },
   { name: 'our-work', legacy: '/our-work.html', route: '/our-work', baseline: 'current' },
+  /*
+   * /projects is the gallery now, approved in review, so it has no legacy
+   * counterpart at all: `legacy` is unused for a page on `current` and points
+   * at the document the route used to serve.
+   */
   { name: 'projects', legacy: '/projects.html', route: '/projects', baseline: 'current' },
+  // The editorial index /projects used to be. Still built, so still gated.
+  {
+    name: 'projects-editorial',
+    legacy: '/projects.html',
+    route: '/projects-editorial',
+    baseline: 'current',
+  },
   {
     name: 'marsa-al-arab',
     legacy: '/marsa-al-arab.html',

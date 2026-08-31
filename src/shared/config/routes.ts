@@ -10,9 +10,10 @@ export const ROUTES = {
   home: '/',
   ourWork: '/our-work',
   projects: '/projects',
-  /* Under review: a gallery-led alternative to /projects. Kept as its own
-     route so the existing page is untouched until the client chooses. */
-  projectNew: '/project-new',
+  /* The editorial index /projects used to be. Superseded by the gallery,
+     kept reachable so the two can be compared, and excluded from the menu,
+     the sitemap and search. */
+  projectsEditorial: '/projects-editorial',
   about: '/about',
   contact: '/contact',
   privacy: '/privacy',

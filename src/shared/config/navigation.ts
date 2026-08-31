@@ -85,7 +85,7 @@ export const CHROME: Record<string, ChromeConfig> = {
     footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
 
-  [ROUTES.projectNew]: {
+  [ROUTES.projectsEditorial]: {
     scrollThreshold: 0.72,
     footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
@@ -157,5 +157,5 @@ export const chromeFor = (pathname: string): ChromeConfig | undefined => CHROME[
  * Only the chrome is shared. The page's own look comes from its CSS module.
  */
 export const CHROME_ALIAS: Record<string, string> = {
-  [ROUTES.projectNew]: 'projects',
+  [ROUTES.projectsEditorial]: 'projects',
 };

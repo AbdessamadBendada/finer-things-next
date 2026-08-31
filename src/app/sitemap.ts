@@ -4,7 +4,12 @@ import { ALL_ROUTES, ROUTES } from '@/shared/config/routes';
 import { SITE } from '@/shared/config/site';
 
 /** Pages that should not be advertised to crawlers. */
-const EXCLUDED = new Set<string>([ROUTES.privacy, ROUTES.terms]);
+const EXCLUDED = new Set<string>([
+  ROUTES.privacy,
+  ROUTES.terms,
+  // Superseded by the gallery at /projects, and kept only for comparison.
+  ROUTES.projectsEditorial,
+]);
 
 /** Home first, then the work, then everything else. */
 function priorityFor(route: string): number {
