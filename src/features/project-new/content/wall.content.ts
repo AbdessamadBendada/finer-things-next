@@ -20,138 +20,145 @@ const MARSA = { property: 'Jumeirah Marsa Al Arab', location: 'Dubai' } as const
 const WALDORF = { property: 'Waldorf Astoria Osaka', location: 'Japan' } as const;
 
 /**
- * The wall.
+ * The wall, on the client's own photography.
  *
  * Deliberately not grouped by property. Each tile carries its own credit on
- * hover, so the two hotels can sit together as one body of work rather than
- * as two labelled runs, which is what keeps the page immersive.
+ * hover, so the two hotels sit together as one body of work, which is what
+ * keeps the page immersive rather than turning it into two labelled runs.
  *
  * Sizes are composed rather than generated: a large tile every few positions
- * gives the scroll a rhythm. The order below is the order on the page.
+ * gives the scroll a rhythm. The order below is the order on the page, and it
+ * alternates between the wide shots of rooms and the close ones of objects so
+ * neighbouring tiles never read as a pair.
  *
- * We hold nineteen images against the thirty-one on the client's own gallery.
- * The format lives on density, so this wants the rest of the set when it
- * arrives. See docs/FEEDBACK.md.
+ * Twenty of the twenty-two supplied are used. The two left out are a phone
+ * snapshot and a duplicate angle.
  */
 export const WALL: readonly WallTile[] = [
   {
-    image: '/assets/0687_Marsa_Al_Arab_Lobby_8_25ea7574.webp',
+    image: '/assets/new-work-marsa-lobby-11.webp',
     ...MARSA,
     space: 'Lobby, styling and bespoke accessories',
     size: 'wide',
     alt: 'Layered decorative details in the Marsa Al Arab lobby',
   },
   {
-    image: '/assets/0663_Marsa_Al_Arab_Suite1_7_a51be4a1.webp',
+    image: '/assets/new-work-bespoke-inlays.webp',
     ...MARSA,
     space: 'Private suite, bespoke accessories',
-    alt: 'A private suite at Marsa Al Arab',
+    alt: 'Bespoke leather trays inlaid in a lit suite drawer',
   },
   {
-    image: '/assets/0670_Marsa_Al_Arab_Bombay_5_95764db5.webp',
+    image: '/assets/new-work-an-01344.webp',
+    ...MARSA,
+    space: 'Iliana, styling and florals',
+    alt: 'A floral centrepiece on a marble dining table at Iliana',
+  },
+  {
+    image: '/assets/new-work-waldorf-16.webp',
+    ...WALDORF,
+    space: 'Entrance hall, styling and curation',
+    size: 'wide',
+    alt: 'The entrance hall at Waldorf Astoria Osaka',
+  },
+  {
+    image: '/assets/new-work-marsa-suite2-08.webp',
+    ...MARSA,
+    space: 'Private suite, bespoke trays',
+    alt: 'A stitched leather tray holding a book and a porcelain flower',
+  },
+  {
+    image: '/assets/new-work-marsa-lobby-05.webp',
+    ...MARSA,
+    space: 'Lobby, objects and styling',
+    size: 'tall',
+    alt: 'Sculptural objects styled on a lacquered lobby console',
+  },
+  {
+    image: '/assets/new-work-an-01321.webp',
     ...MARSA,
     space: 'The Bombay Club, styling and curation',
-    alt: 'Table settings at The Bombay Club',
+    alt: 'Cloches, books and a painted jar on a marble counter',
   },
   {
-    image: '/assets/0662_Waldorf_Astoria_Osaka_13_c71bc2ac.webp',
-    ...WALDORF,
-    space: 'Guest room, bespoke accessories',
+    image: '/assets/new-work-marsa-shelfs.webp',
+    ...MARSA,
+    space: 'Lobby, coral and crystal',
+    alt: 'Coral, crystal and a shell-inlaid box on lit marble shelves',
+  },
+  {
+    image: '/assets/new-work-an-01515.webp',
+    ...MARSA,
+    space: 'Terrace, styling',
+    alt: 'A brass drinks trolley set with crystal, the Burj Al Arab beyond',
+  },
+  {
+    image: '/assets/new-work-marsa-lobby-08.webp',
+    ...MARSA,
+    space: 'Lobby, glass and marble',
+    alt: 'A glass cloche and cut-glass vase on a marble lobby table',
+  },
+  {
+    image: '/assets/new-work-marsa-corridor-03.webp',
+    ...MARSA,
+    space: 'Corridor, considered detail',
     size: 'wide',
-    alt: 'A guest room at Waldorf Astoria Osaka',
+    alt: 'Considered detail along the corridor at Marsa Al Arab',
   },
   {
-    image: '/assets/0661_Marsa_Al_Arab_Iliana_2_829970fd.webp',
+    image: '/assets/new-work-marsa-suite2-02.webp',
     ...MARSA,
-    space: 'Iliana, styling and curation',
-    alt: 'Ceramic detail at Iliana',
+    space: 'Private suite, ceramics and florals',
+    alt: 'Orchids in a gilt-edged ceramic bowl',
   },
   {
-    image: '/assets/0672_Marsa_Al_Arab_Lobby_10_4fff97ed.webp',
+    image: '/assets/new-work-an-01285.webp',
     ...MARSA,
-    space: 'Lobby, objects and florals',
-    size: 'tall',
-    alt: 'Lobby detail at Marsa Al Arab',
+    space: 'Iliana, art and objects',
+    alt: 'A sea fan mounted against a lit turquoise panel',
   },
   {
-    image: '/assets/0674_Marsa_Al_Arab_Suite1_1_49bd6513.webp',
-    ...MARSA,
-    space: 'Private suite, styling',
-    alt: 'Suite detail at Marsa Al Arab',
-  },
-  {
-    image: '/assets/0669_Waldorf_Astoria_Osaka_18_536d1f9e.webp',
-    ...WALDORF,
-    space: 'Corridor, curated objects',
-    alt: 'A corridor at Waldorf Astoria Osaka',
-  },
-  {
-    image: '/assets/0676_Marsa_Al_Arab_Lobby_5_b2051520.webp',
-    ...MARSA,
-    space: 'Lobby, bespoke accessories',
-    alt: 'Distinctive objects in the Marsa Al Arab lobby',
-  },
-  {
-    image: '/assets/0664_Marsa_Al_Arab_Suite2_4_78452d9c.webp',
-    ...MARSA,
-    space: 'Second suite, bespoke accessories',
-    alt: 'A second suite at Marsa Al Arab',
-  },
-  {
-    image: '/assets/0682_Waldorf_Astoria_Osaka_12_ef1532bb.webp',
-    ...WALDORF,
-    space: 'Lounge, styling and curation',
-    size: 'wide',
-    alt: 'A lounge at Waldorf Astoria Osaka',
-  },
-  {
-    image: '/assets/0679_Marsa_Al_Arab_Bombay_3_09aae676.webp',
-    ...MARSA,
-    space: 'The Bombay Club, objects and books',
-    alt: 'Shelf detail at The Bombay Club',
-  },
-  {
-    image: '/assets/0681_Marsa_Al_Arab_Lobby_2_d21675ab.webp',
-    ...MARSA,
-    space: 'Lobby, marble and brass detail',
-    alt: 'Marble and brass detail in the lobby',
-  },
-  {
-    image: '/assets/0667_Marsa_Al_Arab_Lobby_9_dff7cff7.webp',
+    image: '/assets/new-work-marsa-lobby-12.webp',
     ...MARSA,
     space: 'Lobby, styling',
     size: 'tall',
-    alt: 'The lobby at Marsa Al Arab',
+    alt: 'Styled detail in the Marsa Al Arab lobby',
   },
   {
-    image: '/assets/0689_Marsa_Al_Arab_Iliana_5_0c49bd95.webp',
+    image: '/assets/new-work-marsa-lobby-06.webp',
     ...MARSA,
-    space: 'Iliana, decorative objects',
-    alt: 'Decorative objects at Iliana',
+    space: 'Suite, books and objects',
+    alt: 'A photography book and carved figures on a dark timber table',
   },
   {
-    image: '/assets/0686_Waldorf_Astoria_Osaka_16_948b5f8c.webp',
-    ...WALDORF,
-    space: 'Suite, bespoke accessories',
-    alt: 'A suite at Waldorf Astoria Osaka',
-  },
-  {
-    image: '/assets/0678_Marsa_Al_Arab_Lobby_4_b7af1dee.webp',
+    image: '/assets/new-work-an-01347.webp',
     ...MARSA,
-    space: 'Lobby, considered detail',
-    alt: 'Considered detail in the lobby',
+    space: 'The Bombay Club, table styling',
+    alt: 'Table settings and glassware at The Bombay Club',
   },
   {
-    image: '/assets/0680_Marsa_Al_Arab_Iliana_3_e20bcd92.webp',
+    image: '/assets/new-work-marsa-suite2-07.webp',
     ...MARSA,
-    space: 'Iliana, ceramic installation',
+    space: 'Private suite, bespoke accessories',
+    alt: 'Bespoke accessories arranged in a guest suite',
+  },
+  {
+    image: '/assets/new-work-an-01469.webp',
+    ...MARSA,
+    space: 'Iliana, styling and curation',
     size: 'wide',
-    alt: 'Ceramic installation at Iliana',
+    alt: 'A styled arrangement of objects and florals at Iliana',
   },
   {
-    image: '/assets/0685_Marsa_Al_Arab_Lobby_11_c9061482.webp',
+    image: '/assets/new-work-marsa-lobby-09.webp',
     ...MARSA,
     space: 'Lobby, florals and objects',
-    alt: 'Florals and objects in the lobby',
+    alt: 'Florals and decorative objects in the lobby',
+  },
+  {
+    image: '/assets/new-work-marsa-original-01.webp',
+    ...MARSA,
+    space: 'Public spaces, styling',
+    alt: 'A styled corner of the public spaces at Marsa Al Arab',
   },
 ];
