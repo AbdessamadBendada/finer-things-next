@@ -25,6 +25,23 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-08-31: Add mobile and SEO launch action plans
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: documented the measured mobile audit and the production-rendered
+  SEO audit as two prioritized, acceptance-testable launch work queues.
+- Files: `docs/MOBILE-LAUNCH-ACTION-PLAN.md`,
+  `docs/SEO-LAUNCH-ACTION-PLAN.md`, `docs/HANDOFF.md`,
+  `docs/CODEX-CHANGES.md`
+- Verified: audited 13 production-rendered routes across four responsive
+  viewports; checked Googlebot metadata, headings, links, images, JSON-LD,
+  robots, sitemap, Open Graph output, redirects and 404 behavior; ran the
+  production build; checked Markdown formatting and Git whitespace.
+- Follow-up: implement the P0 and P1 tasks in the two action plans before
+  launch.
+
 ## 2026-08-31: Add the Codex handoff log
 
 **Codex change**

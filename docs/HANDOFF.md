@@ -10,6 +10,11 @@ AI-authored work is recorded separately in
 [CODEX-CHANGES.md](CODEX-CHANGES.md); read its newest entry before changing
 the repository.
 
+Launch-readiness work is queued in
+[MOBILE-LAUNCH-ACTION-PLAN.md](MOBILE-LAUNCH-ACTION-PLAN.md) and
+[SEO-LAUNCH-ACTION-PLAN.md](SEO-LAUNCH-ACTION-PLAN.md). These are action plans,
+not records of completed fixes.
+
 ## Status
 
 The site is a complete twelve-page build, migrated from `legacy/` and then
