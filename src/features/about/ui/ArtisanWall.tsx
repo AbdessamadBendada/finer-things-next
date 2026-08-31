@@ -7,8 +7,15 @@ import { prefersReducedMotion } from '@/shared/motion';
 
 import { ARTISAN_WALL } from '../content/artisans.content';
 
-/** Twelve on screen: three rows of four. */
-const TILES = 12;
+/**
+ * Ten on screen.
+ *
+ * The grid is four columns and two of the tiles run double width, so the wall
+ * consumes twelve cells: exactly three full rows. Twelve tiles consumed
+ * fifteen, which is three and three quarter rows, and left a visible hole in
+ * the last one.
+ */
+const TILES = 10;
 
 /** How often one tile changes. Slow enough to read as drift, not a slideshow. */
 const INTERVAL = 2600;

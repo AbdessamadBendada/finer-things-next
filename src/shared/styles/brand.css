@@ -1187,9 +1187,14 @@ body.menu-open [data-page] .menu-toggle {
    the dark ground, muted to match everything around it. They run at full
    strength now and the ground does the holding back instead.
 
-   Twelve equal squares are a static shape however often the contents change,
-   so the grid is broken: two tiles run double width, one runs double height.
-   The wall has a rhythm rather than reading as a chessboard.
+   Equal squares are a static shape however often the contents change, so the
+   grid is broken: two tiles run double width. The wall has a rhythm rather
+   than reading as a chessboard.
+
+   Ten tiles, two of them double width, is twelve cells and so exactly three
+   rows. The count is not arbitrary: twelve tiles with three span-cells came
+   to fifteen, which is three and three quarter rows, and left a hole in the
+   last one. Change either number and the arithmetic has to be redone.
 
    And the swap was a cross-fade so gentle it barely registered. Each new
    photograph now slides up into place as the old one leaves, which makes the
@@ -1209,19 +1214,18 @@ body.menu-open [data-page] .menu-toggle {
   background: rgba(243, 240, 234, 0.05);
 }
 
-/* The broken grid. Positions chosen so the large tiles sit apart rather than
-   adjacent, which would read as one block rather than as rhythm. */
+/* The broken grid: one wide tile on the first row, one on the last, placed so
+   they sit apart rather than adjacent, which would read as a single block
+   rather than as rhythm.
+
+   Double width only. A double-height tile makes the row count fractional and
+   is what left the hole. */
 [data-page='about'] .artisan-tile:nth-child(2) {
   grid-column: span 2;
   aspect-ratio: 2 / 1;
 }
 
-[data-page='about'] .artisan-tile:nth-child(7) {
-  grid-row: span 2;
-  aspect-ratio: 1 / 2;
-}
-
-[data-page='about'] .artisan-tile:nth-child(10) {
+[data-page='about'] .artisan-tile:nth-child(9) {
   grid-column: span 2;
   aspect-ratio: 2 / 1;
 }
@@ -1275,20 +1279,29 @@ body.menu-open [data-page] .menu-toggle {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* The double-height tile leaves a hole once the columns change, so the
-     large tiles are dropped and the grid becomes even again. */
+  /* The spans do not divide into three columns, so the grid becomes even.
+     Ten square tiles is three rows of three plus one, so the last tile is
+     dropped to keep the block complete. */
   [data-page='about'] .artisan-tile:nth-child(2),
-  [data-page='about'] .artisan-tile:nth-child(7),
-  [data-page='about'] .artisan-tile:nth-child(10) {
+  [data-page='about'] .artisan-tile:nth-child(9) {
     grid-column: span 1;
-    grid-row: span 1;
     aspect-ratio: 1 / 1;
+  }
+
+  [data-page='about'] .artisan-tile:nth-child(10) {
+    display: none;
   }
 }
 
+/* Two columns wants an even count. Nine left a single tile alone on a fifth
+   row, so one more is dropped and the wall is four clean rows of two. */
 @media (max-width: 560px) {
   [data-page='about'] .artisan-wall {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  [data-page='about'] .artisan-tile:nth-child(9) {
+    display: none;
   }
 }
 
