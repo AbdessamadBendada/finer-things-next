@@ -44,6 +44,12 @@ report or an analytics call. Log an event name and a correlation id.
 
 ## Before you finish
 
+Record every AI-authored change in [docs/CODEX-CHANGES.md](docs/CODEX-CHANGES.md)
+before handing the repository back. Add one entry per completed task, label it
+**Codex change**, and include the date, commit (or `uncommitted`), affected
+files, verification performed and any follow-up work. This is the durable log
+for the next AI; do not scatter duplicate change notes through unrelated docs.
+
 ```bash
 pnpm verify      # typecheck + lint + build + visual parity
 ```
@@ -142,6 +148,7 @@ in a shared layer instead.
 | Question                       | File                                                 |
 | ------------------------------ | ---------------------------------------------------- |
 | **Where is the project now?**  | **[docs/HANDOFF.md](docs/HANDOFF.md)** — read first  |
+| What did Codex change?         | [docs/CODEX-CHANGES.md](docs/CODEX-CHANGES.md)       |
 | How is the code organised?     | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)         |
 | How do I add a page?           | [docs/ADDING-A-FEATURE.md](docs/ADDING-A-FEATURE.md) |
 | How does the animation work?   | [docs/MOTION.md](docs/MOTION.md)                     |

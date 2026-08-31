@@ -1,11 +1,14 @@
 # Where the project is
 
-Last updated **2026-08-27**, after review round 4.
+Last updated **2026-08-31**, after the client photography update.
 
 Read this first if you are picking the project up. It is the state of play:
 what is settled, what is waiting on the client, and what is known to be broken.
 The reasoning behind individual decisions is in
 [FEEDBACK.md](FEEDBACK.md) and [adr/](adr/); this file is only the map.
+AI-authored work is recorded separately in
+[CODEX-CHANGES.md](CODEX-CHANGES.md); read its newest entry before changing
+the repository.
 
 ## Status
 
@@ -61,7 +64,7 @@ Nothing here is a bug. Each is a placeholder that ships until they answer.
 | What                        | Where                                            | Notes                                                      |
 | --------------------------- | ------------------------------------------------ | ---------------------------------------------------------- |
 | Verdict on the gallery page | `/project-new`                                   | Additive. Reverting `4caf561` removes it                   |
-| 12 more project images      | `features/project-new/content`                   | We hold 19, their own gallery shows 31                     |
+| Remaining project images    | `features/project-new/content`                   | 20 of the 22 supplied photographs are used                 |
 | A sixth material            | `features/our-work/content/materials.content.ts` | The sixth card repeats Marble, flagged `placeholder: true` |
 | Malika's portrait and bio   | `features/about/ui/AboutPage.tsx`                | Labelled panel in the shape the photograph will take       |
 | All real photography        | everywhere                                       | 34 distinct images across 81 placements                    |
