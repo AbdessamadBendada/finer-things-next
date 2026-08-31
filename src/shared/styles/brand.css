@@ -179,8 +179,7 @@
 
 @supports (padding: env(safe-area-inset-top)) {
   [data-page] .mobile-menu {
-    padding:
-      max(100px, calc(70px + env(safe-area-inset-top)))
+    padding: max(100px, calc(70px + env(safe-area-inset-top)))
       max(24px, calc(16px + env(safe-area-inset-right)))
       max(54px, calc(24px + env(safe-area-inset-bottom)))
       max(24px, calc(16px + env(safe-area-inset-left)));
