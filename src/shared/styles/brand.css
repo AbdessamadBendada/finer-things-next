@@ -1176,57 +1176,113 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 /* ---------------- The wall ----------------
-   Three rows of four, and one tile turning over every few seconds. The client
-   says "100s of artisans"; three photographs cannot carry that, and a wall
-   that keeps changing suggests a set too large to show at once.
+   Twelve tiles on a four-column grid, one turning over every few seconds. The
+   client says "100s of artisans"; three photographs cannot carry that, and a
+   wall that keeps changing suggests a set too large to show at once.
 
-   Square tiles on purpose. The photography is a mix of portrait and landscape
-   from several workshops, and a square crop is the only shape that treats
-   them all equally. */
+   Three things were wrong with the first version and are fixed here.
+
+   The photographs were dimmed to 86% brightness, which flattened the one
+   image with real life in it: a shot of molten glass, bright orange against
+   the dark ground, muted to match everything around it. They run at full
+   strength now and the ground does the holding back instead.
+
+   Twelve equal squares are a static shape however often the contents change,
+   so the grid is broken: two tiles run double width, one runs double height.
+   The wall has a rhythm rather than reading as a chessboard.
+
+   And the swap was a cross-fade so gentle it barely registered. Each new
+   photograph now slides up into place as the old one leaves, which makes the
+   change feel like something happening. */
 [data-page='about'] .artisan-wall {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
   gap: clamp(8px, 1vw, 16px);
 }
 
 [data-page='about'] .artisan-tile {
+  position: relative;
   margin: 0;
   overflow: hidden;
   aspect-ratio: 1 / 1;
-  background: rgba(243, 240, 234, 0.06);
-  /* The fade is on the tile, not the image, so the swap happens behind a
-     surface that is already invisible. */
-  opacity: 1;
-  transition: opacity 0.9s ease;
+  background: rgba(243, 240, 234, 0.05);
 }
 
-[data-page='about'] .artisan-tile.is-fading {
-  opacity: 0;
+/* The broken grid. Positions chosen so the large tiles sit apart rather than
+   adjacent, which would read as one block rather than as rhythm. */
+[data-page='about'] .artisan-tile:nth-child(2) {
+  grid-column: span 2;
+  aspect-ratio: 2 / 1;
+}
+
+[data-page='about'] .artisan-tile:nth-child(7) {
+  grid-row: span 2;
+  aspect-ratio: 1 / 2;
+}
+
+[data-page='about'] .artisan-tile:nth-child(10) {
+  grid-column: span 2;
+  aspect-ratio: 2 / 1;
 }
 
 [data-page='about'] .artisan-tile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.86) saturate(0.88);
-  transition:
-    filter 0.7s ease,
-    transform 1.3s var(--ease);
+  transition: transform 1.4s var(--ease);
 }
 
-/* Hovering lifts one tile out of the dimming rather than pausing the wall.
-   Stopping the whole thing when a cursor passes over it feels broken; this
-   rewards attention without interrupting anything. */
+/* The slide. The tile leaves upward and the replacement arrives from below,
+   so the change reads as a new photograph taking the place of the old one
+   rather than as a dissolve. */
+[data-page='about'] .artisan-tile img {
+  opacity: 1;
+  transform: translateY(0) scale(1.01);
+  transition:
+    opacity 0.45s ease,
+    transform 0.85s var(--ease);
+}
+
+[data-page='about'] .artisan-tile.is-fading img {
+  opacity: 0;
+  transform: translateY(-14%) scale(1.06);
+}
+
+[data-page='about'] .artisan-tile.is-arriving img {
+  animation: artisan-arrive 0.85s var(--ease) both;
+}
+
+@keyframes artisan-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(16%) scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1.01);
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   [data-page='about'] .artisan-tile:hover img {
-    filter: brightness(1.04) saturate(1);
-    transform: scale(1.04);
+    transform: scale(1.06);
   }
 }
 
 @media (max-width: 860px) {
   [data-page='about'] .artisan-wall {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* The double-height tile leaves a hole once the columns change, so the
+     large tiles are dropped and the grid becomes even again. */
+  [data-page='about'] .artisan-tile:nth-child(2),
+  [data-page='about'] .artisan-tile:nth-child(7),
+  [data-page='about'] .artisan-tile:nth-child(10) {
+    grid-column: span 1;
+    grid-row: span 1;
+    aspect-ratio: 1 / 1;
   }
 }
 
@@ -1237,9 +1293,10 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-page='about'] .artisan-tile,
   [data-page='about'] .artisan-tile img {
     transition: none;
+    animation: none;
+    transform: none;
   }
 }
 

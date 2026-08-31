@@ -38,6 +38,7 @@ export function ArtisanWall() {
     Array.from({ length: TILES }, (_, i) => i % ARTISAN_WALL.length),
   );
   const [fading, setFading] = useState<number | null>(null);
+  const [arriving, setArriving] = useState<number | null>(null);
   const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,6 +67,10 @@ export function ArtisanWall() {
           return next;
         });
         setFading(null);
+        // Marked for the length of the arrival animation, so the replacement
+        // slides in rather than simply appearing where the old one was.
+        setArriving(position);
+        window.setTimeout(() => setArriving(null), FADE);
       }, FADE / 2);
     };
 
@@ -79,6 +84,7 @@ export function ArtisanWall() {
       running = false;
       window.clearInterval(timer);
       setFading(null);
+      setArriving(null);
     };
 
     const observer = new IntersectionObserver(
@@ -105,7 +111,13 @@ export function ArtisanWall() {
         if (!shot) return null;
         return (
           <figure
-            className={`artisan-tile${fading === position ? ' is-fading' : ''}`}
+            className={[
+              'artisan-tile',
+              fading === position ? 'is-fading' : '',
+              arriving === position ? 'is-arriving' : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
             key={position}
           >
             <Media src={shot.image} alt={shot.alt} sizes="(max-width: 860px) 33vw, 22vw" />
