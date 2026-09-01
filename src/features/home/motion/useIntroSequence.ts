@@ -5,31 +5,24 @@ import { useEffect, type RefObject } from 'react';
 /**
  * Timings of the opening title card, in milliseconds.
  *
- * The hold was 3800ms on top of `load`, with a 5600ms backstop, which put the
- * hero 5.4 seconds away on a normal connection. Measured, and reported as
- * images being slow: they were not, every image arrived inside a second. The
- * wait was this.
+ * The hold and the handoff are the brand's, restored after being shortened by
+ * mistake: the cover is meant to be a deliberate pause on the wordmark, not
+ * something to get past.
  *
- * 1600ms is long enough for the wordmark to register as a deliberate opening
- * and short enough that nobody thinks the page has failed. A returning
- * visitor sees it on every single visit, which is the case the old number
- * ignored.
+ * The failsafe is the one number that is not original. It was 5600ms measured
+ * from navigation, while the hold is measured from `load`, so on any
+ * connection slower than a fast one the backstop reached `begin` first and
+ * became the timing every visitor saw. A backstop that fires on the happy
+ * path is not a backstop. At 9000ms it sits clear of the normal path and does
+ * nothing unless `load` genuinely never arrives.
  */
 const INTRO = {
   /** How long the cover holds before it begins to lift. */
-  hold: 1600,
+  hold: 3800,
   /** Gap between the handoff starting and the hero revealing. */
-  handoff: 420,
-  /**
-   * Hard backstop if `load` never fires (cached media, blocked request).
-   *
-   * Measured from navigation, not from `load`, so it has to clear the point
-   * at which the normal path would have finished or it wins the race and
-   * becomes the timing everyone sees. `load` lands near 1s on a 4Mbps
-   * connection, so the normal reveal is around 2.6s and this sits well past
-   * it, doing nothing unless something has genuinely gone wrong.
-   */
-  failSafe: 6000,
+  handoff: 520,
+  /** Hard backstop if `load` never fires (cached media, blocked request). */
+  failSafe: 9000,
 } as const;
 
 /**
