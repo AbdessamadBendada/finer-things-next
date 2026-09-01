@@ -797,6 +797,42 @@ body.menu-open [data-page] .menu-toggle {
   text-decoration-color: rgba(243, 240, 234, 0.42);
 }
 
+/* Malika's final emphasized word has room beside the preceding words at the
+   desktop measure. Keep it inline there so the heading resolves as two
+   balanced lines instead of leaving `soul.` alone on a third line. */
+@media (min-width: 861px) {
+  [data-page='about'] #malika-founder-heading em {
+    display: inline;
+  }
+}
+
+/* Keep Alex's experience proof point visible without adding another vertical
+   block to the copy. It sits on the portrait like an editorial image label,
+   while the source remains in the document flow for accessibility. */
+[data-page='about'] .experience-image .experience-fact {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  margin: 0;
+  padding: 16px 20px 18px;
+  border-top: 0;
+  background: rgba(243, 240, 234, 0.92);
+  color: var(--ink);
+  backdrop-filter: blur(8px);
+}
+
+[data-page='about'] .experience-image .experience-fact strong {
+  font-size: clamp(4rem, 6vw, 6.5rem);
+}
+
+[data-page='about'] .experience-image .experience-fact span {
+  color: rgba(41, 40, 31, 0.66);
+}
+
 /* ---------------- Hero headlines have to fit their own lines ----------------
    The heroes are written as two deliberate lines, one `.hero-line` each, and
    the page stylesheets cap the headline at 12ch (Our Work) and 9ch (About).

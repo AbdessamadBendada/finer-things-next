@@ -25,6 +25,39 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-01: Overlay Alex's experience proof point
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: moved the “20+ years” fact onto Alex's portrait as a compact
+  editorial overlay so the full biography remains in place without pushing
+  the proof point below the fold; switched the About portrait caption to
+  “Malika and Alex”, matching the Home page caption exactly.
+- Files: `src/features/about/ui/AboutPage.tsx`,
+  `src/shared/styles/brand.css`, `tests/visual/about-founders.spec.ts`,
+  `docs/CODEX-CHANGES.md`
+- Verified: production build; focused About founder browser tests; visual
+  inspection of refreshed About baselines; `pnpm verify` (typecheck, lint,
+  build, 8 form tests, and 39 visual parity checks)
+- Follow-up: None
+
+## 2026-09-01: Balance Malika's founder heading
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: kept the supplied heading copy and typography while allowing its
+  emphasized final word to remain inline on desktop, producing two balanced
+  lines instead of an orphaned third line.
+- Files: `src/features/about/ui/AboutPage.tsx`,
+  `src/shared/styles/brand.css`, `tests/visual/about-founders.spec.ts`,
+  `docs/CODEX-CHANGES.md`
+- Verified: production build; About founder browser tests at 1440 px and
+  390 px; visual inspection of the refreshed desktop baseline; `pnpm verify`
+  (typecheck, lint, build, 8 form tests, and 39 visual parity checks)
+- Follow-up: None
+
 ## 2026-09-01: Replace Malika's About placeholder
 
 **Codex change**

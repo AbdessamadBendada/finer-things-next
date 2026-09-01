@@ -32,7 +32,7 @@ export function AboutPage() {
               src="/assets/finer-things-family.webp"
               alt="Alex and Malika, founders of Finer Things"
             />
-            <figcaption className="hero-caption">Alex & Malika</figcaption>
+            <figcaption className="hero-caption">Malika and Alex</figcaption>
           </figure>
         </section>
         {/* MEET THE FOUNDER */}
@@ -43,6 +43,13 @@ export function AboutPage() {
                 src="/assets/founder-alex-lahmer.webp"
                 alt="Alex Lahmer, founder of Finer Things, in a leather workshop"
               />
+              <div
+                className="experience-fact rise"
+                aria-label="20 plus years of international hospitality experience"
+              >
+                <strong>20+</strong>
+                <span>Years of international hospitality experience</span>
+              </div>
             </figure>
             <div className="experience-copy">
               <div className="eyebrow rise">Meet the founder</div>
@@ -65,10 +72,6 @@ export function AboutPage() {
                 to put together, and giving every piece a function, a story, and the one place
                 it was made for.
               </p>
-              <div className="experience-fact rise">
-                <strong>20+</strong>
-                <span>Years of international hospitality experience</span>
-              </div>
             </div>
           </div>
         </section>
@@ -83,7 +86,7 @@ export function AboutPage() {
             </figure>
             <div className="experience-copy">
               <div className="eyebrow rise">Meet the co-founder</div>
-              <h2 className="rise">
+              <h2 id="malika-founder-heading" className="rise">
                 {'Malika Lahmer gives spaces their '}
                 <em>soul.</em>
               </h2>

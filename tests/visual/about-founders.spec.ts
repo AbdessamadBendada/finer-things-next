@@ -12,7 +12,10 @@ test.describe('About founders', () => {
     const sections = page.locator('.experience');
     await expect(sections).toHaveCount(2);
     await expect(sections.nth(0).locator('h2')).toContainText('Alex Lahmer');
-    await expect(sections.nth(1).locator('h2')).toContainText('Malika Lahmer');
+    const malikaHeading = sections.nth(1).locator('h2');
+    await expect(malikaHeading).toContainText('Malika Lahmer');
+    await expect(page.locator('.hero-caption')).toHaveText('Malika and Alex');
+    await expect(sections.nth(0).locator('.experience-image .experience-fact')).toBeVisible();
     await expect(sections.nth(1)).toContainText('While Alex builds the pieces');
     await expect(sections.nth(1)).toContainText('from Jumeirah to private residences');
     await expect(page.locator('[data-placeholder="true"]')).toHaveCount(0);
@@ -30,6 +33,29 @@ test.describe('About founders', () => {
         }),
       )
       .toBe(true);
+
+    const headingLines = await malikaHeading.evaluate((heading) => {
+      const words: Array<{ text: string; top: number }> = [];
+      const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+      let node = walker.nextNode();
+
+      while (node) {
+        const text = node.textContent ?? '';
+        for (const match of text.matchAll(/\S+/g)) {
+          const range = document.createRange();
+          const start = match.index ?? 0;
+          range.setStart(node, start);
+          range.setEnd(node, start + match[0].length);
+          words.push({ text: match[0], top: Math.round(range.getBoundingClientRect().top) });
+        }
+        node = walker.nextNode();
+      }
+
+      return Array.from(Map.groupBy(words, ({ top }) => top).values()).map((line) =>
+        line.map(({ text }) => text).join(' '),
+      );
+    });
+    expect(headingLines).toEqual(['Malika Lahmer gives', 'spaces their soul.']);
   });
 
   test('the founder sections remain overflow-free on mobile', async ({ page }) => {
