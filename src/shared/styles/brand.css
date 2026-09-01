@@ -477,6 +477,16 @@ body.menu-open [data-page] .menu-toggle {
   color: var(--ink-soft);
 }
 
+/* On a wide screen 46ch leaves “in mind.” orphaned on a second line. A
+   deliberate editorial measure breaks the unchanged sentence after
+   “character,” producing two balanced lines. Smaller screens retain their
+   natural responsive measure rather than inheriting an unnecessary cap. */
+@media (min-width: 861px) {
+  [data-page]:not([data-page='contact']) .closing p {
+    max-width: 30ch;
+  }
+}
+
 [data-page]:not([data-page='contact']) .closing .btn {
   margin-top: clamp(32px, 4vh, 44px);
 }

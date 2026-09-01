@@ -25,6 +25,21 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-01: Balance the shared CTA supporting copy
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: narrowed the shared closing CTA's desktop paragraph measure so its
+  unchanged supporting sentence forms two intentional, balanced lines instead
+  of orphaning “in mind.”
+- Files: `src/shared/styles/brand.css`, `tests/visual/site-cta.spec.ts`,
+  `docs/CODEX-CHANGES.md`
+- Verified: focused desktop line-balance and mobile-overflow checks passed;
+  `pnpm verify` passed (typecheck, lint, production build, 8 form tests and 39
+  visual-parity checks).
+- Follow-up: None.
+
 ## 2026-09-01: Keep the Home purpose statement visible during reveal
 
 **Codex change**
