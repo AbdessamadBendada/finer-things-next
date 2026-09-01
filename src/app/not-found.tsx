@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { FOOTER_LINKS } from '@/shared/config/navigation';
 import { ROUTES } from '@/shared/config/routes';
+import { NewsletterForm } from '@/features/newsletter';
 import { SiteChrome } from '@/shared/layout/SiteChrome';
 import { Media } from '@/shared/ui/Media';
 
@@ -47,11 +47,7 @@ export default function NotFound() {
   // The chrome slug is stated rather than derived: this page renders under
   // whatever URL the visitor typed, so the pathname cannot identify it.
   return (
-    <SiteChrome
-      variant="contact"
-      slug="contact"
-      footer={{ variant: 'row', links: FOOTER_LINKS }}
-    >
+    <SiteChrome slug="contact" newsletter={<NewsletterForm />}>
       <div className={styles.status} data-page="status">
         <div className={styles.asides} aria-hidden="true">
           {ASIDES.map((aside, index) => (

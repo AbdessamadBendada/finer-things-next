@@ -2,18 +2,14 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 import {
+  FOOTER_CONNECT,
   FOOTER_COPY,
-  type FooterConfig,
-  type FooterVariant,
+  FOOTER_EXPLORE,
   type NavLink,
 } from '@/shared/config/navigation';
 
 /**
- * The site footer, in the three shapes the design actually uses.
- *
- * Previously this markup was copy-pasted into eight page components, so a
- * change to the footer meant eight edits. It is one component now; the link
- * sets come from shared/config/navigation.ts.
+ * The site footer.
  *
  * Class names are the legacy ones because the page stylesheets target them
  * directly — see docs/ARCHITECTURE.md.
@@ -46,90 +42,56 @@ export function FooterBrand({ className }: { className: string }) {
   );
 }
 
-function Separated({ links }: { links: readonly NavLink[] }) {
-  return links.map((link, index) => (
-    <span key={link.href}>
-      {index > 0 && ' · '}
-      <FooterLink {...link} />
-    </span>
-  ));
-}
-
-export function SiteFooter({
-  variant,
-  config,
-  children,
-}: {
-  /** Comes from the route group's layout. */
-  variant: FooterVariant;
-  config?: FooterConfig;
-  children?: ReactNode;
-}) {
-  if (variant === 'home') {
-    // The home page's footer carries the newsletter and its own composition.
-    return <footer>{children}</footer>;
-  }
-
-  if (variant === 'minimal') {
-    return (
-      <footer>
-        <div className="wrap footer-row">
-          <span>{FOOTER_COPY.copyright}</span>
-          <span>
-            <Separated links={config?.variant === 'minimal' ? config.links : []} />
-          </span>
-        </div>
-      </footer>
-    );
-  }
-
-  if (variant === 'contact') {
-    return (
-      <footer>
-        <div className="wrap footer-row">
-          <FooterBrand className="footer-brand" />
-          <nav className="footer-links" aria-label="Footer navigation">
-            {(config?.variant === 'row' ? config.links : []).map((link) => (
-              <FooterLink key={link.href} {...link} />
-            ))}
-          </nav>
-          <span className="copyright">
-            {`${FOOTER_COPY.copyright} · `}
-            <Link href="/privacy">Privacy</Link>
-            {' · '}
-            <Link href="/terms">Terms</Link>
-          </span>
-        </div>
-      </footer>
-    );
-  }
-
+/**
+ * The site footer. One shape, every page.
+ *
+ * There were four: the home page's own, a three-column version for the main
+ * body, a compact row for contact, and a bare line for the legal pages. They
+ * had drifted into four different link sets and four different heights, and
+ * the client asked for one.
+ *
+ * This is the home page's, which was the fullest and the only one carrying the
+ * newsletter. The `variant` prop is gone with the alternatives: a footer that
+ * is the same everywhere does not need to be told which page it is on.
+ */
+export function SiteFooter({ newsletter }: { newsletter?: ReactNode }) {
   return (
     <footer>
       <div className="wrap">
-        <div className="footer-top">
-          <div>
-            <FooterBrand className="footer-brand" />
-            <p className="footer-tag">{FOOTER_COPY.tagline}</p>
-          </div>
-          <div className="footer-links">
+        {newsletter && (
+          <div className="footer-newsletter" aria-labelledby="newsletter-title">
             <div>
-              <h3>Explore</h3>
-              {(config?.variant === 'full' ? config.explore : []).map((link) => (
+              <h2 id="newsletter-title">Stay in touch.</h2>
+              <p>Occasional stories, new projects and distinctive designs.</p>
+            </div>
+            {newsletter}
+          </div>
+        )}
+
+        <div className="ft-top">
+          <div>
+            <FooterBrand className="brand serif" />
+            <p className="tag">{FOOTER_COPY.tagline}</p>
+          </div>
+          <div className="ft-cols">
+            <div>
+              <h4>Explore</h4>
+              {FOOTER_EXPLORE.map((link) => (
                 <FooterLink key={link.href} {...link} />
               ))}
             </div>
             <div>
-              <h3>Connect</h3>
-              {(config?.variant === 'full' ? config.connect : []).map((link) => (
+              <h4>Connect</h4>
+              {FOOTER_CONNECT.map((link) => (
                 <FooterLink key={`${link.href}-${link.label}`} {...link} />
               ))}
             </div>
           </div>
         </div>
-        <div className="footer-bottom">
+
+        <div className="ft-btm">
           <span>{FOOTER_COPY.copyright}</span>
-          <em>{FOOTER_COPY.sign_off}</em>
+          <span className="tagline">{FOOTER_COPY.sign_off}</span>
         </div>
       </div>
     </footer>

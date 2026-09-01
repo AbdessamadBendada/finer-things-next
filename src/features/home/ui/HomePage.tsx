@@ -1,17 +1,11 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties } from 'react';
 import { Media } from '@/shared/ui/Media';
-import { FooterBrand } from '@/shared/layout/SiteFooter';
 import Link from 'next/link';
 import { HeroCollage } from './HeroCollage';
 import { HomeShell } from './HomeShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
-/**
- * The newsletter form arrives as a slot rather than an import: `shared` and
- * sibling features are off-limits to each other, so cross-feature composition
- * happens at the route. See docs/ARCHITECTURE.md.
- */
-export function HomePage({ newsletter }: { newsletter: ReactNode }) {
+export function HomePage() {
   return (
     <HomeShell>
       {/* HEADER */}
@@ -100,8 +94,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
             <span className="idx">01</span>
             <h3 className="serif">Bespoke Accessories</h3>
             <span className="desc">
-              Design and production of bespoke accessories, the finer things guests can see,
-              touch and feel.
+              Design and production of bespoke accessories guests can see, touch and feel.
             </span>
           </Link>
         </div>
@@ -316,46 +309,6 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
       </section>
       {/* 9. CLOSING */}
       <SiteCta />
-      {/* 10. FOOTER */}
-      <footer>
-        <div className="wrap">
-          <div className="footer-newsletter" aria-labelledby="newsletter-title">
-            <div>
-              <h2 id="newsletter-title">Stay in touch.</h2>
-              <p>Occasional stories, new projects and distinctive designs.</p>
-            </div>
-            {newsletter}
-          </div>
-          <div className="ft-top">
-            <div>
-              <FooterBrand className="brand serif" />
-              <p className="tag">
-                Bespoke details for the world’s finest spaces. Across the globe.
-              </p>
-            </div>
-            <div className="ft-cols">
-              <div>
-                <h4>Explore</h4>
-                <Link href="/our-work">What we do</Link>
-                <Link href="/projects">Projects</Link>
-                <Link href="/about">About</Link>
-                <Link href="/services/finer-living">Finer Living</Link>
-              </div>
-              <div>
-                <h4>Connect</h4>
-                <a href="#">LinkedIn</a>
-                <Link href="/contact">Contact</Link>
-                <Link href="/privacy">Privacy</Link>
-                <Link href="/terms">Terms</Link>
-              </div>
-            </div>
-          </div>
-          <div className="ft-btm">
-            <span>© 2026 Finer Things. Family owned.</span>
-            <span className="tagline">Every place should tell a story. So should yours.</span>
-          </div>
-        </div>
-      </footer>
     </HomeShell>
   );
 }

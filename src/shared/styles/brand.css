@@ -458,8 +458,16 @@ body.menu-open [data-page] .menu-toggle {
   padding: clamp(115px, 17vh, 175px) 0;
 }
 
+/*
+ * One line, at the same size.
+ *
+ * The cap was 20ch, which resolved to 720px while the heading needs 768px at
+ * its own 72px, so it broke in two with 648px of the column going unused. The
+ * text is 32 characters; 34ch clears it with a little room and still stops the
+ * line running the full width of a wide screen.
+ */
 [data-page]:not([data-page='contact']) .closing h2 {
-  max-width: 20ch;
+  max-width: 34ch;
   margin-inline: auto;
 }
 
@@ -1417,5 +1425,184 @@ body.menu-open [data-page] .menu-toggle {
   [data-page='our-work'] .artisan-shot img {
     transition: none;
     transform: none;
+  }
+}
+
+/* ================================================================
+   ONE FOOTER, SO ONE SET OF FOOTER STYLES
+
+   The footer used to exist in four shapes and the fullest of them
+   was the home page's, so all of its styling is scoped
+   `[data-page='home']` in chrome.css, and the sign-up form's styling
+   sits in the home CSS module, which only loads on the home page.
+
+   With one shared footer that left the newsletter completely
+   unstyled everywhere else: a default browser text box and grey
+   button on a dark ground. These re-declare the same rules without
+   the page scope.
+
+   `[data-page]` matches any page, and brand.css loads after
+   chrome.css, so equal specificity is enough to win.
+   ================================================================ */
+
+[data-page] .footer-newsletter {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.7fr) minmax(320px, 1.3fr);
+  gap: clamp(42px, 9vw, 130px);
+  align-items: end;
+  padding: 0 0 52px;
+  margin-bottom: 44px;
+  border-bottom: 1px solid rgba(241, 237, 231, 0.14);
+}
+
+[data-page] .footer-newsletter h2 {
+  font:
+    500 clamp(2.35rem, 4.2vw, 4rem) / 0.94 var(--font-display),
+    Georgia,
+    serif;
+  letter-spacing: -0.025em;
+}
+
+[data-page] .footer-newsletter p {
+  max-width: 40ch;
+  margin-top: 14px;
+  color: rgba(241, 237, 231, 0.58);
+  font-size: 0.9rem;
+}
+
+/* ---------------- The sign-up form ----------------
+   A rule with the text sitting on it, rather than a box: the field and the
+   button share one underline and neither has a border of its own. */
+[data-page] .newsletter-form {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(241, 237, 231, 0.3);
+}
+
+[data-page] .newsletter-form input {
+  min-width: 0;
+  flex: 1;
+  padding: 14px 0;
+  background: none;
+  border: 0;
+  outline: 0;
+  color: var(--paper);
+  font:
+    300 0.95rem var(--font-body),
+    sans-serif;
+}
+
+[data-page] .newsletter-form input::placeholder {
+  color: rgba(241, 237, 231, 0.42);
+}
+
+[data-page] .newsletter-form input:focus-visible {
+  outline: 1px solid rgba(241, 237, 231, 0.5);
+  outline-offset: 4px;
+}
+
+[data-page] .newsletter-form button {
+  padding: 14px 0 14px 22px;
+  background: none;
+  border: 0;
+  color: var(--clay);
+  font:
+    500 0.68rem var(--font-body),
+    sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+[data-page] .newsletter-form button:hover {
+  opacity: 0.6;
+}
+
+/* ---------------- The columns and the bottom line ---------------- */
+[data-page] .ft-top {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) auto;
+  gap: clamp(40px, 8vw, 120px);
+  padding-bottom: 44px;
+}
+
+[data-page] .ft-top .tag {
+  max-width: 34ch;
+  margin-top: 18px;
+  color: rgba(241, 237, 231, 0.58);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+[data-page] .ft-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 160px));
+  gap: clamp(30px, 5vw, 70px);
+}
+
+[data-page] .ft-cols h4 {
+  margin: 0 0 18px;
+  font-size: 0.63rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--clay);
+}
+
+[data-page] .ft-cols a {
+  display: block;
+  padding: 7px 0;
+  color: rgba(241, 237, 231, 0.82);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+[data-page] .ft-cols a:hover {
+  color: var(--paper);
+}
+
+[data-page] .ft-btm {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 30px;
+  padding-top: 34px;
+  border-top: 1px solid rgba(241, 237, 231, 0.14);
+  color: rgba(241, 237, 231, 0.42);
+  font-size: 0.78rem;
+}
+
+[data-page] .ft-btm .tagline {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1rem;
+  color: rgba(241, 237, 231, 0.62);
+}
+
+@media (max-width: 760px) {
+  [data-page] .footer-newsletter,
+  [data-page] .ft-top {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  [data-page] .footer-newsletter {
+    padding-bottom: 42px;
+  }
+
+  [data-page] .footer-newsletter h2 {
+    font-size: clamp(2.2rem, 11vw, 3.2rem);
+  }
+
+  [data-page] .ft-btm {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* 44px minimum touch targets. */
+  [data-page] .newsletter-form input,
+  [data-page] .newsletter-form button {
+    min-height: 44px;
   }
 }

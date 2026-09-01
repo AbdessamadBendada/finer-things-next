@@ -39,8 +39,14 @@ const LINKEDIN: NavLink = { href: '#', label: 'LinkedIn' };
  * One list, every page, at every width. It is reached through the burger in
  * the masthead; there is no second, desktop-only set of links to keep in sync.
  */
-/** The row of links in the compact footer. */
-export const FOOTER_LINKS = [HOME, OUR_WORK, PROJECTS, ABOUT] as const;
+/**
+ * The footer's two columns.
+ *
+ * One footer on every page, so one pair of link sets rather than the four
+ * that had drifted apart across the variants.
+ */
+export const FOOTER_EXPLORE = [OUR_WORK, PROJECTS, ABOUT, FINER_LIVING] as const;
+export const FOOTER_CONNECT = [LINKEDIN, CONTACT, PRIVACY, TERMS] as const;
 
 export const SITE_MENU = [
   HOME,
@@ -54,82 +60,47 @@ export const SITE_MENU = [
 export type ChromeConfig = {
   /** Fraction of viewport height after which the header takes its scrolled state. */
   scrollThreshold?: number;
-  footer: FooterConfig;
 };
 
-export type FooterVariant = 'site' | 'contact' | 'minimal' | 'home';
-
-export type FooterConfig =
-  | { variant: 'full'; explore: readonly NavLink[]; connect: readonly NavLink[] }
-  | { variant: 'row'; links: readonly NavLink[] }
-  | { variant: 'minimal'; links: readonly NavLink[] }
-  | { variant: 'home' };
-
-const CONNECT = [LINKEDIN, CONTACT, PRIVACY, TERMS] as const;
-
-/** Route path -> its chrome. Navigation is `SITE_MENU`; this is the rest. */
+/**
+ * Route path -> its chrome.
+ *
+ * Only the scroll threshold now: navigation is `SITE_MENU` and the footer is
+ * the same on every page, so neither is configured per route. A page absent
+ * from this table simply takes the default threshold.
+ */
 export const CHROME: Record<string, ChromeConfig> = {
-  [ROUTES.home]: { footer: { variant: 'home' } },
-
   [ROUTES.ourWork]: {
     scrollThreshold: 0.72,
-    footer: {
-      variant: 'full',
-      explore: [HOME, PROJECTS, ABOUT, FINER_LIVING],
-      connect: CONNECT,
-    },
   },
 
   [ROUTES.projects]: {
     scrollThreshold: 0.72,
-    footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.projectsEditorial]: {
     scrollThreshold: 0.72,
-    footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.project('marsa-al-arab')]: {
     scrollThreshold: 0.78,
-    footer: { variant: 'full', explore: [HOME, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.project('waldorf-astoria-osaka')]: {
     scrollThreshold: 0.78,
-    footer: { variant: 'full', explore: [HOME, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.service('bespoke-accessories')]: {
     scrollThreshold: 0.72,
-    footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.service('styling-curation')]: {
     scrollThreshold: 0.72,
-    footer: { variant: 'full', explore: [HOME, OUR_WORK, PROJECTS, ABOUT], connect: CONNECT },
   },
 
   [ROUTES.service('finer-living')]: {
     scrollThreshold: 0.72,
-    footer: { variant: 'full', explore: [HOME, OUR_WORK, FINER_LIVING], connect: CONNECT },
   },
-
-  [ROUTES.about]: {
-    footer: {
-      variant: 'full',
-      explore: [HOME, OUR_WORK, PROJECTS, FINER_LIVING],
-      connect: CONNECT,
-    },
-  },
-
-  [ROUTES.contact]: {
-    footer: { variant: 'row', links: FOOTER_LINKS },
-  },
-
-  [ROUTES.privacy]: { footer: { variant: 'minimal', links: [PRIVACY, TERMS, CONTACT] } },
-
-  [ROUTES.terms]: { footer: { variant: 'minimal', links: [PRIVACY, TERMS, CONTACT] } },
 };
 
 export const FOOTER_COPY = {

@@ -77,8 +77,14 @@ export const PARITY_PAGES = [
   },
   { name: 'about', legacy: '/about.html', route: '/about', baseline: 'current' },
   { name: 'contact', legacy: '/contact.html', route: '/contact', baseline: 'current' },
-  { name: 'privacy', legacy: '/privacy.html', route: '/privacy' },
-  { name: 'terms', legacy: '/terms.html', route: '/terms' },
+  /*
+   * The last two pages still verified against the original documents, and now
+   * the footer is shared they cannot be: their legacy footer was a single line
+   * of copyright, and every page carries the full one. Nothing else about them
+   * has changed, which is why they held out this long.
+   */
+  { name: 'privacy', legacy: '/privacy.html', route: '/privacy', baseline: 'current' },
+  { name: 'terms', legacy: '/terms.html', route: '/terms', baseline: 'current' },
 ] as const satisfies ReadonlyArray<{
   name: string;
   legacy: string;

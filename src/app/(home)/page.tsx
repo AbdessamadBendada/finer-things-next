@@ -1,5 +1,4 @@
 import { HomePage } from '@/features/home';
-import { NewsletterForm } from '@/features/newsletter';
 import { ROUTES } from '@/shared/config/routes';
 import { buildMetadata } from '@/shared/seo/metadata';
 
@@ -11,5 +10,5 @@ export const metadata = buildMetadata({
 });
 
 export default function HomeRoute() {
-  return <HomePage newsletter={<NewsletterForm />} />;
+  return <HomePage />;
 }
