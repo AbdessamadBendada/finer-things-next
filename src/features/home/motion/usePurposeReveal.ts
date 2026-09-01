@@ -7,21 +7,20 @@ import { clamp01, prefersReducedMotion, useScrollDriver } from '@/shared/motion'
 /** Below this the section is full height but does not pin, so nor does the reveal. */
 const PIN_QUERY = '(min-width: 861px)';
 
-/**
- * Fraction of the pin over which the words arrive. The rest is the hold: the
- * finished sentence stays on screen for a moment before the page moves on,
- * which is the point of pinning it at all.
- */
-const REVEAL_THROUGH = 0.62;
+/** Start bringing words into focus while the section is still entering. */
+const ENTRY_START = 0.72;
+
+/** Keep the completed statement in place before the sticky section releases. */
+const COMPLETED_HOLD = 0.24;
 
 /**
  * Reveals the purpose statement a word at a time, paced by scrolling.
  *
  * `useWordReveal` has already split the heading into per-word masks and would
  * reveal them all at once on a timer when the heading intersects. Here the
- * reader's own scrolling performs the sentence instead: the section is three
- * viewports tall with a sticky inner, and each word arrives as the pin is
- * scrolled through.
+ * reader's own scrolling performs the sentence instead: the whole statement
+ * is present as faint text when the section enters, then each word comes into
+ * focus before and during the pin.
  *
  * Fail-open, which the house rule requires of anything that starts hidden:
  *
@@ -84,11 +83,15 @@ export function usePurposeReveal(root: RefObject<HTMLElement | null>) {
 
     const rect = section.getBoundingClientRect();
     const travel = rect.height - window.innerHeight;
-    // Before the pin, 0. After it, 1. Guard the degenerate case where the
-    // section is not taller than the viewport and there is nothing to travel.
-    const progress = travel > 0 ? clamp01(-rect.top / travel) : rect.top <= 0 ? 1 : 0;
+    // Start before the sticky position is reached, so the incoming paper
+    // section never reads as an empty screen. End early enough to let the
+    // complete sentence rest before the section releases.
+    const entryLead = window.innerHeight * ENTRY_START;
+    const hold = window.innerHeight * COMPLETED_HOLD;
+    const revealDistance = Math.max(entryLead, travel + entryLead - hold);
+    const progress = clamp01((entryLead - rect.top) / revealDistance);
 
-    const shown = Math.round(clamp01(progress / REVEAL_THROUGH) * words.current.length);
+    const shown = Math.round(progress * words.current.length);
     words.current.forEach((word, index) => word.classList.toggle('is-in', index < shown));
   }, []);
 

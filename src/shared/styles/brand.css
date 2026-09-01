@@ -1101,22 +1101,26 @@ body.menu-open [data-page] .menu-toggle {
 
   /* ---------------- Scroll-driven words ----------------
      `.scroll-reveal` is added by usePurposeReveal, and only where the section
-     pins and motion is welcome. Nothing here hides text that the ordinary
-     reveal would otherwise show, because the class arrives with the driver.
+     pins and motion is welcome. The complete statement stays faintly readable
+     before its words come into focus, so entering the section can never look
+     like an empty or stalled page.
 
      The per-word delay is dropped: the pacing comes from the scroll now, and
      stacking a 62ms stagger on top of it would leave the words trailing the
      reader's hand. */
   [data-page='home'] #purpose-title.scroll-reveal .reveal-word > span {
-    opacity: 0;
-    transform: translateY(115%);
+    color: var(--ink);
+    opacity: 0.16;
+    transform: translateY(8px);
     transition:
-      transform 0.6s var(--ease),
-      opacity 0.4s ease;
+      color 0.55s ease,
+      transform 0.55s var(--ease),
+      opacity 0.55s ease;
     transition-delay: 0s;
   }
 
   [data-page='home'] #purpose-title.scroll-reveal .reveal-word.is-in > span {
+    color: inherit;
     opacity: 1;
     transform: none;
   }

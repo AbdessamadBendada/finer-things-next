@@ -23,6 +23,64 @@ const CASES = [
 ];
 
 test.describe('scroll reveals', () => {
+  test('the Home purpose statement stays readable before it comes into focus', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(NEXT_ORIGIN, { waitUntil: 'load' });
+    await page.waitForTimeout(7000);
+
+    const purpose = page.locator('#purpose');
+    const sectionTop = await purpose.evaluate((element) => (element as HTMLElement).offsetTop);
+
+    // The complete sentence is already present before highlighting begins.
+    await page.evaluate(
+      (top) => window.scrollTo(0, top - window.innerHeight * 0.85),
+      sectionTop,
+    );
+    await page.waitForTimeout(150);
+
+    const heading = page.locator('#purpose-title');
+    await expect(heading).toHaveClass(/scroll-reveal/);
+    const words = heading.locator('.reveal-word');
+    const wordCount = await words.count();
+    expect(wordCount).toBeGreaterThan(10);
+    await expect(words.first().locator('span')).toHaveCSS('opacity', '0.16');
+    await expect(heading.locator('.reveal-word.is-in')).toHaveCount(0);
+
+    // Highlighting starts during entry, before the section reaches its pin.
+    await page.evaluate(
+      (top) => window.scrollTo(0, top - window.innerHeight * 0.6),
+      sectionTop,
+    );
+    await page.waitForTimeout(150);
+    const enteringCount = await heading.locator('.reveal-word.is-in').count();
+    expect(enteringCount).toBeGreaterThan(0);
+    expect(enteringCount).toBeLessThan(wordCount);
+
+    // The sentence completes before the sticky section releases.
+    await page.evaluate(
+      (top) => window.scrollTo(0, top + window.innerHeight * 0.8),
+      sectionTop,
+    );
+    await page.waitForTimeout(150);
+    await expect(heading.locator('.reveal-word.is-in')).toHaveCount(wordCount);
+  });
+
+  test('the Home purpose statement does not animate with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(NEXT_ORIGIN, { waitUntil: 'load' });
+
+    const heading = page.locator('#purpose-title');
+    await expect(heading).not.toHaveClass(/scroll-reveal/);
+    await expect(heading).toHaveClass(/words-in/);
+    await expect(heading.locator('.reveal-word').first().locator('span')).toHaveCSS(
+      'opacity',
+      '1',
+    );
+  });
+
   for (const { route, selector, settle } of CASES) {
     test(`${selector} reveals as it enters, on ${route}`, async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 });
