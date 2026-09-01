@@ -25,6 +25,22 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-01: Link the Home story to About
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: added a “Meet the family” button to the Home Our story section,
+  aligned with its editorial copy and linked through the shared About route.
+- Files: `src/features/home/ui/HomePage.tsx`,
+  `src/shared/styles/brand.css`, `tests/visual/home-story.spec.ts`,
+  `docs/CODEX-CHANGES.md`
+- Verified: focused link, button-treatment, desktop target and mobile alignment
+  checks passed; explicitly regenerated only the three Home baselines for the
+  intentional new control; `pnpm verify` passed (typecheck, lint, production
+  build, 8 form tests and 39 visual-parity checks).
+- Follow-up: None.
+
 ## 2026-09-01: Balance the shared CTA supporting copy
 
 **Codex change**

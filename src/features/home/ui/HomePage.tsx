@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
 import Link from 'next/link';
 import { HeroCollage } from './HeroCollage';
@@ -297,6 +298,9 @@ export function HomePage() {
               understands the details that make a stay unforgettable. Malika brings the
               discerning eye that gives every space its final character.
             </p>
+            <Link className="btn story-cta rise" href={ROUTES.about}>
+              Meet the family
+            </Link>
           </div>
           <figure className="family-editorial-portrait rise">
             <Media

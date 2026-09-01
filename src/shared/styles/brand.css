@@ -1031,6 +1031,21 @@ body.menu-open [data-page] .menu-toggle {
   max-width: 20ch;
 }
 
+/* The About link belongs to the story copy rather than floating on the grid
+   edge. It uses the same button language as the rest of Home, with the dark
+   treatment reserved for calls to action on paper backgrounds. */
+[data-page='home'] #story .story-cta {
+  margin: clamp(30px, 4vh, 42px) 0 0 clamp(0px, 6vw, 92px);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+[data-page='home'] #story .story-cta:hover,
+[data-page='home'] #story .story-cta:focus-visible {
+  background: var(--oxblood);
+  color: var(--paper);
+}
+
 /* The page stacks this grid at 860px. The rule above outranks that media
    query, so the stacking has to be restated here or the copy column collapses
    to its 420px floor on a tablet and the headline goes back to three lines. */
@@ -1038,6 +1053,10 @@ body.menu-open [data-page] .menu-toggle {
   [data-page='home'] #story .family-editorial-grid {
     grid-template-columns: 1fr;
     gap: 58px;
+  }
+
+  [data-page='home'] #story .story-cta {
+    margin-left: 0;
   }
 }
 
