@@ -25,6 +25,23 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-01: Replace Malika's About placeholder
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: replaced Malika's placeholder portrait and biography with the
+  supplied copy and the shared founders portrait; named Alex Lahmer and Malika
+  Lahmer directly in their respective founder headings.
+- Files: `src/features/about/ui/AboutPage.tsx`, `docs/HANDOFF.md`,
+  `docs/CODEX-CHANGES.md`
+- Verified: focused founder-content, loaded-image and mobile-overflow checks
+  passed; visually reviewed desktop and mobile; explicitly regenerated only
+  the three About baselines; `pnpm verify` passed (typecheck, lint, production
+  build, 8 form tests and 39 visual-parity checks).
+- Follow-up: obtain a dedicated portrait of Malika if the client later wants
+  to replace the shared founders image.
+
 ## 2026-09-01: Link the Home story to About
 
 **Codex change**

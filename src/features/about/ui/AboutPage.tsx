@@ -47,7 +47,7 @@ export function AboutPage() {
             <div className="experience-copy">
               <div className="eyebrow rise">Meet the founder</div>
               <h2 className="rise">
-                {'He designs the details he once '}
+                {'Alex Lahmer designs the details he once '}
                 <em>bought.</em>
               </h2>
               <p className="rise">
@@ -72,27 +72,29 @@ export function AboutPage() {
             </div>
           </div>
         </section>
-        {/* MEET MALIKA — copy and portrait are placeholders, see docs/FEEDBACK.md */}
+        {/* MEET MALIKA */}
         <section className="experience experience-reverse">
           <div className="wrap experience-grid">
-            <figure className="experience-image rise portrait-placeholder" data-drift="-20">
-              <span>Portrait to follow</span>
+            <figure className="experience-image rise" data-drift="-20">
+              <Media
+                src="/assets/finer-things-family.webp"
+                alt="Malika Lahmer with Alex Lahmer, founders of Finer Things"
+              />
             </figure>
             <div className="experience-copy">
               <div className="eyebrow rise">Meet the co-founder</div>
               <h2 className="rise">
-                {'The eye that gives a space its '}
-                <em>final character.</em>
+                {'Malika Lahmer gives spaces their '}
+                <em>soul.</em>
               </h2>
-              <p className="rise" data-placeholder="true">
-                Placeholder copy, to be replaced with Malika’s own words. Malika brings the
-                discerning eye that turns a set of distinctive designs into a room that feels
-                composed, choosing what belongs together and what belongs somewhere else.
+              <p className="rise">
+                While Alex builds the pieces, Malika gives spaces their soul. With her eye for
+                styling and an instinct for the unexpected, she layers books, ceramics, art and
+                found objects until a lobby tells a story no one else could write.
               </p>
-              <p className="rise" data-placeholder="true">
-                Placeholder copy. Her instinct for colour, texture and proportion runs through
-                every project, and it is the reason a Finer Things space reads as one point of
-                view rather than a collection of good pieces.
+              <p className="rise">
+                Some of the most loved projects, from Jumeirah to private residences, carry her
+                signature touch.
               </p>
             </div>
           </div>
