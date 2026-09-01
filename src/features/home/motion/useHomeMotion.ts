@@ -26,10 +26,17 @@ export function useHomeMotion(root: RefObject<HTMLElement | null>): void {
   useTouchWipe(root);
 
   useReveal(root, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -6% 0px',
-    stagger: 110,
-    staggerCap: 99,
+    /*
+     * The defaults, plus a gentle stagger.
+     *
+     * This used threshold 0.15 with a -6% margin and `staggerCap: 99`, which
+     * combined into a reveal that could land two seconds after the element was
+     * already on screen: the portrait in the story section entered the
+     * viewport at 1.6s and did not appear until 3.8s. The cap is what makes
+     * the stagger a flourish between neighbours rather than a queue.
+     */
+    stagger: 90,
+    staggerCap: 3,
   });
 
   // The home page masks words with its own class and index property.

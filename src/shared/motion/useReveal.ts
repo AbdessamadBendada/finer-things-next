@@ -25,8 +25,28 @@ export function useReveal(
   {
     selector = '.rise',
     className = 'in',
-    threshold = 0.14,
-    rootMargin = '0px 0px -6% 0px',
+    /*
+     * A fraction of the *element*, so a tall figure has to push far further up
+     * the screen than a short one before it counts as visible. On a 750px
+     * portrait the old 0.14 meant 105px had to clear the fold, and with the
+     * negative rootMargin on top the reveal fired well after the reader could
+     * already see it: it read as the trigger having failed.
+     *
+     * Small enough that anything reaching the fold is treated as arrived,
+     * whatever its height.
+     */
+    threshold = 0.02,
+    /*
+     * Negative on the bottom edge *shrinks* the trigger area, so an element
+     * must come further up the screen before it counts. That is the wrong
+     * direction here: the original -6% was part of why reveals felt late.
+     *
+     * Zero, so an element reveals the moment any part of it reaches the fold.
+     * A positive value was tried and is worse: it grows the root box below the
+     * viewport, and combined with `threshold` being a fraction of the element
+     * it pushed the trigger past the image entirely.
+     */
+    rootMargin = '0px',
     stagger = 0,
     staggerCap = 4,
   }: RevealOptions = {},
