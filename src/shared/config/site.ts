@@ -16,4 +16,26 @@ export const SITE = {
   external: {
     finerLivingCollection: 'https://finerlivingcollection.com/',
   },
+  /*
+   * How to reach the studio.
+   *
+   * Placeholders until the client supplies the real ones, and deliberately
+   * plausible rather than obviously fake: the page has to be reviewable, and a
+   * block reading "TBC" tells a visitor the site is unfinished.
+   *
+   * Everything here is in one object so replacing it is a single edit. Search
+   * `contact.placeholder` before launch; the flag is what the pre-launch check
+   * in docs/HANDOFF.md looks for.
+   */
+  contact: {
+    placeholder: true,
+    email: 'studio@finerthings.com',
+    phone: '+971 4 000 0000',
+    street: 'Unit 14, Alserkal Avenue',
+    district: 'Al Quoz 1',
+    city: 'Dubai',
+    country: 'United Arab Emirates',
+    hours: 'Sunday to Thursday, 9am to 6pm GST',
+    linkedIn: '#',
+  },
 } as const;

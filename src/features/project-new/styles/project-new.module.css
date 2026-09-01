@@ -81,11 +81,14 @@
   background: var(--paper);
 }
 
-@media (min-width: 1700px) {
-  .page :global(.wall) {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
+/*
+ * No fifth column on a wide screen.
+ *
+ * The wall went to five columns above 1700px, which is the site changing
+ * shape because the monitor is large rather than because the content needs
+ * it: the composed wide and tall tiles were laid out for four, so the whole
+ * rhythm broke. A bigger screen gets bigger tiles, not a different wall.
+ */
 
 .page :global(.wall-tile) {
   position: relative;
@@ -98,12 +101,17 @@
 
 .page :global(.wall-tile-wide) {
   grid-column: span 2;
-  aspect-ratio: 3 / 2;
+  /* A two-column tile also contains the gutter between those columns. The
+     exact 3 / 2 ratio therefore made it one gutter taller than its adjacent
+     3 / 4 tile. This compensated ratio keeps their lower edges aligned. */
+  aspect-ratio: 1.522 / 1;
 }
 
 .page :global(.wall-tile-tall) {
   grid-row: span 2;
-  aspect-ratio: 3 / 8;
+  /* Two stacked rows include the gutter between them. Compensating for that
+     missing height aligns the tall tile with the bottom of its second row. */
+  aspect-ratio: 0.371 / 1;
 }
 
 .page :global(.wall-tile img) {

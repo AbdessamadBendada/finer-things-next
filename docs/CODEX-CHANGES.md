@@ -25,6 +25,52 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-01: Contact details and wide-screen consistency
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: replaced the redundant Contact closing block with studio contact
+  details sourced from shared configuration; added a shared CTA type fallback
+  and capped full-bleed grids and wrappers on very wide displays.
+- Files: `src/features/contact/ui/ContactPage.tsx`,
+  `src/shared/config/site.ts`, `src/shared/styles/brand.css`,
+  `docs/CODEX-CHANGES.md`
+- Verified: typecheck, lint, production build, 8 form tests, focused About and
+  gallery alignment tests, refreshed 39 current visual baselines, and all 39
+  visual parity checks
+- Follow-up: replace every `SITE.contact` placeholder with confirmed studio
+  information before launch
+
+## 2026-09-01: Align project gallery tiles
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: compensated the two-column and two-row gallery tile ratios for
+  their internal grid gutters so wide, tall and standard neighboring images
+  share the intended lower edges.
+- Files: `src/features/project-new/styles/project-new.module.css`,
+  `tests/visual/project-gallery-alignment.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: production build; refreshed and visually inspected the Projects
+  desktop baseline; focused wide-and-tall gallery alignment test passed at
+  1440 px
+- Follow-up: None
+
+## 2026-09-01: Balance the founder grids
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: gave both About founder rows one centered, equal-width two-column
+  frame with a restrained gutter, preserving the mirrored order; moderately
+  reduced only the transition spacing between the two founder rows.
+- Files: `src/shared/styles/brand.css`, `tests/visual/about-founders.spec.ts`,
+  `docs/CODEX-CHANGES.md`
+- Verified: production build; focused About founder browser tests; refreshed
+  and visually inspected the About desktop baseline
+- Follow-up: None
+
 ## 2026-09-01: Overlay Alex's experience proof point
 
 **Codex change**

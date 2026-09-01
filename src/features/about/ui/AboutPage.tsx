@@ -53,10 +53,7 @@ export function AboutPage() {
             </figure>
             <div className="experience-copy">
               <div className="eyebrow rise">Meet the founder</div>
-              <h2 className="rise">
-                {'Alex Lahmer designs the details he once '}
-                <em>bought.</em>
-              </h2>
+              <h2 className="rise">{'Alex Lahmer '}</h2>
               <p className="rise">
                 For two decades, Alex Lahmer stood on the other side of the table, opening and
                 operating the world’s finest hotels, receiving the products everyone else
@@ -87,8 +84,7 @@ export function AboutPage() {
             <div className="experience-copy">
               <div className="eyebrow rise">Meet the co-founder</div>
               <h2 id="malika-founder-heading" className="rise">
-                {'Malika Lahmer gives spaces their '}
-                <em>soul.</em>
+                {'Malika Lahmer'}
               </h2>
               <p className="rise">
                 While Alex builds the pieces, Malika gives spaces their soul. With her eye for

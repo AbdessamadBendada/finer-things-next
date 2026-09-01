@@ -466,9 +466,23 @@ body.menu-open [data-page] .menu-toggle {
  * text is 32 characters; 34ch clears it with a little room and still stops the
  * line running the full width of a wide screen.
  */
+/*
+ * The CTA is one shared component, so its type belongs in the shared layer.
+ *
+ * The size was set per page module instead, and the gallery has no module rule
+ * for it, so on /projects the heading fell back to a browser default: 24px
+ * against 72px everywhere else, in the same panel with the same button. The
+ * page modules still load after this file, so the pages that do declare a size
+ * continue to win; this only supplies one where none exists.
+ */
 [data-page]:not([data-page='contact']) .closing h2 {
   max-width: 34ch;
   margin-inline: auto;
+  font:
+    500 clamp(2.8rem, 5vw, 4.7rem) / 0.97 var(--font-display),
+    Georgia,
+    serif;
+  letter-spacing: -0.03em;
 }
 
 [data-page]:not([data-page='contact']) .closing p {
@@ -735,6 +749,27 @@ body.menu-open [data-page] .menu-toggle {
 
 [data-page='about'] .experience-reverse .experience-grid > * {
   direction: ltr;
+}
+
+/* Both founder rows share one compact, balanced two-column frame. The page
+   import gives the image and copy unequal tracks with a very wide gap; that
+   makes the mirrored row feel like a different composition. Equal tracks and
+   a restrained gutter keep the two rows identical apart from their order. */
+@media (min-width: 861px) {
+  [data-page='about'] main .experience-grid {
+    width: min(100%, 1120px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(36px, 4vw, 60px);
+  }
+
+  /* Tighten the handoff between the two founder rows without collapsing it. */
+  [data-page='about'] #story {
+    padding-bottom: clamp(78px, 10vh, 110px);
+  }
+
+  [data-page='about'] #story + .experience {
+    padding-top: clamp(78px, 10vh, 110px);
+  }
 }
 
 /* Malika's portrait has not been supplied. A labelled panel in the exact
@@ -1716,4 +1751,125 @@ body.menu-open [data-page] .menu-toggle {
   [data-page] .newsletter-form button {
     min-height: 44px;
   }
+}
+
+/* ---------------- Contact: how to reach the studio ----------------
+   On paper, not ink.
+
+   The section was dark and sits directly above a dark footer, so the two ran
+   together and the studio's details read as footer furniture rather than as
+   the end of the page. Paper separates them, and matches how every other page
+   closes before the footer begins.
+
+   `main` is in the selector for weight: the page module sets
+   `.page :global(.closing)` to ink, and an equally specific rule here would
+   tie with it and lose. */
+[data-page='contact'] main .closing {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+[data-page='contact'] main .closing .ey {
+  color: var(--clay);
+}
+
+[data-page='contact'] main .closing h2 {
+  color: var(--ink);
+}
+
+/* ---------------- The details themselves ----------------
+   The block at the foot of the contact page used to advertise the newsletter,
+   which now sits in the footer immediately below it, and carried a line
+   saying the email and LinkedIn "will be connected when supplied": a note
+   from the build, on a page a client is reading.
+
+   It carries the studio's details instead, which is what a contact page
+   should end on and what this one was missing entirely. Three columns beside
+   the heading, collapsing to one on a phone. */
+/* The page stylesheet centres this column; the details read as a list and
+   want the same left edge as the heading beside them. */
+[data-page='contact'] .contact-details {
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+}
+
+[data-page='contact'] .contact-details h3 {
+  margin: 0 0 12px;
+  font-size: 0.63rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--clay);
+}
+
+[data-page='contact'] .contact-details p {
+  margin: 0;
+  text-align: left;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.85;
+}
+
+[data-page='contact'] .contact-details a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(41, 40, 31, 0.28);
+  padding-bottom: 2px;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+[data-page='contact'] .contact-details a:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+@media (max-width: 760px) {
+  [data-page='contact'] .contact-details {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}
+
+/* ================================================================
+   THE LAYOUT IS FIXED ABOVE A CERTAIN WIDTH
+
+   Past a point, a wider monitor should give a visitor larger
+   content, not a different page. The gallery was going from four
+   columns to five above 1700px and its composed tiles were laid out
+   for four, so the wall's rhythm broke on exactly the screens the
+   client reviews on.
+
+   `.wrap` is already capped at 1280px, so the text columns were
+   never the problem. What had no ceiling were the full-bleed grids
+   that deliberately sit outside it: the project wall, the artisan
+   strip and the material cards. They are centred and capped here at
+   the same 1680px, which is comfortably past a 1440 laptop and stops
+   a 2560 display stretching them into something the design was never
+   drawn for.
+
+   Deliberately wider than `.wrap`: these are meant to read as edge
+   to edge against a narrower column of type, and matching 1280 would
+   lose that.
+   ================================================================ */
+
+[data-page] .wall,
+[data-page] .artisan-strip,
+[data-page] .material-grid,
+[data-page] .artisan-wall {
+  max-width: 1680px;
+  margin-inline: auto;
+}
+
+/* `.wrap` is capped at 1280 and centred, but a page setting `width: 100%` on
+   one defeats that: the service rows on What we do ran the full 2560 of a wide
+   display, so their headings sat 44px from the left edge while every other
+   column on the site was centred. The cap has to win. */
+[data-page] .wrap {
+  max-width: 1280px;
+  margin-inline: auto;
 }

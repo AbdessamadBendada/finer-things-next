@@ -11,6 +11,31 @@ test.describe('About founders', () => {
 
     const sections = page.locator('.experience');
     await expect(sections).toHaveCount(2);
+    const gridGeometry = await sections.evaluateAll((founderSections) =>
+      founderSections.map((section) => {
+        const grid = section.querySelector('.experience-grid');
+        const image = grid?.querySelector('.experience-image');
+        const copy = grid?.querySelector('.experience-copy');
+        if (!grid || !image || !copy) return null;
+
+        const gridRect = grid.getBoundingClientRect();
+        const imageRect = image.getBoundingClientRect();
+        const copyRect = copy.getBoundingClientRect();
+        const imageIsLeft = imageRect.left <= copyRect.left;
+        const left = imageIsLeft ? imageRect : copyRect;
+        const right = imageIsLeft ? copyRect : imageRect;
+
+        return {
+          gridLeft: Math.round(gridRect.left),
+          gridWidth: Math.round(gridRect.width),
+          imageWidth: Math.round(imageRect.width),
+          copyWidth: Math.round(copyRect.width),
+          gap: Math.round(right.left - left.right),
+        };
+      }),
+    );
+    expect(gridGeometry[0]).toEqual(gridGeometry[1]);
+    expect(gridGeometry[0]?.imageWidth).toBe(gridGeometry[0]?.copyWidth);
     await expect(sections.nth(0).locator('h2')).toContainText('Alex Lahmer');
     const malikaHeading = sections.nth(1).locator('h2');
     await expect(malikaHeading).toContainText('Malika Lahmer');
@@ -55,7 +80,7 @@ test.describe('About founders', () => {
         line.map(({ text }) => text).join(' '),
       );
     });
-    expect(headingLines).toEqual(['Malika Lahmer gives', 'spaces their soul.']);
+    expect(headingLines).toEqual(['Malika Lahmer']);
   });
 
   test('the founder sections remain overflow-free on mobile', async ({ page }) => {
