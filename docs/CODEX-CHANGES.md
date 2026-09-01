@@ -25,6 +25,19 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-01: Replace distinctive objects wording
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: replaced the two remaining “distinctive objects” phrases with
+  “distinctive designs” on Home and in its legacy reference.
+- Files: `src/features/home/ui/HomePage.tsx`, `legacy/index.html`,
+  `docs/CODEX-CHANGES.md`
+- Verified: repository-wide exact-phrase search and focused Home checks before
+  commit.
+- Follow-up: None.
+
 ## 2026-09-01: Replace considered objects wording
 
 **Codex change**

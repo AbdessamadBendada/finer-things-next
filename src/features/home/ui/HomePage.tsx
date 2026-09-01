@@ -31,7 +31,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
           <h1>Every place should tell a story.</h1>
           <div className="sub">
             We help the world’s finest hotels and residences express their character through
-            bespoke accessories, thoughtful styling and distinctive objects.
+            bespoke accessories, thoughtful styling and distinctive designs.
           </div>
           <div className="cta-wrap">
             <Link href="/contact" className="btn">
