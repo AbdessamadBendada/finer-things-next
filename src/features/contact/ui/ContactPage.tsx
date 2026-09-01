@@ -40,7 +40,7 @@ export function ContactPage() {
               <span className="ey rise">Stay connected</span>
               <h2 className="rise">
                 {'Stories, projects and '}
-                <em>considered objects.</em>
+                <em>distinctive designs.</em>
               </h2>
             </div>
             <div className="closing-side">

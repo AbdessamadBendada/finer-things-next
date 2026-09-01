@@ -322,7 +322,7 @@ export function HomePage({ newsletter }: { newsletter: ReactNode }) {
           <div className="footer-newsletter" aria-labelledby="newsletter-title">
             <div>
               <h2 id="newsletter-title">Stay in touch.</h2>
-              <p>Occasional stories, new projects and considered objects.</p>
+              <p>Occasional stories, new projects and distinctive designs.</p>
             </div>
             {newsletter}
           </div>

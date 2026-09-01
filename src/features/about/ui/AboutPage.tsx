@@ -86,7 +86,7 @@ export function AboutPage() {
               </h2>
               <p className="rise" data-placeholder="true">
                 Placeholder copy, to be replaced with Malika’s own words. Malika brings the
-                discerning eye that turns a set of considered objects into a room that feels
+                discerning eye that turns a set of distinctive designs into a room that feels
                 composed, choosing what belongs together and what belongs somewhere else.
               </p>
               <p className="rise" data-placeholder="true">

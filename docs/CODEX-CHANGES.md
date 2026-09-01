@@ -25,6 +25,23 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-01: Replace considered objects wording
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: replaced every occurrence of “considered objects” with “distinctive
+  designs” across the live site and matching legacy reference copy.
+- Files: `src/features/about/ui/AboutPage.tsx`,
+  `src/features/contact/ui/ContactPage.tsx`,
+  `src/features/home/ui/HomePage.tsx`, `legacy/contact.html`,
+  `legacy/index.html`, `docs/CODEX-CHANGES.md`
+- Verified: repository-wide case-insensitive search found no remaining exact
+  phrase; typecheck, lint, production build and all 8 form tests passed; all 9
+  Home, About and Contact parity checks passed. The full parity rerun was
+  interrupted by the test server exiting and then by an OS memory kill.
+- Follow-up: None.
+
 ## 2026-08-31: Harden mobile launch behavior without redesigning pages
 
 **Codex change**
