@@ -1552,6 +1552,40 @@ body.menu-open [data-page] .menu-toggle {
   opacity: 0.6;
 }
 
+/* The form is a flex row, so the error message was laid out as a third column
+   and appeared alongside the button in the same shouting uppercase as the
+   label. It takes a line of its own below the rule, at reading case and size. */
+[data-page] .newsletter-form {
+  flex-wrap: wrap;
+}
+
+/* `flex-basis: 100%` alone was not enough: the input carries `flex: 1` and
+   shrank to make room, so the message still shared the row and computed to
+   304px. `flex-shrink: 0` is what actually forces the wrap. */
+[data-page] .newsletter-form .status,
+[data-page] .newsletter-form [role='alert'],
+[data-page] .newsletter-form [class*='fieldError'] {
+  flex: 0 0 100%;
+  min-width: 100%;
+  order: 1;
+  margin: 10px 0 0;
+  font-size: 0.82rem;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  line-height: 1.5;
+}
+
+/* Muted rather than alarming: a mistyped address in a newsletter field is not
+   an error worth colouring red on a dark footer. */
+[data-page] .newsletter-form [class*='fieldError'] {
+  color: rgba(241, 237, 231, 0.72);
+}
+
+[data-page] .newsletter-form .status {
+  color: var(--clay);
+}
+
 /* ---------------- The columns and the bottom line ---------------- */
 [data-page] .ft-top {
   display: grid;
@@ -1596,13 +1630,21 @@ body.menu-open [data-page] .menu-toggle {
   color: var(--paper);
 }
 
+/* One rule above the copyright, not two. chrome.css closes `.ft-top` with a
+   bottom border and this adds a top one, which drew a second line a few pixels
+   below the first; the `.ft-top` border is cancelled instead so the divider
+   sits where the spacing puts it. */
+[data-page] .ft-top {
+  border-bottom: 0;
+}
+
 [data-page] .ft-btm {
+  border-top: 1px solid rgba(241, 237, 231, 0.14);
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 30px;
   padding-top: 34px;
-  border-top: 1px solid rgba(241, 237, 231, 0.14);
   color: rgba(241, 237, 231, 0.42);
   font-size: 0.78rem;
 }
