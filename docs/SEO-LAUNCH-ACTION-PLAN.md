@@ -1,12 +1,33 @@
 # SEO launch action plan
 
-Audit date: **2026-08-31**
+Audit date: **2026-08-31**. Regrouped **2026-09-02**.
 
 This is the implementation queue for technical and on-page SEO before launch.
-The audit inspected the production-rendered HTML for all 13 routes as
-Googlebot, plus `robots.txt`, `sitemap.xml`, the generated Open Graph image,
-legacy redirects and the 404 response. It also reviewed the current Next.js
-16.3.1 metadata guidance in `node_modules/next/dist/docs/`.
+The audit inspected the production-rendered HTML for all routes as Googlebot,
+plus `robots.txt`, `sitemap.xml`, the generated Open Graph image, legacy
+redirects and the 404 response. It also reviewed the current Next.js 16.3.1
+metadata guidance in `node_modules/next/dist/docs/`.
+
+## How this list is organised
+
+The original ordering was by SEO impact. It is now ordered by **what is
+actually blocked**, because several of the highest-impact items cannot be
+finished until the client supplies real information, and grouping them with
+work that can start today made the queue unusable.
+
+| Group                                                | Meaning                                                                           |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [A. Build now](#a-build-now)                         | Nothing external is needed. Start immediately.                                    |
+| [B. Blocked on the client](#b-blocked-on-the-client) | Real work, but it needs information we do not have. **Must close before launch.** |
+| [C. After deployment](#c-after-deployment)           | Can only be done against the live production origin.                              |
+
+Item IDs (`SEO-01` …) are unchanged from the original audit so existing
+references still resolve. They are no longer in priority order.
+
+**Placeholders are expected right now.** The site deliberately ships plausible
+stand-in contact details, a `#` LinkedIn link and a guessed domain so the build
+stays reviewable. That is not a defect to fix today. It is a launch gate, and
+it lives in Group B.
 
 ## Current baseline
 
@@ -23,26 +44,11 @@ legacy redirects and the 404 response. It also reviewed the current Next.js
 - Privacy and Terms are excluded from the sitemap and currently carry
   `noindex, follow`.
 
-## P0: resolve before the production domain is opened to crawlers
+---
 
-### SEO-01: Confirm the one production origin
+## A. Build now
 
-- Confirm the client's exact canonical HTTPS domain, including the preferred
-  `www` or apex form.
-- Set `NEXT_PUBLIC_SITE_URL` explicitly in production. Do not rely on the
-  current `https://finerthings.com` default unless ownership and deployment to
-  that origin are confirmed.
-- Redirect every alternate host and HTTP URL to the preferred HTTPS origin at
-  the hosting edge.
-- Work in:
-  - deployment environment
-  - `src/shared/config/env.ts`
-  - `.env.example`
-  - `docs/DEPLOYMENT.md`
-- Acceptance:
-  - Canonicals, `og:url`, sitemap entries, robots host/sitemap and JSON-LD all
-    use the same live origin.
-  - Alternate host and HTTP requests resolve in one permanent redirect.
+No client input required. These are the items to hand over first.
 
 ### SEO-02: Replace placeholder and duplicated page titles
 
@@ -66,31 +72,19 @@ legacy redirects and the 404 response. It also reviewed the current Next.js
 ### SEO-03: Make crawlable heading text read correctly
 
 - Add real whitespace between decorative heading spans. Rendered H1 text
-  currently includes strings such as `ordinaryinto`, `witha`,
-  `JumeirahMarsa`, `BespokeAccessories`, and `infamily` without spaces at span
-  boundaries.
+  currently includes strings such as `ordinaryinto`, `witha`, `JumeirahMarsa`,
+  `BespokeAccessories` and `infamily` without spaces at span boundaries.
 - Preserve line breaks visually with CSS; do not depend on block layout to
   create semantic whitespace.
+- Put the space in the text node. Do not use `&nbsp;`, which is not a normal
+  word separator and changes how the line wraps.
 - Work in the Our Work, Projects, project-story, service and About feature
   components.
 - Acceptance:
   - `textContent` for every H1 reads as a normal sentence or proper name.
   - Each route still has exactly one H1.
   - Screen-reader output and visual line breaks are both correct.
-
-### SEO-04: Decide the index status of `/project-new`
-
-- The route is currently indexable with its own canonical, but it is absent
-  from the sitemap and has no internal link. It also overlaps the intent of
-  `/projects` while awaiting the client's verdict.
-- Until the decision, add `noindex, follow` and keep it out of the sitemap.
-- If it replaces `/projects`, move the approved experience to the durable URL
-  and redirect the temporary route. If both remain, give them distinct search
-  intent, internal links and sitemap entries.
-- Acceptance:
-  - No indexable route is orphaned.
-  - `/projects` and `/project-new` cannot compete as duplicate gallery pages.
-  - The temporary slug is not presented as a permanent public URL.
+  - Parity snapshots are reviewed, not just re-baselined.
 
 ### SEO-05: Let crawlers see legal-page `noindex`
 
@@ -104,18 +98,6 @@ legacy redirects and the 404 response. It also reviewed the current Next.js
 - Acceptance:
   - Both pages are crawlable but emit `noindex, follow`.
   - Neither page appears in `sitemap.xml`.
-
-### SEO-06: Remove placeholder links
-
-- Replace the site-wide LinkedIn `href="#"` with the real organization URL or
-  remove the link until one is supplied.
-- Do not invent an account URL.
-- Work in `src/shared/config/navigation.ts` and the Home footer content.
-- Acceptance:
-  - No rendered page contains an empty, `#` or JavaScript placeholder link.
-  - External links use a valid absolute HTTPS URL.
-
-## P1: high-value optimization after P0
 
 ### SEO-07: Rewrite titles and descriptions around real search intent
 
@@ -141,26 +123,17 @@ legacy redirects and the 404 response. It also reviewed the current Next.js
   - Every selected image has meaningful social alt text and previews cleanly
     at 1200x630.
 
-### SEO-09: Improve structured data without inventing facts
-
-- Add `WebSite` structured data and `Service` data for the three service pages.
-- Add real `sameAs`, contact details and business identity fields to the
-  Organization only when the client supplies and approves them.
-- Review whether `CreativeWork` remains the best type for project case studies.
-- Acceptance:
-  - JSON-LD validates in Schema.org and Google's Rich Results Test where the
-    type is supported.
-  - Structured data matches visible page content exactly.
-  - No placeholder or inferred business fact is published.
-
 ### SEO-10: Make sitemap freshness truthful
 
 - `sitemap.ts` currently sets every route's `lastModified` to the build time,
   making unchanged pages appear newly updated after every deployment.
 - Supply real content modification dates or omit `lastModified` until a
-  reliable source exists.
+  reliable source exists. A workable source is the last commit that touched
+  the route's own files, via `git log -1 --format=%cI -- <path>` resolved at
+  build time; if that is not wanted, omit the field entirely rather than
+  publish a date that is not true.
 - Review `changeFrequency` and `priority`; keep them only if they express a
-  maintained policy.
+  maintained policy. Google ignores both.
 - Acceptance:
   - Rebuilding unchanged content does not change its modification date.
   - The sitemap includes every and only canonical, indexable route.
@@ -169,30 +142,12 @@ legacy redirects and the 404 response. It also reviewed the current Next.js
 
 - Add relevant in-copy links between services, project case studies and the
   Projects hub where they help a visitor continue the same topic.
-- Keep the single burger navigation policy unchanged.
+- Keep the single burger navigation policy unchanged. See HANDOFF.md comment 6
+  before adding anything that resembles a second navigation.
 - Acceptance:
   - Every indexable detail page is reachable from at least one relevant hub.
   - Link text describes the destination rather than using generic wording.
   - No new navigation system is introduced.
-
-## P2: launch follow-through
-
-### SEO-12: Finish icons and search appearance assets
-
-- Confirm the existing square favicon is readable at small sizes.
-- Add Next.js `icon` and `apple-icon` file conventions if approved assets are
-  available. A web app manifest is optional unless installability is wanted.
-
-### SEO-13: Validate production search integrations
-
-- Verify ownership in Google Search Console and Bing Webmaster Tools using a
-  DNS record or another method that does not add an external runtime origin.
-- Submit the production sitemap and inspect the Home, each service, Projects,
-  both project stories and Contact.
-- Validate live canonicals, rendered HTML, mobile usability and indexing
-  status after deployment.
-- Do not add analytics or third-party scripts: the repository CSP and launch
-  policy forbid new external origins.
 
 ### SEO-14: Add regression coverage
 
@@ -204,14 +159,201 @@ legacy redirects and the 404 response. It also reviewed the current Next.js
     this audit.
   - It runs in `pnpm verify` without calling external services.
 
+### SEO-15: Address Core Web Vitals
+
+Not covered by the original audit, and the largest unaddressed ranking factor
+in the build. This is a motion-heavy site, which is exactly the risk profile.
+
+- **Fix image over-fetch.** `shared/ui/Media.tsx` defaults every image to
+  `sizes="100vw"`, so next/image serves a file sized for the whole viewport
+  whatever the image actually occupies. Measured: 8x too wide on the home hero
+  collage, 3.9x on the About portraits, 2.7x on the What we do service media.
+  Already recorded in HANDOFF.md under "Known and unfixed" and reported by the
+  client as "the animation takes so long". The fix is honest `sizes` values per
+  call site.
+- Confirm the LCP element on each route is the hero media and that it carries
+  `priority`.
+- Measure CLS caused by the reveal and mask animations, and by late-arriving
+  webfonts.
+- Confirm that content which starts hidden for animation is still present in
+  the HTML and reaches a visible state if its observer never fires. The
+  fail-open watchdog in `useFailOpenReveal.ts` is the mechanism; verify it
+  holds for every animated block.
+- Acceptance:
+  - Lab LCP, CLS and INP measured per template on mobile and desktop, recorded
+    in this document with before and after numbers.
+  - No route serves an image more than ~1.5x the pixels it can display.
+  - No text is permanently invisible if JavaScript fails.
+
+### SEO-16: Resolve search-intent overlap between the work pages
+
+- `/our-work`, `/projects` and the three `/services/*` pages all describe
+  bespoke accessories, styling and curation for luxury hospitality. They can
+  compete for the same queries, which splits authority and lets Google pick
+  the wrong page.
+- Assign each route one primary query target and make the on-page copy,
+  headings and internal link text reflect that split.
+- This is an editorial decision as much as a technical one; agree the split
+  before rewriting anything in SEO-07.
+- Acceptance:
+  - Each indexable route has a documented primary query target.
+  - No two routes target the same one.
+
+### SEO-17: Small metadata correctness fixes
+
+- `buildMetadata` passes `twitter.images` as a bare string, so the Twitter card
+  has no image alt text while the Open Graph image does. Pass an object with
+  `url` and `alt`.
+- `robots.ts` sets `host`. That directive is Yandex-only, is ignored by Google,
+  and expects a bare hostname rather than a full URL. Drop it or correct it.
+- Decide and enforce a trailing-slash policy, and confirm canonical strings
+  match sitemap strings exactly, character for character.
+- Work in `src/shared/seo/metadata.ts`, `src/app/robots.ts`, `next.config.ts`.
+
+---
+
+## B. Blocked on the client
+
+Real work that cannot be completed until the client supplies information.
+**None of this is urgent today. All of it is a hard launch gate.** Do not
+invent, infer or approximate any value in this group.
+
+### SEO-01: Confirm the one production origin
+
+- Confirm the client's exact canonical HTTPS domain, including the preferred
+  `www` or apex form.
+- Set `NEXT_PUBLIC_SITE_URL` explicitly in production. Do not rely on the
+  current `https://finerthings.com` default in `src/shared/config/env.ts`
+  unless ownership and deployment to that origin are confirmed. A silent
+  default is the wrong failure mode here: a wrong guess ships wrong canonicals,
+  wrong `og:url`, a wrong sitemap and wrong JSON-LD, all at once.
+- Redirect every alternate host and HTTP URL to the preferred HTTPS origin at
+  the hosting edge.
+- Work in:
+  - deployment environment
+  - `src/shared/config/env.ts`
+  - `.env.example`
+  - `docs/DEPLOYMENT.md`
+- Acceptance:
+  - Canonicals, `og:url`, sitemap entries, robots sitemap and JSON-LD all use
+    the same live origin.
+  - Alternate host and HTTP requests resolve in one permanent redirect.
+
+### SEO-18: Replace placeholder business identity before launch
+
+The single most consequential item in this document.
+
+- `src/shared/config/site.ts` ships an invented email, phone number and Dubai
+  street address under `contact`, flagged `placeholder: true`. They are
+  deliberately plausible so the page is reviewable, which is also what makes
+  them dangerous: nothing on the rendered page announces that they are fake.
+- Launching with them publishes incorrect name, address and phone data. Once
+  Google, Bing and any aggregator have ingested it, correcting it is slow and
+  partly outside our control. This is materially harder to undo than a bad
+  title or a missing description.
+- The `placeholder: true` flag is the pre-launch check. Search
+  `contact.placeholder` before shipping; it is a single object so replacing it
+  is one edit.
+- Do not publish `LocalBusiness`, `PostalAddress` or `telephone` structured
+  data until the real values are in place. Structured data that contradicts
+  reality is worse than no structured data.
+- Acceptance:
+  - `contact.placeholder` is `false` and every field under it is client-supplied.
+  - No rendered page, and no JSON-LD, contains an invented business fact.
+
+### SEO-06: Remove placeholder links
+
+- Replace the site-wide LinkedIn `href="#"` with the real organization URL or
+  remove the link until one is supplied.
+- Do not invent an account URL.
+- Work in `src/shared/config/site.ts` and `src/shared/config/navigation.ts`.
+- Acceptance:
+  - No rendered page contains an empty, `#` or JavaScript placeholder link.
+  - External links use a valid absolute HTTPS URL.
+
+### SEO-09: Improve structured data without inventing facts
+
+- Add `WebSite` structured data and `Service` data for the three service pages.
+  These two are unblocked and could move to Group A.
+- Add real `sameAs`, contact details and business identity fields to the
+  Organization **only** when the client supplies and approves them. Blocked by
+  SEO-18.
+- Review whether `CreativeWork` remains the best type for project case studies.
+- Acceptance:
+  - JSON-LD validates in Schema.org and Google's Rich Results Test where the
+    type is supported.
+  - Structured data matches visible page content exactly.
+  - No placeholder or inferred business fact is published.
+
+### SEO-12: Finish icons and search appearance assets
+
+- Confirm the existing square favicon is readable at small sizes.
+- Add Next.js `icon` and `apple-icon` file conventions once approved assets are
+  available. A web app manifest is optional unless installability is wanted.
+
+### SEO-19: Local search presence
+
+- The studio is Dubai-based, so local search is a real acquisition channel and
+  is currently unaddressed.
+- Once SEO-18 closes: claim and complete a Google Business Profile, and add
+  `LocalBusiness` structured data whose name, address and phone match the
+  profile and the rendered page exactly.
+- Blocked entirely by SEO-18. Starting it earlier risks publishing the
+  placeholder address to a platform that is much harder to correct than the
+  site itself.
+
+---
+
+## C. After deployment
+
+Only possible against the live production origin.
+
+### SEO-13: Validate production search integrations
+
+- Verify ownership in Google Search Console and Bing Webmaster Tools using a
+  DNS record or another method that does not add an external runtime origin.
+- Submit the production sitemap and inspect the Home, each service, Projects,
+  both project stories and Contact.
+- Validate live canonicals, rendered HTML, mobile usability and indexing
+  status after deployment.
+- Do not add analytics or third-party scripts: the repository CSP and launch
+  policy forbid new external origins. Search Console is therefore the only
+  measurement surface, so capture a baseline in the first week.
+
+### SEO-20: Confirm the legacy redirects consolidate
+
+- Twelve legacy `.html` URLs redirect permanently via `LEGACY_REDIRECTS` in
+  `src/shared/config/routes.ts`. The redirects are verified as working, but
+  whether Google actually transfers the old URLs' standing to the new ones is
+  only observable after launch.
+- In Search Console, watch the legacy URLs drop out of the index and their
+  replacements enter it. Investigate any that stall in "Crawled, not indexed".
+
+---
+
+## Done
+
+### SEO-04: Duplicate gallery route
+
+Resolved by deletion on 2026-09-02. The gallery was approved and now _is_
+`/projects`; the editorial index and the temporary comparison route
+(`/projects-editorial`, earlier `/project-new`) were removed along with their
+robots and sitemap exclusions, the `CHROME_ALIAS` workaround that existed only
+to give the temporary route a header, and its parity baselines. There is no
+second gallery URL left to compete, and no temporary slug exposed publicly.
+
+---
+
 ## Verification sequence
 
-1. Run the SEO regression test against a production build.
+1. Run the SEO regression test (SEO-14) against a production build.
 2. Inspect `robots.txt`, `sitemap.xml`, canonicals and redirects using the real
    production origin.
 3. Validate JSON-LD and social cards.
-4. Run `pnpm verify` and review any parity changes.
-5. After deployment, use Search Console URL Inspection and submit the sitemap.
+4. Confirm `contact.placeholder` is `false` and no invented business fact ships.
+5. Run `pnpm verify` and review any parity changes by eye, not just by pass or
+   fail. See PARITY.md: the gate cannot see small changes.
+6. After deployment, use Search Console URL Inspection and submit the sitemap.
 
 ## Primary references
 
@@ -224,3 +366,5 @@ legacy redirects and the 404 response. It also reviewed the current Next.js
 - [Google robots meta guidance](https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag)
 - [Google sitemap guidance](https://developers.google.com/search/docs/crawling-indexing/sitemaps/overview)
 - [Google structured-data introduction](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data)
+- [Google Core Web Vitals](https://developers.google.com/search/docs/appearance/core-web-vitals)
+- [Google local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business)
