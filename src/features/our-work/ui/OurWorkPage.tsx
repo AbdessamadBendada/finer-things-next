@@ -2,6 +2,7 @@ import { Media } from '@/shared/ui/Media';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
 import { DETAILS, MATERIALS, PROCESS_STEPS } from '../content/materials.content';
+import { ArtisanStrip } from './ArtisanStrip';
 import { MaterialCards } from './MaterialCards';
 import { OurWorkShell } from './OurWorkShell';
 
@@ -20,7 +21,7 @@ export function OurWorkPage() {
             <h1>
               <span className="hero-line">
                 <span>We turn the ordinary</span>
-              </span>
+              </span>{' '}
               <span className="hero-line">
                 <span>into extraordinary</span>
               </span>
@@ -50,29 +51,6 @@ export function OurWorkPage() {
                 designs to create products that stand the test of time.
               </p>
             </div>
-          </div>
-
-          {/* The claim above had nothing behind it. Three workshops, run to the
-              full width, so the sentence is shown rather than only stated. */}
-          <div className="artisan-strip">
-            <figure className="artisan-shot rise">
-              <Media
-                src="/assets/new-artisan-wood-01.webp"
-                alt="Sawn walnut, oak and maple stacked in a joinery workshop"
-              />
-            </figure>
-            <figure className="artisan-shot rise">
-              <Media
-                src="/assets/new-artisan-ceramics-07.webp"
-                alt="A ceramicist throwing a cup on the wheel"
-              />
-            </figure>
-            <figure className="artisan-shot rise">
-              <Media
-                src="/assets/new-artisan-glass-06.webp"
-                alt="Metal moulds and tools racked along a workshop wall"
-              />
-            </figure>
           </div>
         </section>
 
@@ -183,6 +161,28 @@ export function OurWorkPage() {
               </div>
             </div>
             <MaterialCards cards={DETAILS} columns={2} />
+          </div>
+        </section>
+
+        {/* The workshops. Dark, so three stone sections do not run together,
+            and inside `.wrap` so the photographs line up with the detail cards
+            above rather than running wider than them. */}
+        <section className="continuity artisans-section" id="artisans">
+          <div className="wrap">
+            <div className="continuity-head">
+              <div className="eyebrow rise">Our artisans</div>
+              <div>
+                <h2 className="rise">
+                  {'Made in workshops we know, by artisans we '}
+                  <em>trust</em>
+                </h2>
+                <p className="continuity-note rise">
+                  Wood, ceramics, glass and metal, each from a maker chosen for that material
+                  and that place.
+                </p>
+              </div>
+            </div>
+            <ArtisanStrip />
           </div>
         </section>
 

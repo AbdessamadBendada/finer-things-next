@@ -14,7 +14,7 @@ export function AboutPage() {
             <h1>
               <span className="hero-line">
                 <span>Values rooted in</span>
-              </span>
+              </span>{' '}
               <span className="hero-line">
                 <span>
                   <em>family</em>
@@ -98,6 +98,33 @@ export function AboutPage() {
             </div>
           </div>
         </section>
+
+        {/* THE ARTISANS */}
+        <section className="artisans" id="artisans">
+          <div className="wrap">
+            <div className="artisans-head">
+              <div className="eyebrow rise">The artisans</div>
+              <h2 className="rise">
+                {'Nothing here is made by '}
+                <em>us alone.</em>
+              </h2>
+              <p className="artisans-note rise">
+                Behind every piece is a workshop somewhere in the world: a ceramicist who has
+                kept the same moulds for forty years, a glassblower who works to the minute, a
+                joiner who knows which board to cut and which to leave. We spend as much time
+                finding them as we do designing, because the making is the difference between an
+                object and a piece worth keeping.
+              </p>
+            </div>
+
+            <ArtisanWall />
+
+            <p className="artisans-foot rise">
+              Ceramics, glass, wood, leather and metal, worked by hand in small workshops across
+              Europe and beyond.
+            </p>
+          </div>
+        </section>
         {/* GLOBAL POINT OF VIEW */}
         <section className="world">
           <div className="wrap">
@@ -129,32 +156,6 @@ export function AboutPage() {
                 />
               </figure>
             </div>
-          </div>
-        </section>
-        {/* THE ARTISANS */}
-        <section className="artisans" id="artisans">
-          <div className="wrap">
-            <div className="artisans-head">
-              <div className="eyebrow rise">The artisans</div>
-              <h2 className="rise">
-                {'Nothing here is made by '}
-                <em>us alone.</em>
-              </h2>
-              <p className="artisans-note rise">
-                Behind every piece is a workshop somewhere in the world: a ceramicist who has
-                kept the same moulds for forty years, a glassblower who works to the minute, a
-                joiner who knows which board to cut and which to leave. We spend as much time
-                finding them as we do designing, because the making is the difference between an
-                object and a piece worth keeping.
-              </p>
-            </div>
-
-            <ArtisanWall />
-
-            <p className="artisans-foot rise">
-              Ceramics, glass, wood, leather and metal, worked by hand in small workshops across
-              Europe and beyond.
-            </p>
           </div>
         </section>
         {/* PRINCIPLES */}

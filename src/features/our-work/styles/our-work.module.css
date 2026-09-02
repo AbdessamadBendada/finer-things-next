@@ -64,6 +64,16 @@
 .page :global(.continuity h2) {max-width:14ch;font:500 clamp(3rem,5vw,5.1rem)/.96 var(--font-display),serif;letter-spacing:-.035em}
 .page :global(.continuity h2 em) {color:var(--oxblood);font-weight:400}
 .page :global(.continuity-note) {max-width:43ch;color:var(--soft)}
+/* The artisans section is the one dark `continuity` block. Its accent and
+   muted text are the values the dark `.services` rows already use: --oxblood
+   and --soft are both near-black and would be unreadable on --ink. The strip
+   drops its own gutter because `.wrap` already supplies one. */
+.page :global(.artisans-section) {background:var(--ink);color:var(--paper)}
+.page :global(.artisans-section .eyebrow) {color:#D8A080}
+.page :global(.artisans-section h2 em) {color:#D8A080}
+.page :global(.artisans-section .continuity-note) {color:rgba(243,240,234,.72)}
+.page :global(.artisans-section .artisan-strip) {padding:0}
+.page :global(.artisans-section .artisan-shot) {background:rgba(243,240,234,.08)}
 .page :global(.thread) {display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(41,40,31,.2);border-bottom:1px solid rgba(41,40,31,.2)}
 .page :global(.thread-item) {min-height:280px;padding:30px 34px;display:flex;flex-direction:column}
 .page :global(.thread-item+.thread-item) {border-left:1px solid rgba(41,40,31,.2)}

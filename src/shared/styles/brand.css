@@ -1289,9 +1289,12 @@ body.menu-open [data-page] .menu-toggle {
    applied to a workshop instead of a lobby.
    ================================================================ */
 
+/* Light, and `--stone` rather than `--paper`: the section now sits between the
+   two dark founder blocks and the paper `.world`, so matching paper would run
+   the two light sections together as one. Stone keeps the boundary. */
 [data-page='about'] .artisans {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--stone);
+  color: var(--ink);
   padding: clamp(110px, 16vh, 180px) 0;
 }
 
@@ -1317,7 +1320,7 @@ body.menu-open [data-page] .menu-toggle {
 [data-page='about'] .artisans-note {
   margin: clamp(22px, 3vh, 34px) 0 0;
   max-width: 58ch;
-  color: rgba(243, 240, 234, 0.72);
+  color: var(--soft);
   font-size: 1.02rem;
   line-height: 1.85;
 }
@@ -1358,7 +1361,9 @@ body.menu-open [data-page] .menu-toggle {
   margin: 0;
   overflow: hidden;
   aspect-ratio: 1 / 1;
-  background: rgba(243, 240, 234, 0.05);
+  /* The gap a tile shows before its photograph decodes. Was a paper tint for
+     the dark section; on stone it has to darken instead of lighten. */
+  background: rgba(41, 40, 31, 0.06);
 }
 
 /* The broken grid: one wide tile on the first row, one on the last, placed so
@@ -1463,7 +1468,7 @@ body.menu-open [data-page] .menu-toggle {
 [data-page='about'] .artisans-foot {
   margin: clamp(38px, 5vh, 58px) 0 0;
   max-width: 46ch;
-  color: rgba(243, 240, 234, 0.5);
+  color: rgba(41, 40, 31, 0.5);
   font-size: 0.86rem;
   letter-spacing: 0.02em;
 }
@@ -1505,7 +1510,43 @@ body.menu-open [data-page] .menu-toggle {
   object-fit: cover;
   filter: saturate(0.9);
   transform: scale(1.02);
-  transition: transform 1.3s var(--ease);
+  transition:
+    opacity 0.35s ease,
+    transform 0.7s var(--ease);
+}
+
+/* The strip rotates like the About wall and needs the same two states. The
+   slide is quicker here: with three photographs this large, the About wall's
+   slower crossfade reads as a page still loading rather than as motion.
+
+   The keyframe rests at scale(1.02) rather than the wall's 1.01 so the image
+   does not step when `is-arriving` is removed and the base rule takes back
+   over. */
+/* The rotation classes sit on this inner element, not on the figure: the
+   figure's class is owned by the scroll reveal. See ArtisanStrip.tsx. */
+[data-page='our-work'] .artisan-swap {
+  width: 100%;
+  height: 100%;
+}
+
+[data-page='our-work'] .artisan-swap.is-fading img {
+  opacity: 0;
+  transform: translateY(-12%) scale(1.06);
+}
+
+[data-page='our-work'] .artisan-swap.is-arriving img {
+  animation: artisan-strip-arrive 0.7s var(--ease) both;
+}
+
+@keyframes artisan-strip-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(14%) scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {

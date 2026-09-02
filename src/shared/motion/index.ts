@@ -5,6 +5,7 @@ export { useServiceIndexMotion } from './useServiceIndexMotion';
 export { useMobileMenu } from './useMobileMenu';
 export { useScrollHeader } from './useScrollHeader';
 export { useReducedMotion, prefersReducedMotion } from './useReducedMotion';
+export { useImageRotation, type ImageRotationOptions } from './useImageRotation';
 export {
   useScrollDriver,
   clamp01,

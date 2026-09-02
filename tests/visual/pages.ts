@@ -118,25 +118,30 @@ export const VIEWPORTS = [
 const HIDE_MASTHEAD = '.head, .mobile-menu { visibility: hidden !important; }';
 
 /**
- * The About page's artisan wall swaps one photograph every few seconds,
- * forever, at a random position. Left running it would make the gate flaky:
- * two captures of an unchanged page would differ by whichever tiles happened
- * to turn over between them.
+ * Two places swap one photograph every few seconds, forever, at a random
+ * position: the About artisan wall and the Our Work artisan strip. Left
+ * running they make the gate flaky, because two captures of an unchanged page
+ * differ by whichever images happened to turn over between them.
  *
- * Freezing it here rather than in the component keeps the behaviour honest in
- * the browser and deterministic in the suite. The wall is covered by
- * tests/visual/artisan-wall.spec.ts instead, which asserts what it actually
- * does: that it changes, never shows a duplicate, and stops off screen.
+ * `--frozen` is read by `useImageRotation`, which skips the swap while it is
+ * set. Nothing in the application sets it, so the behaviour stays honest in
+ * the browser and deterministic here. The `transition: none` half stops a
+ * capture landing mid-slide.
+ *
+ * What the rotation actually does — that it changes, never shows a duplicate,
+ * and stops off screen — is asserted in tests/visual/artisan-wall.spec.ts and
+ * tests/visual/artisan-strip.spec.ts instead.
  */
-const FREEZE_WALL = `
-  .artisan-wall { --frozen: 1; }
-  .artisan-tile, .artisan-tile img { transition: none !important; opacity: 1 !important; }
+const FREEZE_ROTATION = `
+  .artisan-wall, .artisan-strip { --frozen: 1; }
+  .artisan-tile, .artisan-tile img,
+  .artisan-shot, .artisan-shot img, .artisan-swap { transition: none !important; opacity: 1 !important; }
 `;
 
 export async function settlePage(page: Page, settleMs = 2500) {
   await page.waitForLoadState('load');
   await page.addStyleTag({ content: HIDE_MASTHEAD });
-  await page.addStyleTag({ content: FREEZE_WALL });
+  await page.addStyleTag({ content: FREEZE_ROTATION });
 
   // Let the intro sequence and any entry animations run.
   await page.waitForTimeout(settleMs);
