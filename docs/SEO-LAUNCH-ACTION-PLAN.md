@@ -95,8 +95,7 @@ Descriptions:
   one-of-a-kind accessories for the luxury hotels and residences behind a new
   level of experience.
 - **`/about`** — Alex Lahmer founded Finer Things to create distinctive bespoke
-  accessories and designs for the world's finest hotels and residences, with
-  co-founder Malika Lahmer.
+  accessories and designs for the world's finest hotels and residences.
 - **`/projects`** — Selected work for the world's finest hotels and residences,
   photographed in place. Every image carries the property and the space it was
   made for.
@@ -119,16 +118,20 @@ Descriptions:
   want people to remember. Finer Things works with hotels and residences
   worldwide.
 
-Three deliberate departures from the copywriter's draft, each flagged back to
+Two deliberate departures from the copywriter's draft, both flagged back to
 her:
 
 1. Home title. Her draft was "The home of Finer Things", marked with a query.
    It is circular: it tells a stranger nothing about the business. Replaced
    with her own proposed site name, which says who and what in five words.
-2. The About description fixed "has foudner" and "for world's finest", and now
-   names Malika. That page gives her a founder section of her own, so an
-   Alex-only description under-describes it.
-3. Privacy and Terms get nothing. They are `noindex`.
+2. The About description fixes the two typos in her draft, "has foudner" and
+   "for world's finest". The wording is otherwise hers.
+
+Privacy and Terms get nothing. They are `noindex`.
+
+The About description names Alex alone, by the client's decision. It was
+briefly drafted to name Malika as well, since that page gives her a founder
+section of her own; that was reverted on request. Do not reintroduce it.
 
 - Write for humans and accurate snippets; do not stuff keywords or chase a
   rigid character count.
@@ -314,6 +317,26 @@ Only possible against the live production origin.
 ---
 
 ## Done
+
+### Batch 3, completed 2026-09-02
+
+**SEO-07: Search-intent titles and descriptions.** All ten indexable routes now
+use the exact approved title and description set above. Home uses an absolute
+title, so it renders as `Finer Things | Exclusive Design Boutique` without a
+second brand suffix. Privacy and Terms retain their existing metadata. The SEO
+suite asserts every final rendered title and description literally.
+
+**SEO-11: Contextual internal linking.** The existing service headings on What
+we do link to all three service pages, and each service links back from its
+existing kicker. Relevant selected-work headings connect Bespoke Accessories
+to Jumeirah Marsa Al Arab and Styling and Curation to Waldorf Astoria Osaka.
+Project-property captions on the Projects hub link to their case studies, and
+each case study's existing Selected project label links back to the hub. No
+visible copy or navigation system was added.
+
+**Verification.** `pnpm verify` passed typecheck, lint, the production build, 8
+form tests, 16 SEO tests and all 36 parity snapshots. No snapshot reported a
+pixel mismatch and no baseline was regenerated.
 
 ### SEO-16: Search-intent overlap between the work pages
 
