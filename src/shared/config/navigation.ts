@@ -78,10 +78,6 @@ export const CHROME: Record<string, ChromeConfig> = {
     scrollThreshold: 0.72,
   },
 
-  [ROUTES.projectsEditorial]: {
-    scrollThreshold: 0.72,
-  },
-
   [ROUTES.project('marsa-al-arab')]: {
     scrollThreshold: 0.78,
   },
@@ -115,18 +111,3 @@ export const withCurrent = (links: readonly NavLink[], pathname: string): NavLin
   links.map((link) => (link.href === pathname ? { ...link, current: true } : link));
 
 export const chromeFor = (pathname: string): ChromeConfig | undefined => CHROME[pathname];
-
-/**
- * Which page's chrome styling a route borrows.
- *
- * `chrome.css` carries a block of masthead and footer rules per page, keyed by
- * `[data-page='…']`, and it only knows the twelve pages that came from
- * `legacy/`. A thirteenth route would get no chrome styling at all and render
- * an unstyled header. Rather than copy twenty rules for a page that is still
- * under review, `/project-new` borrows the chrome of the page it may replace.
- *
- * Only the chrome is shared. The page's own look comes from its CSS module.
- */
-export const CHROME_ALIAS: Record<string, string> = {
-  [ROUTES.projectsEditorial]: 'projects',
-};

@@ -66,12 +66,11 @@ deliberately unchanged.
 
 Nothing here is a bug. Each is a placeholder that ships until they answer.
 
-| What                        | Where                                            | Notes                                                      |
-| --------------------------- | ------------------------------------------------ | ---------------------------------------------------------- |
-| Verdict on the gallery page | `/project-new`                                   | Additive. Reverting `4caf561` removes it                   |
-| Remaining project images    | `features/project-new/content`                   | 20 of the 22 supplied photographs are used                 |
-| A sixth material            | `features/our-work/content/materials.content.ts` | The sixth card repeats Marble, flagged `placeholder: true` |
-| All real photography        | everywhere                                       | 34 distinct images across 81 placements                    |
+| What                     | Where                                            | Notes                                                      |
+| ------------------------ | ------------------------------------------------ | ---------------------------------------------------------- |
+| Remaining project images | `features/projects/content`                      | 20 of the 22 supplied photographs are used                 |
+| A sixth material         | `features/our-work/content/materials.content.ts` | The sixth card repeats Marble, flagged `placeholder: true` |
+| All real photography     | everywhere                                       | 34 distinct images across 81 placements                    |
 
 An email has gone to the client asking them to walk the site and say what
 replaces what. An upload app was built for this and then scrapped as

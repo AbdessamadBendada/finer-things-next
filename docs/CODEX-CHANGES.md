@@ -25,6 +25,38 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-02: The gallery is simply /projects
+
+**Claude change**
+
+- Commit: `this commit`
+- Changed: deleted the superseded editorial projects index and its temporary
+  comparison route `/projects-editorial`, then folded the approved gallery into
+  the `projects` feature so no name refers to it as new. `ProjectNewPage` ->
+  `ProjectsPage`, `ProjectNewShell` -> `ProjectsShell`,
+  `project-new.module.css` -> `projects.module.css`, and
+  `features/project-new/` is gone. Removed the route's robots disallow and
+  sitemap exclusion, its parity entry and baselines, and the `CHROME_ALIAS`
+  indirection in `shared/config/navigation.ts` that existed only to lend the
+  temporary route a styled header.
+- Rationale: the route was disallowed in `robots.txt` while also serving
+  `noindex`, which is self-cancelling. robots.txt blocks the fetch, so the
+  `noindex` could never be read, leaving the URL eligible for a bare listing.
+  Deletion removes the conflict rather than managing it, and the code comment
+  on the route already asked for it once the verdict landed.
+- Files: `src/app/(site)/projects/page.tsx`,
+  `src/app/(site)/projects-editorial/` (deleted), `src/features/projects/`,
+  `src/features/project-new/` (deleted), `src/app/robots.ts`,
+  `src/app/sitemap.ts`, `src/shared/config/routes.ts`,
+  `src/shared/config/navigation.ts`, `src/shared/layout/SiteChrome.tsx`,
+  `tests/visual/pages.ts`, `docs/HANDOFF.md`, `docs/FEEDBACK.md`,
+  `docs/SEO-LAUNCH-ACTION-PLAN.md`
+- Verified: typecheck, lint, Prettier, a clean production build showing
+  `/projects-editorial` gone from the route table, 8 form tests, and 36 of 36
+  parity snapshots passing with no baseline refresh, confirming the rename is
+  visually inert.
+- Follow-up: None. `docs/SEO-LAUNCH-ACTION-PLAN.md` SEO-04 is closed.
+
 ## 2026-09-01: Contact details and wide-screen consistency
 
 **Codex change**

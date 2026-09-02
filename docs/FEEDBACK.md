@@ -455,10 +455,11 @@ Layout and polish, plus one page rebuilt speculatively.
 - **Asked:** the client dislikes `/projects` and pointed at the Style With Us
   page on their own site, wanting it "chicer and more luxurious". Asked for it
   on a separate route until approved.
-- **Status:** 🤔 Awaiting the client
-- **Done:** `/project-new`. A composed wall of photographs with credits on
-  hover, a single-screen hero, and the shared CTA. `/projects` is untouched;
-  reverting the commit removes it entirely.
+- **Status:** ✅ Approved and adopted
+- **Done:** the gallery is now `/projects` itself: a composed wall of
+  photographs with credits on hover, a single-screen hero, and the shared CTA.
+  The editorial index it replaced has been deleted, and the temporary
+  comparison route with it. Both are in git history if ever wanted back.
 - **Note:** their reference page is thirty-one identical tiles with no
   headline, no captions and no call to action. What works about it is that you
   land straight in the work; what makes it read cheap is the flatness and the

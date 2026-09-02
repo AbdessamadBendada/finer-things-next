@@ -10,10 +10,6 @@ export const ROUTES = {
   home: '/',
   ourWork: '/our-work',
   projects: '/projects',
-  /* The editorial index /projects used to be. Superseded by the gallery,
-     kept reachable so the two can be compared, and excluded from the menu,
-     the sitemap and search. */
-  projectsEditorial: '/projects-editorial',
   about: '/about',
   contact: '/contact',
   privacy: '/privacy',

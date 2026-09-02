@@ -38,13 +38,6 @@ export const PARITY_PAGES = [
    * at the document the route used to serve.
    */
   { name: 'projects', legacy: '/projects.html', route: '/projects', baseline: 'current' },
-  // The editorial index /projects used to be. Still built, so still gated.
-  {
-    name: 'projects-editorial',
-    legacy: '/projects.html',
-    route: '/projects-editorial',
-    baseline: 'current',
-  },
   {
     name: 'marsa-al-arab',
     legacy: '/marsa-al-arab.html',

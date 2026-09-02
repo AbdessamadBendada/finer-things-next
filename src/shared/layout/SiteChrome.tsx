@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 
-import { CHROME_ALIAS, SITE_MENU, chromeFor, withCurrent } from '@/shared/config/navigation';
+import { SITE_MENU, chromeFor, withCurrent } from '@/shared/config/navigation';
 
 import { SiteFooter } from './SiteFooter';
 import { SiteHeader } from './SiteHeader';
@@ -42,7 +42,6 @@ export function SiteChrome({
   const chrome = chromeFor(pathname);
   const slug =
     slugOverride ??
-    CHROME_ALIAS[pathname] ??
     (pathname === '/' ? 'home' : (pathname.split('/').filter(Boolean).at(-1) ?? 'home'));
 
   return (

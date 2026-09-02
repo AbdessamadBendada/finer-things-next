@@ -1,4 +1,4 @@
-import { ProjectNewPage } from '@/features/project-new';
+import { ProjectsPage } from '@/features/projects';
 import { ROUTES } from '@/shared/config/routes';
 import { BreadcrumbJsonLd } from '@/shared/seo/JsonLd';
 import { buildMetadata } from '@/shared/seo/metadata';
@@ -10,18 +10,11 @@ export const metadata = buildMetadata({
   path: ROUTES.projects,
 });
 
-/**
- * The gallery, approved in review, is now the projects page.
- *
- * The editorial index it replaced is still built and reachable at
- * /projects-editorial, kept out of search and out of the menu, so the two can
- * be compared without a checkout. Delete that route once nobody wants to look
- * at it again.
- */
+/** The gallery, approved in review, is the projects page. */
 export default function ProjectsRoute() {
   return (
     <>
-      <ProjectNewPage />
+      <ProjectsPage />
       <BreadcrumbJsonLd trail={[{ name: 'Projects', path: ROUTES.projects }]} />
     </>
   );

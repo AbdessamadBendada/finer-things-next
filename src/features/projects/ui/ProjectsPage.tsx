@@ -1,160 +1,61 @@
-import Link from 'next/link';
-import { Media } from '@/shared/ui/Media';
-import { ProjectsShell } from './ProjectsShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
+import { Media } from '@/shared/ui/Media';
 
+import { WALL } from '../content/wall.content';
+import { ProjectsShell } from './ProjectsShell';
+
+/**
+ * The `/projects` index: a gallery-led wall of the work.
+ *
+ * The client's own site shows this work as a wall of photographs with no copy
+ * at all, and liked that you land straight in it. This keeps that, and adds
+ * the three things it was missing: a first frame so you know what you are
+ * looking at, credits so the work is attributable, and a way to act at the
+ * end. See docs/FEEDBACK.md.
+ */
 export function ProjectsPage() {
   return (
     <ProjectsShell>
-      <div className="project-progress" id="projectProgress" aria-hidden="true">
-        <span>01 / 02</span>
-      </div>
       <main>
-        <section className="hero">
-          <div className="hero-bg">
+        {/* One screen, then the work. Deliberately short: a long preamble is
+            the thing the gallery format is meant to avoid. */}
+        <section className="gallery-hero">
+          <div className="gallery-hero-bg">
             <Media
-              src="/assets/0685_Marsa_Al_Arab_Lobby_11_c9061482.webp"
-              alt="A layered interior view at Jumeirah Marsa Al Arab"
+              src="/assets/new-work-marsa-lobby-11.webp"
+              alt="Layered decorative details in the Marsa Al Arab lobby"
+              priority
             />
           </div>
-          <div className="wrap hero-content">
-            <div className="eyebrow">Selected projects</div>
-            <h1>
-              <span className="hero-line">
-                <span>Places with</span>
-              </span>
-              <span className="hero-line">
-                <span>a story to tell.</span>
-              </span>
-            </h1>
-            <div className="hero-foot">
-              <p>
-                A visual index of selected hospitality work across rooms, public spaces and
-                dining destinations.
-              </p>
-              <span className="scroll-cue">View selected places ↓</span>
-            </div>
+          <div className="wrap gallery-hero-copy">
+            <div className="eyebrow">Selected work</div>
+            <h1>Every detail, in its place.</h1>
+            <p>
+              Bespoke accessories, styling and curation for the world&rsquo;s finest hotels and
+              residences. Every image carries the property and the space it was made for.
+            </p>
           </div>
         </section>
-        <section className="intro">
-          <div className="wrap intro-grid">
-            <div className="eyebrow rise">The work in place</div>
-            <div>
-              <h2 className="rise" data-word-reveal="">
-                {
-                  'Every destination has its own character. The details should feel as though they could belong '
-                }
-                <em>nowhere else.</em>
-              </h2>
-              <p className="intro-note rise">
-                The current project imagery brings together two properties and a series of
-                distinctive spaces within them.
-              </p>
-            </div>
-          </div>
+
+        <section className="wall" aria-label="Project gallery">
+          {WALL.map((tile) => (
+            <figure
+              className={`wall-tile rise${tile.size ? ` wall-tile-${tile.size}` : ''}`}
+              key={tile.image}
+              tabIndex={0}
+            >
+              <Media src={tile.image} alt={tile.alt} sizes="(max-width: 860px) 50vw, 33vw" />
+              <figcaption>
+                <span className="wall-property">
+                  {tile.property}
+                  <span className="wall-location"> &middot; {tile.location}</span>
+                </span>
+                <span className="wall-space">{tile.space}</span>
+              </figcaption>
+            </figure>
+          ))}
         </section>
-        <section className="services" id="projects">
-          <article className="service">
-            <div className="service-media">
-              <Media
-                src="/assets/0678_Marsa_Al_Arab_Lobby_4_b7af1dee.webp"
-                alt="Decorative objects in the lobby of Jumeirah Marsa Al Arab"
-              />
-            </div>
-            <div className="wrap service-content">
-              <div className="service-top">
-                <span className="service-number">01</span>
-                <span className="eyebrow">Dubai · United Arab Emirates</span>
-              </div>
-              <h2>
-                {'Jumeirah '}
-                <em>Marsa Al Arab</em>
-              </h2>
-              <div className="service-bottom">
-                <p>
-                  Selected imagery from the lobby, guest suites, The Bombay Club and Iliana.
-                </p>
-                <Link className="service-link" href="/projects/marsa-al-arab">
-                  View project →
-                </Link>
-              </div>
-            </div>
-          </article>
-          <article className="service">
-            <div className="service-media">
-              <Media
-                src="/assets/0669_Waldorf_Astoria_Osaka_18_536d1f9e.webp"
-                alt="Guest-room details at Waldorf Astoria Osaka"
-              />
-            </div>
-            <div className="wrap service-content">
-              <div className="service-top">
-                <span className="service-number">02</span>
-                <span className="eyebrow">Osaka · Japan</span>
-              </div>
-              <h2>
-                {'Waldorf Astoria '}
-                <em>Osaka</em>
-              </h2>
-              <div className="service-bottom">
-                <p>
-                  Selected imagery from guest-room and hospitality spaces at the property in
-                  Osaka’s Umekita district.
-                </p>
-                <Link className="service-link" href="/projects/waldorf-astoria-osaka">
-                  View project →
-                </Link>
-              </div>
-            </div>
-          </article>
-        </section>
-        <section className="continuity">
-          <div className="wrap">
-            <div className="continuity-head">
-              <div className="eyebrow rise">Within Marsa Al Arab</div>
-              <div>
-                <h2 className="rise">
-                  {'One property, '}
-                  <em>many characters.</em>
-                </h2>
-                <p className="continuity-note rise">
-                  The imagery moves from arrival and residence to two distinct dining settings:
-                  The Bombay Club and Iliana.
-                </p>
-              </div>
-            </div>
-            <div className="places-grid">
-              <figure className="place rise" data-place-drift="-18">
-                <Media
-                  src="/assets/0681_Marsa_Al_Arab_Lobby_2_d21675ab.webp"
-                  alt="Lobby interior at Jumeirah Marsa Al Arab"
-                />
-                <figcaption>Lobby</figcaption>
-              </figure>
-              <figure className="place rise" data-place-drift="13">
-                <Media
-                  src="/assets/0664_Marsa_Al_Arab_Suite2_4_78452d9c.webp"
-                  alt="Guest-suite interior at Jumeirah Marsa Al Arab"
-                />
-                <figcaption>Guest suite</figcaption>
-              </figure>
-              <figure className="place rise" data-place-drift="-8">
-                <Media
-                  src="/assets/0679_Marsa_Al_Arab_Bombay_3_09aae676.webp"
-                  alt="Interior details at The Bombay Club"
-                />
-                <figcaption>The Bombay Club</figcaption>
-              </figure>
-              <figure className="place rise" data-place-drift="10">
-                <Media
-                  src="/assets/0680_Marsa_Al_Arab_Iliana_3_e20bcd92.webp"
-                  alt="Interior details at Iliana"
-                />
-                <figcaption>Iliana</figcaption>
-              </figure>
-            </div>
-          </div>
-        </section>
+
         <SiteCta />
       </main>
     </ProjectsShell>
