@@ -18,7 +18,7 @@
     "parity:report": "playwright show-report",
     "verify": "pnpm typecheck && pnpm lint && pnpm build && pnpm test && pnpm parity",
     "prepare": "husky",
-    "test": "playwright test tests/forms",
+    "test": "playwright test tests/forms tests/seo",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare preview",
     "cf:deploy": "opennextjs-cloudflare deploy"

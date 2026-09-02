@@ -19,7 +19,7 @@ export function BespokeAccessoriesPage() {
             <h1>
               <span className="hero-line">
                 <span>Bespoke</span>
-              </span>
+              </span>{' '}
               <span className="hero-line">
                 <span>
                   <em>Accessories</em>

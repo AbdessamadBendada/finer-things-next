@@ -23,7 +23,7 @@ export function WaldorfAstoriaOsakaPage() {
             <h1>
               <span className="mask">
                 <span>Waldorf Astoria</span>
-              </span>
+              </span>{' '}
               <span className="mask">
                 <span>Osaka</span>
               </span>

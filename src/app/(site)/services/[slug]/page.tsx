@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 
 import { SERVICES } from '@/features/services';
 import { SERVICE_SLUGS, ROUTES, type ServiceSlug } from '@/shared/config/routes';
-import { BreadcrumbJsonLd } from '@/shared/seo/JsonLd';
+import { BreadcrumbJsonLd, ServiceJsonLd } from '@/shared/seo/JsonLd';
 import { buildMetadata } from '@/shared/seo/metadata';
 
 type RouteParams = { params: Promise<{ slug: string }> };
@@ -42,6 +42,11 @@ export default async function ServiceRoute({ params }: RouteParams) {
           { name: 'What we do', path: ROUTES.ourWork },
           { name: service.name, path: service.seo.path },
         ]}
+      />
+      <ServiceJsonLd
+        name={service.name}
+        description={service.seo.description}
+        path={service.seo.path}
       />
     </>
   );

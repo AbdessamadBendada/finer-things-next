@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
 
-import { ROUTES } from '@/shared/config/routes';
 import { SITE } from '@/shared/config/site';
 
 export default function robots(): MetadataRoute.Robots {
@@ -8,13 +7,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: [
-        // Placeholder legal text, while it is still a draft.
-        ROUTES.privacy,
-        ROUTES.terms,
-      ],
     },
     sitemap: new URL('/sitemap.xml', SITE.url).toString(),
-    host: SITE.url,
   };
 }

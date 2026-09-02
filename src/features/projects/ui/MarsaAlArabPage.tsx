@@ -23,7 +23,7 @@ export function MarsaAlArabPage() {
             <h1>
               <span className="mask">
                 <span>Jumeirah</span>
-              </span>
+              </span>{' '}
               <span className="mask">
                 <span>Marsa Al Arab</span>
               </span>

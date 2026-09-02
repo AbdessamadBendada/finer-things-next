@@ -25,6 +25,153 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-02: Artisan photography gets a section on each page
+
+**Claude change**
+
+- Commit: `this commit`
+- Changed: on Our Work, the three workshop photographs moved out of the intro
+  into their own dark section after The Details, with an eyebrow, heading and
+  note following the existing `continuity` pattern, and now sit inside `.wrap`
+  so they line up with the detail cards above rather than running wider.
+  They also rotate: one photograph turns over every two seconds, drawn from the
+  21-image pool. On About, the artisans section moved to directly after
+  Malika's founder block and changed from dark to `--stone`.
+- Rationale for stone rather than paper on About: the section now sits between
+  the two dark founder blocks and the paper `.world`, so matching paper would
+  merge the two light sections into one.
+- The rotation logic was extracted to `shared/motion/useImageRotation.ts` and
+  the image pool to `shared/content/artisans.content.ts`, because a feature may
+  not import from a sibling feature. The About wall now uses the same hook.
+- Fixed while here: `tests/visual/pages.ts` claimed to freeze the About wall
+  for the pixel gate, but `--frozen` was set and never read, so the wall really
+  was still swapping images mid-capture. The hook now honours it, which is what
+  makes a rotating strip safe to add to a page inside the gate.
+- Files: `src/features/our-work/ui/{OurWorkPage,ArtisanStrip}.tsx`,
+  `src/features/our-work/styles/our-work.module.css`,
+  `src/features/about/ui/{AboutPage,ArtisanWall}.tsx`,
+  `src/shared/motion/{useImageRotation.ts,index.ts}`,
+  `src/shared/content/artisans.content.ts`, `src/shared/styles/brand.css`,
+  `tests/visual/{pages.ts,artisan-strip.spec.ts}`
+- Verified: measured the image widths against the detail cards at five
+  viewports (identical at all five); sampled opacity and transform through
+  swaps to confirm nothing disappears and the slide is real; `pnpm verify`
+  green with About and Our Work re-baselined after reviewing both by eye.
+- Regression guarded: `.rise` figures are revealed by `classList.add('in')`,
+  so a React-owned className on the same element strips it on every swap and
+  empties the strip. This shipped once. The changing classes now live on an
+  inner element, and `artisan-strip.spec.ts` fails if that is undone —
+  confirmed by reintroducing the bug and watching the test fail.
+- Follow-up: the Our Work section copy is a first draft and needs Alex.
+
+## 2026-09-02: Bespoke Accessories heading broke mid-word
+
+**Claude change**
+
+- Commit: `this commit`
+- Changed: raised the hero `h1` cap on `/services/bespoke-accessories` from
+  `9ch` to `10ch`.
+- Rationale: "Accessories" is eleven characters and the second line carries a
+  `.72em` indent, so the word needed about 9.14ch against a 9ch cap and the
+  global `overflow-wrap: break-word` split it as `Accessorie / s`. The other
+  two service pages escape it because their longest word is eight characters.
+  Pre-existing, and confirmed as such by rebuilding with the pre-Batch-2
+  markup and reproducing it.
+- Files: `src/features/services/styles/bespoke-accessories.module.css`
+- Verified: one line and no horizontal overflow at 390, 430, 700, 860, 1100,
+  1280, 1440, 1920; inspected desktop, tablet and mobile; baseline refreshed.
+- Note: all three parity snapshots **passed** with the heading visibly broken.
+  The tolerance is a fraction of a page thousands of pixels tall, so the gate
+  cannot see a single heading. See PARITY.md.
+
+## 2026-09-02: Verify and correct SEO batches 1 and 2
+
+**Claude change**
+
+- Commit: `this commit`
+- Changed: independently re-verified both batches against rendered production
+  HTML, then fixed five things.
+  1. Removed the invented `https://finerthings.com` default from
+     `src/shared/config/env.ts`. Development falls back to
+     `http://localhost:3000`, and a production build without
+     `NEXT_PUBLIC_SITE_URL` prints a loud `[env]` warning naming what will be
+     wrong. A plausible-looking wrong origin ships silently; localhost cannot.
+  2. `canonicalUrl()` now strips the trailing slash including on the root, so
+     the home canonical and its sitemap entry match character for character.
+     Its comment previously claimed this without doing it.
+  3. `TITLE_TEMPLATE` is defined once and shared by the root layout and
+     `buildMetadata`, rather than the brand suffix being spelled in both.
+  4. The placeholder-link assertion no longer requires the broken LinkedIn
+     link to exist; it asserts no _unknown_ placeholder exists, so it will not
+     fail on the day SEO-06 is fixed.
+  5. Social images: `/projects/marsa-al-arab` and `/services/styling-curation`
+     fall back to the generated 1200x630 card. Their photographs are portrait
+     2:3 and link previews crop to roughly 1.91:1. Every one of the 27 supplied
+     Marsa photographs is portrait, so no landscape option exists. A test now
+     asserts any page-specific card is landscape.
+     Also added `provider` to the `Service` JSON-LD, and corrected the test's
+     hardcoded `^https:` social-image assertion, which only passed because the
+     origin happened to be the fake domain.
+- Files: `src/shared/config/env.ts`, `.env.example`,
+  `src/shared/seo/{url.ts,metadata.ts,JsonLd.tsx}`, `src/app/layout.tsx`,
+  project and service registries, `tests/seo/seo.spec.ts`,
+  `docs/SEO-LAUNCH-ACTION-PLAN.md`
+- Verified: rendered HTML on seven routes, `robots.txt`, `sitemap.xml`,
+  trailing-slash redirects and 404s inspected directly; `pnpm verify` green.
+  The title regression test was confirmed to fail by reintroducing the original
+  `Finer Things | Luxury Motion Study | Finer Things` bug.
+- Follow-up: Group A now holds SEO-07, 11, 15 and 16 only.
+
+## 2026-09-02: Implement SEO launch Batch 2
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: completed SEO-03, SEO-08 and the unblocked part of SEO-09. Added
+  real text-node spaces between decorative H1 line wrappers; assigned approved
+  repository photography, truthful dimensions and descriptive social alt text
+  to both project and all three service pages; added site-wide `WebSite`
+  JSON-LD and `Service` JSON-LD only on the three service routes; and extended
+  the SEO suite to cover exact H1 text, social images and the new structured
+  data without permitting blocked Organization fields.
+- Files: the affected H1 components under `src/features/`, project and service
+  registries, `src/shared/seo/metadata.ts`, `src/shared/seo/JsonLd.tsx`,
+  `src/app/layout.tsx`, `src/app/(site)/services/[slug]/page.tsx`,
+  `tests/seo/seo.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: first confirmed the H1 regression failed against the unchanged
+  What we do heading on `ordinaryinto`; focused typecheck, lint, production
+  build and all 15 SEO tests passed; `pnpm verify` passed typecheck, lint,
+  production build, 8 form tests, 15 SEO tests and all 36 visual parity
+  snapshots with no baseline refresh. No snapshot moved because each literal
+  space sits at an existing block-level line boundary and therefore changes
+  semantic text without painting a visual glyph.
+- Follow-up: Human review can confirm that no rebaseline is needed; the parity
+  suite produced no diffs to approve. All out-of-scope SEO items remain
+  unchanged.
+
+## 2026-09-02: Implement SEO launch Batch 1
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: completed SEO-02, SEO-05, SEO-10, SEO-14 and SEO-17. Replaced
+  placeholder and duplicated titles with subject titles branded once; kept
+  Home absolute; made legal-page `noindex, follow` crawlable; removed synthetic
+  sitemap freshness, frequency and priority fields; added Twitter image alt
+  metadata; removed the robots Host directive; enforced no trailing slashes on
+  non-root routes; and added all-route SEO regression coverage to the standard
+  test command.
+- Files: `next.config.ts`, `package.json`, route metadata under `src/app/`,
+  `src/app/robots.ts`, `src/app/sitemap.ts`, project and service registries,
+  `src/shared/seo/metadata.ts`, `src/shared/seo/url.ts`,
+  `tests/seo/seo.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: first confirmed the new title regression failed against the
+  unchanged build on `Finer Things | Luxury Motion Study | Finer Things`; then
+  passed the focused 15-test SEO suite; `pnpm verify` passed typecheck, lint,
+  production build, 8 form tests, 15 SEO tests and all 36 visual parity
+  snapshots with no baseline refresh.
+- Follow-up: None for Batch 1. All out-of-scope SEO plan items remain unchanged.
+
 ## 2026-09-02: The gallery is simply /projects
 
 **Claude change**

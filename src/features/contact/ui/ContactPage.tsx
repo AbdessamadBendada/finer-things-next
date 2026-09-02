@@ -22,7 +22,7 @@ export function ContactPage() {
               <h1>
                 <span className="mask">
                   <span>Perhaps it begins</span>
-                </span>
+                </span>{' '}
                 <span className="mask">
                   <span>with a place.</span>
                 </span>

@@ -22,12 +22,27 @@ work that can start today made the queue unusable.
 | [C. After deployment](#c-after-deployment)           | Can only be done against the live production origin.                              |
 
 Item IDs (`SEO-01` …) are unchanged from the original audit so existing
-references still resolve. They are no longer in priority order.
+references still resolve. They are no longer in priority order. Completed items
+move to [Done](#done) rather than staying in place with a tick, so Group A
+always reads as work that is still outstanding.
+
+Group A is handed over in batches, because the items are not the same kind of
+work. Mechanical fixes with objectively right answers go first; anything
+needing an editorial judgement waits until that judgement is made.
+
+- **Batch 1** — SEO-02, 05, 10, 14, 17. **Done**, see [Done](#done).
+- **Batch 2** — SEO-03, SEO-08, and the unblocked half of SEO-09. **Done**, see [Done](#done). No decisions
+  required. SEO-03 changes rendered headings, so its parity snapshots must be
+  reviewed by eye rather than re-baselined.
+- **Batch 3** — SEO-16 first, as a decision, then SEO-07 and SEO-11 which both
+  follow from it.
+- **Batch 4** — SEO-15 on its own, with before and after measurements.
 
 **Placeholders are expected right now.** The site deliberately ships plausible
-stand-in contact details, a `#` LinkedIn link and a guessed domain so the build
-stays reviewable. That is not a defect to fix today. It is a launch gate, and
-it lives in Group B.
+stand-in contact details and a `#` LinkedIn link so the build stays reviewable.
+That is not a defect to fix today. It is a launch gate, and it lives in Group B.
+The invented production domain was the one placeholder judged too dangerous to
+keep, and was removed in Batch 1.
 
 ## Current baseline
 
@@ -50,55 +65,6 @@ it lives in Group B.
 
 No client input required. These are the items to hand over first.
 
-### SEO-02: Replace placeholder and duplicated page titles
-
-- Remove `Luxury Motion Study` from every production title.
-- Stop passing already-branded titles into a root template that appends
-  `Finer Things` again. The rendered Home title is currently
-  `Finer Things | Luxury Motion Study | Finer Things`.
-- Prefer page subjects in route metadata and let the root template append the
-  brand once. Give Home an intentional absolute title if needed.
-- Work in:
-  - `src/app/layout.tsx`
-  - `src/shared/seo/metadata.ts`
-  - static page metadata
-  - project and service registries
-- Acceptance:
-  - Every indexable route has a unique, descriptive title with `Finer Things`
-    no more than once.
-  - Open Graph and Twitter titles match the intended page title.
-  - No production metadata contains `Luxury Motion Study`.
-
-### SEO-03: Make crawlable heading text read correctly
-
-- Add real whitespace between decorative heading spans. Rendered H1 text
-  currently includes strings such as `ordinaryinto`, `witha`, `JumeirahMarsa`,
-  `BespokeAccessories` and `infamily` without spaces at span boundaries.
-- Preserve line breaks visually with CSS; do not depend on block layout to
-  create semantic whitespace.
-- Put the space in the text node. Do not use `&nbsp;`, which is not a normal
-  word separator and changes how the line wraps.
-- Work in the Our Work, Projects, project-story, service and About feature
-  components.
-- Acceptance:
-  - `textContent` for every H1 reads as a normal sentence or proper name.
-  - Each route still has exactly one H1.
-  - Screen-reader output and visual line breaks are both correct.
-  - Parity snapshots are reviewed, not just re-baselined.
-
-### SEO-05: Let crawlers see legal-page `noindex`
-
-- Remove Privacy and Terms from the `robots.txt` disallow list while their
-  page-level `noindex, follow` directives remain.
-- A crawler blocked by `robots.txt` may not fetch the page and therefore may
-  not see its `noindex` directive.
-- Keep both routes out of the sitemap until final legal copy replaces the
-  placeholders.
-- Work in `src/app/robots.ts`.
-- Acceptance:
-  - Both pages are crawlable but emit `noindex, follow`.
-  - Neither page appears in `sitemap.xml`.
-
 ### SEO-07: Rewrite titles and descriptions around real search intent
 
 - Give every indexable page a unique title and useful description grounded in
@@ -112,32 +78,6 @@ No client input required. These are the items to hand over first.
   - Each description accurately summarizes content visible on its page.
   - Priority terms appear naturally in headings and body copy, not only meta.
 
-### SEO-08: Add page-specific social imagery
-
-- Use the strongest approved project/service photograph for project and
-  service Open Graph/Twitter previews instead of the same generic card on
-  every route.
-- Keep the generated 1200x630 site card as the default.
-- Acceptance:
-  - Project and service metadata resolve to absolute, crawlable image URLs.
-  - Every selected image has meaningful social alt text and previews cleanly
-    at 1200x630.
-
-### SEO-10: Make sitemap freshness truthful
-
-- `sitemap.ts` currently sets every route's `lastModified` to the build time,
-  making unchanged pages appear newly updated after every deployment.
-- Supply real content modification dates or omit `lastModified` until a
-  reliable source exists. A workable source is the last commit that touched
-  the route's own files, via `git log -1 --format=%cI -- <path>` resolved at
-  build time; if that is not wanted, omit the field entirely rather than
-  publish a date that is not true.
-- Review `changeFrequency` and `priority`; keep them only if they express a
-  maintained policy. Google ignores both.
-- Acceptance:
-  - Rebuilding unchanged content does not change its modification date.
-  - The sitemap includes every and only canonical, indexable route.
-
 ### SEO-11: Strengthen contextual internal linking
 
 - Add relevant in-copy links between services, project case studies and the
@@ -148,16 +88,6 @@ No client input required. These are the items to hand over first.
   - Every indexable detail page is reachable from at least one relevant hub.
   - Link text describes the destination rather than using generic wording.
   - No new navigation system is introduced.
-
-### SEO-14: Add regression coverage
-
-- Add a lightweight SEO test over all routes covering status, one H1, title,
-  description, canonical, robots policy, social fields, JSON-LD parsing,
-  placeholder links and sitemap membership.
-- Acceptance:
-  - The test fails on the title duplication and heading concatenation found by
-    this audit.
-  - It runs in `pnpm verify` without calling external services.
 
 ### SEO-15: Address Core Web Vitals
 
@@ -199,17 +129,6 @@ in the build. This is a motion-heavy site, which is exactly the risk profile.
   - Each indexable route has a documented primary query target.
   - No two routes target the same one.
 
-### SEO-17: Small metadata correctness fixes
-
-- `buildMetadata` passes `twitter.images` as a bare string, so the Twitter card
-  has no image alt text while the Open Graph image does. Pass an object with
-  `url` and `alt`.
-- `robots.ts` sets `host`. That directive is Yandex-only, is ignored by Google,
-  and expects a bare hostname rather than a full URL. Drop it or correct it.
-- Decide and enforce a trailing-slash policy, and confirm canonical strings
-  match sitemap strings exactly, character for character.
-- Work in `src/shared/seo/metadata.ts`, `src/app/robots.ts`, `next.config.ts`.
-
 ---
 
 ## B. Blocked on the client
@@ -222,11 +141,13 @@ invent, infer or approximate any value in this group.
 
 - Confirm the client's exact canonical HTTPS domain, including the preferred
   `www` or apex form.
-- Set `NEXT_PUBLIC_SITE_URL` explicitly in production. Do not rely on the
-  current `https://finerthings.com` default in `src/shared/config/env.ts`
-  unless ownership and deployment to that origin are confirmed. A silent
-  default is the wrong failure mode here: a wrong guess ships wrong canonicals,
-  wrong `og:url`, a wrong sitemap and wrong JSON-LD, all at once.
+- Set `NEXT_PUBLIC_SITE_URL` explicitly in production. There is no longer a
+  production default: `src/shared/config/env.ts` falls back to
+  `http://localhost:3000` and a production build without the variable prints a
+  loud `[env]` warning. The invented `https://finerthings.com` default was
+  removed in Batch 1, because a silent, plausible-looking guess ships wrong
+  canonicals, a wrong `og:url`, a wrong sitemap and wrong JSON-LD all at once,
+  and nothing on the page looks broken.
 - Redirect every alternate host and HTTP URL to the preferred HTTPS origin at
   the hosting edge.
 - Work in:
@@ -273,11 +194,16 @@ The single most consequential item in this document.
 
 ### SEO-09: Improve structured data without inventing facts
 
-- Add `WebSite` structured data and `Service` data for the three service pages.
-  These two are unblocked and could move to Group A.
-- Add real `sameAs`, contact details and business identity fields to the
-  Organization **only** when the client supplies and approves them. Blocked by
-  SEO-18.
+Partly done. `WebSite` and `Service` shipped in Batch 2; the rest is still
+blocked.
+
+- [x] `WebSite` structured data site-wide, and `Service` on the three service
+      pages, each with the Organization as its `provider`.
+- [ ] Add real `sameAs`, contact details and business identity fields to the
+      Organization **only** when the client supplies and approves them. Blocked
+      by SEO-18. A test in `tests/seo/seo.spec.ts` asserts the Organization
+      carries no `sameAs`, `contactPoint`, `address` or `telephone`, so this
+      cannot be added by accident.
 - Review whether `CreativeWork` remains the best type for project case studies.
 - Acceptance:
   - JSON-LD validates in Schema.org and Google's Rich Results Test where the
@@ -332,6 +258,83 @@ Only possible against the live production origin.
 ---
 
 ## Done
+
+### Batch 2, completed 2026-09-02
+
+**SEO-03: Crawlable heading text.** A real space text node now sits between the
+decorative line wrappers in every multi-line H1. Crawled headings read `We turn
+the ordinary into extraordinary`, `Values rooted in family`, `Perhaps it begins
+with a place.` and `Jumeirah Marsa Al Arab`. `&nbsp;` was deliberately not
+used. All 36 parity snapshots passed **with no baseline refresh**: `.hero-line`
+and `.mask` are `display: block`, so whitespace between them collapses and
+paints nothing, and `:nth-child` selectors are unaffected because text nodes
+are not element children.
+
+**SEO-08: Page-specific social imagery.** Both project pages and all three
+service pages now carry an approved photograph with truthful dimensions and
+alt text reused verbatim from the same image's existing use in the app. The
+generated 1200x630 card remains the default everywhere else.
+
+**SEO-09, in part.** See its entry in Group B.
+
+**Test coverage.** `tests/seo/seo.spec.ts` now asserts exact H1 text per route,
+that each social image resolves 200 as `image/webp` with matching declared
+dimensions, that `WebSite` is present site-wide and `Service` only on service
+routes, and that the Organization carries none of the client-blocked identity
+fields.
+
+**Portrait social cards, resolved by falling back.** Two routes were initially
+given portrait 2:3 photographs — `/projects/marsa-al-arab` and
+`/services/styling-curation`. Link previews crop to roughly 1.91:1, which would
+have reduced both to a meaningless middle strip. Neither page has a landscape
+alternative: every one of the 27 supplied Marsa Al Arab photographs is
+portrait. Both routes now omit `image` and fall back to the generated 1200x630
+card, which is on-brand and reads as deliberate. A test asserts any
+page-specific card is landscape, so this cannot be reintroduced by accident.
+Revisit if the client supplies a landscape frame, or if per-route generated
+cards composing a photograph into 1200x630 are ever wanted.
+
+### Batch 1, completed 2026-09-02
+
+Implemented together and verified against a production build. Independently
+re-checked: rendered HTML on seven routes, `robots.txt`, `sitemap.xml`,
+trailing-slash redirects and 404s, plus `pnpm verify` green (typecheck, lint,
+build, 8 form tests, 15 SEO tests, 36 of 36 parity snapshots with no baseline
+refresh). The new regression test was confirmed to fail when the original title
+bug was deliberately reintroduced.
+
+**SEO-02: Placeholder and duplicated page titles.** `Luxury Motion Study` is
+gone from every title. Route metadata now carries the page subject alone and
+the root template appends the brand once; Home sets an absolute title. Rendered
+results: `Finer Things`, `About | Finer Things`,
+`Jumeirah Marsa Al Arab | Finer Things`.
+
+**SEO-05: Legal-page `noindex` is reachable.** Privacy and Terms are no longer
+disallowed in `robots.txt` and still emit `noindex, follow`. Neither appears in
+the sitemap.
+
+**SEO-10: Sitemap freshness.** `lastModified`, `changeFrequency` and `priority`
+were removed rather than faked. Rebuilding unchanged content no longer claims a
+new modification date. Real dates can be added later if a reliable source
+appears.
+
+**SEO-14: Regression coverage.** `tests/seo/seo.spec.ts` covers every route for
+status, one H1, title, description, canonical, robots policy, social fields,
+JSON-LD parsing, placeholder links and sitemap membership. It runs inside
+`pnpm test`, and so inside `pnpm verify`, without calling external services.
+
+**SEO-17: Metadata correctness.** Twitter images now carry alt text; the
+Yandex-only `Host` directive is gone; `trailingSlash: false` is explicit and
+covered by a redirect test. `canonicalUrl()` in `src/shared/seo/url.ts` is the
+single spelling of a route, and strips the trailing slash including on the root
+so the home canonical and its sitemap entry match character for character.
+
+**Related, same batch:** the invented `https://finerthings.com` default was
+removed from `src/shared/config/env.ts`. Development falls back to
+`http://localhost:3000`, and a production build without `NEXT_PUBLIC_SITE_URL`
+prints a loud warning naming exactly what will be wrong. A plausible-looking
+wrong origin could ship silently; localhost cannot. The real origin remains
+SEO-01.
 
 ### SEO-04: Duplicate gallery route
 

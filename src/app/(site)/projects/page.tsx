@@ -4,7 +4,7 @@ import { BreadcrumbJsonLd } from '@/shared/seo/JsonLd';
 import { buildMetadata } from '@/shared/seo/metadata';
 
 export const metadata = buildMetadata({
-  title: 'Projects | Luxury Motion Study',
+  title: 'Projects',
   description:
     'Bespoke accessories, styling and curation for the world\u2019s finest hotels and residences.',
   path: ROUTES.projects,

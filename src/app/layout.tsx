@@ -1,14 +1,15 @@
 import type { Metadata, Viewport } from 'next';
 
 import { SITE } from '@/shared/config/site';
-import { OrganizationJsonLd } from '@/shared/seo/JsonLd';
+import { OrganizationJsonLd, WebSiteJsonLd } from '@/shared/seo/JsonLd';
+import { TITLE_TEMPLATE } from '@/shared/seo/metadata';
 import '@/shared/styles/globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.name} | Luxury Motion Study`,
-    template: `%s | ${SITE.name}`,
+    default: SITE.name,
+    template: TITLE_TEMPLATE,
   },
   description: SITE.description,
   icons: { icon: SITE.favicon },
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             See docs/ARCHITECTURE.md. */}
         {children}
         <OrganizationJsonLd />
+        <WebSiteJsonLd />
       </body>
     </html>
   );

@@ -19,7 +19,7 @@ export function FinerLivingPage() {
             <h1>
               <span className="hero-line">
                 <span>Finer</span>
-              </span>
+              </span>{' '}
               <span className="hero-line">
                 <span>
                   <em>Living</em>

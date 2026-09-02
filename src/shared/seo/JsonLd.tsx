@@ -1,6 +1,8 @@
 import { SITE } from '@/shared/config/site';
 import { ROUTES } from '@/shared/config/routes';
 
+import { canonicalUrl } from './url';
+
 /**
  * Structured data helpers.
  *
@@ -31,6 +33,19 @@ export function OrganizationJsonLd() {
         logo: new URL(SITE.logo, SITE.url).toString(),
         description: SITE.description,
         slogan: SITE.tagline,
+      }}
+    />
+  );
+}
+
+export function WebSiteJsonLd() {
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: SITE.name,
+        url: canonicalUrl(ROUTES.home),
       }}
     />
   );
@@ -78,6 +93,32 @@ export function CreativeWorkJsonLd({
         url: new URL(path, SITE.url).toString(),
         ...(image ? { image: new URL(image, SITE.url).toString() } : {}),
         creator: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+      }}
+    />
+  );
+}
+
+export function ServiceJsonLd({
+  name,
+  description,
+  path,
+}: {
+  name: string;
+  description: string;
+  path: string;
+}) {
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name,
+        description,
+        url: canonicalUrl(path),
+        // Who performs the service. Schema.org treats a Service without a
+        // provider as incomplete, and this is a fact we already hold rather
+        // than one waiting on the client.
+        provider: { '@type': 'Organization', name: SITE.name, url: SITE.url },
       }}
     />
   );

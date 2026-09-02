@@ -20,10 +20,14 @@ export const SERVICES: Record<ServiceSlug, ServiceEntry> = {
     slug: 'bespoke-accessories',
     name: 'Bespoke Accessories',
     seo: {
-      title: 'Bespoke Accessories | Luxury Motion Study',
+      title: 'Bespoke Accessories',
       description:
         'Bespoke hospitality accessories shaped around the identity, materials and story of each destination.',
       path: ROUTES.service('bespoke-accessories'),
+      image: {
+        src: '/assets/new-cover-bespoke-accessories.webp',
+        alt: 'A stitched leather tray on a walnut table',
+      },
     },
     Page: BespokeAccessoriesPage,
   },
@@ -31,10 +35,15 @@ export const SERVICES: Record<ServiceSlug, ServiceEntry> = {
     slug: 'styling-curation',
     name: 'Styling & Curation',
     seo: {
-      title: 'Styling & Curation | Luxury Motion Study',
+      title: 'Styling & Curation',
       description:
         'Styling and curation for guest rooms, public spaces, restaurants, residences and libraries.',
       path: ROUTES.service('styling-curation'),
+      /*
+       * No `image`: the approved cover for this service is portrait 2:3 and a
+       * link preview crops to roughly 1.91:1. The generated 1200x630 card is
+       * the better preview until a landscape frame is approved.
+       */
     },
     Page: StylingCurationPage,
   },
@@ -42,10 +51,14 @@ export const SERVICES: Record<ServiceSlug, ServiceEntry> = {
     slug: 'finer-living',
     name: 'Finer Living',
     seo: {
-      title: 'Finer Living | Luxury Motion Study',
+      title: 'Finer Living',
       description:
         'A curated collection of timeless pieces shaped by craftsmanship, material character and modern luxury.',
       path: ROUTES.service('finer-living'),
+      image: {
+        src: '/assets/new-cover-finer-living.webp',
+        alt: 'An oak and brass footed bowl from the Finer Living collection',
+      },
     },
     Page: FinerLivingPage,
   },

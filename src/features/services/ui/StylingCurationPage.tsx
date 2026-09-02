@@ -19,7 +19,7 @@ export function StylingCurationPage() {
             <h1>
               <span className="hero-line">
                 <span>Styling</span>
-              </span>
+              </span>{' '}
               <span className="hero-line">
                 <span>
                   <em>& Curation</em>

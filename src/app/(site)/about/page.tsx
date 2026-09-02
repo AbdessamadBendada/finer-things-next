@@ -4,7 +4,7 @@ import { BreadcrumbJsonLd } from '@/shared/seo/JsonLd';
 import { buildMetadata } from '@/shared/seo/metadata';
 
 export const metadata = buildMetadata({
-  title: 'About | Luxury Motion Study',
+  title: 'About',
   description:
     'Meet Alex and Malika, the family behind Finer Things, shaped by two decades of international hospitality experience.',
   path: ROUTES.about,
