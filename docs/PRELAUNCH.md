@@ -1,0 +1,226 @@
+# Pre-launch checklist
+
+The single list to work through before the site goes live. Everything here is
+either a hard blocker or a deliberate decision someone has to make.
+
+**This file is the index, not the detail.** Each item says what is needed, who
+it is waiting on, and where the full explanation lives. Do not duplicate the
+detail here; it will drift.
+
+Related: [HANDOFF.md](HANDOFF.md) for the state of the build,
+[SEO-LAUNCH-ACTION-PLAN.md](SEO-LAUNCH-ACTION-PLAN.md) and
+[MOBILE-LAUNCH-ACTION-PLAN.md](MOBILE-LAUNCH-ACTION-PLAN.md) for the queued
+engineering work, [DEPLOYMENT.md](DEPLOYMENT.md) for how to ship it.
+
+## How to read this
+
+| Owner      | Meaning                                         |
+| ---------- | ----------------------------------------------- |
+| **Client** | Needs the client to supply or approve something |
+| **Legal**  | Needs a lawyer, not a developer                 |
+| **Alex**   | A design or brand decision                      |
+| **Dev**    | Engineering work, unblocked, can start now      |
+
+A box stays unticked until the thing is _done and checked_, not merely started.
+
+---
+
+## 1. Hard blockers
+
+Launching without these is not a trade-off. Do not tick any of them early.
+
+### Forms and data protection
+
+The enquiry form and newsletter currently deliver nothing — `FORM_PROVIDER` is
+`log`, which records that a submission arrived and discards it. That is the
+only reason the missing consent flow is not already a problem. **The moment a
+real provider is connected, all of the following must already be true.** See
+[adr/0002](adr/0002-deferred-compliance.md).
+
+- [ ] **Consent checkbox** on the enquiry form, unchecked by default, tied to
+      the privacy policy, with the consent text version stored alongside each
+      submission — **Legal** decides the wording, **Dev** builds it
+- [ ] **Newsletter double opt-in** — a signed, expiring confirmation token
+      before an address counts as subscribed — **Dev**
+- [ ] **Retention policy** agreed: how long enquiries are kept, and how
+      deletion requests are handled — **Legal / Client**
+- [ ] **Real privacy policy and terms**, reviewed by counsel, replacing the
+      placeholder text — **Legal**
+- [ ] Once the legal copy is real: remove `noIndex` from both pages and add
+      them to the sitemap — **Dev**
+- [ ] A real `FORM_PROVIDER` connected, and a **test enquiry actually
+      received** at the client's inbox — **Dev / Client**
+
+> The audience spans the EU, the UAE and Japan. The passive notice inherited
+> from the legacy site is not GDPR-defensible.
+
+### Identity and domain
+
+- [ ] **The confirmed production domain**, including whether it is `www` or
+      apex — **Client**
+- [ ] `NEXT_PUBLIC_SITE_URL` set to it in the production environment. There is
+      no production default on purpose: a build without it warns loudly and
+      falls back to `http://localhost:3000` — **Dev**
+- [ ] **Real contact details** replacing the placeholders in
+      `src/shared/config/site.ts` (`contact.placeholder: true`): email, phone,
+      street, district, city, hours — **Client**
+
+> The placeholder contact details are deliberately plausible so the site stays
+> reviewable. That is also what makes them dangerous: nothing on the page
+> announces they are fake. Publishing them puts a wrong address and phone
+> number into Google, Bing and the aggregators, which is slow and partly
+> outside our control to undo. Search `contact.placeholder` before shipping.
+> Full detail: SEO-18.
+
+### Font licences
+
+Two of the three typefaces are currently unlicensed for web use.
+
+- [ ] **Rodetta** — Logo License ($150) from
+      [BrandSemut](https://brandsemut.com/product/rodetta-rossie-font-duo-logos/).
+      The cheaper tiers exclude logo use, and Rodetta _is_ the wordmark —
+      **Client / Alex**
+- [ ] **Goudy Old Style** — either a Webfont licence from
+      [MyFonts](https://www.myfonts.com/collections/goudy-old-style-font-urw/)
+      (select **Webfonts**, not Desktop), or switch to the free
+      [Sorts Mill Goudy](https://fonts.google.com/specimen/Sorts+Mill+Goudy) —
+      **Alex** decides, **Client** buys
+- [ ] Licensed files swapped into `public/assets/fonts/`, replacing the current
+      unlicensed copies, and parity re-checked — **Dev**
+- [ ] Licence PDFs and receipts filed with the project — **Client**
+
+> Jost is SIL Open Font License. Nothing to buy, nothing to do.
+> The file currently shipping as Goudy is the Microsoft-bundled desktop font,
+> which was never licensed for hosting on a website.
+
+---
+
+## 2. Waiting on the client
+
+Not legally blocking, but the site should not launch looking unfinished.
+
+- [ ] **Real photography.** 34 distinct images across 81 placements; 20 of the
+      22 supplied project photographs are in use — **Client**
+- [ ] **A sixth material** for What We Do. The sixth card currently repeats
+      Marble, flagged `placeholder: true` — **Client**
+- [ ] **The LinkedIn URL**, or a decision to drop the link. It is currently
+      `href="#"` (SEO-06) — **Client**
+- [ ] Business identity facts for structured data — `sameAs`, contact fields.
+      Publish none of it until supplied (SEO-09, SEO-18) — **Client**
+- [ ] Favicon and app icons confirmed readable at small sizes (SEO-12) —
+      **Alex**
+
+---
+
+## 3. Engineering, unblocked
+
+Can all start today. Tracked in full in the two action plans.
+
+### SEO
+
+- [x] **Batch 1** — titles, legal-page `noindex`, sitemap freshness, metadata
+      correctness, regression tests _(done)_
+- [ ] **Batch 2** — heading whitespace (SEO-03). Crawled H1s currently read
+      `ordinaryinto`, `JumeirahMarsa`, `infamily`. Touches animated headings,
+      so parity snapshots need reviewing by eye
+- [ ] **Batch 3** — decide the query target per page (SEO-16) _first_, then
+      rewrite titles and descriptions (SEO-07), add per-page social images
+      (SEO-08) and internal links (SEO-11)
+- [ ] **Batch 4** — Core Web Vitals (SEO-15), as its own project with
+      before/after numbers
+
+### Mobile
+
+- [ ] **MOB-01** — Contact focus zoom, verified on a **physical iPhone**
+- [ ] Safe areas checked on a real notched device, and on an Android handset
+- [ ] Deployed mobile LCP recorded, then decide whether to approve the
+      deferred type-size changes (MOB-02 / MOB-04), which move eight parity
+      snapshots
+
+### Known and unfixed
+
+Both recorded in [HANDOFF.md](HANDOFF.md).
+
+- [ ] **Images over-fetch badly.** `shared/ui/Media.tsx` defaults every image
+      to `sizes="100vw"`: 8x too wide on the home hero, 3.9x on About
+      portraits, 2.7x on What We Do media. Reported by the client as "the
+      animation takes so long". Same work as SEO-15
+- [ ] **The home purpose statement runs four lines on mobile.** Shortening the
+      copy is the only real fix — **Alex / Client**
+
+---
+
+## 4. Deploy day
+
+In order. Full detail in [DEPLOYMENT.md](DEPLOYMENT.md).
+
+- [ ] `pnpm verify` green — typecheck, lint, build, form + SEO tests, 36
+      parity snapshots. Takes about nine minutes
+- [ ] `NEXT_PUBLIC_SITE_URL` set in the production environment, and the build
+      log checked for the `[env]` warning — if it appears, the variable did
+      not take
+- [ ] Every alternate host and every HTTP URL redirects to the one canonical
+      HTTPS origin, in a single hop (SEO-01)
+- [ ] **Edge rate-limit rules applied** at the CDN
+      ([DEPLOYMENT.md](DEPLOYMENT.md#rate-limiting-do-this-at-the-cdn))
+- [ ] CSP verified against the deployed build — `tools/check-csp.mjs`
+- [ ] Spot-check the live site: canonicals, `robots.txt`, `sitemap.xml`, the
+      12 legacy `.html` redirects, and a real 404
+
+---
+
+## 5. After launch
+
+- [ ] Verify ownership in **Google Search Console** and Bing Webmaster Tools,
+      by DNS record or another method that adds no external runtime origin
+- [ ] Submit the sitemap; inspect Home, each service, Projects, both project
+      stories and Contact (SEO-13)
+- [ ] Watch the 12 legacy `.html` URLs drop out of the index and their
+      replacements enter it. Investigate anything stuck in "Crawled, not
+      indexed" (SEO-20)
+- [ ] Capture a baseline in the first week. Search Console is the **only**
+      measurement surface — see the constraint below
+- [ ] Consider Turnstile bot protection; the `BotProtection` port already
+      exists ([adr/0003](adr/0003-deferred-bot-protection.md))
+
+---
+
+## Constraints that outlive launch
+
+Not checkboxes. Things that stay true, and that people repeatedly try to break.
+
+**No analytics, no third-party scripts, no new external origins.** The CSP and
+the launch policy forbid them; the site currently loads nothing from anywhere
+else. This is why Search Console is the only measurement surface. Adding
+Google Analytics is not a small change — see [SECURITY.md](SECURITY.md) and
+[adr/0005](adr/0005-static-csp.md).
+
+**Never invent a business fact.** No address, phone number, social URL,
+opening hour or structured-data field that the client has not supplied. A
+plausible guess is worse than a visible gap.
+
+**A green parity run is not proof nothing changed.** The tolerance is a
+fraction of a page thousands of pixels tall; a 3px rule was once removed and
+it still passed. Treat it as "nothing moved structurally" and confirm design
+changes by looking. See [PARITY.md](PARITY.md).
+
+**Baselines are gitignored**, so `git status` will never tell you they are
+stale. Check file mtimes.
+
+---
+
+## Sign-off
+
+Launch needs all of section 1, and a conscious decision on everything left
+unticked elsewhere.
+
+| Area                       | Owner | Signed off |
+| -------------------------- | ----- | ---------- |
+| Consent, opt-in, retention |       |            |
+| Legal copy                 |       |            |
+| Domain and contact details |       |            |
+| Font licences              |       |            |
+| Photography and content    |       |            |
+| SEO batches 2 to 4         |       |            |
+| Mobile device testing      |       |            |
+| Deploy and rate limiting   |       |            |
