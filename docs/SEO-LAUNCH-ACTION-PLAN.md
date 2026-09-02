@@ -34,8 +34,9 @@ needing an editorial judgement waits until that judgement is made.
 - **Batch 2** — SEO-03, SEO-08, and the unblocked half of SEO-09. **Done**, see [Done](#done). No decisions
   required. SEO-03 changes rendered headings, so its parity snapshots must be
   reviewed by eye rather than re-baselined.
-- **Batch 3** — SEO-16 first, as a decision, then SEO-07 and SEO-11 which both
-  follow from it.
+- **Batch 3** — SEO-07 and SEO-11. SEO-16 is settled: the copywriter's keyword
+  list gives each route a distinct target, and the agreed titles and
+  descriptions are tabulated under SEO-07. Ready to hand over.
 - **Batch 4** — SEO-15 on its own, with before and after measurements.
 
 **Placeholders are expected right now.** The site deliberately ships plausible
@@ -67,16 +68,85 @@ No client input required. These are the items to hand over first.
 
 ### SEO-07: Rewrite titles and descriptions around real search intent
 
-- Give every indexable page a unique title and useful description grounded in
-  its actual service, project, location and audience.
-- Current descriptions for Contact, Projects, What We Do and the project
-  stories are only 64 to 80 characters and are generic.
+**The approved set is the table below.** Keywords and the Home, What we do and
+About entries come from the client's copywriter; the remaining seven
+descriptions were drafted from each page's own visible copy and are hers to
+overrule. Implement exactly what is written here.
+
+| Route                             | Primary keyword              | Title                                     |
+| --------------------------------- | ---------------------------- | ----------------------------------------- |
+| `/`                               | Finer Things                 | Finer Things \| Exclusive Design Boutique |
+| `/our-work`                       | design boutique              | Full-service design boutique              |
+| `/about`                          | Alex Lahmer                  | Alex Lahmer, the Founder of Finer Things  |
+| `/projects`                       | luxury hotel design projects | Selected Projects                         |
+| `/projects/marsa-al-arab`         | Jumeirah Marsa Al Arab       | Jumeirah Marsa Al Arab                    |
+| `/projects/waldorf-astoria-osaka` | Waldorf Astoria Osaka        | Waldorf Astoria Osaka                     |
+| `/services/bespoke-accessories`   | bespoke hotel accessories    | Bespoke Accessories for Luxury Hotels     |
+| `/services/styling-curation`      | hotel styling and curation   | Styling and Curation for Hospitality      |
+| `/services/finer-living`          | Finer Living collection      | Finer Living, the Ready-Made Collection   |
+| `/contact`                        | contact Finer Things         | Contact                                   |
+
+Descriptions:
+
+- **`/`** — Finer Things helps the world's finest hotels and residences tell
+  their story through bespoke accessories, thoughtful styling and distinctive
+  designs.
+- **`/our-work`** — Full-service design boutique creating bespoke,
+  one-of-a-kind accessories for the luxury hotels and residences behind a new
+  level of experience.
+- **`/about`** — Alex Lahmer founded Finer Things to create distinctive bespoke
+  accessories and designs for the world's finest hotels and residences, with
+  co-founder Malika Lahmer.
+- **`/projects`** — Selected work for the world's finest hotels and residences,
+  photographed in place. Every image carries the property and the space it was
+  made for.
+- **`/projects/marsa-al-arab`** — Bespoke accessories and styling at Jumeirah
+  Marsa Al Arab in Dubai, from the lobby and guest suites through to The Bombay
+  Club and Iliana.
+- **`/projects/waldorf-astoria-osaka`** — Guest room details for Waldorf
+  Astoria Osaka, designed by André Fu. Lacquer, glass, brass and stone set
+  against Art Deco form and warm timber.
+- **`/services/bespoke-accessories`** — Bespoke hotel accessories shaped around
+  the identity of a place, translating a property's architecture, heritage and
+  materials into every detail guests touch.
+- **`/services/styling-curation`** — Books, objects, art and florals sourced
+  and arranged together, so guest rooms, public spaces and restaurants feel
+  like nowhere else.
+- **`/services/finer-living`** — The ready-made collection by Finer Things.
+  Wood, marble and glass, each piece chosen for its weight, texture and
+  presence. In stock and fast to ship.
+- **`/contact`** — Tell us what you are creating, where it is, and what you
+  want people to remember. Finer Things works with hotels and residences
+  worldwide.
+
+Three deliberate departures from the copywriter's draft, each flagged back to
+her:
+
+1. Home title. Her draft was "The home of Finer Things", marked with a query.
+   It is circular: it tells a stranger nothing about the business. Replaced
+   with her own proposed site name, which says who and what in five words.
+2. The About description fixed "has foudner" and "for world's finest", and now
+   names Malika. That page gives her a founder section of her own, so an
+   Alex-only description under-describes it.
+3. Privacy and Terms get nothing. They are `noindex`.
+
 - Write for humans and accurate snippets; do not stuff keywords or chase a
   rigid character count.
 - Acceptance:
   - No two routes share substantially identical titles or descriptions.
   - Each description accurately summarizes content visible on its page.
   - Priority terms appear naturally in headings and body copy, not only meta.
+
+**Not in scope here.** The copywriter also proposed two changes to _visible_
+page copy: "tell their story" replacing "express their character" in the Home
+subheadline, and adding "design" to the What we do hero. Both are good, both
+change rendered text, and both therefore need design review and refreshed
+parity baselines. They are a separate piece of work from metadata.
+
+**Also open.** Whether `SITE.name` becomes "Finer Things - Exclusive Design
+Boutique". It currently feeds the title template, `og:site_name` and the
+Organization JSON-LD, so changing it moves far more than one title. The Home
+title above uses the longer phrase without changing `SITE.name`.
 
 ### SEO-11: Strengthen contextual internal linking
 
@@ -114,20 +184,6 @@ in the build. This is a motion-heavy site, which is exactly the risk profile.
     in this document with before and after numbers.
   - No route serves an image more than ~1.5x the pixels it can display.
   - No text is permanently invisible if JavaScript fails.
-
-### SEO-16: Resolve search-intent overlap between the work pages
-
-- `/our-work`, `/projects` and the three `/services/*` pages all describe
-  bespoke accessories, styling and curation for luxury hospitality. They can
-  compete for the same queries, which splits authority and lets Google pick
-  the wrong page.
-- Assign each route one primary query target and make the on-page copy,
-  headings and internal link text reflect that split.
-- This is an editorial decision as much as a technical one; agree the split
-  before rewriting anything in SEO-07.
-- Acceptance:
-  - Each indexable route has a documented primary query target.
-  - No two routes target the same one.
 
 ---
 
@@ -258,6 +314,13 @@ Only possible against the live production origin.
 ---
 
 ## Done
+
+### SEO-16: Search-intent overlap between the work pages
+
+Resolved 2026-09-02 by the client's copywriter, whose keyword list gives each
+route a distinct target. The split is recorded in the SEO-07 table above; the
+one that does the real work is `/our-work` taking "design boutique" while Home
+keeps the brand and each service page takes its own service term.
 
 ### Batch 2, completed 2026-09-02
 
