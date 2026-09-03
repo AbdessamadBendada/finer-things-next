@@ -52,7 +52,7 @@ export function ArtisanWall() {
               .join(' ')}
             key={position}
           >
-            <Media src={shot.image} alt={shot.alt} sizes="(max-width: 860px) 33vw, 22vw" />
+            <Media src={shot.image} alt={shot.alt} sizes="(max-width: 860px) 45vw, 42vw" />
           </figure>
         );
       })}

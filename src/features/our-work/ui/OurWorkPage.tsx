@@ -18,6 +18,7 @@ export function OurWorkPage() {
             <Media
               src="/assets/new-work-marsa-lobby-11.webp"
               alt="Layered decorative details in a styled hotel lobby"
+              sizes="100vw"
             />
           </div>
           <div className="wrap hero-content">
@@ -63,6 +64,7 @@ export function OurWorkPage() {
               <Media
                 src="/assets/new-cover-bespoke-accessories.webp"
                 alt="A stitched leather tray on a walnut table"
+                sizes="100vw"
               />
             </div>
             <div className="wrap service-content">
@@ -90,6 +92,7 @@ export function OurWorkPage() {
               <Media
                 src="/assets/new-cover-styling-curation.webp"
                 alt="Sculptural objects styled on a lacquered console"
+                sizes="100vw"
               />
             </div>
             <div className="wrap service-content">
@@ -116,6 +119,7 @@ export function OurWorkPage() {
               <Media
                 src="/assets/new-cover-finer-living.webp"
                 alt="An oak and brass footed bowl from the Finer Living collection"
+                sizes="100vw"
               />
             </div>
             <div className="wrap service-content">

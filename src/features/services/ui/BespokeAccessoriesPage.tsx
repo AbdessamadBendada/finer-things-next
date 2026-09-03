@@ -15,6 +15,7 @@ export function BespokeAccessoriesPage() {
             <Media
               src="/assets/0676_Marsa_Al_Arab_Lobby_5_b2051520.webp"
               alt="Bespoke decorative objects arranged in the Marsa Al Arab lobby"
+              sizes="100vw"
             />
           </div>
           <div className="wrap hero-content">
@@ -126,6 +127,7 @@ export function BespokeAccessoriesPage() {
                 <Media
                   src="/assets/0689_Marsa_Al_Arab_Iliana_5_0c49bd95.webp"
                   alt="Books, ceramics and decorative bowls within an illuminated niche"
+                  sizes="(max-width: 860px) 80vw, 20vw"
                 />
                 <figcaption>Marsa Al Arab / Iliana</figcaption>
               </figure>
@@ -215,6 +217,7 @@ export function BespokeAccessoriesPage() {
             <Media
               src="/assets/0678_Marsa_Al_Arab_Lobby_4_b7af1dee.webp"
               alt="Bespoke accessories and sculptural objects at Marsa Al Arab"
+              sizes="100vw"
             />
           </div>
           <div className="wrap project-copy">

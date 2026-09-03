@@ -67,8 +67,13 @@ export function HeroCollage() {
                     /* Measured: a cell renders at 506px on a 1440 viewport,
                        which is 35vw. An earlier attempt at 12vw was taken from
                        a mid-animation reading and served 200px files into a
-                       506px box, which is visibly soft. */
-                    sizes="(max-width: 860px) 60vw, 35vw"
+                       506px box, which is visibly soft.
+
+                       The collage does not shrink with the viewport: a cell is
+                       still 506px at 390, which is wider than the phone itself.
+                       60vw served 280px files into that box, the same softness
+                       one breakpoint down, so the small end is 130vw. */
+                    sizes="(max-width: 860px) 130vw, 35vw"
                   />
                 );
               })()}

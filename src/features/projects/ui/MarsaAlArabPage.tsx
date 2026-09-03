@@ -14,6 +14,7 @@ export function MarsaAlArabPage() {
             <Media
               src="/assets/0685_Marsa_Al_Arab_Lobby_11_c9061482.webp"
               alt="Interior view at Jumeirah Marsa Al Arab"
+              sizes="100vw"
             />
           </div>
           <div className="wrap hero-content">
@@ -63,6 +64,7 @@ export function MarsaAlArabPage() {
             <Media
               src="/assets/0676_Marsa_Al_Arab_Lobby_5_b2051520.webp"
               alt="Decorative objects in the lobby at Jumeirah Marsa Al Arab"
+              sizes="100vw"
             />
           </div>
           <div className="wrap chapter-copy">
@@ -85,6 +87,7 @@ export function MarsaAlArabPage() {
             <Media
               src="/assets/0663_Marsa_Al_Arab_Suite1_7_a51be4a1.webp"
               alt="Crystal decanters and a brass trolley in a guest suite at Jumeirah Marsa Al Arab"
+              sizes="100vw"
             />
           </div>
           <div className="wrap chapter-copy">
@@ -107,6 +110,7 @@ export function MarsaAlArabPage() {
             <Media
               src="/assets/0670_Marsa_Al_Arab_Bombay_5_95764db5.webp"
               alt="Interior view at The Bombay Club in Jumeirah Marsa Al Arab"
+              sizes="100vw"
             />
           </div>
           <div className="wrap chapter-copy">
@@ -129,6 +133,7 @@ export function MarsaAlArabPage() {
             <Media
               src="/assets/0680_Marsa_Al_Arab_Iliana_3_e20bcd92.webp"
               alt="Ceramic installation and display niche at Iliana in Jumeirah Marsa Al Arab"
+              sizes="100vw"
             />
           </div>
           <div className="wrap chapter-copy">

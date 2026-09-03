@@ -15,6 +15,7 @@ export function FinerLivingPage() {
             <Media
               src="/assets/0698_Finer_Living_July_2025_edited_1_a006768d.webp"
               alt="Three sculptural wooden stools from the Finer Living collection"
+              sizes="100vw"
             />
           </div>
           <div className="wrap hero-content">
@@ -141,6 +142,7 @@ export function FinerLivingPage() {
                 <Media
                   src="/assets/3.webp"
                   alt="Wooden footed bowl from the Finer Living collection"
+                  sizes="(max-width: 860px) 80vw, 20vw"
                 />
                 <video
                   muted
@@ -238,6 +240,7 @@ export function FinerLivingPage() {
             <Media
               src="/assets/0694_27I6900-6copy_51177df8.webp"
               alt="A palette of marble and stone samples"
+              sizes="100vw"
             />
           </div>
           <div className="wrap project-copy">

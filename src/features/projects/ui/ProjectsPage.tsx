@@ -45,7 +45,11 @@ export function ProjectsPage() {
               className={`wall-tile rise${tile.size ? ` wall-tile-${tile.size}` : ''}`}
               key={tile.image}
             >
-              <Media src={tile.image} alt={tile.alt} sizes="(max-width: 860px) 50vw, 33vw" />
+              <Media
+                src={tile.image}
+                alt={tile.alt}
+                sizes="(max-width: 720px) 100vw, (max-width: 860px) 70vw, 50vw"
+              />
               <figcaption>
                 <span className="wall-property">
                   <Link className="context-link" href={tile.path}>

@@ -159,12 +159,14 @@ export function HomePage() {
                   src="/assets/new-work-marsa-lobby-05.webp"
                   className="film-image"
                   alt="Sculptural objects styled on a lacquered lobby console"
+                  sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
                     src="/assets/new-work-marsa-lobby-08.webp"
                     alt="A glass cloche and cut-glass vase on a marble lobby table"
+                    sizes="(max-width: 860px) 30vw, 14vw"
                   />
                 </div>
                 <div className="film-copy">
@@ -184,12 +186,14 @@ export function HomePage() {
                   src="/assets/new-work-bespoke-inlays.webp"
                   className="film-image"
                   alt="Bespoke leather trays inlaid in a lit suite drawer"
+                  sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
                     src="/assets/new-work-marsa-suite2-02.webp"
                     alt="Orchids in a gilt-edged ceramic bowl"
+                    sizes="(max-width: 860px) 30vw, 14vw"
                   />
                 </div>
                 <div className="film-copy">
@@ -209,12 +213,14 @@ export function HomePage() {
                   src="/assets/new-work-an-01344.webp"
                   className="film-image"
                   alt="A floral centrepiece on a marble dining table at Iliana"
+                  sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
                     src="/assets/new-work-marsa-shelfs.webp"
                     alt="Coral, crystal and a shell-inlaid box on lit marble shelves"
+                    sizes="(max-width: 860px) 30vw, 14vw"
                   />
                 </div>
                 <div className="film-copy">
@@ -234,12 +240,14 @@ export function HomePage() {
                   src="/assets/new-work-an-01515.webp"
                   className="film-image"
                   alt="A brass drinks trolley set with crystal, the Burj Al Arab beyond"
+                  sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
                     src="/assets/new-work-marsa-corridor-03.webp"
                     alt="Considered detail along the corridor at Marsa Al Arab"
+                    sizes="(max-width: 860px) 30vw, 14vw"
                   />
                 </div>
                 <div className="film-copy">
@@ -259,12 +267,14 @@ export function HomePage() {
                   src="/assets/new-work-waldorf-16.webp"
                   className="film-image"
                   alt="The entrance hall at Waldorf Astoria Osaka"
+                  sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
                 <div className="film-detail">
                   <Media
                     src="/assets/new-work-marsa-lobby-12.webp"
                     alt="Styled detail at Waldorf Astoria Osaka"
+                    sizes="(max-width: 860px) 30vw, 14vw"
                   />
                 </div>
                 <div className="film-copy">

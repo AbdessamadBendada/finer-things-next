@@ -141,18 +141,21 @@ export function AboutPage() {
                 <Media
                   src="/assets/0662_Waldorf_Astoria_Osaka_13_c71bc2ac.webp"
                   alt="Guest-room detail at Waldorf Astoria Osaka"
+                  sizes="(max-width: 860px) 100vw, 38vw"
                 />
               </figure>
               <figure className="world-image rise" data-drift="14">
                 <Media
                   src="/assets/0670_Marsa_Al_Arab_Bombay_5_95764db5.webp"
                   alt="Decorative objects and florals at Bombay Club"
+                  sizes="(max-width: 860px) 100vw, 38vw"
                 />
               </figure>
               <figure className="world-image rise" data-drift="-9">
                 <Media
                   src="/assets/0689_Marsa_Al_Arab_Iliana_5_0c49bd95.webp"
                   alt="Books and decorative objects at Iliana"
+                  sizes="(max-width: 860px) 100vw, 38vw"
                 />
               </figure>
             </div>

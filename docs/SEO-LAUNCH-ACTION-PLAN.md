@@ -164,29 +164,44 @@ title above uses the longer phrase without changing `SITE.name`.
 
 ### SEO-15: Address Core Web Vitals
 
-Not covered by the original audit, and the largest unaddressed ranking factor
-in the build. This is a motion-heavy site, which is exactly the risk profile.
+Image sizing is done. What remains is measurement.
 
-- **Fix image over-fetch.** `shared/ui/Media.tsx` defaults every image to
-  `sizes="100vw"`, so next/image serves a file sized for the whole viewport
-  whatever the image actually occupies. Measured: 8x too wide on the home hero
-  collage, 3.9x on the About portraits, 2.7x on the What we do service media.
-  Already recorded in HANDOFF.md under "Known and unfixed" and reported by the
-  client as "the animation takes so long". The fix is honest `sizes` values per
-  call site.
-- Confirm the LCP element on each route is the hero media and that it carries
-  `priority`.
-- Measure CLS caused by the reveal and mask animations, and by late-arriving
-  webfonts.
-- Confirm that content which starts hidden for animation is still present in
-  the HTML and reaches a visible state if its observer never fires. The
-  fail-open watchdog in `useFailOpenReveal.ts` is the mechanism; verify it
-  holds for every animated block.
-- Acceptance:
-  - Lab LCP, CLS and INP measured per template on mobile and desktop, recorded
-    in this document with before and after numbers.
-  - No route serves an image more than ~1.5x the pixels it can display.
-  - No text is permanently invisible if JavaScript fails.
+- [x] **Image over-fetch and under-fetch.** Measured on the rendered page at
+      390, 860, 1440 and 1920 rather than read off the CSS. Results below.
+- [ ] Confirm the LCP element on each route is the hero media and carries
+      `priority`.
+- [ ] Measure CLS from the reveal and mask animations, and from late webfonts.
+- [ ] Record lab LCP, CLS and INP per template, before and after.
+
+**What the measurement found.** The `Media` default had already been lowered
+from `100vw` to a conservative half-viewport, so the over-fetch recorded in
+HANDOFF.md was largely gone. The real problem was the opposite: every
+full-bleed image was inheriting that half-viewport default and being served at
+half the width it renders at, then upscaled. Soft images are a worse failure
+than slow ones, because slowness passes and softness does not.
+
+| Measure                      | Before | After |
+| ---------------------------- | ------ | ----- |
+| Desktop images over 2.5x     | 9      | 1     |
+| Desktop images under-fetched | 34     | 3     |
+| Mobile images under-fetched  | 40     | 0     |
+
+Full-bleed wrappers (`hero-bg`, `chapter-bg`, `project-bg`, `service-media`,
+`hero-media`) now declare `100vw`. Constrained slots declare their measured
+width: the home film detail renders at 12vw and was being sent an 860px file
+for a 163px box. Two hints were wrong at the small end only, where a grid
+collapses to one column: the projects wall is full width below 720px, and a
+home collage cell stays 506px wide on a 390px phone, so it asks for 130vw.
+
+Where a slot's width varies with layout, the hint is sized for the **largest**
+case, which is why over-2.5x rose from 1 to 9. That is deliberate. Sending a
+slightly larger file costs some bytes once; sending a small one is visibly soft
+for as long as the page exists.
+
+**Left undone by decision.** Three full-bleed images on the two project stories
+are still served at roughly half their rendered width. They sit inside a page
+module wrapper that the pattern used here did not match. The client chose not
+to pursue them.
 
 ---
 

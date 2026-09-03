@@ -15,6 +15,7 @@ export function StylingCurationPage() {
             <Media
               src="/assets/0667_Marsa_Al_Arab_Lobby_9_dff7cff7.webp"
               alt="Sculptural object, florals and seating in the Marsa Al Arab lobby"
+              sizes="100vw"
             />
           </div>
           <div className="wrap hero-content">
@@ -126,6 +127,7 @@ export function StylingCurationPage() {
                 <Media
                   src="/assets/0679_Marsa_Al_Arab_Bombay_3_09aae676.webp"
                   alt="Books and decorative objects arranged at Bombay Club"
+                  sizes="(max-width: 860px) 80vw, 20vw"
                 />
                 <figcaption>Marsa Al Arab / Bombay Club</figcaption>
               </figure>
@@ -212,6 +214,7 @@ export function StylingCurationPage() {
             <Media
               src="/assets/0686_Waldorf_Astoria_Osaka_16_948b5f8c.webp"
               alt="A considered interior detail at Waldorf Astoria Osaka"
+              sizes="100vw"
             />
           </div>
           <div className="wrap project-copy">

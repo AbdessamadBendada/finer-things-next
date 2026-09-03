@@ -14,6 +14,7 @@ export function WaldorfAstoriaOsakaPage() {
             <Media
               src="/assets/0669_Waldorf_Astoria_Osaka_18_536d1f9e.webp"
               alt="Guest-room detail at Waldorf Astoria Osaka"
+              sizes="100vw"
             />
           </div>
           <div className="wrap hero-content">
@@ -60,6 +61,7 @@ export function WaldorfAstoriaOsakaPage() {
             <Media
               src="/assets/0662_Waldorf_Astoria_Osaka_13_c71bc2ac.webp"
               alt="Clock and writing accessories on a bedside table at Waldorf Astoria Osaka"
+              sizes="100vw"
             />
           </div>
           <div className="wrap chapter-copy">
@@ -82,6 +84,7 @@ export function WaldorfAstoriaOsakaPage() {
             <Media
               src="/assets/0682_Waldorf_Astoria_Osaka_12_ef1532bb.webp"
               alt="Dark vessel, glass and brass objects at Waldorf Astoria Osaka"
+              sizes="100vw"
             />
           </div>
           <div className="wrap chapter-copy">
@@ -104,6 +107,7 @@ export function WaldorfAstoriaOsakaPage() {
             <Media
               src="/assets/0686_Waldorf_Astoria_Osaka_16_948b5f8c.webp"
               alt="Decorative guest-room detail at Waldorf Astoria Osaka"
+              sizes="100vw"
             />
           </div>
           <div className="wrap chapter-copy">
