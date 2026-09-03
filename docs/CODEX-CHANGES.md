@@ -25,6 +25,25 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-03: Remove newsletter modal scrolling
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed all scrolling from the newsletter card and explicitly locks
+  the document in place while the native modal is open, restoring the exact
+  scroll position after its closing animation. Tightened the content spacing
+  and heading scale so the full form fits the fixed card; short mobile screens
+  omit the photograph rather than introducing an internal scrollbar.
+- Files: `src/features/newsletter/ui/{NewsletterPopup.tsx,NewsletterPopup.module.css}`,
+  `src/features/newsletter/README.md`, `tests/forms/forms.spec.ts`
+- Verified: focused popup tests passed for hidden card overflow, blocked wheel
+  scrolling, scroll-position restoration and short-mobile containment. `pnpm
+verify` passed typecheck, lint, production build, all 27 functional/SEO tests
+  and all 36 parity snapshots. No baseline was regenerated.
+- Follow-up: Review the revised modal visually; the in-app browser was
+  unavailable in this session.
+
 ## 2026-09-03: Compact the newsletter popup and revise its trigger
 
 **Codex change**

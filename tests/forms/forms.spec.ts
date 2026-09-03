@@ -94,9 +94,32 @@ test.describe('newsletter', () => {
     await page.clock.runFor(100);
     await expect(dialog).toHaveAttribute('open', '');
 
+    const lockedPage = await page.evaluate(() => ({
+      bodyOverflow: document.body.style.overflow,
+      bodyPosition: document.body.style.position,
+      rootOverflow: document.documentElement.style.overflow,
+      scrollY: window.scrollY,
+    }));
+    expect(lockedPage.rootOverflow).toBe('hidden');
+    expect(lockedPage.bodyOverflow).toBe('hidden');
+    expect(lockedPage.bodyPosition).toBe('fixed');
+
+    await page.mouse.move(8, 8);
+    await page.mouse.wheel(0, -800);
+    await page.waitForTimeout(100);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(lockedPage.scrollY);
+
     await page.keyboard.press('Escape');
     await page.clock.runFor(600);
     await expect(dialog).not.toHaveAttribute('open', '');
+    const restoredPage = await page.evaluate(() => ({
+      bodyOverflow: document.body.style.overflow,
+      bodyPosition: document.body.style.position,
+      rootOverflow: document.documentElement.style.overflow,
+    }));
+    expect(restoredPage.rootOverflow).toBe('');
+    expect(restoredPage.bodyOverflow).toBe('');
+    expect(restoredPage.bodyPosition).toBe('');
     await expect
       .poll(() =>
         page.evaluate(() =>
@@ -140,12 +163,23 @@ test.describe('newsletter', () => {
     expect(
       Math.abs((box?.y ?? 0) - ((viewport?.height ?? 0) - (box?.height ?? 0)) / 2),
     ).toBeLessThan(2);
+
+    const overflow = await dialog.evaluate((element) => {
+      const content = element.querySelector<HTMLElement>('[class*="content"]');
+      return {
+        contentOverflow: content ? content.scrollHeight - content.clientHeight : null,
+        overflowY: content ? window.getComputedStyle(content).overflowY : null,
+      };
+    });
+    expect(overflow.contentOverflow).not.toBeNull();
+    expect(overflow.contentOverflow ?? 1).toBeLessThanOrEqual(0);
+    expect(overflow.overflowY).toBe('hidden');
   });
 
   test('the invitation opens after 40 seconds without scrolling and fits mobile', async ({
     page,
   }) => {
-    await page.setViewportSize({ width: 390, height: 844 });
+    await page.setViewportSize({ width: 390, height: 650 });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.clock.install();
     await page.goto(`${NEXT_ORIGIN}/`, { waitUntil: 'load' });
@@ -163,13 +197,24 @@ test.describe('newsletter', () => {
     expect(box?.width).toBeGreaterThanOrEqual(360);
     expect(box?.width).toBeLessThan(390);
     expect(box?.x).toBeGreaterThanOrEqual(13);
-    expect(box?.height).toBeLessThanOrEqual(612);
+    expect(box?.height).toBeLessThanOrEqual(522);
 
-    const overflow = await dialog.evaluate((element) => ({
-      horizontal: element.scrollWidth - element.clientWidth,
-      vertical: element.scrollHeight - element.clientHeight,
-    }));
+    const overflow = await dialog.evaluate((element) => {
+      const content = element.querySelector<HTMLElement>('[class*="content"]');
+      const image = element.querySelector<HTMLElement>('[class*="image"]');
+      return {
+        contentVertical: content ? content.scrollHeight - content.clientHeight : null,
+        horizontal: element.scrollWidth - element.clientWidth,
+        imageDisplay: image ? window.getComputedStyle(image).display : null,
+        overflowY: content ? window.getComputedStyle(content).overflowY : null,
+        vertical: element.scrollHeight - element.clientHeight,
+      };
+    });
+    expect(overflow.contentVertical).not.toBeNull();
+    expect(overflow.contentVertical ?? 1).toBeLessThanOrEqual(0);
     expect(overflow.horizontal).toBeLessThanOrEqual(0);
+    expect(overflow.imageDisplay).toBe('none');
+    expect(overflow.overflowY).toBe('hidden');
     expect(overflow.vertical).toBeLessThanOrEqual(0);
   });
 

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   useCallback,
   useEffect,
@@ -19,7 +20,19 @@ const ENGAGED_DELAY_MS = 15_000;
 const PASSIVE_DELAY_MS = 40_000;
 const SCROLL_THRESHOLD = 0.5;
 const DISMISSED_KEY = 'finer-things.newsletter-popup.dismissed';
+const SUBSCRIBED_KEY = 'finer-things.newsletter-popup.subscribed';
 const CLOSE_DURATION_MS = 500;
+
+/**
+ * Routes the invitation stays away from.
+ *
+ * Contact is the important one: someone part-way through writing an enquiry is
+ * already doing the thing the whole site is asking for, and a modal over a
+ * half-filled form is the surest way to lose it. The legal pages are excluded
+ * because interrupting someone reading a privacy policy to ask for their email
+ * is a poor look.
+ */
+const EXCLUDED_ROUTES = new Set<string>([ROUTES.contact, ROUTES.privacy, ROUTES.terms]);
 
 type ScrollLockState = {
   bodyOverflow: string;
@@ -30,9 +43,23 @@ type ScrollLockState = {
   scrollY: number;
 };
 
-function dismissedThisSession() {
+/**
+ * Two kinds of "no", remembered for two different lengths of time.
+ *
+ * Closing the dialog means "not now": it is forgotten when the tab closes, so
+ * a later visit may ask again. Subscribing means "never again", and outlives
+ * the session, because asking someone to join a list they already joined reads
+ * as a site that is not paying attention.
+ *
+ * Both are per browser and per device, which is the limit of doing this
+ * without accounts. A subscriber on a laptop is a stranger on a phone.
+ */
+function alreadyHandled() {
   try {
-    return window.sessionStorage.getItem(DISMISSED_KEY) === 'true';
+    return (
+      window.localStorage.getItem(SUBSCRIBED_KEY) === 'true' ||
+      window.sessionStorage.getItem(DISMISSED_KEY) === 'true'
+    );
   } catch {
     return false;
   }
@@ -46,7 +73,16 @@ function rememberDismissal() {
   }
 }
 
+function rememberSubscribed() {
+  try {
+    window.localStorage.setItem(SUBSCRIBED_KEY, 'true');
+  } catch {
+    // Same restricted contexts; the popup simply asks again next time.
+  }
+}
+
 export function NewsletterPopup() {
+  const pathname = usePathname();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeTimerRef = useRef<number | null>(null);
   const scrollLockRef = useRef<ScrollLockState | null>(null);
@@ -107,18 +143,35 @@ export function NewsletterPopup() {
   }, [unlockPageScroll]);
 
   const rememberSubscription = useCallback(() => {
+    rememberSubscribed();
     rememberDismissal();
   }, []);
 
   useEffect(() => {
-    if (dismissedThisSession()) return;
+    if (alreadyHandled() || EXCLUDED_ROUTES.has(pathname)) return;
 
     let timeReady = false;
     let hasScrolled = window.scrollY > 0;
 
+    /*
+     * The same escape hatch the rotating artisan imagery uses. The visual gate
+     * walks every page to trigger its reveals, which scrolls past the 50%
+     * threshold and opens this dialog; the modal then covers the page and
+     * locks the body, so the capture is of the popup rather than the page.
+     *
+     * Read at open time rather than on mount, because the suite injects the
+     * stylesheet after this component has mounted and armed its timers.
+     * Nothing in the application sets it. See the freeze note in
+     * tests/visual/pages.ts.
+     */
+    const suppressed = () =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue('--suppress-newsletter-popup')
+        .trim() === '1';
+
     const open = () => {
       const dialog = dialogRef.current;
-      if (!dialog || hasOpenedRef.current) return;
+      if (!dialog || hasOpenedRef.current || suppressed()) return;
 
       hasOpenedRef.current = true;
       dialog.showModal();
@@ -150,7 +203,7 @@ export function NewsletterPopup() {
       if (closeTimerRef.current !== null) window.clearTimeout(closeTimerRef.current);
       unlockPageScroll();
     };
-  }, [lockPageScroll, unlockPageScroll]);
+  }, [pathname, lockPageScroll, unlockPageScroll]);
 
   const handleBackdropClick = (event: ReactMouseEvent<HTMLDialogElement>) => {
     if (event.target === event.currentTarget) close();
