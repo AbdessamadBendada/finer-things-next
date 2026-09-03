@@ -37,11 +37,19 @@ only reason the missing consent flow is not already a problem. **The moment a
 real provider is connected, all of the following must already be true.** See
 [adr/0002](adr/0002-deferred-compliance.md).
 
-- [ ] **Consent checkbox** on the enquiry form, unchecked by default, tied to
-      the privacy policy, with the consent text version stored alongside each
-      submission — **Legal** decides the wording, **Dev** builds it
-- [ ] **Newsletter double opt-in** — a signed, expiring confirmation token
-      before an address counts as subscribed — **Dev**
+- [x] **Consent checkbox** built: unchecked by default, tied to the privacy
+      policy, enforced on both the client and the server, and the wording
+      version recorded with each submission.
+- [ ] **Replace the placeholder consent wording.** `CONSENT_TEXT` in
+      `src/features/contact/model/enquiry.schema.ts` has not been reviewed by
+      anyone qualified. Bump `CONSENT_VERSION` in the same file when it changes:
+      proving consent later means showing what was on screen at the time —
+      **Legal**
+- [x] **Newsletter double opt-in** handled by MailerLite: subscribers are
+      created as `unconfirmed` and only join when they click MailerLite's
+      confirmation email. No token flow of our own, and no database needed.
+      Depends on one account setting — double opt-in must be enabled _for API
+      and integrations_, or nobody is ever confirmed and nothing looks broken.
 - [ ] **Retention policy** agreed: how long enquiries are kept, and how
       deletion requests are handled — **Legal / Client**
 - [ ] **Real privacy policy and terms**, reviewed by counsel, replacing the
@@ -71,6 +79,41 @@ real provider is connected, all of the following must already be true.** See
 > number into Google, Bing and the aggregators, which is slow and partly
 > outside our control to undo. Search `contact.placeholder` before shipping.
 > Full detail: SEO-18.
+
+### Email delivery, at launch
+
+Both forms work and are tested end to end. What is left is pointing them at
+real addresses. Nothing here needs code.
+
+**Contact form, via Resend**
+
+- [ ] Verify the production domain at `resend.com/domains` and add the DNS
+      records it gives you — **Client / Dev**
+- [ ] Issue a fresh `RESEND_API_KEY`. The key used in development was shared in
+      a chat and should be treated as public — **Dev**
+- [ ] Set `ENQUIRY_FROM` to a real studio sender on the verified domain.
+      **This is the one setting that can be wrong and still let the site
+      start**, because only Resend knows which domains are verified. Until it
+      changes, the sandbox sender only delivers to the address the Resend
+      account was opened with.
+- [ ] Set `ENQUIRY_TO` to the studio inbox rather than a personal address
+- [ ] Set `FORM_PROVIDER=resend`
+
+**Newsletter, via MailerLite**
+
+- [ ] Issue a fresh `MAILERLITE_API_KEY` — the development one was also shared
+- [ ] Confirm `MAILERLITE_GROUP_ID` points at the intended list
+- [ ] Set the MailerLite sender name and address. It currently sends as
+      "Abdessamad <…@send.mailerlite.eu>", which should be Finer Things from a
+      studio address — **Client / Alex**
+- [ ] Set `NEWSLETTER_PROVIDER=mailerlite`
+
+**Both**
+
+- [ ] Put these in the hosting environment, not `.env.local`, which never
+      deploys — **Dev**
+- [ ] A missing key is a boot failure by design, so a bad deploy fails loudly
+      rather than swallowing enquiries. Read the `[env]` output on first deploy.
 
 ### Font licences
 

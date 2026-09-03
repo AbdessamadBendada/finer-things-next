@@ -47,6 +47,17 @@ export default defineConfig({
     {
       command: `pnpm start --port ${NEXT_PORT}`,
       url: NEXT_ORIGIN,
+      /*
+       * The suite must never reach a real provider. `.env.local` carries live
+       * Resend and MailerLite credentials for manual testing, and `next start`
+       * reads it, so without this the form tests post real enquiries and add
+       * real subscribers. It happened: `reader@example.com`, a fixture address,
+       * reached the production mailing list and had to be deleted by hand.
+       *
+       * Explicit process env wins over `.env.local`, so these pin the two
+       * switches to their inert adapters whatever the file says.
+       */
+      env: { FORM_PROVIDER: 'log', NEWSLETTER_PROVIDER: 'log' },
       reuseExistingServer: !process.env.CI,
       timeout: 180_000,
     },

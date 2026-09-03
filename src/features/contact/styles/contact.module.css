@@ -91,3 +91,39 @@
 @media(max-height:500px) and (orientation:landscape) {
   .page :global(.image-wrap) {height:100svh;min-height:420px}
 }
+
+/* Consent (adr/0002). Sits between the message and the submit row, so it is
+   read before the button rather than discovered after a failed submit. The
+   checkbox keeps its native control: a restyled one is a well-known way to
+   lose keyboard and screen-reader behaviour, and this is the one field where
+   that would matter legally. */
+.page :global(.field-consent) {
+  margin-top: 26px;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.page :global(label.consent) {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+  /* `.field label` sets the display serif at 500. This is body copy, not a
+     field label, so the family and weight have to be restated. */
+  font: 300 0.78rem/1.6 'Jost', sans-serif;
+  color: var(--soft);
+}
+
+.page :global(label.consent input) {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-top: 0.28em;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+.page :global(label.consent a) {
+  color: inherit;
+  text-underline-offset: 3px;
+}

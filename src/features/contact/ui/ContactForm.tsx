@@ -4,8 +4,13 @@ import { errorProps, FieldError } from '@/shared/forms/FieldError';
 import { Honeypot } from '@/shared/forms/Honeypot';
 import { useFormAction } from '@/shared/forms/useFormAction';
 
+import Link from 'next/link';
+
+import { ROUTES } from '@/shared/config/routes';
+
 import { submitEnquiry } from '../api/submitEnquiry.action';
 import {
+  CONSENT_TEXT,
   emptyEnquiry,
   ENQUIRY_SERVICES,
   enquirySchema,
@@ -93,6 +98,24 @@ export function ContactForm() {
 
       <Honeypot />
 
+      {/* adr/0002: unchecked by default, tied to the privacy policy, and the
+          wording version travels with the submission. The passive notice this
+          replaced asserted agreement rather than asking for it. */}
+      <div className="field field-consent">
+        <label className="consent" htmlFor="consent">
+          <input
+            id="consent"
+            type="checkbox"
+            {...errorProps('consent-error', errors.consent?.message)}
+            {...form.register('consent')}
+          />
+          <span>
+            {CONSENT_TEXT} See our <Link href={ROUTES.privacy}>Privacy Policy</Link>.
+          </span>
+        </label>
+        <FieldError id="consent-error" message={errors.consent?.message} />
+      </div>
+
       <div className="form-bottom">
         <button className="submit" type="submit" disabled={pending}>
           {pending ? 'Sending…' : 'Send enquiry →'}
@@ -107,8 +130,7 @@ export function ContactForm() {
       )}
 
       <p className="privacy-note">
-        By sending this enquiry, you agree that Finer Things may use your details to respond.
-        The final privacy-policy link will be added before launch.
+        The wording above is a placeholder pending legal review. See docs/PRELAUNCH.md.
       </p>
     </form>
   );

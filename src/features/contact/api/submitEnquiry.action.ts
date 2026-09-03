@@ -32,6 +32,8 @@ export async function submitEnquiry(
     email: formData.get('email'),
     service: formData.get('service') ?? undefined,
     message: formData.get('message'),
+    // Absent from the FormData entirely when the box is unticked.
+    consent: formData.get('consent') ?? undefined,
     company: formData.get('company') ?? undefined,
   });
 

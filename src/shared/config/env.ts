@@ -7,15 +7,83 @@ import { z } from 'zod';
  * Server-only values must never be read from a Client Component; the
  * `server-only` boundary is enforced by lint rules (see docs/SECURITY.md).
  */
-const serverSchema = z.object({
-  NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+const serverSchema = z
+  .object({
+    NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
 
-  /** Which delivery adapter handles enquiries and subscriptions. */
-  FORM_PROVIDER: z.enum(['log', 'noop']).default('log'),
+    /** Which adapter handles contact enquiries. */
+    FORM_PROVIDER: z.enum(['log', 'noop', 'resend']).default('log'),
 
-  /** Bot protection. Deferred to Cloudflare — see docs/adr/0003-deferred-bot-protection.md */
-  BOT_PROTECTION: z.enum(['noop']).default('noop'),
-});
+    /** Bot protection. Deferred to Cloudflare — see docs/adr/0003-deferred-bot-protection.md */
+    BOT_PROTECTION: z.enum(['noop']).default('noop'),
+
+    /**
+     * Which adapter handles newsletter subscriptions. Separate from
+     * `FORM_PROVIDER` on purpose: an enquiry can go live as soon as a mailbox
+     * exists, while a subscription cannot until consent and double opt-in do.
+     * Tying both to one switch would mean turning on list collection as a side
+     * effect of turning on the contact form.
+     */
+    NEWSLETTER_PROVIDER: z.enum(['log', 'noop', 'mailerlite']).default('log'),
+
+    /** MailerLite credentials. Required only when `NEWSLETTER_PROVIDER=mailerlite`. */
+    MAILERLITE_API_KEY: z.string().min(1).optional(),
+    MAILERLITE_GROUP_ID: z.string().min(1).optional(),
+
+    /** Resend API key. Required only when `FORM_PROVIDER=resend`. */
+    RESEND_API_KEY: z.string().min(1).optional(),
+
+    /** Where enquiries land. Required only when `FORM_PROVIDER=resend`. */
+    ENQUIRY_TO: z.string().email().optional(),
+
+    /**
+     * The sender. `onboarding@resend.dev` is Resend's sandbox address: it works
+     * with no DNS setup, but it will only deliver to the address the Resend
+     * account was opened with. A real `studio@` sender needs the production
+     * domain verified in Resend, which is SEO-01 and adr/0002 territory.
+     */
+    ENQUIRY_FROM: z.string().min(1).default('Finer Things <onboarding@resend.dev>'),
+  })
+  /*
+   * A missing key is a boot failure rather than a silent non-delivery. An
+   * enquiry that is accepted by the form and then quietly dropped is the worst
+   * outcome this file can allow: nobody finds out until a client asks why they
+   * were ignored.
+   */
+  .superRefine((env, ctx) => {
+    if (env.FORM_PROVIDER !== 'resend') return;
+    if (!env.RESEND_API_KEY) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['RESEND_API_KEY'],
+        message: 'FORM_PROVIDER=resend requires RESEND_API_KEY.',
+      });
+    }
+    if (!env.ENQUIRY_TO) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['ENQUIRY_TO'],
+        message: 'FORM_PROVIDER=resend requires ENQUIRY_TO.',
+      });
+    }
+  })
+  .superRefine((env, ctx) => {
+    if (env.NEWSLETTER_PROVIDER !== 'mailerlite') return;
+    if (!env.MAILERLITE_API_KEY) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['MAILERLITE_API_KEY'],
+        message: 'NEWSLETTER_PROVIDER=mailerlite requires MAILERLITE_API_KEY.',
+      });
+    }
+    if (!env.MAILERLITE_GROUP_ID) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['MAILERLITE_GROUP_ID'],
+        message: 'NEWSLETTER_PROVIDER=mailerlite requires MAILERLITE_GROUP_ID.',
+      });
+    }
+  });
 
 /*
  * The development origin, and deliberately not a plausible production domain.

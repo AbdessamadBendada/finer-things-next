@@ -44,11 +44,44 @@ test.describe('contact enquiry', () => {
     await page
       .locator('#message')
       .fill('We are opening a property in Marrakech and would like to talk about styling.');
+    await page.locator('#consent').check();
 
     await page.getByRole('button', { name: /send enquiry/i }).click();
 
     await expect(page.locator('#formStatus')).toContainText(/thank you/i);
     await expect(page.locator('form.form')).toHaveClass(/submitted/);
+  });
+
+  /*
+   * adr/0002: consent is a delivery precondition, not a nicety. The check that
+   * matters is the second one — a client-side tick that the server does not
+   * also require would be decoration.
+   */
+  test('an otherwise valid enquiry is refused without consent', async ({ page }) => {
+    await page.locator('#name').fill('Alex Bendada');
+    await page.locator('#email').fill('alex@example.com');
+    await page
+      .locator('#message')
+      .fill('Everything here is valid except that the consent box is left unticked.');
+
+    await expect(page.locator('#consent')).not.toBeChecked();
+    await page.getByRole('button', { name: /send enquiry/i }).click();
+
+    await expect(page.locator('#consent-error')).toContainText(/confirm/i);
+    await expect(page.locator('#formStatus')).not.toContainText(/on its way/i);
+  });
+
+  test('the server refuses an unconsented enquiry posted directly', async ({ request }) => {
+    const body = new URLSearchParams({
+      name: 'Direct poster',
+      email: 'direct@example.com',
+      message: 'Posted straight at the action with no consent field at all.',
+    });
+    const response = await request.post(`${NEXT_ORIGIN}/contact`, {
+      form: Object.fromEntries(body),
+    });
+    // Whatever the transport does, it must not report a delivered enquiry.
+    expect(await response.text()).not.toContain('on its way');
   });
 
   test('the honeypot is out of reach of real users', async ({ page }) => {
@@ -73,6 +106,7 @@ test.describe('contact enquiry', () => {
     await page
       .locator('#message')
       .fill('No particular service yet — we would like to talk through the options first.');
+    await page.locator('#consent').check();
 
     await page.getByRole('button', { name: /send enquiry/i }).click();
 

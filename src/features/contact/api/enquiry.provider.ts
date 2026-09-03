@@ -4,7 +4,8 @@ import { createLoggingProvider } from '@/shared/forms/createLoggingProvider';
 import type { DeliveryProvider } from '@/shared/forms/delivery';
 import { serverEnv } from '@/shared/config/env';
 
-import type { Enquiry } from '../model/enquiry.schema';
+import { CONSENT_VERSION, type Enquiry } from '../model/enquiry.schema';
+import { resendProvider } from './resend.provider';
 
 export type EnquiryProvider = DeliveryProvider<Enquiry>;
 
@@ -15,6 +16,7 @@ export type EnquiryProvider = DeliveryProvider<Enquiry>;
 const logProvider = createLoggingProvider<Enquiry>('enquiry', (enquiry) => ({
   service: enquiry.service ?? 'unspecified',
   messageLength: enquiry.message.length,
+  consentVersion: CONSENT_VERSION,
 }));
 
 const noopProvider: EnquiryProvider = {
@@ -25,10 +27,8 @@ const noopProvider: EnquiryProvider = {
 const PROVIDERS = {
   log: logProvider,
   noop: noopProvider,
+  resend: resendProvider,
 } as const satisfies Record<typeof serverEnv.FORM_PROVIDER, EnquiryProvider>;
 
-/**
- * Strategy selection. Adding Resend means adding `resend.provider.ts`, one
- * entry here, and one value to the FORM_PROVIDER enum in env.ts.
- */
+/** Strategy selection, keyed by `FORM_PROVIDER`. */
 export const enquiryProvider = (): EnquiryProvider => PROVIDERS[serverEnv.FORM_PROVIDER];
