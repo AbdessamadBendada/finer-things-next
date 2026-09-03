@@ -1,12 +1,11 @@
 import { HomePage } from '@/features/home';
 import { ROUTES } from '@/shared/config/routes';
-import { SITE } from '@/shared/config/site';
 import { buildMetadata } from '@/shared/seo/metadata';
 
 export const metadata = buildMetadata({
-  title: SITE.name,
+  title: 'Finer Things | Exclusive Design Boutique',
   description:
-    'Finer Things creates bespoke accessories, styling and curation for hospitality, residences and the world’s finest spaces.',
+    "Finer Things helps the world's finest hotels and residences tell their story through bespoke accessories, thoughtful styling and distinctive designs.",
   path: ROUTES.home,
   absoluteTitle: true,
 });

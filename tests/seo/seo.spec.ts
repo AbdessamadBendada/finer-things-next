@@ -12,6 +12,88 @@ const SERVICE_ROUTES = new Set<string>([
   ROUTES.service('styling-curation'),
   ROUTES.service('finer-living'),
 ]);
+const EXPECTED_METADATA: Readonly<Record<string, { title: string; description: string }>> = {
+  [ROUTES.home]: {
+    title: 'Finer Things | Exclusive Design Boutique',
+    description:
+      "Finer Things helps the world's finest hotels and residences tell their story through bespoke accessories, thoughtful styling and distinctive designs.",
+  },
+  [ROUTES.ourWork]: {
+    title: 'Full-service design boutique | Finer Things',
+    description:
+      'Full-service design boutique creating bespoke, one-of-a-kind accessories for the luxury hotels and residences behind a new level of experience.',
+  },
+  [ROUTES.about]: {
+    title: 'Alex Lahmer, the Founder of Finer Things',
+    description:
+      "Alex Lahmer founded Finer Things to create distinctive bespoke accessories and designs for the world's finest hotels and residences.",
+  },
+  [ROUTES.projects]: {
+    title: 'Selected Projects | Finer Things',
+    description:
+      "Selected work for the world's finest hotels and residences, photographed in place. Every image carries the property and the space it was made for.",
+  },
+  [ROUTES.project('marsa-al-arab')]: {
+    title: 'Jumeirah Marsa Al Arab | Finer Things',
+    description:
+      'Bespoke accessories and styling at Jumeirah Marsa Al Arab in Dubai, from the lobby and guest suites through to The Bombay Club and Iliana.',
+  },
+  [ROUTES.project('waldorf-astoria-osaka')]: {
+    title: 'Waldorf Astoria Osaka | Finer Things',
+    description:
+      'Guest room details for Waldorf Astoria Osaka, designed by André Fu. Lacquer, glass, brass and stone set against Art Deco form and warm timber.',
+  },
+  [ROUTES.service('bespoke-accessories')]: {
+    title: 'Bespoke Accessories for Luxury Hotels | Finer Things',
+    description:
+      "Bespoke hotel accessories shaped around the identity of a place, translating a property's architecture, heritage and materials into every detail guests touch.",
+  },
+  [ROUTES.service('styling-curation')]: {
+    title: 'Styling and Curation for Hospitality | Finer Things',
+    description:
+      'Books, objects, art and florals sourced and arranged together, so guest rooms, public spaces and restaurants feel like nowhere else.',
+  },
+  [ROUTES.service('finer-living')]: {
+    title: 'Finer Living, the Ready-Made Collection | Finer Things',
+    description:
+      'The ready-made collection by Finer Things. Wood, marble and glass, each piece chosen for its weight, texture and presence. In stock and fast to ship.',
+  },
+  [ROUTES.contact]: {
+    title: 'Contact | Finer Things',
+    description:
+      'Tell us what you are creating, where it is, and what you want people to remember. Finer Things works with hotels and residences worldwide.',
+  },
+};
+const EXPECTED_CONTEXTUAL_LINKS: Readonly<
+  Record<string, ReadonlyArray<{ href: string; label: string }>>
+> = {
+  [ROUTES.ourWork]: [
+    { href: ROUTES.service('bespoke-accessories'), label: 'Bespoke Accessories' },
+    { href: ROUTES.service('styling-curation'), label: 'Styling & Curation' },
+    { href: ROUTES.service('finer-living'), label: 'Finer Living' },
+  ],
+  [ROUTES.projects]: [
+    { href: ROUTES.project('marsa-al-arab'), label: 'Jumeirah Marsa Al Arab' },
+    { href: ROUTES.project('waldorf-astoria-osaka'), label: 'Waldorf Astoria Osaka' },
+  ],
+  [ROUTES.project('marsa-al-arab')]: [
+    { href: ROUTES.projects, label: 'Selected project' },
+    { href: ROUTES.project('waldorf-astoria-osaka'), label: 'Waldorf Astoria Osaka' },
+  ],
+  [ROUTES.project('waldorf-astoria-osaka')]: [
+    { href: ROUTES.projects, label: 'Selected project' },
+    { href: ROUTES.project('marsa-al-arab'), label: 'Jumeirah Marsa Al Arab' },
+  ],
+  [ROUTES.service('bespoke-accessories')]: [
+    { href: ROUTES.ourWork, label: 'What we do / 01' },
+    { href: ROUTES.project('marsa-al-arab'), label: 'Marsa Al Arab' },
+  ],
+  [ROUTES.service('styling-curation')]: [
+    { href: ROUTES.ourWork, label: 'What we do / 02' },
+    { href: ROUTES.project('waldorf-astoria-osaka'), label: 'Waldorf Astoria Osaka' },
+  ],
+  [ROUTES.service('finer-living')]: [{ href: ROUTES.ourWork, label: 'What we do / 03' }],
+};
 const EXPECTED_H1: Readonly<Record<string, string>> = {
   [ROUTES.home]: 'Every place should tell a story.',
   [ROUTES.ourWork]: 'We turn the ordinary into extraordinary',
@@ -52,7 +134,7 @@ const EXPECTED_SOCIAL_IMAGES: Readonly<
 const canonicalFor = (route: string) => canonicalUrl(route);
 
 test.describe('SEO metadata', () => {
-  test('indexable titles are unique, intentional and branded once', async ({ page }) => {
+  test('indexable titles are unique and match the approved set', async ({ page }) => {
     const titles: string[] = [];
 
     for (const route of INDEXABLE_ROUTES) {
@@ -62,6 +144,21 @@ test.describe('SEO metadata', () => {
       const title = await page.title();
       titles.push(title);
 
+      expect(title, `${route} title`).toBe(EXPECTED_METADATA[route]?.title);
+
+      /*
+       * Kept alongside the exact match, not replaced by it. The exact match
+       * only proves the rendered title equals whatever this file expects, so
+       * on its own it cannot catch a bad title being agreed and pinned. These
+       * two say what a title may never be, whatever the approved set says.
+       *
+       * Both have caught a real regression. `Luxury Motion Study` was a
+       * placeholder that reached production metadata, and the brand count is
+       * how the original `Finer Things | Luxury Motion Study | Finer Things`
+       * was found. About re-created the duplication in Batch 3, because its
+       * approved title already ends in the brand and the root template
+       * appended it a second time; that route is absolute for this reason.
+       */
       expect(title, `${route} title`).not.toContain('Luxury Motion Study');
       expect(
         title.match(/Finer Things/g)?.length ?? 0,
@@ -89,7 +186,13 @@ test.describe('SEO metadata', () => {
         () => document.querySelector('meta[name="robots"]')?.getAttribute('content') ?? '',
       );
 
-      expect(descriptionContent).toMatch(/\S/);
+      const expectedMetadata = EXPECTED_METADATA[route];
+      if (expectedMetadata) {
+        expect(title, `${route} title`).toBe(expectedMetadata.title);
+        expect(descriptionContent, `${route} description`).toBe(expectedMetadata.description);
+      } else {
+        expect(descriptionContent).toMatch(/\S/);
+      }
       const expectedDescription = descriptionContent ?? '';
       // Compared literally, not through `new URL()`: normalising both sides
       // hides a canonical and a sitemap entry that spell the same page
@@ -235,6 +338,20 @@ test.describe('SEO metadata', () => {
        */
       expect(placeholderLinks.filter((link) => link.label !== 'LinkedIn')).toEqual([]);
     });
+  }
+});
+
+test('contextual links connect service and project hubs to their detail pages', async ({
+  page,
+}) => {
+  for (const [route, expectedLinks] of Object.entries(EXPECTED_CONTEXTUAL_LINKS)) {
+    const response = await page.goto(`${NEXT_ORIGIN}${route}`);
+    expect(response?.status(), `${route} status`).toBe(200);
+
+    for (const { href, label } of expectedLinks) {
+      const matchingLinks = page.locator(`main a[href="${href}"]`).filter({ hasText: label });
+      expect(await matchingLinks.count(), `${route} -> ${href} (${label})`).toBeGreaterThan(0);
+    }
   }
 });
 

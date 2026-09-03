@@ -1,3 +1,6 @@
+import Link from 'next/link';
+
+import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
@@ -67,8 +70,10 @@ export function OurWorkPage() {
                 <span className="service-number">01</span>
               </div>
               <h2>
-                {'Bespoke '}
-                <em>Accessories</em>
+                <Link className="context-link" href={ROUTES.service('bespoke-accessories')}>
+                  {'Bespoke '}
+                  <em>Accessories</em>
+                </Link>
               </h2>
               <div className="service-bottom">
                 <p>
@@ -92,8 +97,10 @@ export function OurWorkPage() {
                 <span className="service-number">02</span>
               </div>
               <h2>
-                {'Styling '}
-                <em>& Curation</em>
+                <Link className="context-link" href={ROUTES.service('styling-curation')}>
+                  {'Styling '}
+                  <em>& Curation</em>
+                </Link>
               </h2>
               <div className="service-bottom">
                 <p>
@@ -116,8 +123,10 @@ export function OurWorkPage() {
                 <span className="service-number">03</span>
               </div>
               <h2>
-                {'Finer '}
-                <em>Living</em>
+                <Link className="context-link" href={ROUTES.service('finer-living')}>
+                  {'Finer '}
+                  <em>Living</em>
+                </Link>
               </h2>
               <div className="service-bottom">
                 <p>

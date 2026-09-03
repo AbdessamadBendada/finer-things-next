@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { SiteCta } from '@/shared/layout/SiteCta';
 import { Media } from '@/shared/ui/Media';
 
@@ -42,12 +44,13 @@ export function ProjectsPage() {
             <figure
               className={`wall-tile rise${tile.size ? ` wall-tile-${tile.size}` : ''}`}
               key={tile.image}
-              tabIndex={0}
             >
               <Media src={tile.image} alt={tile.alt} sizes="(max-width: 860px) 50vw, 33vw" />
               <figcaption>
                 <span className="wall-property">
-                  {tile.property}
+                  <Link className="context-link" href={tile.path}>
+                    {tile.property}
+                  </Link>
                   <span className="wall-location"> &middot; {tile.location}</span>
                 </span>
                 <span className="wall-space">{tile.space}</span>

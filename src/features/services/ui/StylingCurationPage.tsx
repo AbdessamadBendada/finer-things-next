@@ -1,3 +1,6 @@
+import Link from 'next/link';
+
+import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
 import { StylingCurationShell } from './StylingCurationShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
@@ -15,7 +18,11 @@ export function StylingCurationPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="hero-kicker eyebrow">What we do / 02</div>
+            <div className="hero-kicker eyebrow">
+              <Link className="context-link" href={ROUTES.ourWork}>
+                What we do / 02
+              </Link>
+            </div>
             <h1>
               <span className="hero-line">
                 <span>Styling</span>
@@ -210,9 +217,11 @@ export function StylingCurationPage() {
           <div className="wrap project-copy">
             <div className="eyebrow rise">Selected work</div>
             <h2 id="project-title">
-              <span className="title-mask">
-                <span>Waldorf Astoria Osaka</span>
-              </span>
+              <Link className="context-link" href={ROUTES.project('waldorf-astoria-osaka')}>
+                <span className="title-mask">
+                  <span>Waldorf Astoria Osaka</span>
+                </span>
+              </Link>
             </h2>
             <div className="project-meta rise">
               <span>Osaka</span>

@@ -47,6 +47,18 @@
   color: inherit;
 }
 
+/* Contextual links reuse existing page copy rather than introducing a second
+   navigation surface. A hairline underline keeps their destination legible
+   while matching the site's established treatment for heading emphasis. */
+[data-page] .context-link {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+}
+
+[data-page] .context-link:hover {
+  text-decoration-color: var(--clay);
+}
+
 [data-page] ::selection {
   background: var(--clay);
   color: var(--paper);

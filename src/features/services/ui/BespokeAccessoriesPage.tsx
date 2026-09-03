@@ -1,3 +1,6 @@
+import Link from 'next/link';
+
+import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
 import { BespokeAccessoriesShell } from './BespokeAccessoriesShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
@@ -15,7 +18,11 @@ export function BespokeAccessoriesPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="hero-kicker eyebrow">What we do / 01</div>
+            <div className="hero-kicker eyebrow">
+              <Link className="context-link" href={ROUTES.ourWork}>
+                What we do / 01
+              </Link>
+            </div>
             <h1>
               <span className="hero-line">
                 <span>Bespoke</span>
@@ -213,9 +220,11 @@ export function BespokeAccessoriesPage() {
           <div className="wrap project-copy">
             <div className="eyebrow rise">Selected work</div>
             <h2 id="project-title">
-              <span className="title-mask">
-                <span>Marsa Al Arab</span>
-              </span>
+              <Link className="context-link" href={ROUTES.project('marsa-al-arab')}>
+                <span className="title-mask">
+                  <span>Marsa Al Arab</span>
+                </span>
+              </Link>
             </h2>
             <div className="project-meta rise">
               <span>Dubai</span>

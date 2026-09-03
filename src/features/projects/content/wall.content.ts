@@ -1,10 +1,12 @@
 import type { RegisteredImage } from '@/shared/config/image-registry';
+import { ROUTES } from '@/shared/config/routes';
 
 export type WallTile = {
   image: RegisteredImage;
   /** The property. Shown on hover, bottom left. */
   property: string;
   location: string;
+  path: string;
   /** The room or space, and what we supplied there. */
   space: string;
   /**
@@ -16,8 +18,16 @@ export type WallTile = {
   alt: string;
 };
 
-const MARSA = { property: 'Jumeirah Marsa Al Arab', location: 'Dubai' } as const;
-const WALDORF = { property: 'Waldorf Astoria Osaka', location: 'Japan' } as const;
+const MARSA = {
+  property: 'Jumeirah Marsa Al Arab',
+  location: 'Dubai',
+  path: ROUTES.project('marsa-al-arab'),
+} as const;
+const WALDORF = {
+  property: 'Waldorf Astoria Osaka',
+  location: 'Japan',
+  path: ROUTES.project('waldorf-astoria-osaka'),
+} as const;
 
 /**
  * The wall, on the client's own photography.

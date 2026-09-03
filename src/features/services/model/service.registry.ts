@@ -20,9 +20,9 @@ export const SERVICES: Record<ServiceSlug, ServiceEntry> = {
     slug: 'bespoke-accessories',
     name: 'Bespoke Accessories',
     seo: {
-      title: 'Bespoke Accessories',
+      title: 'Bespoke Accessories for Luxury Hotels',
       description:
-        'Bespoke hospitality accessories shaped around the identity, materials and story of each destination.',
+        "Bespoke hotel accessories shaped around the identity of a place, translating a property's architecture, heritage and materials into every detail guests touch.",
       path: ROUTES.service('bespoke-accessories'),
       image: {
         src: '/assets/new-cover-bespoke-accessories.webp',
@@ -35,9 +35,9 @@ export const SERVICES: Record<ServiceSlug, ServiceEntry> = {
     slug: 'styling-curation',
     name: 'Styling & Curation',
     seo: {
-      title: 'Styling & Curation',
+      title: 'Styling and Curation for Hospitality',
       description:
-        'Styling and curation for guest rooms, public spaces, restaurants, residences and libraries.',
+        'Books, objects, art and florals sourced and arranged together, so guest rooms, public spaces and restaurants feel like nowhere else.',
       path: ROUTES.service('styling-curation'),
       /*
        * No `image`: the approved cover for this service is portrait 2:3 and a
@@ -51,9 +51,9 @@ export const SERVICES: Record<ServiceSlug, ServiceEntry> = {
     slug: 'finer-living',
     name: 'Finer Living',
     seo: {
-      title: 'Finer Living',
+      title: 'Finer Living, the Ready-Made Collection',
       description:
-        'A curated collection of timeless pieces shaped by craftsmanship, material character and modern luxury.',
+        'The ready-made collection by Finer Things. Wood, marble and glass, each piece chosen for its weight, texture and presence. In stock and fast to ship.',
       path: ROUTES.service('finer-living'),
       image: {
         src: '/assets/new-cover-finer-living.webp',

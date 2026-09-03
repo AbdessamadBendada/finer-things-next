@@ -25,6 +25,113 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-03: Compact the newsletter popup and revise its trigger
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: constrained the newsletter dialog to a compact 880 by 520 pixel
+  desktop card so its image cannot stretch the layout; tightened the mobile
+  composition; and replaced the 45-second plus 50% trigger with three paths:
+  immediate opening at 50% scroll, opening after 15 seconds once scrolling has
+  begun, and a 40-second fallback without scrolling. Dismissal now lasts only
+  for the current tab session and resets when the site is closed.
+- Files: `src/features/newsletter/ui/{NewsletterPopup.tsx,NewsletterPopup.module.css}`,
+  `src/features/newsletter/README.md`, `tests/{forms/forms.spec.ts,visual/parity.spec.ts}`
+- Verified: focused popup tests passed for the 50% scroll, 15-second engaged
+  and 40-second passive paths, session dismissal, exact desktop dimensions and
+  mobile containment. `pnpm verify` passed typecheck, lint, production build,
+  all 27 functional/SEO tests and all 36 parity snapshots. No baseline was
+  regenerated.
+- Follow-up: Review the revised compact card visually; the in-app browser was
+  unavailable in this session.
+
+## 2026-09-03: Add the editorial newsletter invitation
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: added a site-wide, full-width newsletter dialog with a photographic
+  42/58 desktop split, a compact mobile composition, a 45-second plus 50%
+  scroll trigger and 30-day dismissal memory. It reuses the existing form,
+  schema and non-live provider; native dialog behavior supplies focus
+  containment and Escape dismissal. Newsletter forms now accept unique IDs so
+  the footer and popup remain valid when rendered together. Kept the global
+  stylesheet ahead of the popup CSS Module after the parity gate exposed that
+  reversing them changed Contact's cascade and page height.
+- Files: `src/app/layout.tsx`, `src/features/newsletter/{README.md,index.ts}`,
+  `src/features/newsletter/ui/{NewsletterForm.tsx,NewsletterPopup.tsx,NewsletterPopup.module.css}`,
+  `tests/forms/forms.spec.ts`
+- Verified: focused desktop/mobile popup tests passed, including trigger,
+  sizing, overflow, Escape and dismissal memory. `pnpm verify` passed
+  typecheck, lint, production build, all 10 form tests, all 16 SEO tests and all
+  36 parity snapshots. No baseline was regenerated.
+- Follow-up: Review the popup visually when an in-app browser is available;
+  that browser was unavailable in this session. Live delivery remains blocked
+  by `docs/adr/0002-deferred-compliance.md`.
+
+## 2026-09-03: Review and correct SEO Batch 3
+
+**Claude change**
+
+- Commit: `this commit`
+- Changed: three corrections on top of Codex's Batch 3.
+  1. The About description named Malika as co-founder. Reverted to Alex alone
+     on the client's instruction, matching the copywriter's original wording.
+     Recorded under SEO-07 so it is not reintroduced.
+  2. The About title rendered as `Alex Lahmer, the Founder of Finer Things |
+Finer Things`. The approved title already ends in the brand and the root
+     template appended it again, re-creating exactly the duplication SEO-02
+     existed to remove. That route is now `absoluteTitle`.
+  3. Restored two guards that Batch 3 deleted from `tests/seo/seo.spec.ts`:
+     titles may not contain `Luxury Motion Study`, and `Finer Things` may not
+     appear more than once. They had been replaced by an exact match against an
+     approved set, and that set contained the double-branded About title, so
+     the suite passed while the regression shipped. An exact match only proves
+     the page equals what the test file expects; it cannot catch a bad value
+     being agreed and written into both places. Both guards are now kept
+     alongside the exact match.
+- Reviewed and accepted without change: the ten approved titles and
+  descriptions, the contextual links (which reuse existing page copy rather
+  than adding a second navigation), and the `:focus-visible` to `:focus-within`
+  change on gallery tiles, which is the correct consequence of putting a link
+  inside the tile.
+- Files: `src/app/(site)/about/page.tsx`, `tests/seo/seo.spec.ts`
+- Verified: baseline timestamps confirm Batch 3 did not regenerate any
+  snapshot, as it claimed. Independently re-ran the parity suite: 36 of 36 in
+  6.7 minutes, a normal-speed pass rather than a loaded one. Typecheck, lint,
+  format and 27 form and SEO tests green. Rendered titles checked directly on
+  all ten routes.
+- Known and accepted: the contextual links carry a 1px underline, so the large
+  service headings on What we do are now underlined. The client has seen it and
+  chosen to keep it. Worth noting that this is the site's established treatment
+  for _emphasis_ in a heading (AGENTS.md), so an underlined word in a heading
+  is now ambiguous between emphasis and link. Parity cannot see it: a hairline
+  on a page thousands of pixels tall is well inside the tolerance.
+- Follow-up: None.
+
+## 2026-09-02: Implement SEO launch Batch 3
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: completed SEO-07 and SEO-11. Applied the copywriter-approved titles
+  and descriptions literally to all ten indexable routes, with Home remaining
+  absolute; added descriptive in-copy links between What we do, all service
+  pages, the Projects hub and relevant project stories without changing page
+  copy or the single-burger navigation; and added exact metadata and
+  contextual-link regression coverage.
+- Files: metadata in `src/app/` and the project/service registries; contextual
+  links in `src/features/{our-work,projects,services}/`; shared link treatment
+  in `src/shared/styles/primitives.css`; `tests/seo/seo.spec.ts`;
+  `docs/SEO-LAUNCH-ACTION-PLAN.md`
+- Verified: `pnpm typecheck`, `pnpm lint` and `pnpm format:check` passed. The
+  final `pnpm verify` passed typecheck, lint, the production build, all 8 form
+  tests, all 16 SEO tests and all 36 parity snapshots. No baseline was
+  regenerated.
+- Follow-up: None. A human can review the new hairline contextual-link
+  treatment, but there are no failed pixel diffs to approve or rebaseline.
+
 ## 2026-09-02: Artisan photography gets a section on each page
 
 **Claude change**

@@ -5,7 +5,8 @@ import { buildMetadata } from '@/shared/seo/metadata';
 
 export const metadata = buildMetadata({
   title: 'Contact',
-  description: 'Contact Finer Things to begin a conversation about your project.',
+  description:
+    'Tell us what you are creating, where it is, and what you want people to remember. Finer Things works with hotels and residences worldwide.',
   path: ROUTES.contact,
 });
 

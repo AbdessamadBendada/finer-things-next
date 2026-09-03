@@ -30,7 +30,8 @@ export const PROJECTS: Record<ProjectSlug, ProjectEntry> = {
     cover: '/assets/0687_Marsa_Al_Arab_Lobby_8_25ea7574.webp',
     seo: {
       title: 'Jumeirah Marsa Al Arab',
-      description: 'A visual story of selected spaces at Jumeirah Marsa Al Arab in Dubai.',
+      description:
+        'Bespoke accessories and styling at Jumeirah Marsa Al Arab in Dubai, from the lobby and guest suites through to The Bombay Club and Iliana.',
       path: ROUTES.project('marsa-al-arab'),
       /*
        * No `image`, so this page falls back to the generated 1200x630 card.
@@ -49,7 +50,7 @@ export const PROJECTS: Record<ProjectSlug, ProjectEntry> = {
     seo: {
       title: 'Waldorf Astoria Osaka',
       description:
-        'A visual story of selected guest-room details at Waldorf Astoria Osaka in Japan.',
+        'Guest room details for Waldorf Astoria Osaka, designed by André Fu. Lacquer, glass, brass and stone set against Art Deco form and warm timber.',
       path: ROUTES.project('waldorf-astoria-osaka'),
       image: {
         src: '/assets/0686_Waldorf_Astoria_Osaka_16_948b5f8c.webp',

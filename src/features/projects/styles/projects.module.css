@@ -200,18 +200,18 @@
   }
 
   .page :global(.wall-tile:hover figcaption),
-  .page :global(.wall-tile:focus-visible figcaption) {
+  .page :global(.wall-tile:focus-within figcaption) {
     opacity: 1;
     transform: none;
   }
 
   .page :global(.wall-tile:hover img),
-  .page :global(.wall-tile:focus-visible img) {
+  .page :global(.wall-tile:focus-within img) {
     transform: scale(1.06);
   }
 }
 
-.page :global(.wall-tile:focus-visible) {
+.page :global(.wall-tile:focus-within) {
   outline: 1px solid var(--paper);
   outline-offset: -5px;
 }

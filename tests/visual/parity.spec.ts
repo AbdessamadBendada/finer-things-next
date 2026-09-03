@@ -19,6 +19,9 @@ test.describe('visual parity with the legacy site', () => {
     for (const viewport of VIEWPORTS) {
       test(`${page.name} @ ${viewport.name}`, async ({ page: browserPage }) => {
         await browserPage.setViewportSize({ width: viewport.width, height: viewport.height });
+        await browserPage.addInitScript(() => {
+          window.sessionStorage.setItem('finer-things.newsletter-popup.dismissed', 'true');
+        });
         await browserPage.goto(`${NEXT_ORIGIN}${page.route}`, { waitUntil: 'load' });
 
         await settlePage(browserPage, 'settle' in page ? page.settle : undefined);

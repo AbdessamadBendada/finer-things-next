@@ -1,4 +1,6 @@
 import Link from 'next/link';
+
+import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
 import { MarsaAlArabShell } from './MarsaAlArabShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
@@ -16,7 +18,11 @@ export function MarsaAlArabPage() {
           </div>
           <div className="wrap hero-content">
             <div className="hero-meta">
-              <span className="ey">Selected project</span>
+              <span className="ey">
+                <Link className="context-link" href={ROUTES.projects}>
+                  Selected project
+                </Link>
+              </span>
               <i />
               <span className="ey">Dubai · United Arab Emirates</span>
             </div>
@@ -177,7 +183,7 @@ export function MarsaAlArabPage() {
             </div>
           </div>
         </section>
-        <Link className="next" href="/projects/waldorf-astoria-osaka">
+        <Link className="next" href={ROUTES.project('waldorf-astoria-osaka')}>
           <Media
             src="/assets/0669_Waldorf_Astoria_Osaka_18_536d1f9e.webp"
             alt="Interior details at Waldorf Astoria Osaka"
