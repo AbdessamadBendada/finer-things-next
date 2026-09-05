@@ -249,6 +249,12 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .form input {
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 390px) {
   .panel {
     grid-template-rows: 105px minmax(0, 1fr);
@@ -256,10 +262,6 @@
 
   .content {
     padding-inline: 20px;
-  }
-
-  .form input {
-    font-size: 0.9rem;
   }
 
   .form button {

@@ -25,6 +25,73 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-04: Extend MOB-01 to landscape and tablet widths
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: widened only the Contact, shared footer newsletter and newsletter
+  popup text-control rules from 560px to 1024px so landscape iPhones and small
+  tablets retain 16px text. Kept Contact heading rules at 560px and preserved
+  the approved 561px to 1024px field line box so the larger text does not move
+  images or section boundaries. Expanded the regression matrix with 844x390,
+  926x428 and 744x1133. Desktop typography, pinch zoom and the `15x15px`
+  consent checkbox remain unchanged.
+- Files: `src/features/contact/styles/contact.module.css`,
+  `src/features/newsletter/ui/NewsletterPopup.module.css`,
+  `src/shared/styles/brand.css`, `tests/visual/mobile-readiness.spec.ts`,
+  `docs/{MOBILE-LAUNCH-ACTION-PLAN.md,CODEX-CHANGES.md}`
+- Verified: before the fix, a production build measured Contact at `15.36px`,
+  the footer at `15.2px` and the popup at `15.36px` at all three added
+  viewports. Afterward, all three groups measured exactly `16px` through the
+  1024px boundary and returned to their approved sizes at 1025px and 1440px;
+  the expanded mobile-readiness suite passed all 7 tests. The pre-baseline
+  `pnpm parity` run passed 35 snapshots and failed only Contact tablet, while a
+  strict zero-difference review exposed the shared footer change on all 12
+  tablets. Every diff was inspected visually; Contact's initial 3px downstream
+  shift was removed before acceptance. Regenerated only the Home, Our Work,
+  Projects, both project stories, all three service pages, About, Contact,
+  Privacy and Terms tablet baselines. Desktop and mobile baselines and
+  `maxDiffPixelRatio` were untouched. `pnpm verify` passed typecheck, lint with
+  one existing `_meta` warning in `mailerlite.provider.ts`, the production
+  build, all 29 form and SEO tests, and all 36 parity snapshots; parity
+  completed in 7.1 minutes.
+- Follow-up: focus every text field on a physical iPhone in both orientations
+  and confirm Safari does not zoom before ticking MOB-01 complete. Review the
+  unchanged `15x15px` consent checkbox when MOB-02 resumes.
+
+## 2026-09-04: Prevent iOS form-focus zoom
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: set the Contact text fields, shared footer newsletter input and
+  newsletter popup input to a mobile-only `16px` through 560px, without
+  changing desktop type or restricting pinch zoom. Production measurements at
+  320, 390 and 560px found that the old Home CSS Module rule no longer reached
+  the shared footer: its live input was `15.2px`, while Contact was `15.36px`
+  and the popup was `15.36px` or `14.4px`. Extended the mobile-readiness test
+  across all three widths and corrected the MOB-01 audit. Measured the newer
+  consent checkbox at `15x15px` and left it unchanged for MOB-02.
+- Files: `src/features/contact/styles/contact.module.css`,
+  `src/features/newsletter/ui/NewsletterPopup.module.css`,
+  `src/shared/styles/brand.css`, `tests/visual/mobile-readiness.spec.ts`,
+  `docs/{MOBILE-LAUNCH-ACTION-PLAN.md,CODEX-CHANGES.md}`
+- Verified: production-build computed-style checks confirmed every visible
+  text-entry control at exactly `16px` at 320, 390 and 560px; the focused
+  mobile-readiness suite passed all 7 tests. The pre-baseline `pnpm parity`
+  run passed 24 snapshots and moved exactly the 12 mobile snapshots: Home, Our
+  Work, Projects, both project stories, all three service pages, About,
+  Contact, Privacy and Terms. Each diff was inspected visually, then only
+  those 12 mobile baselines were regenerated; desktop and tablet baselines and
+  `maxDiffPixelRatio` were untouched. `pnpm verify` passed typecheck, lint with
+  one existing `_meta` warning in `mailerlite.provider.ts`, the production
+  build, all 29 form and SEO tests, and all 36 parity snapshots; the parity
+  portion completed in 6.8 minutes.
+- Follow-up: focus every text field on a physical iPhone and confirm Safari
+  does not zoom before ticking MOB-01 complete. Review the `15x15px` consent
+  checkbox when MOB-02 resumes.
+
 ## 2026-09-03: Complete SEO-15 Web Vitals lab measurement
 
 **Codex change**

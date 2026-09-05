@@ -1794,6 +1794,13 @@ body.menu-open [data-page] .menu-toggle {
   }
 }
 
+@media (max-width: 1024px) {
+  /* iOS Safari zooms the page when a focused text control is below 16px. */
+  [data-page] .newsletter-form input {
+    font-size: 1rem;
+  }
+}
+
 /* ---------------- Contact: how to reach the studio ----------------
    On paper, not ink.
 

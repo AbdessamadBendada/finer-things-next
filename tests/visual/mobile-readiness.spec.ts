@@ -2,6 +2,15 @@ import { expect, test, type Locator } from '@playwright/test';
 
 import { NEXT_ORIGIN } from '../../playwright.config';
 
+const FORM_VIEWPORTS = [
+  { width: 320, height: 844 },
+  { width: 390, height: 844 },
+  { width: 560, height: 844 },
+  { width: 844, height: 390 },
+  { width: 926, height: 428 },
+  { width: 744, height: 1133 },
+] as const;
+
 async function expectMinimumTarget(locator: Locator, minimum = 44) {
   const box = await locator.boundingBox();
   expect(box, 'target should be visible and measurable').not.toBeNull();
@@ -12,16 +21,44 @@ async function expectMinimumTarget(locator: Locator, minimum = 44) {
 test.describe('mobile launch readiness', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
+    await page.addInitScript(() => {
+      window.sessionStorage.setItem('finer-things.newsletter-popup.dismissed', 'true');
+    });
   });
 
   test('the Home newsletter avoids iOS focus zoom and exposes a usable target', async ({
     page,
   }) => {
-    await page.goto(NEXT_ORIGIN, { waitUntil: 'domcontentloaded' });
-    const newsletter = page.locator('#newsletterEmail');
-    await newsletter.scrollIntoViewIfNeeded();
-    await expect(newsletter).toHaveCSS('font-size', '16px');
-    await expectMinimumTarget(newsletter);
+    for (const viewport of FORM_VIEWPORTS) {
+      await page.setViewportSize(viewport);
+      await page.goto(NEXT_ORIGIN, { waitUntil: 'domcontentloaded' });
+      const newsletter = page.locator('#newsletterEmail');
+      await newsletter.scrollIntoViewIfNeeded();
+      await expect(newsletter).toHaveCSS('font-size', '16px');
+      await expectMinimumTarget(newsletter);
+    }
+  });
+
+  test('the Contact text fields avoid iOS focus zoom', async ({ page }) => {
+    for (const viewport of FORM_VIEWPORTS) {
+      await page.setViewportSize(viewport);
+      await page.goto(`${NEXT_ORIGIN}/contact`, { waitUntil: 'domcontentloaded' });
+
+      for (const selector of ['#name', '#email', '#message']) {
+        await expect(page.locator(selector)).toHaveCSS('font-size', '16px');
+      }
+    }
+  });
+
+  test('the newsletter popup input avoids iOS focus zoom', async ({ page }) => {
+    for (const viewport of FORM_VIEWPORTS) {
+      await page.setViewportSize(viewport);
+      await page.goto(NEXT_ORIGIN, { waitUntil: 'domcontentloaded' });
+      const dialog = page.locator('dialog[aria-labelledby="newsletter-popup-title"]');
+      await dialog.evaluate((element: HTMLDialogElement) => element.showModal());
+      await expect(page.locator('#newsletterPopupEmail')).toHaveCSS('font-size', '16px');
+      await dialog.evaluate((element: HTMLDialogElement) => element.close());
+    }
   });
 
   test('site-wide and page-level primary targets meet the mobile minimum', async ({ page }) => {

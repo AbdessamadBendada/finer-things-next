@@ -9,6 +9,21 @@ each deliberate design change against the parity baseline.
 
 ## Implementation status
 
+**Codex change — 2026-09-04:** the browser/code half of MOB-01 is complete
+after a landscape follow-up. The original 560px ceiling covered portrait
+phones but not an 844px or 926px landscape iPhone, so it did not satisfy the
+real-device acceptance criterion. The form-control-only ceiling is now 1024px.
+A production build computes the Contact name, email and message controls, the
+shared footer newsletter input and the newsletter popup input at exactly
+`16px` at 320x844, 390x844, 560x844, 844x390, 926x428 and 744x1133. At 1025px
+and desktop widths, their approved sizes remain unchanged. The Contact
+landscape/tablet line box preserves the approved layout height. Automated
+checks cover all three control groups throughout that matrix. The 12 reviewed
+mobile baselines from the portrait pass and the 12 reviewed tablet baselines
+from the landscape pass were deliberately regenerated; desktop was untouched.
+A physical-iPhone focus check in both orientations is still required before
+MOB-01 can close.
+
 **Codex change — 2026-08-31:** the low-risk launch subset is implemented.
 The burger and header logo now expose 44px hit areas without changing their
 layout footprint; fixed chrome and the full-screen menu account for safe-area
@@ -19,12 +34,12 @@ behaviors, and the unchanged legacy screenshots pass at every route and
 viewport.
 
 The remaining items require either an approved visual change or real-device /
-deployed-preview evidence. Contact field typography and page-content targets
-were tested at the proposed sizes but reverted because they materially changed
-eight mobile parity snapshots. MOB-04 is likewise deferred. Before launch,
-test Contact focus zoom and safe areas on a physical iPhone, inspect an Android
-device, and record deployed mobile LCP before deciding whether to approve those
-design changes.
+deployed-preview evidence. Form-control typography is now implemented under
+MOB-01, but its physical-iPhone check remains. Page-content targets under
+MOB-02 and MOB-04 are still deferred. Before launch, test focus zoom and safe
+areas on a physical iPhone in both orientations, inspect an Android device,
+and record deployed mobile LCP before deciding whether to approve those design
+changes.
 
 ## Current baseline
 
@@ -41,19 +56,39 @@ design changes.
 
 ### MOB-01: Prevent iOS form-focus zoom
 
-- Set visible `input`, `textarea` and `select` text to at least `16px` on
-  mobile.
-- Contact controls currently render at `15.36px`; the Home newsletter renders
-  at `15.2px`.
-- Work in:
+**Status: code complete; physical-iPhone confirmation outstanding.**
+
+- [x] Set visible text-entry controls to at least `16px` through 1024px. A
+      production build confirms `16px` at 320x844, 390x844, 560x844, 844x390,
+      926x428 and 744x1133 for Contact, the shared footer newsletter and the
+      popup newsletter. The 1024px ceiling is intentional: a 560px ceiling
+      misses landscape iPhones. `pointer: coarse` is deliberately not used
+      because the parity and mobile harnesses do not emulate touch.
+- [x] Keep desktop typography unchanged and preserve pinch zoom. No
+      `maximum-scale` restriction was added.
+- [ ] Focus every field on a physical iPhone in both orientations and confirm
+      Safari does not zoom.
+- Files:
   - `src/features/contact/styles/contact.module.css`
-  - `src/features/home/styles/home.module.css`
+  - `src/features/newsletter/ui/NewsletterPopup.module.css`
+  - `src/shared/styles/brand.css`
+  - `tests/visual/mobile-readiness.spec.ts`
+- Existing but unchanged: `src/features/home/styles/home.module.css` already
+  carries the original 16px Home-page rule. The live footer now needs the
+  shared rule above because it renders outside that page wrapper.
 - Acceptance:
-  - All visible controls compute to at least `16px` at widths up to 560px.
-  - Focusing every field on a physical iPhone does not zoom the page.
+  - All visible text-entry controls compute to at least `16px` at widths up to
+    1024px.
+  - Focusing every field on a physical iPhone in both orientations does not
+    zoom the page.
   - Contact and newsletter form tests still pass.
 
 ### MOB-02: Enlarge primary touch targets
+
+**Newer control to include when MOB-02 resumes:** the consent checkbox added in
+`ae7141a` measures `15x15px` throughout the MOB-01 portrait, landscape and
+tablet matrix. It remains native and was measured but deliberately not resized
+during MOB-01.
 
 - Give interactive controls at least a `44x44px` hit area without necessarily
   enlarging their visible artwork.
