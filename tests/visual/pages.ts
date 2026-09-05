@@ -131,15 +131,8 @@ const HIDE_MASTHEAD = '.head, .mobile-menu { visibility: hidden !important; }';
  * What the rotation actually does — that it changes, never shows a duplicate,
  * and stops off screen — is asserted in tests/visual/artisan-wall.spec.ts and
  * tests/visual/artisan-strip.spec.ts instead.
- *
- * `--suppress-newsletter-popup` is the same idea for the newsletter dialog.
- * The walk below scrolls past its 50% trigger, and an open modal both covers
- * the page and locks the body, so a capture becomes a picture of the popup
- * rather than of the route. Its own behaviour is covered by
- * tests/forms/forms.spec.ts.
  */
 const FREEZE_ROTATION = `
-  :root { --suppress-newsletter-popup: 1; }
   .artisan-wall, .artisan-strip { --frozen: 1; }
   .artisan-tile, .artisan-tile img,
   .artisan-shot, .artisan-shot img, .artisan-swap { transition: none !important; opacity: 1 !important; }

@@ -21,9 +21,6 @@ async function expectMinimumTarget(locator: Locator, minimum = 44) {
 test.describe('mobile launch readiness', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.addInitScript(() => {
-      window.sessionStorage.setItem('finer-things.newsletter-popup.dismissed', 'true');
-    });
   });
 
   test('the Home newsletter avoids iOS focus zoom and exposes a usable target', async ({
@@ -47,17 +44,6 @@ test.describe('mobile launch readiness', () => {
       for (const selector of ['#name', '#email', '#message']) {
         await expect(page.locator(selector)).toHaveCSS('font-size', '16px');
       }
-    }
-  });
-
-  test('the newsletter popup input avoids iOS focus zoom', async ({ page }) => {
-    for (const viewport of FORM_VIEWPORTS) {
-      await page.setViewportSize(viewport);
-      await page.goto(NEXT_ORIGIN, { waitUntil: 'domcontentloaded' });
-      const dialog = page.locator('dialog[aria-labelledby="newsletter-popup-title"]');
-      await dialog.evaluate((element: HTMLDialogElement) => element.showModal());
-      await expect(page.locator('#newsletterPopupEmail')).toHaveCSS('font-size', '16px');
-      await dialog.evaluate((element: HTMLDialogElement) => element.close());
     }
   });
 

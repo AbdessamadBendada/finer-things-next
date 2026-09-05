@@ -12,9 +12,6 @@ import { NEXT_ORIGIN } from '../../playwright.config';
  */
 test.describe('contact enquiry', () => {
   test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      window.sessionStorage.setItem('finer-things.newsletter-popup.dismissed', 'true');
-    });
     await page.goto(`${NEXT_ORIGIN}/contact`, { waitUntil: 'load' });
   });
 
@@ -115,147 +112,15 @@ test.describe('contact enquiry', () => {
 });
 
 test.describe('newsletter', () => {
-  test('the invitation opens at halfway and stays dismissed for the tab session', async ({
-    page,
-  }) => {
-    await page.clock.install();
+  test('does not render a site-wide newsletter popup', async ({ page }) => {
     await page.goto(`${NEXT_ORIGIN}/`, { waitUntil: 'load' });
 
-    const dialog = page.locator('dialog[aria-labelledby="newsletter-popup-title"]');
-    await expect(dialog).not.toHaveAttribute('open', '');
-
-    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-    await page.clock.runFor(100);
-    await expect(dialog).toHaveAttribute('open', '');
-
-    const lockedPage = await page.evaluate(() => ({
-      bodyOverflow: document.body.style.overflow,
-      bodyPosition: document.body.style.position,
-      rootOverflow: document.documentElement.style.overflow,
-      scrollY: window.scrollY,
-    }));
-    expect(lockedPage.rootOverflow).toBe('hidden');
-    expect(lockedPage.bodyOverflow).toBe('hidden');
-    expect(lockedPage.bodyPosition).toBe('fixed');
-
-    await page.mouse.move(8, 8);
-    await page.mouse.wheel(0, -800);
-    await page.waitForTimeout(100);
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(lockedPage.scrollY);
-
-    await page.keyboard.press('Escape');
-    await page.clock.runFor(600);
-    await expect(dialog).not.toHaveAttribute('open', '');
-    const restoredPage = await page.evaluate(() => ({
-      bodyOverflow: document.body.style.overflow,
-      bodyPosition: document.body.style.position,
-      rootOverflow: document.documentElement.style.overflow,
-    }));
-    expect(restoredPage.rootOverflow).toBe('');
-    expect(restoredPage.bodyOverflow).toBe('');
-    expect(restoredPage.bodyPosition).toBe('');
-    await expect
-      .poll(() =>
-        page.evaluate(() =>
-          window.sessionStorage.getItem('finer-things.newsletter-popup.dismissed'),
-        ),
-      )
-      .toBe('true');
-
-    await page.reload({ waitUntil: 'load' });
-    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-    await page.clock.fastForward(41_000);
-    await expect(dialog).not.toHaveAttribute('open', '');
-  });
-
-  test('the compact invitation opens after 15 seconds once browsing begins', async ({
-    page,
-  }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.clock.install();
-    await page.goto(`${NEXT_ORIGIN}/`, { waitUntil: 'load' });
-
-    const dialog = page.locator('dialog[aria-labelledby="newsletter-popup-title"]');
-    await page.evaluate(() => window.scrollTo(0, 100));
-    await page.clock.fastForward(14_000);
-    await expect(dialog).not.toHaveAttribute('open', '');
-    await page.clock.fastForward(1_100);
-    await expect(dialog).toHaveAttribute('open', '');
-    await page.clock.runFor(600);
-
-    const box = await dialog.boundingBox();
-    const viewport = page.viewportSize();
-    expect(box).not.toBeNull();
-    expect(viewport).not.toBeNull();
-    expect(box?.width).toBeGreaterThanOrEqual(875);
-    expect(box?.width).toBeLessThanOrEqual(882);
-    expect(box?.height).toBeGreaterThanOrEqual(515);
-    expect(box?.height).toBeLessThanOrEqual(522);
-    expect(
-      Math.abs((box?.x ?? 0) - ((viewport?.width ?? 0) - (box?.width ?? 0)) / 2),
-    ).toBeLessThan(2);
-    expect(
-      Math.abs((box?.y ?? 0) - ((viewport?.height ?? 0) - (box?.height ?? 0)) / 2),
-    ).toBeLessThan(2);
-
-    const overflow = await dialog.evaluate((element) => {
-      const content = element.querySelector<HTMLElement>('[class*="content"]');
-      return {
-        contentOverflow: content ? content.scrollHeight - content.clientHeight : null,
-        overflowY: content ? window.getComputedStyle(content).overflowY : null,
-      };
-    });
-    expect(overflow.contentOverflow).not.toBeNull();
-    expect(overflow.contentOverflow ?? 1).toBeLessThanOrEqual(0);
-    expect(overflow.overflowY).toBe('hidden');
-  });
-
-  test('the invitation opens after 40 seconds without scrolling and fits mobile', async ({
-    page,
-  }) => {
-    await page.setViewportSize({ width: 390, height: 650 });
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.clock.install();
-    await page.goto(`${NEXT_ORIGIN}/`, { waitUntil: 'load' });
-
-    const dialog = page.locator('dialog[aria-labelledby="newsletter-popup-title"]');
-    await page.clock.fastForward(39_900);
-    await expect(dialog).not.toHaveAttribute('open', '');
-    await page.clock.fastForward(200);
-    await expect(dialog).toHaveAttribute('open', '');
-    await page.clock.runFor(600);
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
-
-    const box = await dialog.boundingBox();
-    expect(box).not.toBeNull();
-    expect(box?.width).toBeGreaterThanOrEqual(360);
-    expect(box?.width).toBeLessThan(390);
-    expect(box?.x).toBeGreaterThanOrEqual(13);
-    expect(box?.height).toBeLessThanOrEqual(522);
-
-    const overflow = await dialog.evaluate((element) => {
-      const content = element.querySelector<HTMLElement>('[class*="content"]');
-      const image = element.querySelector<HTMLElement>('[class*="image"]');
-      return {
-        contentVertical: content ? content.scrollHeight - content.clientHeight : null,
-        horizontal: element.scrollWidth - element.clientWidth,
-        imageDisplay: image ? window.getComputedStyle(image).display : null,
-        overflowY: content ? window.getComputedStyle(content).overflowY : null,
-        vertical: element.scrollHeight - element.clientHeight,
-      };
-    });
-    expect(overflow.contentVertical).not.toBeNull();
-    expect(overflow.contentVertical ?? 1).toBeLessThanOrEqual(0);
-    expect(overflow.horizontal).toBeLessThanOrEqual(0);
-    expect(overflow.imageDisplay).toBe('none');
-    expect(overflow.overflowY).toBe('hidden');
-    expect(overflow.vertical).toBeLessThanOrEqual(0);
+    await expect(page.locator('dialog[aria-labelledby="newsletter-popup-title"]')).toHaveCount(
+      0,
+    );
   });
 
   test('validates the address before sending', async ({ page }) => {
-    await page.addInitScript(() => {
-      window.sessionStorage.setItem('finer-things.newsletter-popup.dismissed', 'true');
-    });
     await page.goto(`${NEXT_ORIGIN}/`, { waitUntil: 'load' });
 
     const form = page.locator('#newsletterForm');
@@ -267,9 +132,6 @@ test.describe('newsletter', () => {
   });
 
   test('confirms a valid subscription', async ({ page }) => {
-    await page.addInitScript(() => {
-      window.sessionStorage.setItem('finer-things.newsletter-popup.dismissed', 'true');
-    });
     await page.goto(`${NEXT_ORIGIN}/`, { waitUntil: 'load' });
 
     const form = page.locator('#newsletterForm');

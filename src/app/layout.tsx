@@ -4,7 +4,6 @@ import type { Metadata, Viewport } from 'next';
    imports changes the Contact/footer cascade and adds height to that route. */
 import '@/shared/styles/globals.css';
 
-import { NewsletterPopup } from '@/features/newsletter';
 import { SITE } from '@/shared/config/site';
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/shared/seo/JsonLd';
 import { TITLE_TEMPLATE } from '@/shared/seo/metadata';
@@ -55,7 +54,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gets its masthead and footer from where it lives in app/.
             See docs/ARCHITECTURE.md. */}
         {children}
-        <NewsletterPopup />
         <OrganizationJsonLd />
         <WebSiteJsonLd />
       </body>

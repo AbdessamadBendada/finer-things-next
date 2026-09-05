@@ -25,6 +25,30 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-05: Remove the newsletter popup
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: removed the site-wide newsletter modal, including its timed and
+  scroll triggers, session/local-storage state, scroll locking, root-layout
+  mount, component styles and popup-specific form API. Kept the shared footer
+  newsletter form and its validation/delivery path unchanged. Removed obsolete
+  popup suppression and behavior tests, added a regression assertion that no
+  newsletter dialog renders, and updated the newsletter and MOB-01 docs to
+  describe the remaining footer-only surface.
+- Files: `src/app/layout.tsx`,
+  `src/features/newsletter/{README.md,index.ts,ui/NewsletterForm.tsx}`,
+  deleted `src/features/newsletter/ui/NewsletterPopup.{tsx,module.css}`,
+  `tests/{forms/forms.spec.ts,visual/mobile-readiness.spec.ts,visual/pages.ts,visual/parity.spec.ts}`,
+  `docs/{MOBILE-LAUNCH-ACTION-PLAN.md,CODEX-CHANGES.md}`
+- Verified: `pnpm verify` passed typecheck, lint with one existing `_meta`
+  warning in `mailerlite.provider.ts`, the production build, all 27 form and
+  SEO tests, and all 36 parity snapshots; parity completed in 6.8 minutes. The
+  separate mobile-readiness suite passed all 6 tests. No baseline was
+  regenerated and no snapshot moved.
+- Follow-up: None
+
 ## 2026-09-04: Extend MOB-01 to landscape and tablet widths
 
 **Codex change**

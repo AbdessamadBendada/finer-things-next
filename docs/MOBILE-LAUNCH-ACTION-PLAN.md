@@ -9,6 +9,12 @@ each deliberate design change against the parity baseline.
 
 ## Implementation status
 
+**Codex change — 2026-09-05:** the newsletter popup was removed by client
+request. Its earlier measurements remain below as historical implementation
+notes, but it is no longer part of the live MOB-01 surface or regression suite.
+The remaining text-entry controls are the Contact fields and shared footer
+newsletter input. The physical-iPhone check in both orientations stays open.
+
 **Codex change — 2026-09-04:** the browser/code half of MOB-01 is complete
 after a landscape follow-up. The original 560px ceiling covered portrait
 phones but not an 844px or 926px landscape iPhone, so it did not satisfy the
@@ -60,17 +66,16 @@ changes.
 
 - [x] Set visible text-entry controls to at least `16px` through 1024px. A
       production build confirms `16px` at 320x844, 390x844, 560x844, 844x390,
-      926x428 and 744x1133 for Contact, the shared footer newsletter and the
-      popup newsletter. The 1024px ceiling is intentional: a 560px ceiling
-      misses landscape iPhones. `pointer: coarse` is deliberately not used
-      because the parity and mobile harnesses do not emulate touch.
+      926x428 and 744x1133 for Contact and the shared footer newsletter. The
+      1024px ceiling is intentional: a 560px ceiling misses landscape iPhones.
+      `pointer: coarse` is deliberately not used because the parity and mobile
+      harnesses do not emulate touch.
 - [x] Keep desktop typography unchanged and preserve pinch zoom. No
       `maximum-scale` restriction was added.
 - [ ] Focus every field on a physical iPhone in both orientations and confirm
       Safari does not zoom.
 - Files:
   - `src/features/contact/styles/contact.module.css`
-  - `src/features/newsletter/ui/NewsletterPopup.module.css`
   - `src/shared/styles/brand.css`
   - `tests/visual/mobile-readiness.spec.ts`
 - Existing but unchanged: `src/features/home/styles/home.module.css` already

@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import { errorProps, FieldError } from '@/shared/forms/FieldError';
 import { Honeypot } from '@/shared/forms/Honeypot';
 import { useFormAction } from '@/shared/forms/useFormAction';
@@ -13,13 +11,7 @@ import {
   type Subscription,
 } from '../model/subscription.schema';
 
-type NewsletterFormProps = {
-  className?: string;
-  idPrefix?: string;
-  onSuccess?: () => void;
-};
-
-export function NewsletterForm({ className, idPrefix, onSuccess }: NewsletterFormProps = {}) {
+export function NewsletterForm() {
   const { form, state, pending, blocked, formProps } = useFormAction<Subscription>({
     action: subscribe,
     schema: subscriptionSchema,
@@ -29,37 +21,24 @@ export function NewsletterForm({ className, idPrefix, onSuccess }: NewsletterFor
   const message = form.formState.errors.email?.message;
   const status =
     blocked ?? (state.status === 'success' || state.status === 'error' ? state.message : '');
-  const formId = idPrefix ? `${idPrefix}Form` : 'newsletterForm';
-  const emailId = idPrefix ? `${idPrefix}Email` : 'newsletterEmail';
-  const errorId = idPrefix ? `${idPrefix}Error` : 'newsletter-error';
-
-  useEffect(() => {
-    if (state.status === 'success') onSuccess?.();
-  }, [onSuccess, state.status]);
-
   return (
-    <form
-      {...formProps}
-      className={`newsletter-form${className ? ` ${className}` : ''}`}
-      id={formId}
-      aria-busy={pending}
-    >
-      <label htmlFor={emailId} hidden>
+    <form {...formProps} className="newsletter-form" id="newsletterForm" aria-busy={pending}>
+      <label htmlFor="newsletterEmail" hidden>
         Email address
       </label>
       <input
-        id={emailId}
+        id="newsletterEmail"
         type="email"
         autoComplete="email"
         placeholder="Your email address"
-        {...errorProps(errorId, message)}
+        {...errorProps('newsletter-error', message)}
         {...form.register('email')}
       />
       <button type="submit" disabled={pending}>
         {pending ? 'Sending…' : 'Subscribe'}
       </button>
       <Honeypot name="newsletterCompany" />
-      <FieldError id={errorId} message={message} />
+      <FieldError id="newsletter-error" message={message} />
       <p className="status" role="status" aria-live="polite">
         {status}
       </p>
