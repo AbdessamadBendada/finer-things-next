@@ -163,14 +163,12 @@ Can all start today. Tracked in full in the two action plans.
 
 - [x] **Batch 1** — titles, legal-page `noindex`, sitemap freshness, metadata
       correctness, regression tests _(done)_
-- [ ] **Batch 2** — heading whitespace (SEO-03). Crawled H1s currently read
-      `ordinaryinto`, `JumeirahMarsa`, `infamily`. Touches animated headings,
-      so parity snapshots need reviewing by eye
-- [ ] **Batch 3** — decide the query target per page (SEO-16) _first_, then
-      rewrite titles and descriptions (SEO-07), add per-page social images
-      (SEO-08) and internal links (SEO-11)
-- [ ] **Batch 4** — Core Web Vitals (SEO-15), as its own project with
-      before/after numbers
+- [x] **Batch 2** — heading whitespace, per-page social images and the
+      unblocked structured-data work (SEO-03, SEO-08, SEO-09) _(done)_
+- [x] **Batch 3** — query targets, approved titles and descriptions, and
+      contextual internal links (SEO-07, SEO-11, SEO-16) _(done)_
+- [x] **Batch 4** — Core Web Vitals lab measurement and the measured local-font
+      fix, with before/after numbers (SEO-15) _(done)_
 
 ### Mobile
 
@@ -180,14 +178,13 @@ Can all start today. Tracked in full in the two action plans.
       deferred type-size changes (MOB-02 / MOB-04), which move eight parity
       snapshots
 
-### Known and unfixed
+### Known items
 
 Both recorded in [HANDOFF.md](HANDOFF.md).
 
-- [ ] **Images over-fetch badly.** `shared/ui/Media.tsx` defaults every image
-      to `sizes="100vw"`: 8x too wide on the home hero, 3.9x on About
-      portraits, 2.7x on What We Do media. Reported by the client as "the
-      animation takes so long". Same work as SEO-15
+- [x] **Image over-fetch and under-fetch resolved by `2314109`.** Rendered
+      slots were measured at four widths and now carry accurate `sizes` hints.
+      The accepted project-story exceptions remain documented under SEO-15.
 - [ ] **The home purpose statement runs four lines on mobile.** Shortening the
       copy is the only real fix — **Alex / Client**
 

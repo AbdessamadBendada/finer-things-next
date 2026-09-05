@@ -164,14 +164,72 @@ title above uses the longer phrase without changing `SITE.name`.
 
 ### SEO-15: Address Core Web Vitals
 
-Image sizing is done. What remains is measurement.
+Image sizing and production-build lab measurement are done.
 
 - [x] **Image over-fetch and under-fetch.** Measured on the rendered page at
       390, 860, 1440 and 1920 rather than read off the CSS. Results below.
-- [ ] Confirm the LCP element on each route is the hero media and carries
-      `priority`.
-- [ ] Measure CLS from the reveal and mask animations, and from late webfonts.
-- [ ] Record lab LCP, CLS and INP per template, before and after.
+- [x] Measure the actual LCP element on every route. Home and the Projects
+      gallery are the only image winners, and both winning requests are
+      preloaded. The other eight routes have hero-text LCPs, so their hero
+      images were deliberately not given speculative priority.
+- [x] Measure CLS from the reveal and mask animations, and from late webfonts.
+- [x] Record lab LCP, CLS and INP per template, before and after.
+
+**LCP element audit.** These are `PerformanceObserver` results after three
+fresh-context runs per route at each viewport, not predictions from the DOM.
+Every winner is inside its route's hero. The image preload check matched the
+winning `currentSrc` against the responsive image preload's `imagesrcset`.
+
+| Route                             | 390x844 LCP           | 1440x900 LCP          | Image priority action                   |
+| --------------------------------- | --------------------- | --------------------- | --------------------------------------- |
+| `/`                               | Hero collage, leather | Hero collage, leather | Already preloaded by `HeroCollage`      |
+| `/our-work`                       | Hero introduction     | Hero H1               | None; text wins                         |
+| `/projects`                       | Hero photograph       | Hero photograph       | Already preloaded by `Media` `priority` |
+| `/projects/marsa-al-arab`         | Hero title            | Hero title            | None; text wins                         |
+| `/projects/waldorf-astoria-osaka` | Hero title            | Hero title            | None; text wins                         |
+| `/services/bespoke-accessories`   | Hero introduction     | Hero title            | None; text wins                         |
+| `/services/styling-curation`      | Hero title            | Hero title            | None; text wins                         |
+| `/services/finer-living`          | Hero introduction     | Hero title            | None; text wins                         |
+| `/about`                          | Hero introduction     | Hero title            | None; text wins                         |
+| `/contact`                        | Hero lead             | Hero title            | None; text wins                         |
+
+**Core Web Vitals lab results.** This is local, unthrottled, headless Chromium
+against `pnpm build && pnpm start`, not a forecast of field performance. Each
+route ran three times at 390x844 and 1440x900 in a fresh browser context. Shared
+template rows pool their routes, giving six project-story and nine service
+samples per viewport. Values are medians with the observed range in brackets.
+INP is the worst Event Timing duration from opening and closing the one shared
+burger menu. CLS is the maximum session-window score.
+
+| Template         | Viewport | LCP before ms    | LCP after ms     | CLS before                | CLS after | INP before ms | INP after ms  |
+| ---------------- | -------- | ---------------- | ---------------- | ------------------------- | --------- | ------------- | ------------- |
+| Home             | Mobile   | 132 [100-340]    | 108 [96-172]     | 0.00051                   | 0.00000   | 32 [32-40]    | 32            |
+| Our Work         | Mobile   | 1416 [1408-1428] | 1408 [1400-1432] | 0.00000                   | 0.00000   | 40            | 40            |
+| Projects gallery | Mobile   | 84 [76-88]       | 96 [88-100]      | 0.00000                   | 0.00000   | 32            | 40 [32-40]    |
+| Project story    | Mobile   | 1456 [1324-1488] | 1418 [1352-1508] | 0.00000                   | 0.00000   | 40 [32-40]    | 40 [32-40]    |
+| Service          | Mobile   | 1404 [1368-1464] | 1404 [1388-1480] | 0.00000 [0.00000-0.01426] | 0.00000   | 40            | 40 [32-40]    |
+| About            | Mobile   | 1388 [1384-1392] | 1404 [1368-1452] | 0.00000                   | 0.00000   | 32 [32-40]    | 32            |
+| Contact          | Mobile   | 88 [88-96]       | 88 [84-92]       | 0.00093                   | 0.00000   | 40 [32-40]    | 40            |
+| Home             | Desktop  | 120 [112-120]    | 108 [104-108]    | 0.00007                   | 0.00000   | 160 [152-160] | 144 [144-152] |
+| Our Work         | Desktop  | 1340 [1280-1408] | 1308 [1308-1328] | 0.00000                   | 0.00000   | 64 [56-64]    | 56            |
+| Projects gallery | Desktop  | 72 [68-72]       | 80 [76-96]       | 0.00000                   | 0.00000   | 56            | 56            |
+| Project story    | Desktop  | 1534 [1392-1648] | 1486 [1360-1524] | 0.00000                   | 0.00000   | 60 [56-64]    | 60 [56-64]    |
+| Service          | Desktop  | 1540 [504-1648]  | 1524 [1488-1608] | 0.00000                   | 0.00000   | 64 [56-64]    | 64 [56-104]   |
+| About            | Desktop  | 1260 [1248-1260] | 1260 [1232-1264] | 0.00000                   | 0.00000   | 64            | 64            |
+| Contact          | Desktop  | 1268 [1260-1280] | 1276 [1272-1280] | 0.00021                   | 0.00000   | 56 [56-64]    | 64 [56-64]    |
+
+No reveal or mask produced a layout-shift entry during the full-page scroll
+phase, and no shift source was a `Media` image, confirming the registry's
+intrinsic dimensions reserve every image slot. All before shifts occurred at
+initial paint alongside font loading: Home's `brandwords`, the Contact form,
+and, materially, the mobile Bespoke Accessories H1 at `0.01426`. Preloading the
+local Goudy face removed that heading shift in a focused three-run check and
+all 60 after samples recorded zero CLS. Rodetta did not load because every
+remaining wordmark is a glyph-free image or CSS mask, so it caused no shift.
+
+The reusable harness is `tools/measure-web-vitals.mjs`; raw reports go to the
+gitignored `test-results/` directory. The committed root `all3.mjs` remains
+unchanged as the earlier image-sizing harness rather than being repurposed.
 
 **What the measurement found.** The `Media` default had already been lowered
 from `100vw` to a conservative half-viewport, so the over-fetch recorded in
@@ -332,6 +390,17 @@ Only possible against the live production origin.
 ---
 
 ## Done
+
+### Batch 4, completed 2026-09-03
+
+**SEO-15: Core Web Vitals lab measurement.** Actual LCP candidates were
+observed on all ten indexable routes at both target viewports. Only Home and
+the Projects gallery have image LCPs, and both were already preloaded; the
+other routes have hero-text LCPs. Reveal, mask and image layout shifts measured
+zero. A measured late-font shift on the mobile Bespoke Accessories heading was
+removed by preloading the local Goudy face, after which all 60 CLS samples were
+zero. The before and after template results and the repeatable harness are
+recorded under SEO-15.
 
 ### Batch 3, completed 2026-09-02
 

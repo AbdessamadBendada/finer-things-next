@@ -32,13 +32,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang={SITE.locale}>
       <head>
-        {/* The body face is on the critical path for every page; the display
-            faces are only used below the masthead and can load normally. */}
+        {/* Lab LCP observation identifies hero text as the largest content on
+            eight of the ten indexable routes. Preload its display face as well
+            as the body face so neither has to wait for stylesheet discovery. */}
         <link
           rel="preload"
           href="/assets/fonts/jost-latin.woff2"
           as="font"
           type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/assets/fonts/goudy-old-style.ttf"
+          as="font"
+          type="font/ttf"
           crossOrigin="anonymous"
         />
       </head>

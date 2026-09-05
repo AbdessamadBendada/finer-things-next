@@ -25,6 +25,36 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-03: Complete SEO-15 Web Vitals lab measurement
+
+**Codex change**
+
+- Commit: `this commit`
+- Changed: measured LCP, CLS and a shared-menu interaction through the browser
+  performance APIs against production builds, with three fresh-context runs
+  on every indexable route at 390x844 and 1440x900 before and after. Only Home
+  and the Projects gallery had image LCPs, and both were already preloaded; the
+  other eight winners were hero text, so no speculative image priority was
+  added. Preloaded the local Goudy face after the baseline attributed a
+  repeatable `0.01426` mobile Bespoke Accessories CLS to its late heading swap;
+  all 60 after samples recorded zero CLS. Added the reusable lab harness and
+  its per-template results, completed SEO-15, and corrected the stale Batch 2,
+  Batch 3, Batch 4 and image-sizing ticks in the pre-launch checklist. The
+  existing root `all3.mjs` image-sizing harness and the three accepted
+  project-story image exceptions were left unchanged.
+- Files: `src/app/layout.tsx`, `tools/{measure-web-vitals.mjs,README.md}`,
+  `docs/{SEO-LAUNCH-ACTION-PLAN.md,PRELAUNCH.md,CODEX-CHANGES.md}`
+- Verified: two complete 60-sample production-build measurements plus a
+  focused three-run font check; every LCP winner was inside its hero, no reveal,
+  mask or `Media` image emitted a layout shift, and the after run recorded zero
+  CLS throughout. `pnpm verify` passed typecheck, lint with one existing
+  `_meta` warning in `mailerlite.provider.ts`, the production build, all 29 form
+  and SEO tests, and all 36 parity snapshots in 6.8 minutes. No baseline was
+  regenerated and no snapshot moved.
+- Follow-up: Field LCP, CLS and INP remain unavailable until the site is
+  deployed and Search Console has enough real-user data. Record deployed
+  mobile LCP before deciding MOB-02 or MOB-04.
+
 ## 2026-09-03: Remove newsletter modal scrolling
 
 **Codex change**
