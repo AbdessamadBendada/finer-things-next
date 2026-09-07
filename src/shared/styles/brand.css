@@ -613,7 +613,8 @@ body.menu-open [data-page] .menu-toggle {
 [data-page] .material-copy p {
   margin: 12px 0 0;
   max-width: 42ch;
-  font-size: 0.88rem;
+  font-size: var(--text-body-sm);
+  font-weight: 400;
   line-height: 1.62;
   color: rgba(243, 240, 234, 0.86);
 }
@@ -704,7 +705,7 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 [data-page='our-work'] .process-number {
-  font-size: 0.65rem;
+  font-size: var(--text-eyebrow-sm);
   letter-spacing: 0.16em;
   color: var(--clay);
 }
@@ -790,7 +791,7 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 [data-page='about'] .portrait-placeholder span {
-  font-size: 0.68rem;
+  font-size: var(--text-eyebrow);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ink-soft);
@@ -1027,7 +1028,7 @@ body.menu-open [data-page] .menu-toggle {
 @media (max-width: 560px) {
   /* 144 characters. */
   [data-page='home'] #purpose-title {
-    font-size: clamp(1.3rem, 5.6vw, 1.7rem);
+    font-size: clamp(1.6rem, 6.2vw, 2.1rem);
   }
 
   /* 72 characters, three lines. */
@@ -1321,7 +1322,7 @@ body.menu-open [data-page] .menu-toggle {
   margin: clamp(22px, 3vh, 34px) 0 0;
   max-width: 58ch;
   color: var(--soft);
-  font-size: 1.02rem;
+  font-size: var(--text-body);
   line-height: 1.85;
 }
 
@@ -1469,7 +1470,8 @@ body.menu-open [data-page] .menu-toggle {
   margin: clamp(38px, 5vh, 58px) 0 0;
   max-width: 46ch;
   color: rgba(41, 40, 31, 0.5);
-  font-size: 0.86rem;
+  font-size: var(--text-body-sm);
+  font-weight: 400;
   letter-spacing: 0.02em;
 }
 
@@ -1612,7 +1614,8 @@ body.menu-open [data-page] .menu-toggle {
   max-width: 40ch;
   margin-top: 14px;
   color: rgba(241, 237, 231, 0.58);
-  font-size: 0.9rem;
+  font-size: var(--text-body-sm);
+  font-weight: 400;
 }
 
 /* ---------------- The sign-up form ----------------
@@ -1633,7 +1636,7 @@ body.menu-open [data-page] .menu-toggle {
   outline: 0;
   color: var(--paper);
   font:
-    300 0.95rem var(--font-body),
+    300 var(--text-body) var(--font-body),
     sans-serif;
 }
 
@@ -1652,7 +1655,7 @@ body.menu-open [data-page] .menu-toggle {
   border: 0;
   color: var(--clay);
   font:
-    500 0.68rem var(--font-body),
+    500 var(--text-eyebrow) var(--font-body),
     sans-serif;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -1681,7 +1684,7 @@ body.menu-open [data-page] .menu-toggle {
   min-width: 100%;
   order: 1;
   margin: 10px 0 0;
-  font-size: 0.82rem;
+  font-size: var(--text-fine);
   font-weight: 300;
   letter-spacing: 0.01em;
   text-transform: none;
@@ -1710,7 +1713,8 @@ body.menu-open [data-page] .menu-toggle {
   max-width: 34ch;
   margin-top: 18px;
   color: rgba(241, 237, 231, 0.58);
-  font-size: 0.9rem;
+  font-size: var(--text-body-sm);
+  font-weight: 400;
   line-height: 1.7;
 }
 
@@ -1722,7 +1726,7 @@ body.menu-open [data-page] .menu-toggle {
 
 [data-page] .ft-cols h4 {
   margin: 0 0 18px;
-  font-size: 0.63rem;
+  font-size: var(--text-eyebrow);
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -1734,7 +1738,8 @@ body.menu-open [data-page] .menu-toggle {
   padding: 7px 0;
   color: rgba(241, 237, 231, 0.82);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: var(--text-body-sm);
+  font-weight: 400;
   transition: color 0.3s ease;
 }
 
@@ -1758,12 +1763,13 @@ body.menu-open [data-page] .menu-toggle {
   gap: 30px;
   padding-top: 34px;
   color: rgba(241, 237, 231, 0.42);
-  font-size: 0.78rem;
+  font-size: var(--text-fine);
+  font-weight: 400;
 }
 
 [data-page] .ft-btm .tagline {
   font-family: var(--font-display), Georgia, serif;
-  font-size: 1rem;
+  font-size: var(--text-body);
   color: rgba(241, 237, 231, 0.62);
 }
 
@@ -1797,7 +1803,7 @@ body.menu-open [data-page] .menu-toggle {
 @media (max-width: 1024px) {
   /* iOS Safari zooms the page when a focused text control is below 16px. */
   [data-page] .newsletter-form input {
-    font-size: 1rem;
+    font-size: var(--text-body);
   }
 }
 
@@ -1846,7 +1852,7 @@ body.menu-open [data-page] .menu-toggle {
 
 [data-page='contact'] .contact-details h3 {
   margin: 0 0 12px;
-  font-size: 0.63rem;
+  font-size: var(--text-eyebrow);
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -1857,7 +1863,7 @@ body.menu-open [data-page] .menu-toggle {
   margin: 0;
   text-align: left;
   color: var(--ink-soft);
-  font-size: 0.92rem;
+  font-size: var(--text-body);
   line-height: 1.85;
 }
 

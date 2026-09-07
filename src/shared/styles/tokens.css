@@ -19,7 +19,7 @@
   --ink: #29281f;
 
   /* Text */
-  --soft: rgba(41, 40, 31, 0.66);
+  --soft: rgba(41, 40, 31, 0.72);
 
   /* Accents */
   --clay: #b56d43;
@@ -33,6 +33,37 @@
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --reveal-duration: 1.25s;
   --transition-duration: 0.4s;
+
+  /* ---- Type scale ----
+     Body, metadata and UI type was roughly 135 fixed literals spread over
+     twenty stylesheets, in increments that carried no intent: 0.98, 0.96, 0.95,
+     0.94 and 0.92rem all meant "body copy". They are collapsed into six steps
+     here, plus a UI step for buttons.
+
+     Headings are deliberately NOT in this scale. They already scale on vw in
+     their own clamps and are drawn per page — that asymmetry is the whole
+     problem this fixes. Body copy was a fixed 1rem in Jost Light 300, whose
+     small x-height makes 16px read closer to 14px: fine on a laptop, not on the
+     27-inch display the client reviews on. Headings grew with the viewport and
+     the small text did not, so the wider the screen the worse it got.
+
+     Each step therefore holds a floor to roughly 1100px and then grows to a
+     ceiling at 2560px. The floor sits close to where the site already was, on
+     purpose: anchoring the fluid range at 1280px instead puts the ceiling-bound
+     value on every screen below it, which lifted a 1440 laptop by 11% and made
+     the whole site read as though it were zoomed. Body copy is 16.5px on a
+     phone, 17.2px at 1440 and 19.5px at 2560 — the lift lands on the wide
+     displays that needed it.
+
+     --text-fine is a flat 14px rather than a fluid step. It carries the consent
+     note and the legal metadata, so it is a legibility floor, not a size. */
+  --text-lead: clamp(1.15rem, 0.991rem + 0.228vw, 1.36rem);
+  --text-body: clamp(1.031rem, 0.89rem + 0.205vw, 1.219rem);
+  --text-body-sm: clamp(0.943rem, 0.813rem + 0.187vw, 1.114rem);
+  --text-fine: 0.875rem;
+  --text-eyebrow: clamp(0.755rem, 0.655rem + 0.145vw, 0.888rem);
+  --text-eyebrow-sm: clamp(0.678rem, 0.586rem + 0.134vw, 0.8rem);
+  --text-ui: clamp(0.74rem, 0.68rem + 0.09vw, 0.82rem);
 
   /* ---- Aliases kept so the ported page stylesheets read unchanged ----
      Each legacy document invented its own name for the same value. Rather

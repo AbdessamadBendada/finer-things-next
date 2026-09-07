@@ -44,7 +44,7 @@
   color: var(--ink);
   overflow: hidden;
   font:
-    300 1rem/1.7 var(--font-body),
+    300 var(--text-body)/1.7 var(--font-body),
     sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -81,8 +81,8 @@
 }
 
 .eyebrow {
-  font-size: 0.67rem;
-  letter-spacing: 0.23em;
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--clay);
 }
@@ -114,7 +114,7 @@
 .copy {
   margin: 0;
   max-width: 46ch;
-  font-size: 1.05rem;
+  font-size: var(--text-lead);
   color: var(--soft);
 }
 
@@ -133,7 +133,7 @@
   cursor: pointer;
   font-family: inherit;
   color: inherit;
-  font-size: 0.72rem;
+  font-size: var(--text-eyebrow);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;

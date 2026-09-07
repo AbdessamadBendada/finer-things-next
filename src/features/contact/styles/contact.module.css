@@ -8,7 +8,7 @@
  */
 
 .page {--paper:#F3F0EA;--stone:#DED9CC;--ink:#29281F;--soft:rgba(41,40,31,.64);--clay:#B56D43;--red:#7D342C;--tan:#BE9973;--line:rgba(166,152,120,.34)}
-.page :global(.ey) {font-size:.66rem;letter-spacing:.23em;text-transform:uppercase;color:var(--clay)}
+.page :global(.ey) {font-size: var(--text-eyebrow);letter-spacing:0.20em;text-transform:uppercase;color:var(--clay)}
 .page :global(.rise) {opacity:0;transform:translateY(18px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1)}
 .page :global(.contact) {min-height:100svh;padding:128px 0 85px;background:var(--paper);display:flex;align-items:center}
 .page :global(.contact-grid) {display:grid;grid-template-columns:minmax(340px,.8fr) minmax(480px,1.2fr);gap:clamp(65px,9vw,145px);align-items:center}
@@ -16,7 +16,7 @@
 :global(body.ready) .page :global(.image-wrap) {clip-path:inset(0)}
 .page :global(.image-wrap img) {position:absolute;inset:-5% 0;height:110%;filter:brightness(.75) saturate(.62);transform:translate3d(0,var(--image-y,0),0) scale(1.045);will-change:transform}
 .page :global(.image-wrap:after) {content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(28,27,22,.36),transparent 55%)}
-.page :global(.image-caption) {position:absolute;z-index:2;left:20px;bottom:18px;color:rgba(243,240,234,.78);font-size:.61rem;letter-spacing:.17em;text-transform:uppercase}
+.page :global(.image-caption) {position:absolute;z-index:2;left:20px;bottom:18px;color:rgba(243,240,234,.78);font-size: var(--text-eyebrow-sm);letter-spacing:.17em;text-transform:uppercase}
 .page :global(.copy) {padding:25px 0}
 .page :global(.copy h1) {max-width:9ch;margin:24px 0 26px;font:500 clamp(4.4rem,7.6vw,7.7rem)/.79 var(--font-display);letter-spacing:-.055em}
 .page :global(.mask) {display:block;overflow:hidden;padding-bottom:.09em;margin-bottom:-.09em}
@@ -27,7 +27,7 @@
 .page :global(.form) {margin-top:48px}
 .page :global(.field) {position:relative;margin-top:26px;padding-bottom:10px;border-bottom:1px solid rgba(41,40,31,.25)}
 .page :global(.field label) {display:block;font:500 1.35rem var(--font-display);color:var(--ink)}
-.page :global(.field input), .page :global(.field textarea) {display:block;width:100%;padding:8px 0 2px;background:none;border:0;outline:0;color:var(--ink);font:300 .96rem/1.6 'Jost'}
+.page :global(.field input), .page :global(.field textarea) {display:block;width:100%;padding:8px 0 2px;background:none;border:0;outline:0;color:var(--ink);font: 300 var(--text-body)/1.6 'Jost'}
 .page :global(.field textarea) {min-height:85px;resize:vertical}
 .page :global(.field input::placeholder), .page :global(.field textarea::placeholder) {color:rgba(41,40,31,.37)}
 .page :global(.field:after) {content:"";position:absolute;inset:auto 0 -1px;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.16,1,.3,1)}
@@ -36,16 +36,16 @@
 .page :global(.interest-title) {font:500 1.35rem var(--font-display)}
 .page :global(.choices) {display:flex;flex-wrap:wrap;gap:7px 24px;margin-top:12px}
 .page :global(.choice input) {position:absolute;opacity:0}
-.page :global(.choice span) {position:relative;display:block;padding:4px 0;color:var(--soft);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:color .3s}
+.page :global(.choice span) {position:relative;display:block;padding:4px 0;color:var(--soft);font-size: var(--text-eyebrow);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:color .3s}
 .page :global(.choice span:after) {content:"";position:absolute;inset:auto 0 0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .35s}
 .page :global(.choice input:checked+span) {color:var(--red)}
 .page :global(.choice input:checked+span:after) {transform:scaleX(1)}
 .page :global(.choice input:focus-visible+span) {outline:2px solid var(--red);outline-offset:4px}
 .page :global(.form-bottom) {display:flex;align-items:center;gap:24px;margin-top:35px}
-.page :global(.submit) {padding:0 0 5px;border:0;border-bottom:1px solid var(--ink);background:none;color:var(--ink);font:500 .68rem 'Jost';letter-spacing:.17em;text-transform:uppercase;cursor:pointer;transition:color .3s,border-color .3s}
+.page :global(.submit) {padding:0 0 5px;border:0;border-bottom:1px solid var(--ink);background:none;color:var(--ink);font: 500 var(--text-ui) 'Jost';letter-spacing:.17em;text-transform:uppercase;cursor:pointer;transition:color .3s,border-color .3s}
 .page :global(.submit:hover) {color:var(--red);border-color:var(--red)}
-.page :global(.status) {font-size:.74rem;color:var(--soft)}
-.page :global(.privacy-note) {margin-top:17px;max-width:56ch;color:rgba(41,40,31,.43);font-size:.68rem}
+.page :global(.status) {font-size: var(--text-fine);font-weight:400;color:var(--soft)}
+.page :global(.privacy-note) {margin-top:17px;max-width:56ch;color:var(--soft);font-size: var(--text-fine);font-weight:400}
 .page :global(.privacy-note a) {text-underline-offset:3px}
 .page :global(.closing) {background:var(--ink);color:var(--paper);padding:clamp(85px,11vh,120px) 0}
 .page :global(.closing-grid) {display:grid;grid-template-columns:.75fr 1.25fr;gap:8vw;align-items:end}
@@ -53,7 +53,7 @@
 .page :global(.closing h2 em) {color:#D8A080;font-weight:400}
 .page :global(.closing-side) {display:flex;justify-content:space-between;gap:35px;align-items:end}
 .page :global(.closing-side p) {max-width:38ch;color:rgba(243,240,234,.6)}
-.page :global(.small-link) {font-size:.64rem;letter-spacing:.17em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(243,240,234,.45);padding-bottom:4px;white-space:nowrap}
+.page :global(.small-link) {font-size: var(--text-ui);letter-spacing:.17em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid rgba(243,240,234,.45);padding-bottom:4px;white-space:nowrap}
 @media(max-width:860px) {
   .page :global(.contact) {padding-top:100px}
   .page :global(.contact-grid) {grid-template-columns:1fr;gap:58px}
@@ -89,7 +89,7 @@
   .page h1, .page h2, .page h3 {letter-spacing:-.035em!important}
 }
 @media(max-width:1024px) {
-  .page :global(.field input:not([type='checkbox'])), .page :global(.field textarea) {font-size:1rem}
+  .page :global(.field input:not([type='checkbox'])), .page :global(.field textarea) {font-size: var(--text-body)}
 }
 @media(min-width:561px) and (max-width:1024px) {
   /* Preserve the approved field height while the text grows to 16px. */
@@ -117,7 +117,7 @@
   cursor: pointer;
   /* `.field label` sets the display serif at 500. This is body copy, not a
      field label, so the family and weight have to be restated. */
-  font: 300 0.78rem/1.6 'Jost', sans-serif;
+  font: 400 var(--text-fine)/1.6 'Jost', sans-serif;
   color: var(--soft);
 }
 

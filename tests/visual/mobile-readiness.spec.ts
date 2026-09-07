@@ -18,6 +18,21 @@ async function expectMinimumTarget(locator: Locator, minimum = 44) {
   expect(box!.height).toBeGreaterThanOrEqual(minimum);
 }
 
+/**
+ * iOS Safari zooms the page when a focused text control is *below* 16px, so the
+ * requirement is a floor rather than a value. This asserted `=== 16px` while the
+ * controls were pinned there by a mobile-only rule; they now inherit the shared
+ * fluid body step, which starts at 16.5px. Comparing for equality would fail on
+ * a change that moves the size further away from the zoom threshold.
+ */
+async function expectNoFocusZoom(locator: Locator) {
+  const size = await locator.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+  expect(
+    size,
+    'text controls must be at least 16px or iOS zooms on focus',
+  ).toBeGreaterThanOrEqual(16);
+}
+
 test.describe('mobile launch readiness', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
@@ -31,7 +46,7 @@ test.describe('mobile launch readiness', () => {
       await page.goto(NEXT_ORIGIN, { waitUntil: 'domcontentloaded' });
       const newsletter = page.locator('#newsletterEmail');
       await newsletter.scrollIntoViewIfNeeded();
-      await expect(newsletter).toHaveCSS('font-size', '16px');
+      await expectNoFocusZoom(newsletter);
       await expectMinimumTarget(newsletter);
     }
   });
@@ -42,7 +57,7 @@ test.describe('mobile launch readiness', () => {
       await page.goto(`${NEXT_ORIGIN}/contact`, { waitUntil: 'domcontentloaded' });
 
       for (const selector of ['#name', '#email', '#message']) {
-        await expect(page.locator(selector)).toHaveCSS('font-size', '16px');
+        await expectNoFocusZoom(page.locator(selector));
       }
     }
   });

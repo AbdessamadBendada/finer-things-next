@@ -62,7 +62,7 @@
   max-width: 52ch;
   margin: clamp(20px, 2.6vh, 30px) 0 0;
   color: rgba(243, 240, 234, 0.78);
-  font-size: 0.98rem;
+  font-size: var(--text-body);
   line-height: 1.7;
 }
 
@@ -153,7 +153,7 @@
 
 .page :global(.wall-property) {
   font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(0.86rem, 0.95vw, 1.06rem);
+  font-size: clamp(1.05rem, 0.95vw, 1.12rem);
   line-height: 1.18;
 }
 
@@ -162,7 +162,7 @@
 }
 
 .page :global(.wall-space) {
-  font-size: 0.63rem;
+  font-size: var(--text-eyebrow-sm);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(243, 240, 234, 0.76);

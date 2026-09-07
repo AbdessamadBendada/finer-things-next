@@ -25,6 +25,51 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-07: Raise the small-text scale
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: the client could not read the body copy and eyebrows on a large
+  display. Body was a fixed `1rem` in Jost Light 300 — a small x-height makes
+  16px read closer to 14px — and eyebrows were `0.67rem` (10.7px), with captions
+  and numerals down to `0.55rem` (8.8px). The cause was structural: every
+  heading is a fluid `clamp(min, Xvw, max)` while every body, label and UI size
+  was a hardcoded literal, roughly 135 of them across twenty stylesheets. So the
+  wider the viewport the worse the imbalance, and nothing grew past ~1600px.
+
+  Added a seven-step type scale to `tokens.css` and mapped those literals onto
+  it. Each step holds a floor to ~1100px then grows to a ceiling at 2560px:
+  body copy is 16.5px on a phone, 17.2px at 1440 and 19.5px at 2560. Raised the
+  two smallest prose tiers to weight 400 and `--soft` from 0.66 to 0.72; the
+  Contact consent note was `0.68rem` at `rgba(41,40,31,.43)`, about 2.1:1, and
+  now uses `--text-fine` at `--soft`. Reduced eyebrow tracking `0.23em → 0.20em`
+  to absorb the extra width.
+
+  **No heading was changed**, with one exception: the mobile `#purpose-title`
+  was `clamp(1.3rem, 5.6vw, 1.7rem)`, only 1.19x the new body size, and was
+  raised to clear it. `.wall-property` was below body size and got a floor.
+
+- Files: `src/shared/styles/{tokens,primitives,brand,chrome}.css`, all 13 page
+  modules, `src/app/status.module.css`,
+  `src/shared/forms/FieldError.module.css`,
+  `tests/visual/mobile-readiness.spec.ts`
+- Verified: `pnpm typecheck`, `pnpm lint` (pre-existing `_meta` warning),
+  `pnpm format:check` and a clean `pnpm build` all pass; 33 form, SEO and
+  mobile-readiness tests pass. Computed sizes were measured in Chromium at 390,
+  768, 1024, 1280, 1440, 1920 and 2560px across seven pages: every heading
+  measures identically to before, and body, eyebrow and footer steps track the
+  scale. No page scrolls horizontally at any of those widths, the home hero's
+  `white-space: nowrap` h1 still fits its container, and no eyebrow wraps.
+- Follow-up: `pnpm parity` will fail by design — typography moved on every page.
+  Review the diffs and regenerate the baselines. Two notes for whoever does:
+  `src/shared/styles/chrome.css` is generated but has diverged from
+  `build-chrome.mjs`, which also rewrites all 13 page modules from `legacy/*.html`
+  and will revert the removed desktop nav, the iOS safe-area padding and this
+  change — do not run it. And `mobile-readiness.spec.ts` asserted text controls
+  were exactly `16px`; since the requirement is a floor (iOS zooms _below_ 16px)
+  and the shared body step starts at 16.5px, it now asserts `>= 16`.
+
 ## 2026-09-05: Remove the newsletter popup
 
 **Codex change**
