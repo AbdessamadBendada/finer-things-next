@@ -23,6 +23,11 @@ const EXPECTED_METADATA: Readonly<Record<string, { title: string; description: s
     description:
       'Full-service design boutique creating bespoke, one-of-a-kind accessories for the luxury hotels and residences behind a new level of experience.',
   },
+  [ROUTES.ourCraft]: {
+    title: 'Our Craft, the materials and the makers | Finer Things',
+    description:
+      'The materials behind every Finer Things piece: leather, wood, horn, lacquer, resin and shell. The workshops that work them by hand, and the process from a first conversation to an installed piece.',
+  },
   [ROUTES.about]: {
     title: 'Alex Lahmer, the Founder of Finer Things',
     description:
@@ -97,6 +102,7 @@ const EXPECTED_CONTEXTUAL_LINKS: Readonly<
 const EXPECTED_H1: Readonly<Record<string, string>> = {
   [ROUTES.home]: 'Every place should tell a story.',
   [ROUTES.ourWork]: 'We turn the ordinary into extraordinary',
+  [ROUTES.ourCraft]: 'The material comes first',
   [ROUTES.projects]: 'Every detail, in its place.',
   [ROUTES.project('marsa-al-arab')]: 'Jumeirah Marsa Al Arab',
   [ROUTES.project('waldorf-astoria-osaka')]: 'Waldorf Astoria Osaka',

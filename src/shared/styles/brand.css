@@ -675,13 +675,15 @@ body.menu-open [data-page] .menu-toggle {
 
    Two columns rather than three: those rows carry a title and a description,
    and the process steps are titles only. */
-[data-page='our-work'] .process-steps {
+[data-page='our-work'] .process-steps,
+[data-page='our-craft'] .process-steps {
   list-style: none;
   margin: clamp(48px, 7vh, 78px) 0 0;
   padding: 0;
 }
 
-[data-page='our-work'] .process-step {
+[data-page='our-work'] .process-step,
+[data-page='our-craft'] .process-step {
   position: relative;
   display: grid;
   grid-template-columns: 72px 1fr;
@@ -691,7 +693,8 @@ body.menu-open [data-page] .menu-toggle {
   transition: background 0.45s ease;
 }
 
-[data-page='our-work'] .process-step::before {
+[data-page='our-work'] .process-step::before,
+[data-page='our-craft'] .process-step::before {
   content: '';
   position: absolute;
   left: 0;
@@ -705,21 +708,25 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 /* `.rise` is given `in` when it reveals, exactly as the scope rows are. */
-[data-page='our-work'] .process-step.in::before {
+[data-page='our-work'] .process-step.in::before,
+[data-page='our-craft'] .process-step.in::before {
   transform: scaleX(1);
 }
 
-[data-page='our-work'] .process-step:last-child {
+[data-page='our-work'] .process-step:last-child,
+[data-page='our-craft'] .process-step:last-child {
   border-bottom: 1px solid rgba(41, 40, 31, 0.19);
 }
 
-[data-page='our-work'] .process-number {
+[data-page='our-work'] .process-number,
+[data-page='our-craft'] .process-number {
   font-size: var(--text-eyebrow-sm);
   letter-spacing: 0.16em;
   color: var(--clay);
 }
 
-[data-page='our-work'] .process-label {
+[data-page='our-work'] .process-label,
+[data-page='our-craft'] .process-label {
   font:
     500 clamp(1.6rem, 2.7vw, 2.7rem) / 1.04 var(--font-display),
     serif;
@@ -729,21 +736,25 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  [data-page='our-work'] .process-step:hover {
+  [data-page='our-work'] .process-step:hover,
+  [data-page='our-craft'] .process-step:hover {
     background: rgba(243, 240, 234, 0.22);
   }
 
-  [data-page='our-work'] .process-label {
+  [data-page='our-work'] .process-label,
+  [data-page='our-craft'] .process-label {
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  [data-page='our-work'] .process-step:hover .process-label {
+  [data-page='our-work'] .process-step:hover .process-label,
+  [data-page='our-craft'] .process-step:hover .process-label {
     transform: translateX(9px);
   }
 }
 
 @media (max-width: 720px) {
-  [data-page='our-work'] .process-step {
+  [data-page='our-work'] .process-step,
+  [data-page='our-craft'] .process-step {
     grid-template-columns: 42px 1fr;
     gap: 17px;
     padding: 26px 0;
@@ -1330,6 +1341,9 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 /* ---------------- The wall ----------------
+   Used by About and by Our Craft, which is why every rule below names both
+   slugs. The wall itself is unchanged.
+
    Twelve tiles on a four-column grid, one turning over every few seconds. The
    client says "100s of artisans"; three photographs cannot carry that, and a
    wall that keeps changing suggests a set too large to show at once.
@@ -1353,14 +1367,16 @@ body.menu-open [data-page] .menu-toggle {
    And the swap was a cross-fade so gentle it barely registered. Each new
    photograph now slides up into place as the old one leaves, which makes the
    change feel like something happening. */
-[data-page='about'] .artisan-wall {
+[data-page='about'] .artisan-wall,
+[data-page='our-craft'] .artisan-wall {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 1fr;
   gap: clamp(8px, 1vw, 16px);
 }
 
-[data-page='about'] .artisan-tile {
+[data-page='about'] .artisan-tile,
+[data-page='our-craft'] .artisan-tile {
   position: relative;
   margin: 0;
   overflow: hidden;
@@ -1376,17 +1392,20 @@ body.menu-open [data-page] .menu-toggle {
 
    Double width only. A double-height tile makes the row count fractional and
    is what left the hole. */
-[data-page='about'] .artisan-tile:nth-child(2) {
+[data-page='about'] .artisan-tile:nth-child(2),
+[data-page='our-craft'] .artisan-tile:nth-child(2) {
   grid-column: span 2;
   aspect-ratio: 2 / 1;
 }
 
-[data-page='about'] .artisan-tile:nth-child(9) {
+[data-page='about'] .artisan-tile:nth-child(9),
+[data-page='our-craft'] .artisan-tile:nth-child(9) {
   grid-column: span 2;
   aspect-ratio: 2 / 1;
 }
 
-[data-page='about'] .artisan-tile img {
+[data-page='about'] .artisan-tile img,
+[data-page='our-craft'] .artisan-tile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1396,7 +1415,8 @@ body.menu-open [data-page] .menu-toggle {
 /* The slide. The tile leaves upward and the replacement arrives from below,
    so the change reads as a new photograph taking the place of the old one
    rather than as a dissolve. */
-[data-page='about'] .artisan-tile img {
+[data-page='about'] .artisan-tile img,
+[data-page='our-craft'] .artisan-tile img {
   opacity: 1;
   transform: translateY(0) scale(1.01);
   transition:
@@ -1404,12 +1424,14 @@ body.menu-open [data-page] .menu-toggle {
     transform 0.85s var(--ease);
 }
 
-[data-page='about'] .artisan-tile.is-fading img {
+[data-page='about'] .artisan-tile.is-fading img,
+[data-page='our-craft'] .artisan-tile.is-fading img {
   opacity: 0;
   transform: translateY(-14%) scale(1.06);
 }
 
-[data-page='about'] .artisan-tile.is-arriving img {
+[data-page='about'] .artisan-tile.is-arriving img,
+[data-page='our-craft'] .artisan-tile.is-arriving img {
   animation: artisan-arrive 0.85s var(--ease) both;
 }
 
@@ -1425,13 +1447,15 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  [data-page='about'] .artisan-tile:hover img {
+  [data-page='about'] .artisan-tile:hover img,
+  [data-page='our-craft'] .artisan-tile:hover img {
     transform: scale(1.06);
   }
 }
 
 @media (max-width: 860px) {
-  [data-page='about'] .artisan-wall {
+  [data-page='about'] .artisan-wall,
+  [data-page='our-craft'] .artisan-wall {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -1439,12 +1463,15 @@ body.menu-open [data-page] .menu-toggle {
      Ten square tiles is three rows of three plus one, so the last tile is
      dropped to keep the block complete. */
   [data-page='about'] .artisan-tile:nth-child(2),
-  [data-page='about'] .artisan-tile:nth-child(9) {
+  [data-page='our-craft'] .artisan-tile:nth-child(2),
+  [data-page='about'] .artisan-tile:nth-child(9),
+  [data-page='our-craft'] .artisan-tile:nth-child(9) {
     grid-column: span 1;
     aspect-ratio: 1 / 1;
   }
 
-  [data-page='about'] .artisan-tile:nth-child(10) {
+  [data-page='about'] .artisan-tile:nth-child(10),
+  [data-page='our-craft'] .artisan-tile:nth-child(10) {
     display: none;
   }
 }
@@ -1452,17 +1479,20 @@ body.menu-open [data-page] .menu-toggle {
 /* Two columns wants an even count. Nine left a single tile alone on a fifth
    row, so one more is dropped and the wall is four clean rows of two. */
 @media (max-width: 560px) {
-  [data-page='about'] .artisan-wall {
+  [data-page='about'] .artisan-wall,
+  [data-page='our-craft'] .artisan-wall {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  [data-page='about'] .artisan-tile:nth-child(9) {
+  [data-page='about'] .artisan-tile:nth-child(9),
+  [data-page='our-craft'] .artisan-tile:nth-child(9) {
     display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-page='about'] .artisan-tile img {
+  [data-page='about'] .artisan-tile img,
+  [data-page='our-craft'] .artisan-tile img {
     transition: none;
     animation: none;
     transform: none;

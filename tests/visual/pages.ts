@@ -33,6 +33,12 @@ export const PARITY_PAGES = [
   { name: 'home', legacy: '/index.html', route: '/', settle: 7000, baseline: 'current' },
   { name: 'our-work', legacy: '/our-work.html', route: '/our-work', baseline: 'current' },
   /*
+   * Our Craft has no legacy counterpart: it is the bottom half of /our-work
+   * moved to a page of its own, so its baseline can only ever be this build.
+   * `legacy` points at the document those sections used to be served from.
+   */
+  { name: 'our-craft', legacy: '/our-work.html', route: '/our-craft', baseline: 'current' },
+  /*
    * /projects is the gallery now, approved in review, so it has no legacy
    * counterpart at all: `legacy` is unused for a page on `current` and points
    * at the document the route used to serve.
@@ -119,7 +125,7 @@ const HIDE_MASTHEAD = '.head, .mobile-menu { visibility: hidden !important; }';
 
 /**
  * Two places swap one photograph every few seconds, forever, at a random
- * position: the About artisan wall and the Our Work artisan strip. Left
+ * position: the Our Craft artisan wall and the Our Work artisan strip. Left
  * running they make the gate flaky, because two captures of an unchanged page
  * differ by whichever images happened to turn over between them.
  *

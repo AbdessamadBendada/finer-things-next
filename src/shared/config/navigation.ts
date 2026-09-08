@@ -25,6 +25,13 @@ export type NavLink = {
 
 const HOME: NavLink = { href: ROUTES.home, label: 'Home' };
 const OUR_WORK: NavLink = { href: ROUTES.ourWork, label: 'What we do' };
+/*
+ * Labelled "Our craft" rather than "Our Craft" to match the sentence case the
+ * rest of the menu uses. It sits directly after "What we do" in both the menu
+ * and the footer because the two pages are halves of the same story: what we
+ * make, then how it is made.
+ */
+const OUR_CRAFT: NavLink = { href: ROUTES.ourCraft, label: 'Our craft' };
 const PROJECTS: NavLink = { href: ROUTES.projects, label: 'Projects' };
 const ABOUT: NavLink = { href: ROUTES.about, label: 'About' };
 const CONTACT: NavLink = { href: ROUTES.contact, label: 'Contact' };
@@ -45,12 +52,13 @@ const LINKEDIN: NavLink = { href: '#', label: 'LinkedIn' };
  * One footer on every page, so one pair of link sets rather than the four
  * that had drifted apart across the variants.
  */
-export const FOOTER_EXPLORE = [OUR_WORK, PROJECTS, ABOUT, FINER_LIVING] as const;
+export const FOOTER_EXPLORE = [OUR_WORK, OUR_CRAFT, PROJECTS, ABOUT, FINER_LIVING] as const;
 export const FOOTER_CONNECT = [LINKEDIN, CONTACT, PRIVACY, TERMS] as const;
 
 export const SITE_MENU = [
   HOME,
   OUR_WORK,
+  OUR_CRAFT,
   PROJECTS,
   ABOUT,
   FINER_LIVING,
@@ -71,6 +79,10 @@ export type ChromeConfig = {
  */
 export const CHROME: Record<string, ChromeConfig> = {
   [ROUTES.ourWork]: {
+    scrollThreshold: 0.72,
+  },
+
+  [ROUTES.ourCraft]: {
     scrollThreshold: 0.72,
   },
 

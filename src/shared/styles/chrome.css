@@ -37,6 +37,7 @@
     backdrop-filter 0.5s ease,
     border-color 0.5s ease;
 }
+[data-page='our-craft'] .head,
 [data-page='our-work'] .head,
 [data-page='projects'] .head,
 [data-page='bespoke-accessories'] .head,
@@ -121,6 +122,7 @@
   margin: 0 auto;
   padding: 0 44px;
 }
+[data-page='our-craft'] .wrap,
 [data-page='our-work'] .wrap,
 [data-page='projects'] .wrap,
 [data-page='bespoke-accessories'] .wrap,
@@ -149,6 +151,7 @@
   color: var(--paper);
   padding: 66px 0 38px;
 }
+[data-page='our-craft'] footer,
 [data-page='our-work'] footer,
 [data-page='projects'] footer,
 [data-page='bespoke-accessories'] footer,
@@ -261,6 +264,7 @@
   font-size: var(--text-body);
   color: var(--tan);
 }
+[data-page='our-craft'] .head.scrolled,
 [data-page='our-work'] .head.scrolled,
 [data-page='projects'] .head.scrolled {
   color: var(--ink);
@@ -283,6 +287,7 @@
   border-color: var(--line);
   backdrop-filter: blur(16px) saturate(1.1);
 }
+[data-page='our-craft'] .footer-top,
 [data-page='our-work'] .footer-top,
 [data-page='projects'] .footer-top,
 [data-page='bespoke-accessories'] .footer-top,
@@ -303,6 +308,7 @@
   padding-bottom: 42px;
   border-bottom: 1px solid rgba(243, 240, 234, 0.14);
 }
+[data-page='our-craft'] .footer-brand,
 [data-page='our-work'] .footer-brand,
 [data-page='projects'] .footer-brand,
 [data-page='bespoke-accessories'] .footer-brand,
@@ -320,6 +326,7 @@
 [data-page='contact'] .footer-brand {
   font: 500 italic 1.7rem var(--font-display);
 }
+[data-page='our-craft'] .footer-tag,
 [data-page='our-work'] .footer-tag,
 [data-page='projects'] .footer-tag,
 [data-page='bespoke-accessories'] .footer-tag,
@@ -340,6 +347,7 @@
   font-size: var(--text-body-sm);
   font-weight: 400;
 }
+[data-page='our-craft'] .footer-links,
 [data-page='our-work'] .footer-links,
 [data-page='projects'] .footer-links,
 [data-page='bespoke-accessories'] .footer-links,
@@ -358,6 +366,7 @@
   display: flex;
   gap: 27px;
 }
+[data-page='our-craft'] .footer-links h3,
 [data-page='our-work'] .footer-links h3,
 [data-page='projects'] .footer-links h3,
 [data-page='bespoke-accessories'] .footer-links h3,
@@ -380,6 +389,7 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+[data-page='our-craft'] .footer-links a,
 [data-page='our-work'] .footer-links a,
 [data-page='projects'] .footer-links a,
 [data-page='bespoke-accessories'] .footer-links a,
@@ -407,6 +417,7 @@
   text-decoration: none;
   color: rgba(243, 240, 234, 0.67);
 }
+[data-page='our-craft'] .footer-bottom,
 [data-page='our-work'] .footer-bottom,
 [data-page='projects'] .footer-bottom,
 [data-page='bespoke-accessories'] .footer-bottom,
@@ -431,6 +442,7 @@
   font-size: var(--text-fine);
   font-weight: 400;
 }
+[data-page='our-craft'] .footer-bottom em,
 [data-page='our-work'] .footer-bottom em,
 [data-page='projects'] .footer-bottom em,
 [data-page='bespoke-accessories'] .footer-bottom em,
@@ -475,6 +487,7 @@
   [data-page='home'] .head {
     padding-inline: 22px;
   }
+  [data-page='our-craft'] .head,
   [data-page='our-work'] .head,
   [data-page='projects'] .head,
   [data-page='marsa-al-arab'] .head,
@@ -491,6 +504,7 @@
     padding-right: max(22px, calc(14px + env(safe-area-inset-right)));
     padding-left: max(22px, calc(14px + env(safe-area-inset-left)));
   }
+  [data-page='our-craft'] .head,
   [data-page='our-work'] .head,
   [data-page='projects'] .head,
   [data-page='marsa-al-arab'] .head,
@@ -504,6 +518,7 @@
     padding-right: max(24px, calc(16px + env(safe-area-inset-right)));
     padding-left: max(24px, calc(16px + env(safe-area-inset-left)));
   }
+  [data-page='our-craft'] .wrap,
   [data-page='our-work'] .wrap,
   [data-page='projects'] .wrap,
   [data-page='marsa-al-arab'] .wrap,
@@ -515,6 +530,7 @@
   [data-page='contact'] .wrap {
     padding-inline: 24px;
   }
+  [data-page='our-craft'] .footer-top,
   [data-page='our-work'] .footer-top,
   [data-page='projects'] .footer-top,
   [data-page='marsa-al-arab'] .footer-top,
@@ -525,6 +541,7 @@
   [data-page='about'] .footer-top {
     display: block;
   }
+  [data-page='our-craft'] .footer-links,
   [data-page='our-work'] .footer-links,
   [data-page='projects'] .footer-links,
   [data-page='bespoke-accessories'] .footer-links,
@@ -541,6 +558,7 @@
     margin: 22px 0;
     flex-wrap: wrap;
   }
+  [data-page='our-craft'] .footer-bottom,
   [data-page='our-work'] .footer-bottom,
   [data-page='projects'] .footer-bottom,
   [data-page='marsa-al-arab'] .footer-bottom,

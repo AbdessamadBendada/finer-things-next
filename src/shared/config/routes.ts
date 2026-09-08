@@ -9,6 +9,7 @@
 export const ROUTES = {
   home: '/',
   ourWork: '/our-work',
+  ourCraft: '/our-craft',
   projects: '/projects',
   about: '/about',
   contact: '/contact',
@@ -32,6 +33,7 @@ export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
 export const ALL_ROUTES: readonly string[] = [
   ROUTES.home,
   ROUTES.ourWork,
+  ROUTES.ourCraft,
   ROUTES.projects,
   ...PROJECT_SLUGS.map((slug) => ROUTES.project(slug)),
   ...SERVICE_SLUGS.map((slug) => ROUTES.service(slug)),
