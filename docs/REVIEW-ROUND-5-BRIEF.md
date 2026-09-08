@@ -513,12 +513,29 @@ predicted here, and under AA. Recorded, not silently shipped.
   <div className="hero-kicker eyebrow">Curated collection</div>
   ```
 
-  Then check whether `Link` and `ROUTES` are still used elsewhere in the file
-  (they are, further down) and only remove an import if it has genuinely become
-  unused.
+- **Both imports become unused. Remove them.** This task originally said `Link`
+  and `ROUTES` were "used elsewhere in the file, further down" — **that was
+  wrong.** Verified 2026-09-08: `<Link` appears exactly once in
+  `FinerLivingPage.tsx` and `ROUTES.` exactly once, both in the kicker above. So
+  after this edit, delete both imports or lint fails on unused variables.
+
+- **One test asserts the old label and will fail. Update it.**
+  `tests/seo/seo.spec.ts` line 104, in `EXPECTED_CONTEXTUAL_LINKS`:
+
+  ```ts
+  [ROUTES.service('finer-living')]: [{ href: ROUTES.ourWork, label: 'What we do / 03' }],
+  ```
+
+  Finer Living is now the only service page with **no** contextual link out, so
+  remove the whole `[ROUTES.service('finer-living')]` key rather than emptying
+  its array — check how the `contextual links connect service and project hubs`
+  test at line 359 iterates before deciding, and make sure an absent key does
+  not itself fail. Leave the `bespoke-accessories` and `styling-curation`
+  entries exactly as they are.
 
 - **Done when**: the Finer Living hero reads "CURATED COLLECTION" in the
-  eyebrow style, and there is no link in the kicker.
+  eyebrow style, there is no link in the kicker, and `pnpm test` passes with no
+  unused-import warnings from lint.
 - **Do not**: change the equivalent kicker on `/services/bespoke-accessories`
   ("What we do / 01") or `/services/styling-curation` ("What we do / 02"). The
   comment named Finer Living only. **Flag in your report** that the three
