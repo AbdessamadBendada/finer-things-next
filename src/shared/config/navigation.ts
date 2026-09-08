@@ -39,6 +39,8 @@ const FINER_LIVING: NavLink = { href: ROUTES.service('finer-living'), label: 'Fi
 const PRIVACY: NavLink = { href: ROUTES.privacy, label: 'Privacy' };
 const TERMS: NavLink = { href: ROUTES.terms, label: 'Terms' };
 const LINKEDIN: NavLink = { href: '#', label: 'LinkedIn' };
+const INSTAGRAM: NavLink = { href: '#', label: 'Instagram' };
+const IMPRINT: NavLink = { href: ROUTES.imprint, label: 'Imprint' };
 
 /**
  * The site menu — the only navigation on the site.
@@ -47,13 +49,14 @@ const LINKEDIN: NavLink = { href: '#', label: 'LinkedIn' };
  * the masthead; there is no second, desktop-only set of links to keep in sync.
  */
 /**
- * The footer's two columns.
+ * The footer's three columns.
  *
- * One footer on every page, so one pair of link sets rather than the four
+ * One footer on every page, so one group of link sets rather than the four
  * that had drifted apart across the variants.
  */
 export const FOOTER_EXPLORE = [OUR_WORK, OUR_CRAFT, PROJECTS, ABOUT, FINER_LIVING] as const;
-export const FOOTER_CONNECT = [LINKEDIN, CONTACT, PRIVACY, TERMS] as const;
+export const FOOTER_CONNECT = [LINKEDIN, INSTAGRAM, CONTACT] as const;
+export const FOOTER_LEGAL = [PRIVACY, TERMS, IMPRINT] as const;
 
 export const SITE_MENU = [
   HOME,

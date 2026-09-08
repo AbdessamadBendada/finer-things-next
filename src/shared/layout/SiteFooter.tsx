@@ -5,6 +5,7 @@ import {
   FOOTER_CONNECT,
   FOOTER_COPY,
   FOOTER_EXPLORE,
+  FOOTER_LEGAL,
   type NavLink,
 } from '@/shared/config/navigation';
 
@@ -84,6 +85,12 @@ export function SiteFooter({ newsletter }: { newsletter?: ReactNode }) {
               <h4>Connect</h4>
               {FOOTER_CONNECT.map((link) => (
                 <FooterLink key={`${link.href}-${link.label}`} {...link} />
+              ))}
+            </div>
+            <div>
+              <h4>Legal</h4>
+              {FOOTER_LEGAL.map((link) => (
+                <FooterLink key={link.href} {...link} />
               ))}
             </div>
           </div>

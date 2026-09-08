@@ -15,6 +15,7 @@ export const ROUTES = {
   contact: '/contact',
   privacy: '/privacy',
   terms: '/terms',
+  imprint: '/imprint',
   project: (slug: string) => `/projects/${slug}`,
   service: (slug: string) => `/services/${slug}`,
 } as const;
@@ -41,6 +42,7 @@ export const ALL_ROUTES: readonly string[] = [
   ROUTES.contact,
   ROUTES.privacy,
   ROUTES.terms,
+  ROUTES.imprint,
 ];
 
 /**

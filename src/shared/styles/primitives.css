@@ -28,7 +28,8 @@
    rather than from the page wrapper — so the difference has to be expressed
    at this level or the footer row lands 0.6px short. */
 [data-page='privacy'],
-[data-page='terms'] {
+[data-page='terms'],
+[data-page='imprint'] {
   line-height: 1.75;
 }
 
