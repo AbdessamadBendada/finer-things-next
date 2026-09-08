@@ -117,15 +117,55 @@
     transition:clip-path .85s cubic-bezier(.76,0,.24,1);will-change:clip-path}
 .page :global(.svc-row .wipe::after) {content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(40,39,28,.76),rgba(40,39,28,.44))}
 .page :global(.svc-row .wipe img) {filter:brightness(.72) saturate(.85);transform:scale(1.025);transition:transform 1.4s cubic-bezier(.16,1,.3,1)}
-.page :global(.svc-row a) {position:relative;z-index:2;display:grid;grid-template-columns:80px 1.3fr 1fr;gap:40px;align-items:center;
-    min-height:inherit;max-width:1280px;margin:0 auto;padding:5.8vh 44px;text-decoration:none;color:var(--ink);transition:color .5s}
-.page :global(.svc-row .idx) {font-size: var(--text-fine);font-weight:400;letter-spacing:.14em;color:var(--ink-soft);transition:color .5s}
+/* ---------------- One row's photograph is cropped lower ----------------
+   Styling & Curation is the only portrait source of the three: 1279x1920,
+   where Bespoke Accessories and Finer Living are both landscape 1440x960.
+   Cover-fitting a 2:3 image into a row roughly 3:1 shows about a fifth of it,
+   and this particular frame puts its subject — the console and the objects on
+   it — at roughly 47% to 70% of the height, with a tall dark wall above.
+   Centred, the visible band was mostly that empty wall with the objects cut
+   off along the bottom edge, which is why the row read as showing nothing.
+
+   62% lands the band on the arrangement and keeps the console's top edge in
+   frame to ground it. Tested against 50, 58 and 66: 58 still cuts the objects,
+   66 starts showing the console's dimpled front and clips the lamps.
+
+   Attribute rather than :nth-of-type — `.svc-head` is a div in this section
+   too, so `.svc-row:nth-of-type(2)` selects the *first* service row. */
+.page :global([data-crop='lower'] .wipe img) {object-position:50% 62%}
+/* The anchor spans the whole row, not a centred 1280px band.
+
+   It was `max-width:1280px;margin:0 auto`, so on anything wider than 1280 the
+   outer edges of the row were not the link — no pointer cursor, no click. The
+   review comment was that nothing says the row is clickable, and part of it
+   genuinely was not.
+
+   The asymmetric padding keeps every pixel of the content where it was: below
+   1280 the max() picks the plain 44px, and above it the extra half-gutter
+   reproduces exactly what the centring used to do. */
+.page :global(.svc-row a) {position:relative;z-index:2;display:grid;grid-template-columns:80px 1.3fr 1fr auto;gap:40px;align-items:center;
+    min-height:inherit;padding-block:5.8vh;padding-inline:max(44px,calc((100% - 1280px) / 2 + 44px));
+    text-decoration:none;color:var(--ink);cursor:pointer;transition:color .5s}
+/* The row numbers carry the brand accent. `--clay` is the canonical token —
+   `--brass` is an alias for it, kept from the legacy stylesheets. */
+.page :global(.svc-row .idx) {font-size: var(--text-fine);font-weight:400;letter-spacing:.14em;color:var(--clay);transition:color .5s}
+/* The arrow is the affordance, so it is visible at rest rather than appearing
+   on hover — a cue you only get after pointing at the thing is not a cue that
+   the thing can be pointed at. Hover brightens it and slides it right. */
+.page :global(.svc-row .go) {justify-self:end;font-size:2.4rem;line-height:1;color:var(--clay);
+    transition:color .5s,transform .55s cubic-bezier(.16,1,.3,1)}
 .page :global(.svc-row h3) {font-family:var(--font-display),Georgia,serif;font-weight:500;font-style:italic;
     font-size:clamp(2.1rem,5.6vw,4.6rem);line-height:1;letter-spacing:-.015em;transition:transform .55s cubic-bezier(.16,1,.3,1)}
 .page :global(.svc-row .desc) {font-size: var(--text-body);color:var(--ink-soft);max-width:36ch;justify-self:end;transition:color .5s}
 .page :global(.svc-row.wiped .wipe) {clip-path:inset(0 0 0 0)}
 .page :global(.svc-row.wiped .wipe img) {transform:scale(1)}
-.page :global(.svc-row.wiped a), .page :global(.svc-row.wiped .idx), .page :global(.svc-row.wiped .desc) {color:var(--paper)}
+/* Over the photograph everything goes paper — except the number, which stays
+   in the accent. `--tan` is the palette's light warm tone: the same hue as
+   `--clay`, legible on the dark image, so the number reads as brand colour in
+   both states instead of turning into ordinary white text on hover. */
+.page :global(.svc-row.wiped a), .page :global(.svc-row.wiped .desc) {color:var(--paper)}
+.page :global(.svc-row.wiped .idx) {color:var(--tan)}
+.page :global(.svc-row.wiped .go) {color:var(--paper)}
 .page :global(.svc-row.wiped h3) {transform:translateX(22px);transition-delay:.12s}
 .page :global(.svc-row::after) {content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:var(--paper);
     transform:scaleX(1);transition:transform 1.15s cubic-bezier(.76,0,.24,1)}
@@ -135,14 +175,36 @@
 .page :global(.svc-row a) {opacity:0;transform:translateY(12px);transition:color .5s,opacity .8s ease .32s,transform .95s cubic-bezier(.16,1,.3,1) .32s}
 .page :global(.svc-row.luxury-in a) {opacity:1;transform:none}
 @media(hover:hover) and (pointer:fine) {
-  .page :global(.svc-row:hover), .page :global(.svc-row:focus-within) {min-height:clamp(258px,32vh,330px)}
+  /* The hover height is set by the photograph, not by the text.
+
+     History: rest is clamp(220,27vh,280) — 243px at a 900px viewport — and
+     hover was clamp(258,32vh,330), a 45px lift nobody could see. It went to
+     37vh (a 90px lift), and the note back was that the point of the taller row
+     is to let the image behind it be *read*: these are wide photographs of
+     objects, and a 334px letterbox of one is not enough to tell what you are
+     looking at.
+
+     So the row roughly doubles instead: 243px -> 450px at 900, which is a
+     crop deep enough to show the object rather than a band across its middle.
+     The ceiling is what keeps this honest on a tall display — beyond ~520px
+     the row starts pushing the next two services off the screen, and a
+     services list you cannot see the rest of is a worse problem than a
+     shallow crop. */
+  .page :global(.svc-row:hover), .page :global(.svc-row:focus-within) {min-height:clamp(380px,50vh,520px)}
   .page :global(.svc-row .wipe), .page :global(.svc-row.wiped .wipe) {clip-path:inset(0 100% 0 0)}
-  .page :global(.svc-row a), .page :global(.svc-row.wiped a), .page :global(.svc-row .idx), .page :global(.svc-row.wiped .idx) {color:var(--ink)}
+  .page :global(.svc-row a), .page :global(.svc-row.wiped a) {color:var(--ink)}
+  .page :global(.svc-row .idx), .page :global(.svc-row.wiped .idx) {color:var(--clay)}
   .page :global(.svc-row .desc), .page :global(.svc-row.wiped .desc) {color:var(--ink-soft)}
+  .page :global(.svc-row .go), .page :global(.svc-row.wiped .go) {color:var(--clay);transform:none}
   .page :global(.svc-row h3), .page :global(.svc-row.wiped h3) {transform:none;transition-delay:0s}
   .page :global(.svc-row:hover .wipe), .page :global(.svc-row:focus-within .wipe) {clip-path:inset(0 0 0 0)}
   .page :global(.svc-row:hover .wipe img), .page :global(.svc-row:focus-within .wipe img) {transform:scale(1)}
-  .page :global(.svc-row:hover a), .page :global(.svc-row:hover .idx), .page :global(.svc-row:hover .desc), .page :global(.svc-row:focus-within a), .page :global(.svc-row:focus-within .idx), .page :global(.svc-row:focus-within .desc) {color:var(--paper)}
+  .page :global(.svc-row:hover a), .page :global(.svc-row:hover .desc), .page :global(.svc-row:focus-within a), .page :global(.svc-row:focus-within .desc) {color:var(--paper)}
+  .page :global(.svc-row:hover .idx), .page :global(.svc-row:focus-within .idx) {color:var(--tan)}
+  /* Rotated to point up and out, the way an "opens this page" arrow does,
+     rather than just sliding sideways. It is the one moving part that says
+     the row goes somewhere. */
+  .page :global(.svc-row:hover .go), .page :global(.svc-row:focus-within .go) {color:var(--paper);transform:translateX(10px) rotate(-45deg)}
   .page :global(.svc-row:hover h3), .page :global(.svc-row:focus-within h3) {transform:translateX(22px);transition-delay:.12s}
 }
 @media(max-width:860px) {
@@ -151,6 +213,11 @@
   .page :global(.svc-row.wiped) {min-height:clamp(335px,80vw,480px)}
   .page :global(.svc-row a) {min-height:inherit;grid-template-columns:44px 1fr;gap:14px;padding:7vh 24px;align-content:center}
   .page :global(.svc-row .desc) {display:block;grid-column:2;justify-self:start;max-width:32ch;margin-top:10px;font-size: var(--text-body)}
+  /* No fourth column here — the arrow sits under the description, at the start
+     of the text column. It matters less on touch, where the whole row is the
+     tap target anyway, but it is the same cue and it keeps the three rows
+     consistent between breakpoints. */
+  .page :global(.svc-row .go) {grid-column:2;justify-self:start;margin-top:18px;font-size:2rem}
   .page :global(.svc-row h3) {font-size:clamp(2rem,9vw,3.2rem)}
 }
 .page :global(.featured) {background:var(--paper-2);color:var(--ink);padding:15vh 0 0;overflow:visible}
@@ -329,7 +396,9 @@
   .page :global(.hero-copy), .page :global(.rise) {opacity:1;transform:none;transition:none}
   .page :global(.svc-row .wipe), .page :global(.svc-row.wiped .wipe) {clip-path:inset(0 0 0 0);transition:none}
   .page :global(.svc-row .wipe img) {transform:none;transition:none}
-  .page :global(.svc-row a), .page :global(.svc-row .idx), .page :global(.svc-row .desc) {color:var(--paper)}
+  .page :global(.svc-row a), .page :global(.svc-row .desc) {color:var(--paper)}
+  .page :global(.svc-row .idx) {color:var(--tan)}
+  .page :global(.svc-row .go) {color:var(--paper);transform:none;transition:none}
   .page :global(.svc-row h3), .page :global(.svc-row.wiped h3) {transform:none;transition:none}
   .page :global(.svc-row) {transition:none}
   .page :global(.filmstrip-scroll) {height:auto;padding:70px 0}

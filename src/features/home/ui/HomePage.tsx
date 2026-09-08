@@ -100,9 +100,16 @@ export function HomePage() {
             <span className="desc">
               Design and production of bespoke accessories guests can see, touch and feel.
             </span>
+            {/* The row is a link and did not look like one. Decorative: the
+                anchor already carries the accessible name. */}
+            <span className="go" aria-hidden="true">
+              →
+            </span>
           </Link>
         </div>
-        <div className="svc-row rise">
+        {/* The only portrait photograph of the three. See the `data-crop` rule
+            in home.module.css for why it needs its own focal point. */}
+        <div className="svc-row rise" data-crop="lower">
           <div className="wipe">
             <Media
               sizes="100vw"
@@ -115,6 +122,9 @@ export function HomePage() {
             <h3 className="serif">Styling & Curation</h3>
             <span className="desc">
               Styling and curation that give spaces character and soul.
+            </span>
+            <span className="go" aria-hidden="true">
+              →
             </span>
           </Link>
         </div>
@@ -131,6 +141,9 @@ export function HomePage() {
             <h3 className="serif">Finer Living</h3>
             <span className="desc">
               Finer Living - the ready-made collection of European-crafted pieces.
+            </span>
+            <span className="go" aria-hidden="true">
+              →
             </span>
           </Link>
         </div>
