@@ -25,6 +25,68 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-08: Service rows — accent numbers, a deeper hover, a click cue
+
+**Codex change**
+
+- Commit: `944d909 Service rows: brand-orange numbers, a deeper hover and an arrow`
+- Changed: three client review points on the home "What we do" rows. The row
+  numbers move from `--ink-soft` to `--clay`, taking `--tan` over the
+  photograph so they stay brand-coloured in both states. The hover height goes
+  from a 45px lift to roughly double the row (243px → 450px at a 900px
+  viewport, capped 520px), because the reason for the taller row is to let the
+  wide photograph be read. And the row now says it is a link: the anchor spans
+  the full row instead of a centred 1280px band — the outer strips genuinely
+  had no pointer and no click — plus an arrow at the right, visible at rest,
+  rotating up and out on hover.
+- Also: `/services/styling-curation`'s photograph is the only portrait source
+  of the three (1279x1920 against 1440x960), so cover-fitting it into a 3:1 row
+  showed mostly the empty wall above its subject. Cropped to `50% 62%` through
+  a `data-crop` attribute. Not `:nth-of-type(2)` — `.svc-head` is a div in that
+  section, so that selector picks the first row.
+- Files: `src/features/home/ui/HomePage.tsx`,
+  `src/features/home/styles/home.module.css`
+- Verified: typecheck, lint, `pnpm build`, `pnpm test` (28), reveal + headings +
+  mobile-readiness (52). Measured in a browser at 1440x900 and 390x844: colours,
+  row heights, `object-position`, and `elementFromPoint` at the row's far edge
+  resolving to the link.
+- Follow-up: the photograph is still darkened by `brightness(.72)` plus a
+  `.76 → .44` veil, which is now the limit on reading it rather than the height.
+  A landscape crop of the Styling & Curation set-up would retire the `data-crop`
+  special case, which is a fixed percentage and will not survive a change to the
+  row height gracefully.
+
+## 2026-09-08: The home statement stops holding the scroll
+
+**Codex change**
+
+- Commit: `41fa595 Home statement: let the page scroll instead of pinning it`
+- Changed: reverses the pinned treatment recorded as FEEDBACK comment 21. The
+  section held the viewport for two screens while the reader's scrolling wrote
+  the sentence; the client asked for the words without the hold. `#purpose` is
+  now one screen tall with ordinary section padding and scrolls past like any
+  other section, and the statement takes the ordinary staggered word reveal.
+- The reveal was retimed: 1.15s/62ms → 0.5s/22ms, about 0.95s end to end for
+  21 words, and the trigger fires as the heading crosses the fold rather than
+  waiting for a third of it to be inside the viewport. The old timing was right
+  while the page was holding still and much too slow once it was not.
+- Files: `src/features/home/motion/useHomeMotion.ts`,
+  `src/shared/styles/brand.css`, `src/features/home/styles/home.module.css`,
+  `tests/visual/reveal.spec.ts`
+- Verified: typecheck, `pnpm build`, `reveal.spec.ts` (6) rewritten to assert
+  the section is one viewport with nothing sticky and that the words still
+  arrive one at a time. Measured while scrolling in: the sentence completes with
+  the heading at the fold, against ~2000px past it before.
+- Follow-up: `usePurposeReveal.ts` and its `.scroll-reveal` rules are kept,
+  unwired and labelled in both files, so the pin can be restored. An agent that
+  "fixes" the dangling hook will undo a client decision.
+- Note: `brand.css` beat the page module here. The stagger was first retuned in
+  `home.module.css` with a clean build and passing tests and nothing moved on
+  screen, because `[data-page='home'] #purpose-title .reveal-word > span` in
+  `brand.css` was the rule that applied. Page modules load after `brand.css`, so
+  `brand.css` scopes its overrides to ids to win. Confirm which rule applies
+  before editing a value. Recorded in `REVIEW-ROUND-5-BRIEF.md` as a trap.
+
 ## 2026-09-07: Raise the small-text scale
 
 **Codex change**
