@@ -208,6 +208,266 @@ Each finished batch reports:
 - **Open question**: <or `None` — ask before starting, do not guess>
 ```
 
-### Batch 1 — _pending_
+Batches run **in order**, not in parallel — batch 2 and batch 3 both edit
+`brand.css`, in different sections, and that is only safe because one finishes
+before the next starts.
 
-### Batch 2 — _pending_
+---
+
+### Batch 1 — the home page loses two things
+
+Both tasks are in the same three files. One agent, one pass.
+
+#### C1 — Remove the "Our story" section from the home page
+
+- **Asked** (verbatim): "Our story section in the home page should be removed!"
+- **Read as**: delete the section from the home page only. The founders' copy
+  and portrait also live on `/about`, and that page is untouched.
+- **Where**:
+  - `src/features/home/ui/HomePage.tsx` — the block that begins with the
+    comment `{/* FAMILY EDITORIAL PORTRAIT */}` and runs from
+    `<section className="family-editorial" id="story" …>` to its closing
+    `</section>`. It sits between the featured filmstrip section and
+    `<SiteCta />`. Delete the comment and the section together.
+  - `src/features/home/styles/home.module.css` — every `.family-editorial*`
+    rule becomes dead. `grep -n "family-editorial" src/features/home/styles/home.module.css`
+    and delete all of them, including the ones inside the `@media(max-width:860px)`
+    block.
+  - `src/shared/styles/brand.css` — `grep -n "#story" src/shared/styles/brand.css`.
+    There is a `.story-cta` treatment and a media query restating the grid
+    stacking. Both are dead; delete them.
+  - `src/features/home/motion/useHomeMotion.ts` — inside `drive`, the two lines
+    that query `.family-editorial-portrait` and call
+    `setDrift(portrait, '--family-shift', 28)`. If `setDrift` is then unused in
+    the file, remove it from the import too, or lint will fail.
+- **Tests that will break — fix them as part of this task, do not skip them:**
+  - `tests/visual/home-story.spec.ts` — the whole file tests `#story .story-cta`.
+    **Delete the file.**
+  - `tests/visual/reveal.spec.ts` — the `CASES` array's first entry,
+    `{ route: '/', selector: '.family-editorial-portrait', settle: 7000 }`.
+    Remove that one entry; leave the two `/about` entries alone.
+- **Done when**: `/` renders with no `#story` section, the filmstrip is
+  followed directly by the closing CTA, `grep -rn "family-editorial" src tests`
+  returns nothing, and the suite is green.
+- **Do not**: touch `/about`, or remove the About entry from the menu or the
+  footer. Losing the "Meet the family" button from the home page is expected;
+  About is still reachable from both.
+- **Open question**: None.
+
+#### C4 — Remove the small inset photograph from the featured cards
+
+- **Asked** (verbatim): "in the featured section there are a big image and a
+  small little image stick with it right ? Delete that small image please."
+- **Read as**: the small rotated photograph pinned to the top-right corner of
+  each featured project card. It is `.film-detail`. The card's main image
+  (`.film-image`), its shade, number, title and caption all stay.
+- **Where**:
+  - `src/features/home/ui/HomePage.tsx` — five `<div className="film-detail">…</div>`
+    blocks, one per `<article className="film-card">`, each wrapping a `<Media>`.
+    Delete all five, including the `<Media>` inside them.
+  - `src/features/home/styles/home.module.css` — four `.film-detail` rules.
+    `grep -n "film-detail"` to find them; one is inside a media query.
+- **Done when**: `grep -rn "film-detail" src` returns nothing, and all five
+  cards show only their full-bleed photograph with the copy over it.
+- **Do not**: delete the image files from `public/assets/`. Five assets become
+  unreferenced (`new-work-marsa-lobby-08`, `new-work-marsa-suite2-02`,
+  `new-work-marsa-shelfs`, `new-work-marsa-corridor-03`,
+  `new-work-marsa-lobby-12`) and they stay on disk.
+- **Open question**: None.
+
+---
+
+### Batch 2 — the footer, and a new Imprint page
+
+One task, but it is the largest in this round: it adds a route.
+
+#### C3 — Three footer columns, and an Imprint page
+
+- **Asked** (verbatim): "In the footer there is a contact column where there is
+  linked contact and pricy .. this is not how it should be we should make the
+  contact and make in it LinkedIn and instagram + contact and make a legal
+  column or if we can make it bellow the contact column or something in it
+  there will be in It privacy and terms and imprints which we didn't create
+  yet, and we should, let's create it."
+- **Read as**: the footer's second column currently mixes social, contact and
+  legal links. Split it in two. The column headed **Connect** holds LinkedIn,
+  Instagram and Contact. A new column headed **Legal** holds Privacy, Terms and
+  Imprint. Imprint is a page that does not exist yet and has to be built.
+- **Current state**: `FOOTER_CONNECT` is `[LINKEDIN, CONTACT, PRIVACY, TERMS]`
+  and `SiteFooter` renders exactly two columns, Explore and Connect.
+
+**Do these in order:**
+
+1. **`src/shared/config/routes.ts`** — add `imprint: '/imprint'` to `ROUTES`,
+   and add `ROUTES.imprint` to `ALL_ROUTES` immediately after `ROUTES.terms`.
+   Do **not** add a `LEGACY_REDIRECTS` entry: there was never an
+   `/imprint.html` to redirect from.
+
+2. **`src/shared/config/navigation.ts`** — beside the existing `LINKEDIN`
+   constant add:
+
+   ```ts
+   const INSTAGRAM: NavLink = { href: '#', label: 'Instagram' };
+   const IMPRINT: NavLink = { href: ROUTES.imprint, label: 'Imprint' };
+   ```
+
+   Then change the exported sets to:
+
+   ```ts
+   export const FOOTER_CONNECT = [LINKEDIN, INSTAGRAM, CONTACT] as const;
+   export const FOOTER_LEGAL = [PRIVACY, TERMS, IMPRINT] as const;
+   ```
+
+   `LINKEDIN` and `INSTAGRAM` both keep `href: '#'` — the real URLs have not
+   been supplied yet. This is a known, accepted gap for this batch; say so in
+   your report. Do not invent social URLs.
+
+3. **`src/shared/layout/SiteFooter.tsx`** — import `FOOTER_LEGAL` and add a
+   third column after the Connect one, in the same shape:
+
+   ```tsx
+   <div>
+     <h4>Legal</h4>
+     {FOOTER_LEGAL.map((link) => (
+       <FooterLink key={link.href} {...link} />
+     ))}
+   </div>
+   ```
+
+4. **The two-column grid has to become three.**
+   - `src/shared/styles/brand.css`, `[data-page] .ft-cols` — currently
+     `grid-template-columns: repeat(2, minmax(120px, 160px))`. Make it `3`.
+   - `src/shared/styles/chrome.css`, `[data-page='home'] .ft-cols` — a
+     `display: flex` with `gap: 60px`, which takes a third column on its own.
+     Check it at 390px wide and add wrapping if the three columns overflow.
+   - Check the footer at 1440, 768 and 390. Three columns plus the brand block
+     is the layout most likely to break on a phone.
+
+5. **Build `/imprint`**, mirroring the two legal pages exactly — read
+   `src/features/legal/ui/TermsPage.tsx` and `TermsShell.tsx` first and follow
+   their structure, they are the template:
+   - `src/features/legal/ui/ImprintPage.tsx` and `ImprintShell.tsx`
+   - export `ImprintPage` from `src/features/legal/index.ts`
+   - `src/app/(legal)/imprint/page.tsx`, mirroring
+     `src/app/(legal)/privacy/page.tsx` — including **`noIndex: true`**, which
+     both existing legal routes set.
+
+   **The content:** an imprint is a legal notice and needs real company data —
+   registered name, legal address, register and VAT numbers, managing director,
+   contact. **We do not have it, and you must not invent any of it.** The legal
+   pages already have the convention for this: a `<div className="notice">`
+   reading "Draft only." at the top, and `<p className="placeholder">` for each
+   unsupplied fact. Use them. Every field a real imprint needs gets a heading
+   and a `.placeholder` paragraph naming what must be supplied — e.g. "Add the
+   registered company name and legal form before launch." A reader must be able
+   to tell at a glance that the page is unfinished.
+
+6. **Tests and metadata for the new route:**
+   - `tests/seo/seo.spec.ts` — the per-route metadata table has an entry per
+     path; add one for `[ROUTES.imprint]` with a title and description, and add
+     it to the heading-expectation map beside it. Follow the `ROUTES.ourCraft`
+     entry as the model.
+   - `tests/visual/pages.ts` — add
+     `{ name: 'imprint', legacy: '/privacy.html', route: '/imprint', baseline: 'current' }`.
+     `baseline: 'current'` because, like Our Craft, there is no legacy document
+     for this page.
+   - `tests/visual/headings.spec.ts` reads `ALL_ROUTES` and will pick the page
+     up on its own. Make sure its headings run to two lines at most, or you
+     will have to add an exemption — which the brief says not to do.
+   - **Two `Set`s hardcode the legal routes and both need `ROUTES.imprint`
+     adding, or the SEO suite fails.** The page is `noIndex`, so it must be
+     excluded from the sitemap exactly as Privacy and Terms are:
+     - `src/app/sitemap.ts` line 7 —
+       `const EXCLUDED = new Set<string>([ROUTES.privacy, ROUTES.terms]);`
+     - `tests/seo/seo.spec.ts` line 8 —
+       `const LEGAL_ROUTES = new Set<string>([ROUTES.privacy, ROUTES.terms]);`
+       which drives `INDEXABLE_ROUTES`, and the test asserting the sitemap
+       lists exactly the indexable canonical routes.
+
+- **Done when**: the footer shows Explore / Connect / Legal on every page and
+  at every width; `/imprint` renders, is linked from the footer, and is
+  obviously a draft; `pnpm verify`'s typecheck, lint, build and `pnpm test` all
+  pass.
+- **Do not**: remove Privacy or Terms, change their content, or drop Contact
+  from the footer. Contact moves into the Connect column, it does not disappear.
+- **Open question**: None — the placeholder approach was confirmed by the
+  client. The real company details and the two social URLs come later.
+
+---
+
+### Batch 3 — two small ones
+
+#### C2 — The closing CTA button is filled brand orange
+
+- **Asked** (verbatim): "the start a project button in the final cta is gonna
+  be a fill with the brand orange please"
+- **Read as**: the "Start a project" button in the shared closing CTA, on every
+  page that has one, is filled with the brand orange instead of near-black.
+- **The colour is `var(--clay)`**, `#b56d43` — the canonical accent token in
+  `src/shared/styles/tokens.css`. It is the same orange as the section eyebrows
+  and the service-row numbers. `--brass` is an alias for it. Do not introduce a
+  new hex value.
+- **Where**: `src/shared/styles/brand.css`, the existing rule
+  `[data-page]:not([data-page='contact']) .closing .btn`, which currently sets
+  only `margin-top`. Add the fill there — that selector already scopes the
+  change to the shared CTA and correctly leaves the Contact page's different
+  panel alone.
+
+  ```css
+  background: var(--clay);
+  color: var(--paper);
+  ```
+
+  and a hover/focus rule on the same selector taking it to `var(--oxblood)`,
+  which is the site's existing deeper accent and what the button already used
+  on hover.
+
+- **Do not** change `[data-page] .btn` in `primitives.css`. That is every button
+  on the site — the hero CTA, the newsletter, the story links. The comment asks
+  for one button.
+- **Known trade-off, and it must be in your report**: paper text on `--clay` is
+  about **3.6:1**, under the 4.5:1 WCAG AA needs at this button's size
+  (`--text-ui`, roughly 12px uppercase). The current ink fill is far above it,
+  and `--oxblood` is about 6.9:1. Implement what the client asked for, measure
+  the actual ratio, and state it. Do not silently substitute a darker colour,
+  and do not silently ship it without flagging.
+- **Done when**: the button reads brand orange on Home, Our Work, Our Craft,
+  Projects, About, the three service pages and both project pages, and the
+  Contact page's closing panel is unchanged.
+- **Open question**: None.
+
+#### C5 — Finer Living's kicker reads "Curated collection"
+
+- **Asked** (verbatim): "In the finer living page instead of WHAT WE DO / 03 we
+  need to put curated collection."
+- **Where**: `src/features/services/ui/FinerLivingPage.tsx`, around line 22, in
+  the hero:
+
+  ```tsx
+  <div className="hero-kicker eyebrow">
+    <Link className="context-link" href={ROUTES.ourWork}>
+      What we do / 03
+    </Link>
+  </div>
+  ```
+
+- **Do exactly this** — the client confirmed it becomes plain text, not a link,
+  because "Curated collection" names this page rather than the page it used to
+  point at:
+
+  ```tsx
+  <div className="hero-kicker eyebrow">Curated collection</div>
+  ```
+
+  Then check whether `Link` and `ROUTES` are still used elsewhere in the file
+  (they are, further down) and only remove an import if it has genuinely become
+  unused.
+
+- **Done when**: the Finer Living hero reads "CURATED COLLECTION" in the
+  eyebrow style, and there is no link in the kicker.
+- **Do not**: change the equivalent kicker on `/services/bespoke-accessories`
+  ("What we do / 01") or `/services/styling-curation` ("What we do / 02"). The
+  comment named Finer Living only. **Flag in your report** that the three
+  service pages are now inconsistent, so the client can decide — state it once
+  and do not act on it.
+- **Open question**: None.
