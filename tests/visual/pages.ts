@@ -18,7 +18,7 @@ export type BaselineSource = 'legacy' | 'current';
 /** Every route, with the reference its baseline is captured from. */
 export const PARITY_PAGES = [
   /*
-   * Everything except the two legal pages now compares against the last
+   * Everything except the legal pages now compares against the last
    * approved build rather than the original.
    *
    * Round 1 redesigned the home hero. Round 2 went site-wide: the footer sets
@@ -27,8 +27,9 @@ export const PARITY_PAGES = [
    * accent. Both were asked for, and both mean these pages are deliberately no
    * longer the legacy documents.
    *
-   * Privacy and Terms carry neither change, so they stay verified against the
-   * original — see docs/FEEDBACK.md and PARITY.md.
+   * Privacy and Terms originally carried neither change; all legal routes now
+   * use current baselines because the shared footer differs from the legacy
+   * documents. Imprint has no legacy counterpart.
    */
   { name: 'home', legacy: '/index.html', route: '/', settle: 7000, baseline: 'current' },
   { name: 'our-work', legacy: '/our-work.html', route: '/our-work', baseline: 'current' },
@@ -77,13 +78,13 @@ export const PARITY_PAGES = [
   { name: 'about', legacy: '/about.html', route: '/about', baseline: 'current' },
   { name: 'contact', legacy: '/contact.html', route: '/contact', baseline: 'current' },
   /*
-   * The last two pages still verified against the original documents, and now
-   * the footer is shared they cannot be: their legacy footer was a single line
-   * of copyright, and every page carries the full one. Nothing else about them
-   * has changed, which is why they held out this long.
+   * The existing legal pages once verified against the original documents,
+   * but the shared footer means they cannot now: their legacy footer was a
+   * single line of copyright, and every page carries the full one.
    */
   { name: 'privacy', legacy: '/privacy.html', route: '/privacy', baseline: 'current' },
   { name: 'terms', legacy: '/terms.html', route: '/terms', baseline: 'current' },
+  { name: 'imprint', legacy: '/privacy.html', route: '/imprint', baseline: 'current' },
 ] as const satisfies ReadonlyArray<{
   name: string;
   legacy: string;

@@ -5,7 +5,7 @@ import { ALL_ROUTES, ROUTES } from '../../src/shared/config/routes';
 import { SITE } from '../../src/shared/config/site';
 import { canonicalUrl } from '../../src/shared/seo/url';
 
-const LEGAL_ROUTES = new Set<string>([ROUTES.privacy, ROUTES.terms]);
+const LEGAL_ROUTES = new Set<string>([ROUTES.privacy, ROUTES.terms, ROUTES.imprint]);
 const INDEXABLE_ROUTES = ALL_ROUTES.filter((route) => !LEGAL_ROUTES.has(route));
 const SERVICE_ROUTES = new Set<string>([
   ROUTES.service('bespoke-accessories'),
@@ -68,6 +68,10 @@ const EXPECTED_METADATA: Readonly<Record<string, { title: string; description: s
     description:
       'Tell us what you are creating, where it is, and what you want people to remember. Finer Things works with hotels and residences worldwide.',
   },
+  [ROUTES.imprint]: {
+    title: 'Imprint | Finer Things',
+    description: 'Placeholder imprint for the Finer Things website.',
+  },
 };
 const EXPECTED_CONTEXTUAL_LINKS: Readonly<
   Record<string, ReadonlyArray<{ href: string; label: string }>>
@@ -113,6 +117,7 @@ const EXPECTED_H1: Readonly<Record<string, string>> = {
   [ROUTES.contact]: 'Perhaps it begins with a place.',
   [ROUTES.privacy]: 'Privacy Policy',
   [ROUTES.terms]: 'Terms & Conditions',
+  [ROUTES.imprint]: 'Imprint',
 };
 const EXPECTED_SOCIAL_IMAGES: Readonly<
   Record<string, { src: string; alt: string; width: string; height: string }>
@@ -337,12 +342,16 @@ test.describe('SEO metadata', () => {
       );
 
       /*
-       * The LinkedIn `#` is the one known placeholder, blocked on the client
-       * supplying a real URL (SEO-06). Anything else is a new one and should
-       * fail here. Asserting the LinkedIn link still exists would instead make
-       * this test fail on the day SEO-06 is fixed, which is backwards.
+       * LinkedIn and Instagram are the two known placeholders, blocked on the
+       * client supplying real URLs. Anything else is a new one and should fail
+       * here. Asserting either social link still exists would instead make this
+       * test fail on the day its placeholder is fixed, which is backwards.
        */
-      expect(placeholderLinks.filter((link) => link.label !== 'LinkedIn')).toEqual([]);
+      expect(
+        placeholderLinks.filter(
+          (link) => link.label !== 'LinkedIn' && link.label !== 'Instagram',
+        ),
+      ).toEqual([]);
     });
   }
 });
@@ -369,6 +378,7 @@ test('robots and sitemap advertise exactly the indexable canonical routes', asyn
   const robots = await robotsResponse.text();
   expect(robots).not.toContain(`Disallow: ${ROUTES.privacy}`);
   expect(robots).not.toContain(`Disallow: ${ROUTES.terms}`);
+  expect(robots).not.toContain(`Disallow: ${ROUTES.imprint}`);
   expect(robots).not.toMatch(/^Host:/m);
 
   const sitemapResponse = await request.get(`${NEXT_ORIGIN}/sitemap.xml`);
