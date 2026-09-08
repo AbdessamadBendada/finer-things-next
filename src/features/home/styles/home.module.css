@@ -389,7 +389,22 @@
 .page :global(.hero-copy) {left:52px;right:auto;bottom:62px;display:block;width:min(980px,calc(100vw - 104px))}
 .page :global(.hero-copy .hero-ey) {margin-bottom:17px;font-size: var(--text-eyebrow);font-weight:400;letter-spacing:.24em;text-transform:uppercase;color:rgba(241,237,231,.76)}
 .page :global(.hero-copy h1) {max-width:none;white-space:nowrap;font-family:var(--font-display),Georgia,serif;font-size:clamp(2.8rem,3.25vw,4.1rem);font-weight:500;line-height:1.02;letter-spacing:-.018em}
-.page :global(.hero-copy .sub) {max-width:76ch;margin-top:19px;font-family:'Jost',sans-serif;font-size:clamp(.88rem,1vw,.98rem);font-style:normal;font-weight:300;line-height:1.65;color:rgba(241,237,231,.82)}
+/* The one paragraph the type scale missed.
+
+   It kept a hardcoded clamp(.88rem, 1vw, .98rem): 14.4px at 1440 and frozen at
+   15.7px from 1920 up, because the 1vw middle value hits the .98rem ceiling
+   there and stops. Body copy on the same page runs 19.1px to 21.7px, so the
+   site's opening sentence was the smallest text on the screen and got smaller
+   in relative terms the wider the display — the exact failure the scale pass
+   was written to fix, on the one paragraph it did not catch.
+
+   `--text-lead` is the token for an intro paragraph and is what the "What we
+   do" standfirst already uses, so the hero now matches it: 19.1px at 1440,
+   21.7px at 2560, and it keeps growing instead of stopping.
+
+   The measure is left at 76ch. It is generous, but the hero column is capped
+   at 980px, so the line breaks well before the measure does. */
+.page :global(.hero-copy .sub) {max-width:76ch;margin-top:19px;font-family:'Jost',sans-serif;font-size: var(--text-lead);font-style:normal;font-weight:300;line-height:1.65;color:rgba(241,237,231,.82)}
 .page :global(.hero-copy .cta-wrap) {align-items:flex-start;margin-top:28px}
 .page :global(.hero-copy .btn) {padding:14px 24px;background:var(--paper);font-size: var(--text-ui)}
 .page :global(.hero-copy .btn:hover) {background:var(--oxblood);color:var(--paper)}
