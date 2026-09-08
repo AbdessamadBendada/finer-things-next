@@ -4,10 +4,9 @@ A work order for an AI agent (Codex) picking up the latest round of client
 review comments. Everything an agent needs to do one task correctly and stop
 is in this file or linked from it.
 
-**Status: the task list below is not filled in yet.** The standing sections —
-protocol, house rules, verification, traps — are complete and correct. The
-comments arrive separately and get written into
-[The tasks](#the-tasks) before any agent starts.
+**Status: batches 1–3 are ready to run.** They cover the client's first five
+comments. Later comments get appended as further batches; the standing sections
+above the task list apply to all of them.
 
 ---
 
