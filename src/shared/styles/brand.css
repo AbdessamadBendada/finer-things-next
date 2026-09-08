@@ -407,18 +407,27 @@ body.menu-open [data-page] .menu-toggle {
   margin-bottom: 18px;
 }
 
-/* ---------------- Purpose statement: a slower word reveal ----------------
-   The home page's second section reveals its headline a word at a time. The
-   timing was already the original's exactly — 0.8s travel, 45ms between
-   words — and review asked for the same thing, only slower.
+/* ---------------- Purpose statement: the word reveal's timing ----------------
+   The home page's second section reveals its headline a word at a time.
 
-   Roughly 1.4x: the words still arrive as one sentence rather than a queue,
-   but each has time to land. For ~20 words that is about 2.4s end to end,
-   against 1.7s before.
+   This rule has been in both directions. An earlier review asked for it
+   slower than the original 0.8s/45ms, and it went to 1.15s with a 62ms
+   stagger — about 2.4s end to end for the statement's 21 words. That was the
+   right answer while the section pinned: the page was holding still, so the
+   sentence had all the time it wanted.
 
-     transform   0.8s  -> 1.15s
-     opacity     0.55s -> 0.8s
-     stagger     45ms  -> 62ms
+   Unpinning it made 2.4s far too slow. Nothing is holding the reader now, and
+   at an ordinary scrolling speed the last words were still arriving when the
+   statement had already left the top of the screen — the animation visibly
+   trailing the hand that is driving it.
+
+     transform   1.15s -> 0.5s
+     opacity     0.8s  -> 0.32s
+     stagger     62ms  -> 22ms
+
+   ~0.95s end to end. Still unmistakably word by word — the stagger is what
+   makes it read as a sentence being written rather than a block fading in —
+   but it finishes on the screen the reader is looking at.
 
    Scoped to the statement's own id. The rule it overrides is
    `.page :global(.reveal-word>span)`, in a stylesheet that loads after this
@@ -426,9 +435,9 @@ body.menu-open [data-page] .menu-toggle {
    headline being retimed — the other pages' word reveals are untouched. */
 [data-page='home'] #purpose-title .reveal-word > span {
   transition:
-    transform 1.15s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.8s ease;
-  transition-delay: calc(var(--word-index) * 62ms);
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.32s ease;
+  transition-delay: calc(var(--word-index) * 22ms);
 }
 
 /* ================================================================
@@ -1145,9 +1154,15 @@ body.menu-open [data-page] .menu-toggle {
    took its presence away.
 
    Rather than merge or repanel the sections, which the design does
-   not want, the statement is given the screen: full height, pinned
-   while it is read, and set on a wider measure so the type can come
-   back up. The pin is the same device the filmstrip already uses.
+   not want, the statement is given the screen: full height and set on
+   a wider measure so the type can come back up.
+
+   It was pinned too, for two viewports, with the words written by the
+   reader's own scrolling. Client review round 2 asked for the words
+   without the hold, so the pin is gone: the section is one screen tall
+   and scrolls past like any other, and the sentence writes itself on
+   the ordinary staggered word reveal when it enters. Nothing here
+   takes the scroll away from the reader any more.
    ================================================================ */
 
 /* ---------------- The 44px misalignment ----------------
@@ -1160,25 +1175,18 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 @media (min-width: 861px) {
-  /* Two viewports: one of travel while the sentence is written, one that the
-     pin itself occupies. Started at three and it was too long, which is the
-     usual failure of this device: two full screens of scrolling to get
-     through one sentence reads as the page having stalled. The words finish
-     at 62% of the travel, so roughly 62svh writes the sentence and 38svh
-     holds it. This height is the dial if it wants to be shorter still. */
-  [data-page='home'] #purpose {
-    height: 200svh;
-    padding: 0;
-  }
+  /* The full-viewport height is gone too. It was there to give the statement
+     a screen of its own while it pinned; without the pin it was just a screen
+     of paper with a sentence floating in the middle of it, and the reader
+     scrolls past most of it. The section takes the ordinary generous section
+     padding from home.module.css instead — the statement still arrives alone,
+     because nothing else is in the section, and now it arrives in the space it
+     actually needs.
 
-  [data-page='home'] .purpose-pin {
-    position: sticky;
-    top: 0;
-    height: 100svh;
-    min-height: 620px;
-    display: flex;
-    align-items: center;
-  }
+     Nothing to declare here: removing the rules that set `min-height`, `flex`
+     and `padding: 0` hands the section back to the module's own
+     `.purpose { padding: clamp(90px, 12vh, 135px) 0 }`. `.purpose-pin` is a
+     plain block wrapper now and needs no rule of its own. */
 
   /* The type comes back up by using the whole measure rather than by breaking
      the grid. Height alone could not have bought a pixel back, because the
@@ -1200,9 +1208,13 @@ body.menu-open [data-page] .menu-toggle {
     font-size: clamp(2rem, calc((100vw - 88px) / 21), 3.6rem);
   }
 
-  /* ---------------- Scroll-driven words ----------------
-     `.scroll-reveal` is added by usePurposeReveal, and only where the section
-     pins and motion is welcome. The complete statement stays faintly readable
+  /* ---------------- Scroll-driven words (inert) ----------------
+     Nothing adds `.scroll-reveal` now that the pin is gone; these rules stay
+     paired with the unwired usePurposeReveal hook so the two can be brought
+     back together if the hold is ever wanted again.
+
+     `.scroll-reveal` was added by usePurposeReveal, and only where the section
+     pinned and motion was welcome. The complete statement stays faintly readable
      before its words come into focus, so entering the section can never look
      like an empty or stalled page.
 
@@ -1227,20 +1239,11 @@ body.menu-open [data-page] .menu-toggle {
   }
 }
 
-/* Below the pin breakpoint the section still fills the screen, but it scrolls
-   past like any other. Pinning a phone to read one sentence is a good way to
-   make a page feel broken. */
-@media (max-width: 860px) {
-  [data-page='home'] #purpose {
-    display: flex;
-    align-items: center;
-    min-height: 100svh;
-  }
-
-  [data-page='home'] .purpose-pin {
-    width: 100%;
-  }
-}
+/* The phone had the same full-screen treatment, minus the pin, and it goes for
+   the same reason: a sentence centred in an otherwise empty 100svh is a lot of
+   scrolling for one line, and worse on a phone where the statement runs to five
+   lines and the screen is short. It takes the module's section padding now,
+   like every other section on the page. */
 
 /* ---------------- The hero CTA is outlined, not solid ----------------
    It was solid paper on dark photography, which made it the brightest object

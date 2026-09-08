@@ -16,7 +16,6 @@ import { FILMSTRIP_MODE } from '../model/filmstrip.mode';
 import { useFilmstrip } from './useFilmstrip';
 import { useFilmstripSlider } from './useFilmstripSlider';
 import { useIntroSequence } from './useIntroSequence';
-import { usePurposeReveal } from './usePurposeReveal';
 import { useServiceImageWarmup } from './useServiceImageWarmup';
 import { useTouchWipe } from './useTouchWipe';
 
@@ -54,18 +53,30 @@ export function useHomeMotion(root: RefObject<HTMLElement | null>): void {
     staggerCap: 3,
   });
 
-  // The home page masks words with its own class and index property.
+  /*
+   * The home page masks words with its own class and index property.
+   *
+   * It fires as soon as a sliver of the heading is above the fold. The old
+   * 0.3 threshold with a -8% bottom margin waited for nearly a third of the
+   * statement to be well inside the viewport, which cost roughly half a
+   * screen of scrolling before the first word moved — invisible while the
+   * section pinned and the reader was held still, obvious once it did not.
+   */
   useWordReveal(root, {
-    threshold: 0.3,
-    rootMargin: '0px 0px -8% 0px',
+    threshold: 0.05,
     maskClass: 'reveal-word',
     indexProperty: '--word-index',
   });
 
-  // …and the purpose statement then hands its reveal over to the scroll, so
-  // the pinned sentence is read at the reader's own pace. Must come after
-  // useWordReveal: it takes over the words that hook creates.
-  usePurposeReveal(root);
+  /*
+   * The purpose statement used to hand its reveal over to the scroll: the
+   * section pinned for two viewports and the reader's scrolling wrote the
+   * sentence a word at a time. Client review asked for the words without the
+   * hold, so the statement now takes the ordinary staggered reveal above —
+   * same word-by-word writing, same pace, but the page never stops moving.
+   * `usePurposeReveal` is left in the folder unwired in case the pin is wanted
+   * back.
+   */
 
   // Service rows arrive with a directional wipe, once each.
   useEffect(() => {

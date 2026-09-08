@@ -92,11 +92,15 @@
     font-size:clamp(2.1rem,5.4vw,5.2rem);line-height:1.04;letter-spacing:-.018em;color:var(--ink)}
 .page :global(.purpose h2 .outcome) {color:var(--oxblood)}
 .page :global(.reveal-word) {display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.07em;margin-bottom:-.07em}
+/* The purpose statement retimes this for itself in brand.css, under its own
+   id. Editing the numbers here does nothing to it. */
 .page :global(.reveal-word>span) {display:inline-block;transform:translateY(115%);opacity:0;
     transition:transform .8s cubic-bezier(.16,1,.3,1),opacity .55s ease;transition-delay:calc(var(--word-index)*45ms)}
 .page :global([data-word-reveal].words-in .reveal-word>span) {transform:translateY(0);opacity:1}
 @media(max-width:560px) {
-  .page :global(.purpose) {padding:88px 0}
+  /* The same small lift on a phone, where the statement runs to five lines
+     and needs the separation more, not less. */
+  .page :global(.purpose) {padding:124px 0}
   .page :global(.purpose h2) {font-size:clamp(2.25rem,11.5vw,3.25rem);line-height:1.06}
 }
 .page :global(.statement) {background:var(--paper);padding:19vh 0}
@@ -360,7 +364,17 @@
 .page :global(.hero-copy .cta-wrap) {align-items:flex-start;margin-top:28px}
 .page :global(.hero-copy .btn) {padding:14px 24px;background:var(--paper);font-size: var(--text-ui)}
 .page :global(.hero-copy .btn:hover) {background:var(--oxblood);color:var(--paper)}
-.page :global(.purpose) {padding:clamp(90px,12vh,135px) 0}
+/* A good deal more air than the other sections get. This is the rule that now
+   decides the statement's height — the full-viewport treatment is gone — and
+   it has been walked up twice from the 12vh it inherited, which read as
+   crowded: 12vh -> 16vh -> 20vh, or 108px a side at 900 to 180px, taking the
+   section from 403px to about 545px.
+
+   That is a little over half a screen for one sentence, which is the point:
+   it is the page's thesis and it is the only thing in its section, so the
+   space around it is doing the work the pin used to do. Going further starts
+   to reinvent the full-viewport treatment that was just removed. */
+.page :global(.purpose) {padding:clamp(130px,20vh,215px) 0}
 .page :global(.purpose h2) {max-width:25ch;font-size:clamp(2rem,4.25vw,4.15rem);line-height:1.08}
 .page :global(.svc-head) {padding:8vh 0 4vh}
 .page :global(.svc-row a) {padding-top:4.5vh;padding-bottom:4.5vh}

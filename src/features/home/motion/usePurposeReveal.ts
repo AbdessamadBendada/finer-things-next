@@ -14,6 +14,12 @@ const ENTRY_START = 0.72;
 const COMPLETED_HOLD = 0.24;
 
 /**
+ * NOT WIRED UP. Client review round 2 asked for the purpose statement's words
+ * without the section holding the scroll, so `useHomeMotion` no longer calls
+ * this and the statement takes the ordinary staggered word reveal instead.
+ * Kept, with its CSS in brand.css, so the pin can be restored in one line if
+ * it is ever wanted back.
+ *
  * Reveals the purpose statement a word at a time, paced by scrolling.
  *
  * `useWordReveal` has already split the heading into per-word masks and would

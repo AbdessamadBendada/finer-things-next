@@ -23,48 +23,55 @@ const CASES = [
 ];
 
 test.describe('scroll reveals', () => {
-  test('the Home purpose statement stays readable before it comes into focus', async ({
-    page,
-  }) => {
+  /*
+   * The purpose section no longer pins. Client review asked for the words
+   * without the scroll being taken away, so the two properties worth holding
+   * on to are: the section is one screen, not two, and the sentence still
+   * writes itself word by word when it arrives.
+   */
+  test('the Home purpose section does not hold the scroll', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(NEXT_ORIGIN, { waitUntil: 'load' });
     await page.waitForTimeout(7000);
 
-    const purpose = page.locator('#purpose');
-    const sectionTop = await purpose.evaluate((element) => (element as HTMLElement).offsetTop);
+    const geometry = await page.locator('#purpose').evaluate((element) => ({
+      height: element.getBoundingClientRect().height,
+      viewport: window.innerHeight,
+      sticky: getComputedStyle(element.querySelector('.purpose-pin') as HTMLElement).position,
+    }));
 
-    // The complete sentence is already present before highlighting begins.
-    await page.evaluate(
-      (top) => window.scrollTo(0, top - window.innerHeight * 0.85),
-      sectionTop,
-    );
-    await page.waitForTimeout(150);
+    // Nothing inside it sticks to the viewport, and the section is sized by
+    // its own content and padding rather than reserving a whole screen.
+    expect(geometry.sticky).not.toBe('sticky');
+    expect(geometry.height).toBeLessThan(geometry.viewport);
 
     const heading = page.locator('#purpose-title');
-    await expect(heading).toHaveClass(/scroll-reveal/);
+    await expect(heading).not.toHaveClass(/scroll-reveal/);
+  });
+
+  test('the Home purpose statement writes itself in when it arrives', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(NEXT_ORIGIN, { waitUntil: 'load' });
+    await page.waitForTimeout(7000);
+
+    const heading = page.locator('#purpose-title');
     const words = heading.locator('.reveal-word');
     const wordCount = await words.count();
     expect(wordCount).toBeGreaterThan(10);
-    await expect(words.first().locator('span')).toHaveCSS('opacity', '0.16');
-    await expect(heading.locator('.reveal-word.is-in')).toHaveCount(0);
 
-    // Highlighting starts during entry, before the section reaches its pin.
+    const sectionTop = await page
+      .locator('#purpose')
+      .evaluate((element) => (element as HTMLElement).offsetTop);
     await page.evaluate(
-      (top) => window.scrollTo(0, top - window.innerHeight * 0.6),
+      (top) => window.scrollTo(0, top - window.innerHeight * 0.2),
       sectionTop,
     );
-    await page.waitForTimeout(150);
-    const enteringCount = await heading.locator('.reveal-word.is-in').count();
-    expect(enteringCount).toBeGreaterThan(0);
-    expect(enteringCount).toBeLessThan(wordCount);
 
-    // The sentence completes before the sticky section releases.
-    await page.evaluate(
-      (top) => window.scrollTo(0, top + window.innerHeight * 0.8),
-      sectionTop,
-    );
-    await page.waitForTimeout(150);
-    await expect(heading.locator('.reveal-word.is-in')).toHaveCount(wordCount);
+    // The stagger is 45ms a word over a 0.8s travel, so the whole sentence is
+    // written well inside two seconds of the section entering.
+    await expect(heading).toHaveClass(/words-in/, { timeout: 4000 });
+    await page.waitForTimeout(2000);
+    await expect(words.last().locator('span')).toHaveCSS('opacity', '1');
   });
 
   test('the Home purpose statement does not animate with reduced motion', async ({ page }) => {
