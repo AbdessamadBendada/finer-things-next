@@ -199,13 +199,6 @@ export function HomePage() {
                   sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
-                <div className="film-detail">
-                  <Media
-                    src="/assets/new-work-marsa-lobby-08.webp"
-                    alt="A glass cloche and cut-glass vase on a marble lobby table"
-                    sizes="(max-width: 860px) 30vw, 14vw"
-                  />
-                </div>
                 <div className="film-copy">
                   <div>
                     <span className="film-num">01 / 05</span>
@@ -226,13 +219,6 @@ export function HomePage() {
                   sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
-                <div className="film-detail">
-                  <Media
-                    src="/assets/new-work-marsa-suite2-02.webp"
-                    alt="Orchids in a gilt-edged ceramic bowl"
-                    sizes="(max-width: 860px) 30vw, 14vw"
-                  />
-                </div>
                 <div className="film-copy">
                   <div>
                     <span className="film-num">02 / 05</span>
@@ -253,13 +239,6 @@ export function HomePage() {
                   sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
-                <div className="film-detail">
-                  <Media
-                    src="/assets/new-work-marsa-shelfs.webp"
-                    alt="Coral, crystal and a shell-inlaid box on lit marble shelves"
-                    sizes="(max-width: 860px) 30vw, 14vw"
-                  />
-                </div>
                 <div className="film-copy">
                   <div>
                     <span className="film-num">03 / 05</span>
@@ -280,13 +259,6 @@ export function HomePage() {
                   sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
-                <div className="film-detail">
-                  <Media
-                    src="/assets/new-work-marsa-corridor-03.webp"
-                    alt="Considered detail along the corridor at Marsa Al Arab"
-                    sizes="(max-width: 860px) 30vw, 14vw"
-                  />
-                </div>
                 <div className="film-copy">
                   <div>
                     <span className="film-num">04 / 05</span>
@@ -307,13 +279,6 @@ export function HomePage() {
                   sizes="(max-width: 860px) 100vw, 80vw"
                 />
                 <div className="film-shade" />
-                <div className="film-detail">
-                  <Media
-                    src="/assets/new-work-marsa-lobby-12.webp"
-                    alt="Styled detail at Waldorf Astoria Osaka"
-                    sizes="(max-width: 860px) 30vw, 14vw"
-                  />
-                </div>
                 <div className="film-copy">
                   <div>
                     <span className="film-num">05 / 05</span>
