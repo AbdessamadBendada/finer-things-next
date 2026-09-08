@@ -544,6 +544,21 @@ Layout and polish, plus one page rebuilt speculatively.
   were generated after visual review. The pre-existing 39 baselines remain
   stale and were not replaced.
 
+### 29. Finer Living's kicker names the collection
+
+- **Page:** `/services/finer-living`
+- **Asked:** "In the finer living page instead of WHAT WE DO / 03 we need to
+  put curated collection."
+- **Read as:** replace the linked service-number kicker with plain text reading
+  "Curated collection" in the existing eyebrow style.
+- **Status:** ✅ Done
+- **Done:** the hero kicker now reads "CURATED COLLECTION" and is no longer a
+  link. The now-unused `Link` and `ROUTES` imports and the obsolete contextual
+  link expectation were removed.
+- **Note:** the other two service pages still use "What we do / 01" and "What
+  we do / 02", so the three service kickers are now intentionally inconsistent
+  pending a client decision. No other service page was changed.
+
 ---
 
 ## Cross-cutting notes

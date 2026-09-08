@@ -25,6 +25,29 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-08: Rename the Finer Living hero kicker
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: replaced the linked "What we do / 03" Finer Living hero kicker
+  with plain "Curated collection" text, removed the now-unused `Link` and
+  `ROUTES` imports, and removed the obsolete Finer Living contextual-link test
+  expectation. Marked Review Round 5 complete and recorded the client comment.
+- Files: `src/features/services/ui/FinerLivingPage.tsx`,
+  `tests/seo/seo.spec.ts`,
+  `docs/{FEEDBACK.md,REVIEW-ROUND-5-BRIEF.md,CODEX-CHANGES.md}`
+- Verified: fresh production builds passed. Production Chromium at 1440x900
+  and 390x844 showed "CURATED COLLECTION" on one line in the existing eyebrow
+  style, with no link or horizontal overflow; before and after screenshots
+  were reviewed. `pnpm verify` passed typecheck, lint with the existing `_meta`
+  warning, the production build and all 29 form/SEO tests, then exited 1 only
+  because parity reproduced the 39 known stale failures; the three Imprint
+  snapshots passed. No baseline was regenerated.
+- Follow-up: the client may decide whether Bespoke Accessories and Styling &
+  Curation should keep their numbered "What we do" kickers or be made
+  consistent with Finer Living.
+
 ## 2026-09-08: Split footer columns and add the Imprint page
 
 **Codex change**

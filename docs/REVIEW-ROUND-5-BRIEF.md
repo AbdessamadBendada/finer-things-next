@@ -4,9 +4,9 @@ A work order for an AI agent (Codex) picking up the latest round of client
 review comments. Everything an agent needs to do one task correctly and stop
 is in this file or linked from it.
 
-**Status: batches 1 and 2 are complete; batch 3 is ready to run.** They cover
-the client's first five comments. Later comments get appended as further
-batches; the standing sections above the task list apply to all of them.
+**Status: batches 1–3 are complete.** They cover the client's first five
+comments. Later comments get appended as further batches; the standing sections
+above the task list apply to all of them.
 
 ---
 
@@ -440,7 +440,7 @@ corrected in place, with the general lesson recorded in Traps.
 
 ---
 
-### Batch 3 — one small one
+### Batch 3 — one small one ✅ DONE 2026-09-08
 
 C2 was done by hand on 2026-09-08, outside the batch, so **Batch 3 is now C5
 only.** C2 is kept below as a record of what was asked and what was decided.
@@ -490,7 +490,7 @@ predicted here, and under AA. Recorded, not silently shipped.
   Contact page's closing panel is unchanged.
 - **Open question**: None.
 
-#### C5 — Finer Living's kicker reads "Curated collection"
+#### C5 — Finer Living's kicker reads "Curated collection" ✅ DONE 2026-09-08
 
 - **Asked** (verbatim): "In the finer living page instead of WHAT WE DO / 03 we
   need to put curated collection."
