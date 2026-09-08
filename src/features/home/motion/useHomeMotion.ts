@@ -12,7 +12,9 @@ import {
 } from '@/shared/motion';
 import { useEffect } from 'react';
 
+import { FILMSTRIP_MODE } from '../model/filmstrip.mode';
 import { useFilmstrip } from './useFilmstrip';
+import { useFilmstripSlider } from './useFilmstripSlider';
 import { useIntroSequence } from './useIntroSequence';
 import { usePurposeReveal } from './usePurposeReveal';
 import { useServiceImageWarmup } from './useServiceImageWarmup';
@@ -21,7 +23,20 @@ import { useTouchWipe } from './useTouchWipe';
 /** Composes the home page's choreography. */
 export function useHomeMotion(root: RefObject<HTMLElement | null>): void {
   useIntroSequence(root);
-  useFilmstrip(root);
+
+  /*
+   * Both filmstrip hooks are called, and one of them returns immediately.
+   *
+   * `FILMSTRIP_MODE` is a module constant, so the branch is decided at build
+   * time and never changes between renders — but writing it as a conditional
+   * call would still break the rules of hooks, and would break for real the
+   * moment the mode became a prop or a query flag. Each hook looks for markup
+   * the other mode does not render (`[data-film-prev]`, the pinned track) and
+   * bails when it is absent, so the idle one costs a single querySelector.
+   */
+  useFilmstrip(root, FILMSTRIP_MODE === 'scroll');
+  useFilmstripSlider(root, FILMSTRIP_MODE === 'slider');
+
   useServiceImageWarmup(root);
   useTouchWipe(root);
 

@@ -162,8 +162,14 @@
 .page :global(.filmstrip-track) {display:flex;align-items:center;gap:clamp(18px,2.2vw,36px);width:max-content;padding:0 8vw;will-change:transform;backface-visibility:hidden}
 .page :global(.film-card) {position:relative;flex:0 0 min(72vw,1040px);height:min(72vh,740px);overflow:hidden;background:#1d1c17;clip-path:inset(0 100% 0 0);
     opacity:.42;transform:scale(.91);will-change:transform,opacity;backface-visibility:hidden;contain:layout paint;transition:clip-path 1.25s cubic-bezier(.76,0,.24,1)}
-.page :global(.filmstrip-scroll.entered .film-card) {clip-path:inset(0);transition-delay:calc(var(--f)*90ms)}
-.page :global(.filmstrip-scroll.settled .film-card) {transition-delay:0s}
+/* Both modes. The hook adds `entered` to whichever element it scrolls, which
+   is `.filmstrip-scroll` when pinned and `.filmstrip-viewport` in the slider —
+   miss the second selector and the cards stay clipped to zero width, which
+   renders the whole section as an empty band. */
+.page :global(.filmstrip-scroll.entered .film-card),
+.page :global(.filmstrip-viewport.entered .film-card) {clip-path:inset(0);transition-delay:calc(var(--f)*90ms)}
+.page :global(.filmstrip-scroll.settled .film-card),
+.page :global(.filmstrip-viewport.settled .film-card) {transition-delay:0s}
 .page :global(.film-card>.film-image) {position:absolute;inset:-5%;width:110%;height:110%;filter:saturate(.68) brightness(.82);transform:scale(1.06);will-change:transform}
 .page :global(.film-shade) {position:absolute;inset:0;background:linear-gradient(180deg,transparent 43%,rgba(13,11,9,.8))}
 .page :global(.film-copy) {position:absolute;z-index:4;left:clamp(22px,3vw,46px);right:clamp(22px,3vw,46px);bottom:clamp(25px,4vh,42px);display:flex;justify-content:space-between;align-items:end;gap:25px;color:var(--paper)}
@@ -175,6 +181,46 @@
 .page :global(.film-card.active .film-detail) {opacity:1;transform:rotate(2deg)}
 .page :global(.film-detail img) {filter:saturate(.72)}
 .page :global(.film-hint) {position:absolute;z-index:8;right:8vw;top:28px;font-size: var(--text-eyebrow-sm);letter-spacing:.22em;text-transform:uppercase;color:rgba(41,40,31,.55)}
+
+/* ================= Featured, slider mode =================
+   The alternative to the pinned filmstrip. See model/filmstrip.mode.ts.
+
+   Everything that moves is native: `overflow-x` plus scroll snap, so a swipe,
+   a trackpad, the arrows and the arrow keys all work with no scroll listener
+   between the reader and the page. Vertical scroll is never intercepted, and
+   the section costs one screen instead of four.
+
+   The card rules above are shared by both modes and are not restated; only the
+   frame around them changes. */
+.page :global(.filmstrip-slider) {position:relative;background:var(--paper-2);border-top:1px solid rgba(41,40,31,.13);padding:clamp(40px,6vh,72px) 0 clamp(30px,4vh,50px)}
+/* `overflow-y: visible` would turn this into a scroll container on both axes.
+   `clip` on the block axis keeps the vertical overflow visible-ish without
+   that, which matters because the focused card scales past its own box. */
+.page :global(.filmstrip-viewport) {overflow-x:auto;overflow-y:clip;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-block:clamp(14px,2vh,26px)}
+.page :global(.filmstrip-viewport::-webkit-scrollbar) {display:none}
+/* The focus ring has to sit inside the clipped box or it is invisible. */
+.page :global(.filmstrip-viewport:focus-visible) {outline:2px solid var(--oxblood);outline-offset:-4px}
+.page :global(.filmstrip-slider .filmstrip-track) {transform:none!important;will-change:auto;padding:0 max(8vw,calc(50vw - min(36vw,520px)))}
+.page :global(.filmstrip-slider .film-card) {scroll-snap-align:center;height:min(66vh,660px);transition:clip-path 1.25s cubic-bezier(.76,0,.24,1),transform .5s cubic-bezier(.16,1,.3,1),opacity .5s ease}
+
+.page :global(.film-controls) {display:flex;justify-content:space-between;align-items:center;gap:clamp(20px,4vw,60px);margin-top:clamp(24px,3.5vh,44px)}
+.page :global(.film-progress-rail) {position:relative;flex:1;height:1px;background:rgba(41,40,31,.16);overflow:hidden}
+.page :global(.film-progress) {display:block;height:100%;background:var(--oxblood);transform-origin:left center;transform:scaleX(.2);transition:transform .28s cubic-bezier(.16,1,.3,1)}
+.page :global(.film-controls-right) {display:flex;align-items:center;gap:clamp(12px,1.4vw,20px)}
+.page :global(.film-counter) {margin:0;font-size: var(--text-eyebrow-sm);letter-spacing:.22em;color:var(--ink);font-variant-numeric:tabular-nums}
+.page :global(.film-counter-total) {color:rgba(41,40,31,.45)}
+/* 44px is the mobile touch minimum the readiness spec asserts site-wide. */
+.page :global(.film-arrow) {width:44px;height:44px;display:grid;place-items:center;padding:0;background:transparent;color:var(--ink);border:1px solid rgba(41,40,31,.28);border-radius:50%;cursor:pointer;font-size:1rem;line-height:1;transition:background .3s,border-color .3s,color .3s,opacity .3s}
+.page :global(.film-arrow:hover:not(:disabled)) {background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.page :global(.film-arrow:focus-visible) {outline:2px solid var(--oxblood);outline-offset:3px}
+/* Kept in the layout rather than hidden: an arrow that vanishes at the last
+   card shifts the counter beside it and reads as a glitch. */
+.page :global(.film-arrow:disabled) {opacity:.3;cursor:default}
+
+@media(max-width:760px) {
+  .page :global(.filmstrip-slider .film-card) {height:58vh}
+  .page :global(.filmstrip-slider .filmstrip-track) {padding:0 7vw}
+}
 @media(max-width:760px) {
   .page :global(.filmstrip-scroll) {height:360svh}
   .page :global(.filmstrip-pin) {min-height:620px}
@@ -287,6 +333,12 @@
   .page :global(.filmstrip-track) {transform:none!important}
   .page :global(.film-card) {clip-path:none;opacity:1;transform:none;transition:none}
   .page :global(.film-hint) {display:none}
+  /* Slider mode. Snapping and the arrows stay: neither is an animation, and
+     removing them would leave a reader who asked for less motion with a strip
+     that has no controls at all. What goes is the entry wipe and the focus
+     scale, which the hook also skips — see useFilmstripSlider. */
+  .page :global(.filmstrip-slider .film-card) {clip-path:none;opacity:1;transform:none;transition:none}
+  .page :global(.film-progress) {transition:none}
   .page :global(.family-editorial-portrait) {clip-path:none;transition:none}
   .page :global(.family-editorial-portrait img) {transform:none;transition:none}
   .page :global(.reveal-word>span) {transform:none;opacity:1;transition:none}

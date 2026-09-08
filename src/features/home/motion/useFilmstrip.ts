@@ -20,8 +20,9 @@ const EPSILON = 0.15;
  * The rAF loop is self-parking: it stops as soon as the strip has caught up,
  * so an idle page costs nothing.
  */
-export function useFilmstrip(root: RefObject<HTMLElement | null>) {
+export function useFilmstrip(root: RefObject<HTMLElement | null>, enabled = true) {
   useEffect(() => {
+    if (!enabled) return;
     const element = root.current;
     if (!element) return;
 
@@ -129,5 +130,5 @@ export function useFilmstrip(root: RefObject<HTMLElement | null>) {
       window.clearTimeout(entryTimer);
       observer?.disconnect();
     };
-  }, [root]);
+  }, [root, enabled]);
 }

@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { HeroCollage } from './HeroCollage';
 import { HomeShell } from './HomeShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
+import { FILMSTRIP_MODE } from '../model/filmstrip.mode';
+
+const IS_SLIDER = FILMSTRIP_MODE === 'slider';
 
 export function HomePage() {
   return (
@@ -150,9 +153,31 @@ export function HomePage() {
             </Link>
           </div>
         </div>
-        <div className="filmstrip-scroll" id="filmstripScroll">
-          <div className="filmstrip-pin">
-            <div className="film-hint">Scroll to explore</div>
+        {/*
+         * Two shapes for the same five cards, chosen by FILMSTRIP_MODE.
+         *
+         * `slider` puts the scroll container on the element the hook listens
+         * to, so `#filmstripScroll` is the overflow box itself rather than a
+         * 400svh spacer wrapping a sticky pin. The card markup below is shared
+         * and unchanged; only the frame around it differs.
+         */}
+        <div
+          className={IS_SLIDER ? 'filmstrip-slider' : 'filmstrip-scroll'}
+          id={IS_SLIDER ? undefined : 'filmstripScroll'}
+        >
+          <div
+            className={IS_SLIDER ? 'filmstrip-viewport' : 'filmstrip-pin'}
+            id={IS_SLIDER ? 'filmstripScroll' : undefined}
+            /*
+             * A native overflow box is not focusable in Firefox or Safari
+             * without this, which would leave keyboard users unable to reach
+             * the cards at all. With it, arrow keys scroll the strip.
+             */
+            tabIndex={IS_SLIDER ? 0 : undefined}
+            role={IS_SLIDER ? 'group' : undefined}
+            aria-label={IS_SLIDER ? 'Featured projects' : undefined}
+          >
+            {!IS_SLIDER && <div className="film-hint">Scroll to explore</div>}
             <div className="filmstrip-track" id="filmstripTrack">
               <article className="film-card active" style={{ '--f': '0' } as CSSProperties}>
                 <Media
@@ -291,6 +316,45 @@ export function HomePage() {
               </article>
             </div>
           </div>
+          {/*
+           * The wayfinding the pinned version never had: how many there are,
+           * which one you are on, and two controls that move it. Outside the
+           * overflow box so the arrows are not themselves scrolled away.
+           *
+           * The counter is not a live region. It changes on every swipe, and
+           * announcing "03 of 05" mid-drag talks over the card titles, which
+           * are what a screen reader user is actually there for. The cards
+           * each carry their own "03 / 05" in the copy already.
+           */}
+          {IS_SLIDER && (
+            <div className="wrap film-controls">
+              <div className="film-progress-rail" aria-hidden="true">
+                <span className="film-progress" data-film-progress />
+              </div>
+              <div className="film-controls-right">
+                <p className="film-counter" aria-hidden="true">
+                  <span data-film-counter>01</span>
+                  <span className="film-counter-total"> / 05</span>
+                </p>
+                <button
+                  type="button"
+                  className="film-arrow"
+                  data-film-prev
+                  aria-label="Previous project"
+                >
+                  <span aria-hidden="true">←</span>
+                </button>
+                <button
+                  type="button"
+                  className="film-arrow"
+                  data-film-next
+                  aria-label="Next project"
+                >
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
       {/* FAMILY EDITORIAL PORTRAIT */}
