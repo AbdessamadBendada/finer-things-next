@@ -520,6 +520,30 @@ Layout and polish, plus one page rebuilt speculatively.
   recorded here rather than substituted quietly — if accessibility is raised
   later, `--oxblood` is the accent that passes.
 
+### 28. Split the footer links and add an Imprint page
+
+- **Page:** every page with the shared footer, plus `/imprint`
+- **Asked:** "In the footer there is a contact column where there is linked
+  contact and pricy .. this is not how it should be we should make the contact
+  and make in it LinkedIn and instagram + contact and make a legal column or if
+  we can make it bellow the contact column or something in it there will be in
+  It privacy and terms and imprints which we didn't create yet, and we should,
+  let's create it."
+- **Read as:** keep Explore, split the mixed second column into Connect with
+  LinkedIn, Instagram and Contact, and Legal with Privacy, Terms and Imprint.
+  Build the missing Imprint route in the existing legal-page style.
+- **Status:** ✅ Done
+- **Done:** the shared footer now renders Explore, Connect and Legal. The new
+  `/imprint` route mirrors the legal-page structure, is linked from every
+  footer, carries exact metadata and one H1, and is `noindex, follow`.
+- **Note:** no company information or social URL was invented. Every required
+  Imprint field is visibly labelled as placeholder content under a "Draft
+  only." notice, and LinkedIn and Instagram deliberately remain `href="#"`.
+  At 390px Legal sits below Explore and Connect; at 768px all three link
+  columns sit together below the brand. Only the three new Imprint baselines
+  were generated after visual review. The pre-existing 39 baselines remain
+  stale and were not replaced.
+
 ---
 
 ## Cross-cutting notes

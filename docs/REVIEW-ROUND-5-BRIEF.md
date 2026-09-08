@@ -4,9 +4,9 @@ A work order for an AI agent (Codex) picking up the latest round of client
 review comments. Everything an agent needs to do one task correctly and stop
 is in this file or linked from it.
 
-**Status: batches 1–3 are ready to run.** They cover the client's first five
-comments. Later comments get appended as further batches; the standing sections
-above the task list apply to all of them.
+**Status: batches 1 and 2 are complete; batch 3 is ready to run.** They cover
+the client's first five comments. Later comments get appended as further
+batches; the standing sections above the task list apply to all of them.
 
 ---
 
@@ -304,11 +304,24 @@ shape of task.
   work order.
 - **Open question**: None.
 
+### A page-specific footer rule may no longer win
+
+C3 named `[data-page='home'] .ft-cols` in `chrome.css` as the active Home
+footer layout. It is not: `[data-page] .ft-cols` in the later-loaded
+`brand.css` has equal specificity and wins by source order, so the computed
+layout is grid at every viewport. Adding flex wrapping to the Home rule would
+have had no effect. When old page-specific chrome and newer shared brand rules
+both match an element, inspect the computed style and all matching rules before
+choosing which file to edit.
+
 ---
 
-### Batch 2 — the footer, and a new Imprint page
+### Batch 2 — the footer, and a new Imprint page ✅ DONE 2026-09-08
 
 One task, but it is the largest in this round: it adds a route.
+
+**Completed.** One error in step 4 below was found during the work and is
+corrected in place, with the general lesson recorded in Traps.
 
 #### C3 — Three footer columns, and an Imprint page
 
@@ -366,9 +379,12 @@ One task, but it is the largest in this round: it adds a route.
 4. **The two-column grid has to become three.**
    - `src/shared/styles/brand.css`, `[data-page] .ft-cols` — currently
      `grid-template-columns: repeat(2, minmax(120px, 160px))`. Make it `3`.
-   - `src/shared/styles/chrome.css`, `[data-page='home'] .ft-cols` — a
-     `display: flex` with `gap: 60px`, which takes a third column on its own.
-     Check it at 390px wide and add wrapping if the three columns overflow.
+   - `src/shared/styles/chrome.css`, `[data-page='home'] .ft-cols` contains a
+     `display: flex` with `gap: 60px`, but it does **not** take effect. The
+     later `[data-page] .ft-cols` rule in `brand.css` has equal specificity and
+     wins by source order. Responsive wrapping therefore belongs with the live
+     grid in `brand.css`: the brand and columns stack by 860px, and the Legal
+     column moves below the other two by 560px.
    - Check the footer at 1440, 768 and 390. Three columns plus the brand block
      is the layout most likely to break on a phone.
 

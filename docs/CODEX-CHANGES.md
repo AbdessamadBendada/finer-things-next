@@ -25,6 +25,39 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-08: Split footer columns and add the Imprint page
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: split the shared footer into Explore, Connect and Legal columns;
+  added placeholder Instagram and Imprint links; and added `/imprint` using
+  the existing legal-page structure, with only clearly labelled placeholder
+  fields, a "Draft only." notice and `noindex`. Added the route to shared
+  route data, crawl-metadata coverage and the visual page matrix. Responsive
+  footer rules stack the brand by 860px and place Legal below the other two
+  link columns by 560px.
+- Files: `src/app/{sitemap.ts,(legal)/imprint/page.tsx}`,
+  `src/features/legal/{index.ts,ui/ImprintPage.tsx,ui/ImprintShell.tsx}`,
+  `src/shared/{config/navigation.ts,config/routes.ts,layout/SiteFooter.tsx,styles/brand.css,styles/chrome.css,styles/primitives.css}`,
+  `tests/{seo/seo.spec.ts,visual/pages.ts}`,
+  `docs/{FEEDBACK.md,REVIEW-ROUND-5-BRIEF.md,CODEX-CHANGES.md}`
+- Verified: fresh production builds passed and included `/imprint`. Production
+  Chromium at 1440x900, 768x1024 and 390x844 confirmed the three footer
+  groups, correct responsive wrapping and no horizontal overflow; the Imprint
+  page was visually reviewed at all three sizes and exposed `noindex, follow`.
+  Only the three new Imprint baselines were generated and reviewed at the
+  parity viewports; all three pass. `pnpm verify` passed typecheck, lint with
+  the existing `_meta` warning, the production build and all 29 form/SEO
+  tests, then exited 1 only because the parity stage reproduced the 39 known
+  stale failures; the final parity total was 3 passed, 39 failed.
+  `tests/visual/headings.spec.ts` passed all 43 tests, including Imprint at
+  desktop, tablet and mobile with no new exemption.
+- Follow-up: replace the placeholder Imprint fields and both `#` social links
+  only when the client supplies approved company data and URLs. The 39
+  pre-existing parity baselines still need a separate deliberate review and
+  refresh.
+
 ## 2026-09-08: Remove the Home "Our story" section
 
 **Codex change**
