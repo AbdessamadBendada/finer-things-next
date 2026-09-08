@@ -101,7 +101,6 @@ const EXPECTED_CONTEXTUAL_LINKS: Readonly<
     { href: ROUTES.ourWork, label: 'What we do / 02' },
     { href: ROUTES.project('waldorf-astoria-osaka'), label: 'Waldorf Astoria Osaka' },
   ],
-  [ROUTES.service('finer-living')]: [{ href: ROUTES.ourWork, label: 'What we do / 03' }],
 };
 const EXPECTED_H1: Readonly<Record<string, string>> = {
   [ROUTES.home]: 'Every place should tell a story.',

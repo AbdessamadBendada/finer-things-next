@@ -1,6 +1,3 @@
-import Link from 'next/link';
-
-import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
 import { FinerLivingShell } from './FinerLivingShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
@@ -19,11 +16,7 @@ export function FinerLivingPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="hero-kicker eyebrow">
-              <Link className="context-link" href={ROUTES.ourWork}>
-                What we do / 03
-              </Link>
-            </div>
+            <div className="hero-kicker eyebrow">Curated collection</div>
             <h1>
               <span className="hero-line">
                 <span>Finer</span>
