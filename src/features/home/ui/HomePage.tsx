@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react';
-import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
 import Link from 'next/link';
 import { HeroCollage } from './HeroCollage';
@@ -368,34 +367,6 @@ export function HomePage() {
               </div>
             </div>
           )}
-        </div>
-      </section>
-      {/* FAMILY EDITORIAL PORTRAIT */}
-      <section className="family-editorial" id="story" aria-labelledby="family-editorial-title">
-        <div className="wrap family-editorial-grid">
-          <div className="family-editorial-copy">
-            <div className="ey rise">Our story</div>
-            <h2 className="rise" id="family-editorial-title">
-              {'Behind Finer Things is '}
-              <em>one family.</em>
-            </h2>
-            <p className="story rise">
-              Finer Things is a family business founded by Alex and Malika. After two decades
-              opening and operating hotels, resorts and residences around the world, Alex
-              understands the details that make a stay unforgettable. Malika brings the
-              discerning eye that gives every space its final character.
-            </p>
-            <Link className="btn story-cta rise" href={ROUTES.about}>
-              Meet the family
-            </Link>
-          </div>
-          <figure className="family-editorial-portrait rise">
-            <Media
-              src="/assets/finer-things-family.webp"
-              alt="Malika and Alex, founders of Finer Things"
-            />
-            <figcaption>Malika and Alex</figcaption>
-          </figure>
         </div>
       </section>
       {/* 9. CLOSING */}

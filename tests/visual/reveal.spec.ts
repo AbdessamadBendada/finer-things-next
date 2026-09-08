@@ -17,7 +17,6 @@ import { NEXT_ORIGIN } from '../../playwright.config';
  * not once it has been scrolled past.
  */
 const CASES = [
-  { route: '/', selector: '.family-editorial-portrait', settle: 7000 },
   { route: '/about', selector: '.experience-image', settle: 2500 },
   { route: '/about', selector: '.world-image', settle: 2500 },
 ];

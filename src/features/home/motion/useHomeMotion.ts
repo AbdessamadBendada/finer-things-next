@@ -3,7 +3,6 @@
 import { useCallback, type RefObject } from 'react';
 
 import {
-  setDrift,
   useReveal,
   useScrollDriver,
   useWordReveal,
@@ -99,9 +98,6 @@ export function useHomeMotion(root: RefObject<HTMLElement | null>): void {
   }, [root]);
 
   const drive = useCallback((element: HTMLElement) => {
-    const portrait = element.querySelector<HTMLElement>('.family-editorial-portrait');
-    if (portrait) setDrift(portrait, '--family-shift', 28);
-
     // Generic parallax: `data-parallax` carries the speed multiplier.
     element.querySelectorAll<HTMLElement>('[data-parallax]').forEach((target) => {
       const rect = target.getBoundingClientRect();
