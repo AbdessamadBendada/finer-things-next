@@ -25,6 +25,52 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-08: Remove the Home "Our story" section
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed the Home-only founders section between the featured
+  filmstrip and shared closing CTA, along with all of its Home CSS, drift
+  motion, fail-open reveal registration and obsolete visual tests. The About
+  page and its menu and footer links remain unchanged.
+- Files: `src/features/home/{ui/HomePage.tsx,styles/home.module.css,motion/useHomeMotion.ts}`,
+  `src/shared/{styles/brand.css,motion/useFailOpenReveal.ts}`,
+  `tests/visual/{home-story.spec.ts,reveal.spec.ts}`,
+  `docs/{FEEDBACK.md,REVIEW-ROUND-5-BRIEF.md,CODEX-CHANGES.md}`
+- Verified: fresh `pnpm build` passed. Production Chromium at 1440x900 and
+  390x844 found no `#story` or `.family-editorial`, confirmed `#collection`
+  is followed directly by `.closing`, and retained two `/about` links. Before
+  and after screenshots were reviewed. `pnpm parity` confirmed the documented
+  stale state: all 39 route/viewport combinations failed; no baseline was
+  regenerated. `pnpm verify` passed typecheck, lint with the existing `_meta`
+  warning, the production build and all 28 form/SEO tests, then exited 1 only
+  because the parity stage reproduced those 39 stale failures. The updated
+  reveal suite passed all 5 tests separately.
+- Follow-up: parity baselines need a separate deliberate review and refresh;
+  this batch did not replace the 39 stale baselines.
+
+## 2026-09-08: Remove featured-card inset photographs
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed the small rotated `.film-detail` photograph from each of
+  the five Home featured cards and deleted its four CSS rules. Each card keeps
+  its full-bleed image, shade, number, title and caption. No asset was deleted.
+- Files: `src/features/home/{ui/HomePage.tsx,styles/home.module.css}`,
+  `docs/{FEEDBACK.md,REVIEW-ROUND-5-BRIEF.md,CODEX-CHANGES.md}`
+- Verified: fresh `pnpm build` passed. Production Chromium at 1440x900 and
+  390x844 found five cards, five direct `.film-image` elements and no
+  `.film-detail`; before and after screenshots were reviewed. `pnpm parity`
+  confirmed all 39 stale baseline failures; no baseline was regenerated.
+  `pnpm verify` passed typecheck, lint with the existing `_meta` warning, the
+  production build and all 28 form/SEO tests, then exited 1 only because the
+  parity stage reproduced those 39 stale failures. The updated reveal suite
+  passed all 5 tests separately.
+- Follow-up: parity baselines need a separate deliberate review and refresh;
+  this batch did not replace the 39 stale baselines.
+
 ## 2026-09-08: Service rows — accent numbers, a deeper hover, a click cue
 
 **Codex change**

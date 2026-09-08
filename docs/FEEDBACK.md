@@ -468,6 +468,42 @@ Layout and polish, plus one page rebuilt speculatively.
 
 ---
 
+## Round 5 — 2026-09-08
+
+### 25. Remove the Home "Our story" section
+
+- **Page:** `/` (home)
+- **Asked:** "Our story section in the home page should be removed!"
+- **Read as:** remove the Home-only founders section, including its copy,
+  portrait and "Meet the family" button. Keep the separate About page and its
+  links in the menu and footer.
+- **Status:** ✅ Done
+- **Done:** the featured filmstrip is followed directly by the shared closing
+  CTA. The section markup, every `.family-editorial*` style, its Home `#story`
+  overrides, portrait drift, fail-open reveal registration and two obsolete
+  visual-test references are gone.
+- **Note:** no parity baseline was regenerated. The existing baseline set is
+  stale from earlier approved work and all 39 route/viewport combinations were
+  already red as documented in the Round 5 brief.
+
+### 26. Remove the featured-card inset photographs
+
+- **Page:** `/` (home)
+- **Asked:** "in the featured section there are a big image and a small little
+  image stick with it right ? Delete that small image please."
+- **Read as:** remove the small rotated photograph pinned to the top-right of
+  every featured card. Keep the full-bleed photograph, shade, number, title and
+  caption.
+- **Status:** ✅ Done
+- **Done:** all five `.film-detail` wrappers and their four CSS rules are gone.
+  The five main card images and all copy remain.
+- **Note:** no image file was deleted. Contrary to the implementation brief,
+  the five inset sources do not become unreferenced: all five are also used by
+  the Projects gallery content. No parity baseline was regenerated because the
+  complete 39-image baseline set is already stale.
+
+---
+
 ## Cross-cutting notes
 
 Things that came up more than once, or that change every page at once. Worth

@@ -162,6 +162,21 @@ runs. See [MOTION.md](MOTION.md) and `shared/motion/useFailOpenReveal.ts`.
 Reduced motion and no-JS both have to end with the content on screen. There
 are tests for this; do not weaken them.
 
+### Removing a revealed element also means cleaning the shared reveal registry
+
+C1's original file map omitted `src/shared/motion/useFailOpenReveal.ts`, where
+`.family-editorial-portrait` was still part of the `GROUPS` selector. The
+task's final `grep -rn "family-editorial" src tests` caught it. When removing
+an animated element, check both its feature motion and this shared fail-open
+registry even if the work order names only the feature file.
+
+### C4's inset assets are still used by the Projects gallery
+
+C4 originally said its five inset sources would become unreferenced. They do
+not: every one is also listed in `src/features/projects/content/wall.content.ts`.
+Keep the files in `public/assets/`, as the task already requires, and do not
+remove their image-registry records.
+
 ### `#purpose` was just rebuilt — do not "restore" it
 
 The home statement's pinned, scroll-driven treatment (FEEDBACK comment 21) was
@@ -213,9 +228,14 @@ before the next starts.
 
 ---
 
-### Batch 1 — the home page loses two things
+### Batch 1 — the home page loses two things ✅ DONE 2026-09-08
 
 Both tasks are in the same three files. One agent, one pass.
+
+**Completed.** Two errors in the task text below were found during the work and
+are corrected in place, with the general lesson from each recorded in Traps.
+Kept as written, rather than deleted, because the next batches inherit the same
+shape of task.
 
 #### C1 — Remove the "Our story" section from the home page
 
@@ -239,6 +259,11 @@ Both tasks are in the same three files. One agent, one pass.
     that query `.family-editorial-portrait` and call
     `setDrift(portrait, '--family-shift', 28)`. If `setDrift` is then unused in
     the file, remove it from the import too, or lint will fail.
+  - `src/shared/motion/useFailOpenReveal.ts` — **added after the fact.** The
+    original list of files missed this one, where `.family-editorial-portrait`
+    was still a member of the `GROUPS` selector. See the Traps entry: a revealed
+    element is registered in the shared fail-open registry as well as in its own
+    feature's motion.
 - **Tests that will break — fix them as part of this task, do not skip them:**
   - `tests/visual/home-story.spec.ts` — the whole file tests `#story .story-cta`.
     **Delete the file.**
@@ -268,10 +293,15 @@ Both tasks are in the same three files. One agent, one pass.
     `grep -n "film-detail"` to find them; one is inside a media query.
 - **Done when**: `grep -rn "film-detail" src` returns nothing, and all five
   cards show only their full-bleed photograph with the copy over it.
-- **Do not**: delete the image files from `public/assets/`. Five assets become
-  unreferenced (`new-work-marsa-lobby-08`, `new-work-marsa-suite2-02`,
-  `new-work-marsa-shelfs`, `new-work-marsa-corridor-03`,
-  `new-work-marsa-lobby-12`) and they stay on disk.
+- **Do not**: delete the image files from `public/assets/`, or their records in
+  `src/shared/config/image-registry.ts`. **Correction:** this task originally
+  claimed the five sources (`new-work-marsa-lobby-08`,
+  `new-work-marsa-suite2-02`, `new-work-marsa-shelfs`,
+  `new-work-marsa-corridor-03`, `new-work-marsa-lobby-12`) would become
+  unreferenced. They do not — every one is also used by
+  `src/features/projects/content/wall.content.ts`, so deleting them would break
+  the project pages. Verify before removing an asset; never infer it from a
+  work order.
 - **Open question**: None.
 
 ---
