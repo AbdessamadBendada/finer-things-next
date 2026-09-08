@@ -59,7 +59,7 @@ export function AboutPage() {
                 operating the world’s finest hotels, receiving the products everyone else
                 designed. He saw which materials survived a thousand guests and which didn’t,
                 which pieces guests photographed and which they ignored. He can tell you a
-                hundred stories about wrong materials, wrong sizes, wrong finishes.
+                hundred cases about wrong materials, wrong sizes, wrong finishes.
               </p>
               <p className="rise">
                 Finer Things exists so their clients never become one of those stories.
