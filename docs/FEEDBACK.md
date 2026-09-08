@@ -502,6 +502,24 @@ Layout and polish, plus one page rebuilt speculatively.
   the Projects gallery content. No parity baseline was regenerated because the
   complete 39-image baseline set is already stale.
 
+### 27. The closing CTA button is filled brand orange
+
+- **Page:** every page with the shared closing CTA (not Contact)
+- **Asked:** "the start a project button in the final cta is gonna be a fill
+  with the brand orange please"
+- **Read as:** the "Start a project" button takes the brand accent as its fill
+  instead of near-black, everywhere the shared CTA appears.
+- **Status:** ✅ Done
+- **Done:** `[data-page]:not([data-page='contact']) .closing .btn` in brand.css
+  now fills `var(--clay)` with paper text, hovering to `var(--oxblood)`. Scoped
+  to the closing CTA rather than to `.btn` in primitives.css, which is every
+  button on the site.
+- **Note:** paper on `--clay` measures **3.53:1**, under the 4.5:1 WCAG AA wants
+  for text at this button's size (~12px uppercase). The ink fill it replaces was
+  far above that, and `--oxblood` measures 6.9:1. Implemented as asked and
+  recorded here rather than substituted quietly — if accessibility is raised
+  later, `--oxblood` is the accent that passes.
+
 ---
 
 ## Cross-cutting notes

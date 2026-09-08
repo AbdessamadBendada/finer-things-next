@@ -424,9 +424,18 @@ One task, but it is the largest in this round: it adds a route.
 
 ---
 
-### Batch 3 — two small ones
+### Batch 3 — one small one
 
-#### C2 — The closing CTA button is filled brand orange
+C2 was done by hand on 2026-09-08, outside the batch, so **Batch 3 is now C5
+only.** C2 is kept below as a record of what was asked and what was decided.
+
+#### C2 — The closing CTA button is filled brand orange ✅ DONE 2026-09-08
+
+Implemented in `brand.css` on the selector named below. Measured after the fact:
+the fill is `rgb(181, 109, 67)` on Home, About, Our Craft and the other CTA
+pages, hover resolves to `--oxblood` `#7d342c`, the Contact page's own closing
+panel is untouched, and paper-on-clay contrast is **3.53:1** — close to the 3.6
+predicted here, and under AA. Recorded, not silently shipped.
 
 - **Asked** (verbatim): "the start a project button in the final cta is gonna
   be a fill with the brand orange please"

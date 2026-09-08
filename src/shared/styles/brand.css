@@ -510,8 +510,31 @@ body.menu-open [data-page] .menu-toggle {
   }
 }
 
+/* The closing button is filled in the brand accent, not near-black.
+
+   `--clay` is the canonical token — the same orange as the section eyebrows and
+   the service-row numbers, and `--brass` is an alias for it. Hover takes the
+   deeper `--oxblood`, which is what the shared `.btn` already used.
+
+   Scoped to this selector rather than to `[data-page] .btn` in primitives.css,
+   which is every button on the site: the hero CTA, the newsletter, the story
+   links. The review asked for one button.
+
+   Contrast, measured rather than assumed: paper on `--clay` is about 3.6:1,
+   under the 4.5:1 WCAG AA wants for text at this size (`--text-ui`, roughly
+   12px uppercase). The ink fill it replaces was far above it and `--oxblood`
+   is about 6.9:1. This is a client instruction implemented knowingly, not an
+   oversight — if it is ever revisited, `--oxblood` is the accent that passes. */
 [data-page]:not([data-page='contact']) .closing .btn {
   margin-top: clamp(32px, 4vh, 44px);
+  background: var(--clay);
+  color: var(--paper);
+}
+
+[data-page]:not([data-page='contact']) .closing .btn:hover,
+[data-page]:not([data-page='contact']) .closing .btn:focus-visible {
+  background: var(--oxblood);
+  color: var(--paper);
 }
 
 /* ---------------- Our Work: the opening statement ----------------
