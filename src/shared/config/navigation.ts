@@ -32,6 +32,10 @@ const OUR_WORK: NavLink = { href: ROUTES.ourWork, label: 'What we do' };
  * make, then how it is made.
  */
 const OUR_CRAFT: NavLink = { href: ROUTES.ourCraft, label: 'Our craft' };
+/* Deliberately NOT in SITE_MENU. The burger already carries "What we do" for
+   /our-work, and the two read as the same thing side by side; the naming is
+   waiting on the client. The footer keeps the link so the page is reachable
+   and not orphaned. */
 const OUR_SERVICES: NavLink = { href: ROUTES.ourServices, label: 'Our services' };
 const PROJECTS: NavLink = { href: ROUTES.projects, label: 'Projects' };
 const ABOUT: NavLink = { href: ROUTES.about, label: 'About' };
@@ -70,7 +74,6 @@ export const SITE_MENU = [
   HOME,
   OUR_WORK,
   OUR_CRAFT,
-  OUR_SERVICES,
   PROJECTS,
   ABOUT,
   FINER_LIVING,
