@@ -452,6 +452,21 @@
 @media(hover:hover) and (pointer:fine) {
   .page :global(.svc-row:hover h3), .page :global(.svc-row:focus-within h3) {transform:translateX(14px)}
 }
+/* ...but not on a phone.
+
+   The nudge is a flourish for the desktop row, where the heading has a column
+   of its own and drifts a little as the photograph wipes in behind it. On a
+   phone every part of the row shares one narrow column, so the same 14px puts
+   the heading out of line with the description and the arrow directly beneath
+   it: measured, the number sat at 24px, the description and arrow at 82px, and
+   the heading alone at 96px. Three left edges in one row is what made the
+   wiped row look untidy next to the two closed ones.
+
+   Later than the rule it cancels and later than the 860px block, because both
+   of those already had their say. */
+@media(max-width:860px) {
+  .page :global(.svc-row.wiped h3) {transform:none}
+}
 .page :global(.closing h2) {font-size:clamp(2.35rem,4.35vw,3.9rem)}
 .page :global(.closing p) {max-width:45ch;font-size: var(--text-body)}
 .page h1 em, .page h2 em, .page h3 em {padding-inline:.035em;font-style:normal}
