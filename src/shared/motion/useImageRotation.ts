@@ -25,8 +25,8 @@ export type ImageRotationOptions = {
 /**
  * A set of images where one position quietly turns over every few seconds.
  *
- * Extracted from the About artisan wall so the Our Work strip could behave the
- * same way. The subtle parts are the reason this is shared rather than copied:
+ * Shared by every artisan wall. The subtle parts are the reason this behavior
+ * lives here rather than being copied into each page:
  *
  * - **One at a time.** Simultaneous changes read as a slideshow; a single tile
  *   turning over reads as a room you keep noticing new things in.

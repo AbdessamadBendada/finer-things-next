@@ -1,6 +1,6 @@
 import { Media } from '@/shared/ui/Media';
+import { ArtisanWall } from '@/shared/ui/ArtisanWall';
 import { AboutShell } from './AboutShell';
-import { ArtisanWall } from './ArtisanWall';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
 export function AboutPage() {

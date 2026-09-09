@@ -23,10 +23,9 @@ const FADE = 900;
 /**
  * A wall of workshop photography that quietly rearranges itself.
  *
- * The rotation itself lives in `useImageRotation`, shared with the Our Work
- * artisan strip. Everything that makes it feel alive rather than broken — one
- * tile at a time, never a duplicate on screen, stopping when out of view or in
- * a background tab — is documented there.
+ * The rotation lives in `useImageRotation`. It changes one tile at a time,
+ * never duplicates an image on screen, and stops when the wall is out of view
+ * or the tab is in the background.
  */
 export function ArtisanWall() {
   const { indices, fading, arriving, root } = useImageRotation({

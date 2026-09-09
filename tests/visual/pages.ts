@@ -125,10 +125,10 @@ export const VIEWPORTS = [
 const HIDE_MASTHEAD = '.head, .mobile-menu { visibility: hidden !important; }';
 
 /**
- * Two places swap one photograph every few seconds, forever, at a random
- * position: the Our Craft artisan wall and the Our Work artisan strip. Left
- * running they make the gate flaky, because two captures of an unchanged page
- * differ by whichever images happened to turn over between them.
+ * Artisan walls swap one photograph every few seconds, forever, at a random
+ * position. Left running they make the gate flaky, because two captures of an
+ * unchanged page differ by whichever images happened to turn over between
+ * them.
  *
  * `--frozen` is read by `useImageRotation`, which skips the swap while it is
  * set. Nothing in the application sets it, so the behaviour stays honest in
@@ -136,13 +136,11 @@ const HIDE_MASTHEAD = '.head, .mobile-menu { visibility: hidden !important; }';
  * capture landing mid-slide.
  *
  * What the rotation actually does — that it changes, never shows a duplicate,
- * and stops off screen — is asserted in tests/visual/artisan-wall.spec.ts and
- * tests/visual/artisan-strip.spec.ts instead.
+ * and stops off screen — is asserted in tests/visual/artisan-wall.spec.ts.
  */
 const FREEZE_ROTATION = `
-  .artisan-wall, .artisan-strip { --frozen: 1; }
-  .artisan-tile, .artisan-tile img,
-  .artisan-shot, .artisan-shot img, .artisan-swap { transition: none !important; opacity: 1 !important; }
+  .artisan-wall { --frozen: 1; }
+  .artisan-tile, .artisan-tile img { transition: none !important; opacity: 1 !important; }
 `;
 
 export async function settlePage(page: Page, settleMs = 2500) {

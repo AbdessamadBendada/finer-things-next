@@ -1,8 +1,8 @@
 import { Media } from '@/shared/ui/Media';
+import { ArtisanWall } from '@/shared/ui/ArtisanWall';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
 import { DETAILS, MATERIALS, PROCESS_STEPS } from '../content/materials.content';
-import { ArtisanWall } from './ArtisanWall';
 import { MaterialCards } from './MaterialCards';
 import { OurCraftShell } from './OurCraftShell';
 
@@ -17,11 +17,8 @@ import { OurCraftShell } from './OurCraftShell';
  * keeps the hero, the intro and the three services; everything below the
  * services moved here.
  *
- * The artisan wall came the other way, off /about. It is the strongest craft
- * asset the site has and it was illustrating a founder story; here it is the
- * evidence for the section it belongs to. Nothing is duplicated: /about links
- * across rather than keeping a copy, and /our-work shows a three-shot teaser
- * that is a pointer to this page, not the same content twice.
+ * The shared artisan wall is the strongest craft asset the site has, so it is
+ * used here as evidence for the section it belongs to.
  *
  * Section grounds run paper → stone → stone → ink → stone, which is the
  * rhythm /our-work already used. The dark artisan block is what stops four

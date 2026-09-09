@@ -1,11 +1,11 @@
 import Link from 'next/link';
 
 import { ROUTES } from '@/shared/config/routes';
+import { ArtisanWall } from '@/shared/ui/ArtisanWall';
 import { Media } from '@/shared/ui/Media';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
 import { DETAILS, MATERIALS, PROCESS_STEPS } from '../content/materials.content';
-import { ArtisanStrip } from './ArtisanStrip';
 import { MaterialCards } from './MaterialCards';
 import { OurWorkShell } from './OurWorkShell';
 
@@ -195,7 +195,7 @@ export function OurWorkPage() {
                 </p>
               </div>
             </div>
-            <ArtisanStrip />
+            <ArtisanWall />
           </div>
         </section>
 
