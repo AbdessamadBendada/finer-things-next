@@ -40,7 +40,6 @@ test.describe('About founders', () => {
     const malikaHeading = sections.nth(1).locator('h2');
     await expect(malikaHeading).toContainText('Malika Lahmer');
     await expect(page.locator('.hero-caption')).toHaveText('Malika and Alex');
-    await expect(sections.nth(0).locator('.experience-image .experience-fact')).toBeVisible();
     await expect(sections.nth(1)).toContainText('While Alex builds the pieces');
     await expect(sections.nth(1)).toContainText('from Jumeirah to private residences');
     await expect(page.locator('[data-placeholder="true"]')).toHaveCount(0);

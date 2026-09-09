@@ -43,13 +43,6 @@ export function AboutPage() {
                 src="/assets/founder-alex-lahmer.webp"
                 alt="Alex Lahmer, founder of Finer Things, in a leather workshop"
               />
-              <div
-                className="experience-fact rise"
-                aria-label="20 plus years of international hospitality experience"
-              >
-                <strong>20+</strong>
-                <span>Years of international hospitality experience</span>
-              </div>
             </figure>
             <div className="experience-copy">
               <div className="eyebrow rise">Meet the founder</div>
