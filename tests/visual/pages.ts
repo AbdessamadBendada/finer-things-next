@@ -44,6 +44,12 @@ export const PARITY_PAGES = [
    * counterpart at all: `legacy` is unused for a page on `current` and points
    * at the document the route used to serve.
    */
+  {
+    name: 'our-services',
+    legacy: '/our-work.html',
+    route: '/our-services',
+    baseline: 'current',
+  },
   { name: 'projects', legacy: '/projects.html', route: '/projects', baseline: 'current' },
   {
     name: 'marsa-al-arab',

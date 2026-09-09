@@ -32,6 +32,7 @@ const OUR_WORK: NavLink = { href: ROUTES.ourWork, label: 'What we do' };
  * make, then how it is made.
  */
 const OUR_CRAFT: NavLink = { href: ROUTES.ourCraft, label: 'Our craft' };
+const OUR_SERVICES: NavLink = { href: ROUTES.ourServices, label: 'Our services' };
 const PROJECTS: NavLink = { href: ROUTES.projects, label: 'Projects' };
 const ABOUT: NavLink = { href: ROUTES.about, label: 'About' };
 const CONTACT: NavLink = { href: ROUTES.contact, label: 'Contact' };
@@ -54,7 +55,14 @@ const IMPRINT: NavLink = { href: ROUTES.imprint, label: 'Imprint' };
  * One footer on every page, so one group of link sets rather than the four
  * that had drifted apart across the variants.
  */
-export const FOOTER_EXPLORE = [OUR_WORK, OUR_CRAFT, PROJECTS, ABOUT, FINER_LIVING] as const;
+export const FOOTER_EXPLORE = [
+  OUR_WORK,
+  OUR_CRAFT,
+  OUR_SERVICES,
+  PROJECTS,
+  ABOUT,
+  FINER_LIVING,
+] as const;
 export const FOOTER_CONNECT = [LINKEDIN, INSTAGRAM, CONTACT] as const;
 export const FOOTER_LEGAL = [PRIVACY, TERMS, IMPRINT] as const;
 
@@ -62,6 +70,7 @@ export const SITE_MENU = [
   HOME,
   OUR_WORK,
   OUR_CRAFT,
+  OUR_SERVICES,
   PROJECTS,
   ABOUT,
   FINER_LIVING,
@@ -86,6 +95,10 @@ export const CHROME: Record<string, ChromeConfig> = {
   },
 
   [ROUTES.ourCraft]: {
+    scrollThreshold: 0.72,
+  },
+
+  [ROUTES.ourServices]: {
     scrollThreshold: 0.72,
   },
 

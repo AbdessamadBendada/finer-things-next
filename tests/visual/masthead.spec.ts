@@ -116,6 +116,7 @@ test.describe('masthead', () => {
       'Home',
       'What we do',
       'Our craft',
+      'Our services',
       'Projects',
       'About',
       'Finer Living',

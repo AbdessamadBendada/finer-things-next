@@ -13,6 +13,20 @@
    home masthead hides itself until the wordmark hands off, Contact
    aligns its footer row to the baseline, the project stories space
    their links a little tighter.
+
+   EXCEPT for three slugs, which are maintained BY HAND here:
+   `our-craft`, `our-services` and `imprint`. The generator builds from
+   the legacy documents in `PAGES`, and these three pages have no
+   legacy counterpart — they were designed for this site. There is
+   nothing for the generator to read, so it cannot emit their rules.
+
+   Each of them is carried alongside the page it was modelled on:
+   our-craft and our-services beside our-work, imprint beside
+   privacy and terms. Re-running build-chrome.mjs WILL drop all three
+   and leave those pages with no masthead, wrap or footer styling —
+   the symptom is content sitting flush against the viewport edge.
+   Re-add them, or teach the generator about pages without a legacy
+   source.
    ================================================================ */
 [data-page='home'] .head {
   position: fixed;
@@ -71,7 +85,12 @@
   border-bottom: 1px solid transparent;
   transition: 0.45s;
 }
-[data-page='about'] .head {
+/* our-services opens on paper, not on a photograph, so its masthead is About's
+   rather than our-work's: ink on translucent paper. Taking the dark-hero
+   masthead put a paper-coloured logo and burger on a cream page, where they
+   were invisible until you scrolled. */
+[data-page='about'] .head,
+[data-page='our-services'] .head {
   position: fixed;
   inset: 0 0 auto;
   z-index: 100;
@@ -124,6 +143,7 @@
   padding: 0 44px;
 }
 [data-page='our-craft'] .wrap,
+[data-page='our-services'] .wrap,
 [data-page='our-work'] .wrap,
 [data-page='projects'] .wrap,
 [data-page='bespoke-accessories'] .wrap,
@@ -154,6 +174,7 @@
   padding: 66px 0 38px;
 }
 [data-page='our-craft'] footer,
+[data-page='our-services'] footer,
 [data-page='our-work'] footer,
 [data-page='projects'] footer,
 [data-page='bespoke-accessories'] footer,
@@ -293,6 +314,7 @@
   backdrop-filter: blur(16px) saturate(1.1);
 }
 [data-page='our-craft'] .footer-top,
+[data-page='our-services'] .footer-top,
 [data-page='our-work'] .footer-top,
 [data-page='projects'] .footer-top,
 [data-page='bespoke-accessories'] .footer-top,
@@ -314,6 +336,7 @@
   border-bottom: 1px solid rgba(243, 240, 234, 0.14);
 }
 [data-page='our-craft'] .footer-brand,
+[data-page='our-services'] .footer-brand,
 [data-page='our-work'] .footer-brand,
 [data-page='projects'] .footer-brand,
 [data-page='bespoke-accessories'] .footer-brand,
@@ -332,6 +355,7 @@
   font: 500 italic 1.7rem var(--font-display);
 }
 [data-page='our-craft'] .footer-tag,
+[data-page='our-services'] .footer-tag,
 [data-page='our-work'] .footer-tag,
 [data-page='projects'] .footer-tag,
 [data-page='bespoke-accessories'] .footer-tag,
@@ -353,6 +377,7 @@
   font-weight: 400;
 }
 [data-page='our-craft'] .footer-links,
+[data-page='our-services'] .footer-links,
 [data-page='our-work'] .footer-links,
 [data-page='projects'] .footer-links,
 [data-page='bespoke-accessories'] .footer-links,
@@ -372,6 +397,7 @@
   gap: 27px;
 }
 [data-page='our-craft'] .footer-links h3,
+[data-page='our-services'] .footer-links h3,
 [data-page='our-work'] .footer-links h3,
 [data-page='projects'] .footer-links h3,
 [data-page='bespoke-accessories'] .footer-links h3,
@@ -395,6 +421,7 @@
   text-transform: uppercase;
 }
 [data-page='our-craft'] .footer-links a,
+[data-page='our-services'] .footer-links a,
 [data-page='our-work'] .footer-links a,
 [data-page='projects'] .footer-links a,
 [data-page='bespoke-accessories'] .footer-links a,
@@ -423,6 +450,7 @@
   color: rgba(243, 240, 234, 0.67);
 }
 [data-page='our-craft'] .footer-bottom,
+[data-page='our-services'] .footer-bottom,
 [data-page='our-work'] .footer-bottom,
 [data-page='projects'] .footer-bottom,
 [data-page='bespoke-accessories'] .footer-bottom,
@@ -448,6 +476,7 @@
   font-weight: 400;
 }
 [data-page='our-craft'] .footer-bottom em,
+[data-page='our-services'] .footer-bottom em,
 [data-page='our-work'] .footer-bottom em,
 [data-page='projects'] .footer-bottom em,
 [data-page='bespoke-accessories'] .footer-bottom em,
@@ -495,6 +524,7 @@
     padding-inline: 22px;
   }
   [data-page='our-craft'] .head,
+  [data-page='our-services'] .head,
   [data-page='our-work'] .head,
   [data-page='projects'] .head,
   [data-page='marsa-al-arab'] .head,
@@ -503,6 +533,7 @@
   [data-page='styling-curation'] .head,
   [data-page='finer-living'] .head,
   [data-page='about'] .head,
+  [data-page='our-services'] .head,
   [data-page='contact'] .head {
     padding: 19px 24px;
   }
@@ -512,6 +543,7 @@
     padding-left: max(22px, calc(14px + env(safe-area-inset-left)));
   }
   [data-page='our-craft'] .head,
+  [data-page='our-services'] .head,
   [data-page='our-work'] .head,
   [data-page='projects'] .head,
   [data-page='marsa-al-arab'] .head,
@@ -520,12 +552,14 @@
   [data-page='styling-curation'] .head,
   [data-page='finer-living'] .head,
   [data-page='about'] .head,
+  [data-page='our-services'] .head,
   [data-page='contact'] .head {
     padding-top: max(19px, calc(11px + env(safe-area-inset-top)));
     padding-right: max(24px, calc(16px + env(safe-area-inset-right)));
     padding-left: max(24px, calc(16px + env(safe-area-inset-left)));
   }
   [data-page='our-craft'] .wrap,
+  [data-page='our-services'] .wrap,
   [data-page='our-work'] .wrap,
   [data-page='projects'] .wrap,
   [data-page='marsa-al-arab'] .wrap,
@@ -538,6 +572,7 @@
     padding-inline: 24px;
   }
   [data-page='our-craft'] .footer-top,
+  [data-page='our-services'] .footer-top,
   [data-page='our-work'] .footer-top,
   [data-page='projects'] .footer-top,
   [data-page='marsa-al-arab'] .footer-top,
@@ -549,6 +584,7 @@
     display: block;
   }
   [data-page='our-craft'] .footer-links,
+  [data-page='our-services'] .footer-links,
   [data-page='our-work'] .footer-links,
   [data-page='projects'] .footer-links,
   [data-page='bespoke-accessories'] .footer-links,
@@ -566,6 +602,7 @@
     flex-wrap: wrap;
   }
   [data-page='our-craft'] .footer-bottom,
+  [data-page='our-services'] .footer-bottom,
   [data-page='our-work'] .footer-bottom,
   [data-page='projects'] .footer-bottom,
   [data-page='marsa-al-arab'] .footer-bottom,

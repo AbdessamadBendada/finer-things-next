@@ -68,6 +68,11 @@ const EXPECTED_METADATA: Readonly<Record<string, { title: string; description: s
     description:
       'Tell us what you are creating, where it is, and what you want people to remember. Finer Things works with hotels and residences worldwide.',
   },
+  [ROUTES.ourServices]: {
+    title: 'Our Services, bespoke accessories, styling and Finer Living | Finer Things',
+    description:
+      'The three ways Finer Things works with a property: bespoke accessories designed for one place, styling and curation that complete a space, and the ready-made Finer Living collection.',
+  },
   [ROUTES.imprint]: {
     title: 'Imprint | Finer Things',
     description: 'Placeholder imprint for the Finer Things website.',
@@ -112,6 +117,7 @@ const EXPECTED_H1: Readonly<Record<string, string>> = {
   [ROUTES.service('bespoke-accessories')]: 'Bespoke Accessories',
   [ROUTES.service('styling-curation')]: 'Styling & Curation',
   [ROUTES.service('finer-living')]: 'Finer Living',
+  [ROUTES.ourServices]: 'Three services, one standard.',
   [ROUTES.about]: 'Values rooted in family',
   [ROUTES.contact]: 'Contact Finer Things',
   [ROUTES.privacy]: 'Privacy Policy',

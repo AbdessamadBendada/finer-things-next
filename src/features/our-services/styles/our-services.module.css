@@ -1,0 +1,99 @@
+/*
+ * our-services — page-specific styling only.
+ *
+ * The three services on one page, each opening in place. The panels are
+ * `<details>` elements, so most of the work here is undoing the browser's
+ * default disclosure look and giving the row the same rhythm as the service
+ * rows on Home: a number, a name at display size, a hairline between each.
+ *
+ * Anything the shared layers provide (tokens, primitives, chrome) is not
+ * restated. Scoped under .page — see docs/ARCHITECTURE.md.
+ */
+
+.page {--paper:#F3F0EA;--stone:#DED9CC;--ink:#29281F;--soft:rgba(41,40,31,.66);--clay:#B56D43;--oxblood:#7D342C;--line:rgba(166,152,120,.34)}
+.page {background:var(--paper);color:var(--ink)}
+.page :global(.eyebrow) {font-size: var(--text-eyebrow);font-weight:400;letter-spacing:0.20em;text-transform:uppercase;color:var(--clay)}
+.page :global(.rise) {opacity:0;transform:translateY(20px);transition:opacity 1.2s cubic-bezier(.16,1,.3,1),transform 1.2s cubic-bezier(.16,1,.3,1)}
+.page :global(.rise.in) {opacity:1;transform:none}
+
+/* ---------------- Opening ---------------- */
+.page :global(.intro) {padding:clamp(130px,20vh,210px) 0 clamp(60px,8vh,90px)}
+.page :global(.intro-grid) {display:grid;grid-template-columns:minmax(150px,1fr) 3fr;gap:clamp(30px,5vw,70px);align-items:start}
+.page :global(.intro h1) {max-width:16ch;font:500 clamp(2.8rem,5vw,4.8rem)/1 var(--font-display),Georgia,serif;letter-spacing:-.03em}
+.page :global(.intro-note) {max-width:52ch;margin-top:26px;color:var(--soft);font-size: var(--text-lead)}
+
+/* ---------------- The panels ----------------
+   `list-style` clears the marker in Firefox, the `::-webkit-details-marker`
+   rule clears it in Safari. Both are needed; neither is enough alone. */
+.page :global(.services-accordion) {padding:0 0 clamp(90px,13vh,150px)}
+.page :global(.service-panel) {border-top:1px solid var(--line)}
+.page :global(.service-panel:last-of-type) {border-bottom:1px solid var(--line)}
+.page :global(.panel-summary) {list-style:none;cursor:pointer;display:grid;grid-template-columns:clamp(52px,6vw,88px) 1fr auto;gap:clamp(18px,3vw,44px);
+    align-items:center;padding:clamp(30px,4.5vh,48px) 0;transition:color .4s ease}
+.page :global(.panel-summary)::-webkit-details-marker {display:none}
+.page :global(.panel-summary:focus-visible) {outline:1px solid var(--ink);outline-offset:6px}
+.page :global(.panel-number) {font-size: var(--text-fine);letter-spacing:.14em;color:var(--clay)}
+.page :global(.panel-name) {margin:0;font:500 clamp(1.9rem,3.6vw,3.1rem)/1.02 var(--font-display),Georgia,serif;letter-spacing:-.02em}
+.page :global(.panel-lede) {display:block;max-width:56ch;margin-top:10px;color:var(--soft);font-size: var(--text-body)}
+
+/* The mark: a plus that loses its upright when the panel opens. Drawn rather
+   than set as a glyph so it lines up with the row at any type size.
+
+   The pseudo-element goes OUTSIDE `:global()`. Written as
+   `:global(.panel-mark::before)` the whole rule is dropped silently by the CSS
+   modules compiler — it does not warn, the build passes, and the element simply
+   has no mark. Checked in the built stylesheet, not by reading this file. */
+.page :global(.panel-mark) {position:relative;width:22px;height:22px;flex:none}
+.page :global(.panel-mark)::before, .page :global(.panel-mark)::after {content:"";position:absolute;inset:50% 0 auto 0;height:1px;background:var(--ink);
+    transform-origin:center;transition:transform .45s cubic-bezier(.16,1,.3,1),background-color .4s ease}
+.page :global(.panel-mark)::after {transform:rotate(90deg)}
+.page :global(.service-panel[open] .panel-mark)::after {transform:rotate(180deg)}
+.page :global(.service-panel[open] .panel-number) {color:var(--oxblood)}
+
+@media(hover:hover) and (pointer:fine) {
+  .page :global(.panel-summary:hover .panel-name) {color:var(--oxblood)}
+  .page :global(.panel-summary:hover .panel-mark)::before, .page :global(.panel-summary:hover .panel-mark)::after {background:var(--oxblood)}
+}
+
+/* ---------------- The opened panel ----------------
+   `details` shows its content instantly; the animation is on the content, so
+   it arrives rather than appearing. There is no height transition — animating
+   `details` open is a fight with the element, and the honest version reads
+   better than a janky one. */
+.page :global(.panel-body) {display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,4vw,64px);
+    padding:0 0 clamp(44px,6vh,72px);animation:panel-in .7s cubic-bezier(.16,1,.3,1) both}
+@keyframes panel-in {
+  from {opacity:0;transform:translateY(14px)}
+  to {opacity:1;transform:none}
+}
+.page :global(.panel-media) {position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--stone)}
+.page :global(.panel-media img) {filter:saturate(.82)}
+.page :global(.panel-statement) {max-width:46ch;font-family:var(--font-display),Georgia,serif;font-weight:500;
+    font-size:clamp(1.25rem,1.9vw,1.7rem);line-height:1.32;letter-spacing:-.01em}
+.page :global(.panel-scope) {list-style:none;margin:clamp(28px,4vh,42px) 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:24px clamp(24px,3vw,44px)}
+.page :global(.panel-scope li) {border-top:1px solid var(--line);padding-top:16px}
+.page :global(.panel-scope .scope-num) {font-size: var(--text-eyebrow-sm);letter-spacing:.16em;color:var(--clay)}
+.page :global(.panel-scope h3) {margin:8px 0 6px;font:500 1.15rem/1.2 var(--font-display),Georgia,serif;letter-spacing:-.01em}
+.page :global(.panel-scope p) {margin:0;color:var(--soft);font-size: var(--text-body-sm);line-height:1.6}
+.page :global(.panel-link) {display:inline-block;margin-top:clamp(28px,4vh,40px);padding-bottom:4px;border-bottom:1px solid var(--clay);
+    color:var(--ink);text-decoration:none;font-size: var(--text-ui);letter-spacing:.16em;text-transform:uppercase;transition:color .35s,border-color .35s}
+.page :global(.panel-link:hover) {color:var(--oxblood);border-color:var(--oxblood)}
+
+@media(max-width:980px) {
+  .page :global(.intro-grid) {grid-template-columns:1fr;gap:22px}
+  .page :global(.panel-body) {grid-template-columns:1fr;gap:28px}
+  .page :global(.panel-media) {aspect-ratio:16/9}
+}
+
+@media(max-width:640px) {
+  .page :global(.panel-summary) {grid-template-columns:auto 1fr auto;gap:16px;align-items:start}
+  .page :global(.panel-number) {padding-top:.5em}
+  .page :global(.panel-scope) {grid-template-columns:1fr}
+  .page :global(.panel-mark) {margin-top:.4em}
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .page :global(.rise) {opacity:1;transform:none;transition:none}
+  .page :global(.panel-body) {animation:none}
+  .page :global(.panel-mark)::before, .page :global(.panel-mark)::after {transition:none}
+}
