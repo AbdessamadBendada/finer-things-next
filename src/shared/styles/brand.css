@@ -1060,9 +1060,17 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 /* Written as two deliberate masked lines, "Contact" over "Finer Things". */
+/* One line, so no measure cap: "Contact Finer Things" is a name, and breaking a
+   name across two lines is what the cap was doing. The size is set from the
+   column it sits in rather than from the viewport — the copy is the right half
+   of a two-column grid, so a vw-based size that fits at 1440 overflows at 1024
+   where the column narrows faster than the viewport does.
+
+   It wraps again below 900px, where the grid stacks and the column is the full
+   width: one line there would need type smaller than the body copy under it. */
 [data-page='contact'] main .copy h1 {
-  max-width: 19ch;
-  font-size: clamp(2.6rem, 5.4vw, 5.4rem);
+  max-width: none;
+  font-size: clamp(3.4rem, 4.55vw, 4.3rem);
 }
 
 /* ---------------- The same rule on a phone ----------------

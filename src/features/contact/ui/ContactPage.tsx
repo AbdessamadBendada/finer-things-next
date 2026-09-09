@@ -18,13 +18,12 @@ export function ContactPage() {
               <figcaption className="image-caption">Begin a conversation</figcaption>
             </figure>
             <div className="copy">
-              <span className="ey">Contact Finer Things</span>
+              {/* No eyebrow. It read "Contact Finer Things" to name the page
+                  while the heading was "Perhaps it begins with a place."; the
+                  heading says it now, and two of them was a stutter. */}
               <h1>
                 <span className="mask">
-                  <span>Contact</span>
-                </span>{' '}
-                <span className="mask">
-                  <span>Finer Things</span>
+                  <span>Contact Finer Things</span>
                 </span>
               </h1>
               <p className="lead">
