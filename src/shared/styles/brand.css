@@ -869,10 +869,45 @@ body.menu-open [data-page] .menu-toggle {
   text-decoration-color: rgba(41, 40, 31, 0.32);
 }
 
+/* …and it has to be redrawn on the word masks, or it is not drawn at all.
+
+   `useWordReveal` wraps every word in an inline-block span. CSS does not paint
+   a parent's text decoration into an atomic inline box, so on any heading that
+   is both emphasised and word-revealed the `em` rule above reached only the
+   plain whitespace between two masked words. The client saw the result on Finer
+   Living: a stray dash under the space in "daily life.", which reads as a typo.
+
+   It was worse where the emphasis is a single word — Our Work's "narrative",
+   Our Craft's "everything", Styling & Curation's "connected" — because there is
+   no space inside the `em` at all, so the emphasis was simply invisible.
+
+   Restating the decoration on the inner span puts the line back under the
+   letters, and it now travels with the word as it reveals. The colour is
+   repeated rather than inherited because `text-decoration-color` is not an
+   inherited property. Both mask class names are covered: `word-mask` is the
+   default and `reveal-word` is the home page's. */
+[data-page] h1 em .word-mask > span,
+[data-page] h2 em .word-mask > span,
+[data-page] h3 em .word-mask > span,
+[data-page] h1 em .reveal-word > span,
+[data-page] h2 em .reveal-word > span,
+[data-page] h3 em .reveal-word > span {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  text-decoration-color: rgba(41, 40, 31, 0.32);
+}
+
 /* Over photography the rule has to lift with the text it belongs to. */
 [data-page] .hero h1 em,
 [data-page] .experience-copy h2 em,
 [data-page] .film-copy h3 em {
+  text-decoration-color: rgba(243, 240, 234, 0.42);
+}
+
+[data-page] .hero h1 em .word-mask > span,
+[data-page] .experience-copy h2 em .word-mask > span,
+[data-page] .film-copy h3 em .word-mask > span {
   text-decoration-color: rgba(243, 240, 234, 0.42);
 }
 
