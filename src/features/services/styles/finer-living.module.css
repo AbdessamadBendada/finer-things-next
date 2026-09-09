@@ -31,9 +31,8 @@
 :global(body.ready) .page :global(.hero-kicker), :global(body.ready) .page :global(.hero-bottom) {opacity:1;transform:none}
 :global(body.ready) .page :global(.hero h1 .hero-line>span) {opacity:1;transform:none}
 :global(body.ready) .page :global(.hero-bottom) {transition-delay:.32s}
-.page :global(.hero-bottom) {display:flex;align-items:flex-end;justify-content:space-between;gap:50px;margin-top:42px}
+.page :global(.hero-bottom) {display:flex;flex-direction:column;align-items:flex-start;gap:28px;margin-top:42px}
 .page :global(.hero-intro) {max-width:53ch;color:rgba(243,240,234,.82);font-size: var(--text-body)}
-.page :global(.scroll-cue) {font-size: var(--text-eyebrow-sm);letter-spacing:.24em;text-transform:uppercase;color:rgba(243,240,234,.58);white-space:nowrap}
 .page :global(.manifesto) {padding:clamp(110px,17vh,190px) 0;background:var(--paper)}
 .page :global(.manifesto-grid) {display:grid;grid-template-columns:.55fr 1.45fr;gap:8vw;align-items:start}
 .page :global(.manifesto h2) {max-width:18ch;font:500 clamp(2.8rem,5.3vw,5.5rem)/.98 var(--font-display),serif;letter-spacing:-.035em}
@@ -42,6 +41,14 @@
 .page :global(.word-mask>span) {display:inline-block;opacity:0;transform:translateY(108%);transition:opacity .6s ease,transform .85s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i)*52ms)}
 .page :global(.words-in .word-mask>span) {opacity:1;transform:none}
 .page :global(.manifesto-note) {max-width:40ch;margin:44px 0 0 auto;padding-left:26px;border-left:1px solid var(--line);color:var(--soft)}
+.page :global(.collection-gallery) {padding:clamp(90px,13vh,145px) 0;background:var(--stone)}
+.page :global(.gallery-grid) {display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.page :global(.gallery-item) {position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--ink)}
+.page :global(.gallery-item img) {filter:saturate(.72);transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.page :global(.gallery-action) {margin-top:48px;text-align:center}
+@media(hover:hover) and (pointer:fine) {
+  .page :global(.gallery-item:hover img) {transform:scale(1.025)}
+}
 .page :global(.scope) {background:var(--stone);padding:clamp(90px,13vh,145px) 0}
 .page :global(.scope-head) {display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:62px}
 .page :global(.scope-head h2) {max-width:12ch;font:500 clamp(2.8rem,4.8vw,4.8rem)/.98 var(--font-display),serif;letter-spacing:-.03em}
@@ -100,23 +107,26 @@
   .page :global(.material:hover .material-detail) {color:var(--ink)}
   .page :global(.material-list:has(.material:hover) .material:not(:hover)) {opacity:.52}
 }
-.page :global(.process) {background:var(--stone);padding:clamp(100px,15vh,165px) 0}
-.page :global(.process-title) {display:flex;align-items:end;justify-content:space-between;gap:40px;margin-bottom:70px}
-.page :global(.process-title h2) {max-width:11ch;font:500 clamp(3rem,5vw,5rem)/.96 var(--font-display),serif;letter-spacing:-.035em}
-.page :global(.process-title p) {max-width:40ch;color:var(--soft)}
-.page :global(.steps) {position:relative;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(41,40,31,.14)}
-.page :global(.steps::before) {content:"";position:absolute;z-index:2;left:0;right:0;top:-1px;height:2px;background:var(--oxblood);transform:scaleX(0);transform-origin:left;transition:transform 1.8s cubic-bezier(.16,1,.3,1)}
-.page :global(.steps.line-in::before) {transform:scaleX(1)}
-.page :global(.step) {min-height:285px;padding:27px 28px;border-right:1px solid rgba(41,40,31,.2);display:flex;flex-direction:column}
-.page :global(.step:first-child) {border-left:1px solid rgba(41,40,31,.2)}
-.page :global(.step-num) {font-size: var(--text-eyebrow-sm);letter-spacing:.16em;color:var(--clay);transition:color .4s ease}
-.page :global(.step.in .step-num) {color:var(--oxblood)}
-.page :global(.step h3) {margin-top:auto;font:500 2rem/1 var(--font-display),serif}
-.page :global(.step p) {margin-top:15px;color:var(--soft);font-size: var(--text-body-sm);font-weight:400;line-height:1.65}
 .page :global(.project) {position:relative;min-height:88svh;display:flex;align-items:flex-end;background:var(--ink);color:var(--paper);overflow:hidden}
 .page :global(.project-bg) {position:absolute;inset:-5%;will-change:transform}
 .page :global(.project-bg img) {filter:brightness(.54) saturate(.72)}
-.page :global(.project-bg::after) {content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(22,21,17,.78),transparent 62%)}
+/* A scrim under the copy, not a blackout.
+
+   Review: the eyebrow could not be read. It is clay orange at eyebrow size over
+   a photograph whose left side is pale grey, and there was no overlay at all
+   here — only a brightness(.54) filter on the image itself.
+
+   Clay is a dark orange, so small text in it needs a genuinely dark backdrop to
+   clear 4.5:1 — about rgb(22,22,22) or below. That is only true where the words
+   are. The copy occupies the left 46% of the section, so the gradient is heavy
+   there and falls away across the middle, leaving the right third of the
+   photograph legible. The first attempt at this was solid black to 62% and the
+   image disappeared entirely, which fixes the contrast by deleting the picture.
+
+   Measured with the copy hidden and the backdrop pixel sampled: see the numbers
+   in FEEDBACK. Re-measure if the gradient or the image changes. */
+.page :global(.project-bg::after) {content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(12,11,9,.93) 0%,rgba(12,11,9,.91) 45%,rgba(12,11,9,.55) 66%,rgba(12,11,9,.25) 82%,rgba(12,11,9,.14) 100%)}
 .page :global(.project-copy) {position:relative;z-index:2;padding-bottom:68px}
 .page :global(.project-copy h2) {margin-top:17px;font:500 clamp(3.4rem,7vw,7rem)/.88 var(--font-display),serif;letter-spacing:-.045em}
 .page :global(.title-mask) {display:inline-block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
@@ -130,14 +140,13 @@
 .page :global(.closing h2.in .cta-line>span) {opacity:1;transform:none}
 .page :global(.closing h2 .cta-line:nth-child(2)>span) {transition-delay:.12s}
 .page :global(.closing p) {max-width:46ch;margin:28px auto 40px;color:var(--soft)}
-.page :global(.btn) {display:inline-block;padding:14px 26px;background:var(--ink);color:var(--paper);font-size: var(--text-ui);letter-spacing:.17em;text-transform:uppercase;text-decoration:none;transition:background .3s}
 @media(max-width:860px) {
   .page :global(.hero) {min-height:720px}
   .page :global(.hero-content) {padding-bottom:38px}
   .page :global(.hero h1) {font-size:clamp(4rem,18vw,6.3rem)}
-  .page :global(.hero-bottom) {display:block;margin-top:34px}
-  .page :global(.scroll-cue) {margin-top:28px}
+  .page :global(.hero-bottom) {margin-top:34px}
   .page :global(.manifesto-grid), .page :global(.scope-head), .page :global(.materials-top) {grid-template-columns:1fr;gap:40px}
+  .page :global(.gallery-grid) {grid-template-columns:1fr 1fr;gap:12px}
   .page :global(.manifesto-note) {margin:34px 0 0}
   .page :global(.scope-row) {grid-template-columns:42px 1fr;gap:17px}
   .page :global(.scope-row p) {grid-column:2}
@@ -147,10 +156,6 @@
   .page :global(.story-main) {grid-column:1/3;grid-row:auto}
   .page :global(.story-small) {margin-top:0}
   .page :global(.story-detail) {width:100%;margin:16vw 0 0;border:0}
-  .page :global(.process-title) {display:block}
-  .page :global(.process-title p) {margin-top:26px}
-  .page :global(.steps) {grid-template-columns:1fr 1fr}
-  .page :global(.step) {min-height:245px}
   .page :global(.project) {min-height:76svh}
   .page :global(.project-meta) {flex-direction:column;gap:5px}
 }
@@ -160,10 +165,6 @@
   .page :global(.story-small), .page :global(.story-detail) {aspect-ratio:4/5;width:86%}
   .page :global(.story-small) {margin-left:auto}
   .page :global(.story-detail) {margin:14px 0 0}
-  .page :global(.steps) {grid-template-columns:1fr;border-top:0;border-left:1px solid rgba(41,40,31,.14)}
-  .page :global(.steps::before) {inset:0 auto 0 -1px;width:2px;height:auto;transform:scaleY(0);transform-origin:top}
-  .page :global(.steps.line-in::before) {transform:scaleY(1)}
-  .page :global(.step) {min-height:215px;border-left:0;border-bottom:1px solid rgba(41,40,31,.2)}
 }
 @media(max-height:500px) and (orientation:landscape) {
   .page :global(.hero) {min-height:520px}
@@ -175,7 +176,6 @@
   .page :global(.story-figure) {clip-path:none;transition:none}
   .page :global(.story-figure img) {transform:none!important}
   .page :global(.story-figure video), .page :global(.making-label) {display:none}
-  .page :global(.steps::before) {transform:none!important;transition:none}
   .page :global(.project-bg) {transform:none!important}
 }
 .page h1 em, .page h2 em, .page h3 em {padding-inline:.035em;font-style:normal}

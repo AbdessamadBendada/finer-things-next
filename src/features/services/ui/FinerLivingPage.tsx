@@ -32,7 +32,14 @@ export function FinerLivingPage() {
                 A curated selection of timeless pieces where exceptional craftsmanship meets
                 modern luxury, each chosen for its story and enduring quality.
               </p>
-              <span className="scroll-cue">Explore the collection ↓</span>
+              <a
+                className="btn btn-accent"
+                href="https://finerlivingcollection.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Explore the collection
+              </a>
             </div>
           </div>
         </section>
@@ -50,6 +57,105 @@ export function FinerLivingPage() {
                 distinctive pieces, bringing material character and considered design into the
                 home.
               </p>
+            </div>
+          </div>
+        </section>
+        {/* These images are placeholders pending the client's own photography. */}
+        <section className="collection-gallery" aria-label="Finer Living collection gallery">
+          <div className="wrap">
+            <div className="gallery-grid">
+              <figure className="gallery-item rise">
+                <Media
+                  src="/assets/new-cover-finer-living-collection.webp"
+                  alt="Objects from the Finer Living collection"
+                  sizes="(max-width: 860px) 50vw, 33vw"
+                />
+              </figure>
+              <figure className="gallery-item rise">
+                <Media
+                  src="/assets/0698_Finer_Living_July_2025_edited_1_a006768d.webp"
+                  alt="Sculptural wooden stools from the Finer Living collection"
+                  sizes="(max-width: 860px) 50vw, 33vw"
+                />
+              </figure>
+              <figure className="gallery-item rise">
+                <Media
+                  src="/assets/1.webp"
+                  alt="Glass cloche from the Finer Living collection"
+                  sizes="(max-width: 860px) 50vw, 33vw"
+                />
+              </figure>
+              <figure className="gallery-item rise">
+                <Media
+                  src="/assets/2.webp"
+                  alt="Marble and glass serving stand from the Finer Living collection"
+                  sizes="(max-width: 860px) 50vw, 33vw"
+                />
+              </figure>
+              <figure className="gallery-item rise">
+                <Media
+                  src="/assets/3.webp"
+                  alt="Wooden footed bowl from the Finer Living collection"
+                  sizes="(max-width: 860px) 50vw, 33vw"
+                />
+              </figure>
+              <figure className="gallery-item rise">
+                <Media
+                  src="/assets/0694_27I6900-6copy_51177df8.webp"
+                  alt="Marble and stone samples from the Finer Living collection"
+                  sizes="(max-width: 860px) 50vw, 33vw"
+                />
+              </figure>
+            </div>
+            <div className="gallery-action rise">
+              <a
+                className="btn btn-accent"
+                href="https://finerlivingcollection.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                See more
+              </a>
+            </div>
+          </div>
+        </section>
+        {/* COLLECTION MATERIALS */}
+        <section className="materials">
+          <div className="wrap">
+            <div className="materials-top">
+              <div className="eyebrow rise">Material character</div>
+              <div>
+                <h2 className="rise">
+                  {'Nature gives each piece its '}
+                  <em>voice.</em>
+                </h2>
+                <p className="materials-copy rise">
+                  Colour, grain, veining, weight and finish make every material distinct. The
+                  collection lets those qualities remain visible and felt.
+                </p>
+              </div>
+            </div>
+            <div className="material-list rise" aria-label="Finer Living material palette">
+              <div className="material">
+                <span className="material-name">Marble & stone</span>
+                <span className="material-detail">Veining · colour · weight</span>
+              </div>
+              <div className="material">
+                <span className="material-name">Wood</span>
+                <span className="material-detail">Grain · warmth · tactility</span>
+              </div>
+              <div className="material">
+                <span className="material-name">Glass</span>
+                <span className="material-detail">Clarity · colour · light</span>
+              </div>
+              <div className="material">
+                <span className="material-name">Leather</span>
+                <span className="material-detail">Texture · tone · touch</span>
+              </div>
+              <div className="material">
+                <span className="material-name">Metal</span>
+                <span className="material-detail">Finish · contrast · detail</span>
+              </div>
             </div>
           </div>
         </section>
@@ -89,7 +195,7 @@ export function FinerLivingPage() {
         <section className="story">
           <div className="wrap">
             <div className="story-head">
-              <h2 className="rise">Three objects. Three expressions of craft.</h2>
+              <h2 className="rise">From first sketch to final unique design.</h2>
               <p className="rise">
                 Glass, marble and wood give each piece its own weight, texture and presence.
               </p>
@@ -150,80 +256,6 @@ export function FinerLivingPage() {
                 <span className="making-label">Making of</span>
                 <figcaption>Wood / Footed bowl</figcaption>
               </figure>
-            </div>
-          </div>
-        </section>
-        {/* COLLECTION MATERIALS */}
-        <section className="materials">
-          <div className="wrap">
-            <div className="materials-top">
-              <div className="eyebrow rise">Material character</div>
-              <div>
-                <h2 className="rise">
-                  {'Nature gives each piece its '}
-                  <em>voice.</em>
-                </h2>
-                <p className="materials-copy rise">
-                  Colour, grain, veining, weight and finish make every material distinct. The
-                  collection lets those qualities remain visible and felt.
-                </p>
-              </div>
-            </div>
-            <div className="material-list rise" aria-label="Finer Living material palette">
-              <div className="material">
-                <span className="material-name">Marble & stone</span>
-                <span className="material-detail">Veining · colour · weight</span>
-              </div>
-              <div className="material">
-                <span className="material-name">Wood</span>
-                <span className="material-detail">Grain · warmth · tactility</span>
-              </div>
-              <div className="material">
-                <span className="material-name">Glass</span>
-                <span className="material-detail">Clarity · colour · light</span>
-              </div>
-              <div className="material">
-                <span className="material-name">Leather</span>
-                <span className="material-detail">Texture · tone · touch</span>
-              </div>
-              <div className="material">
-                <span className="material-name">Metal</span>
-                <span className="material-detail">Finish · contrast · detail</span>
-              </div>
-            </div>
-          </div>
-        </section>
-        {/* PROCESS */}
-        <section className="process" id="process">
-          <div className="wrap">
-            <div className="process-title">
-              <h2 className="rise">The Finer Living point of view.</h2>
-              <p className="rise">
-                Four qualities connect the collection, from the first impression of an object to
-                the place it earns in daily life.
-              </p>
-            </div>
-            <div className="steps">
-              <article className="step rise">
-                <span className="step-num">01</span>
-                <h3>Story</h3>
-                <p>A distinctive idea that gives the object character.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">02</span>
-                <h3>Craft</h3>
-                <p>Exceptional craftsmanship expressed through considered details.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">03</span>
-                <h3>Material</h3>
-                <p>Intrinsic qualities allowed to remain present and individual.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">04</span>
-                <h3>Living</h3>
-                <p>Timeless pieces made to become part of everyday rituals.</p>
-              </article>
             </div>
           </div>
         </section>

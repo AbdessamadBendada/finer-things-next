@@ -60,8 +60,7 @@ const KNOWN_LONG: Readonly<Record<string, Readonly<Record<string, number>>>> = {
   '/services/finer-living': {
     'Objects with a story, made for the rituals of daily life.': 3,
     'Chosen for more than appearance.': 3,
-    'Three objects. Three expressions of craft.': 3,
-    'The Finer Living point of view.': 3,
+    'From first sketch to final unique design.': 3,
   },
 };
 
