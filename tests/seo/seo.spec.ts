@@ -113,7 +113,7 @@ const EXPECTED_H1: Readonly<Record<string, string>> = {
   [ROUTES.service('styling-curation')]: 'Styling & Curation',
   [ROUTES.service('finer-living')]: 'Finer Living',
   [ROUTES.about]: 'Values rooted in family',
-  [ROUTES.contact]: 'Perhaps it begins with a place.',
+  [ROUTES.contact]: 'Contact Finer Things',
   [ROUTES.privacy]: 'Privacy Policy',
   [ROUTES.terms]: 'Terms & Conditions',
   [ROUTES.imprint]: 'Imprint',

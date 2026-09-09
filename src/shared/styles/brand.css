@@ -1024,8 +1024,7 @@ body.menu-open [data-page] .menu-toggle {
   font-size: clamp(2.2rem, 3.9vw, 4rem);
 }
 
-/* Written as two masked lines, "Perhaps it begins" over "with a place.", and
-   each was wrapping inside itself. Same fault as the heroes. */
+/* Written as two deliberate masked lines, "Contact" over "Finer Things". */
 [data-page='contact'] main .copy h1 {
   max-width: 19ch;
   font-size: clamp(2.6rem, 5.4vw, 5.4rem);

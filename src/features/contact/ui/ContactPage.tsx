@@ -21,10 +21,10 @@ export function ContactPage() {
               <span className="ey">Contact Finer Things</span>
               <h1>
                 <span className="mask">
-                  <span>Perhaps it begins</span>
+                  <span>Contact</span>
                 </span>{' '}
                 <span className="mask">
-                  <span>with a place.</span>
+                  <span>Finer Things</span>
                 </span>
               </h1>
               <p className="lead">
