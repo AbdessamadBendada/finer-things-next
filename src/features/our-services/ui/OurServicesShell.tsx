@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 
-import { useReveal } from '@/shared/motion';
+import { useReveal, useServiceIndexMotion } from '@/shared/motion';
 import { usePageRoot } from '@/shared/motion/usePageRoot';
 
 import { useServiceAccordion } from '../motion/useServiceAccordion';
@@ -16,6 +16,10 @@ import styles from '../styles/our-services.module.css';
 export function OurServicesShell({ children }: { children: ReactNode }) {
   const root = usePageRoot();
   useReveal(root);
+  /* Drives `--hero-shift`, the hero's parallax, exactly as on /our-work and
+     /our-craft. The rest of that hook looks for service rows this page does not
+     have and is a no-op without them. */
+  useServiceIndexMotion(root);
   useServiceAccordion(root);
 
   return (

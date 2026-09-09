@@ -52,6 +52,7 @@
     border-color 0.5s ease;
 }
 [data-page='our-craft'] .head,
+[data-page='our-services'] .head,
 [data-page='our-work'] .head,
 [data-page='projects'] .head,
 [data-page='bespoke-accessories'] .head,
@@ -85,12 +86,7 @@
   border-bottom: 1px solid transparent;
   transition: 0.45s;
 }
-/* our-services opens on paper, not on a photograph, so its masthead is About's
-   rather than our-work's: ink on translucent paper. Taking the dark-hero
-   masthead put a paper-coloured logo and burger on a cream page, where they
-   were invisible until you scrolled. */
-[data-page='about'] .head,
-[data-page='our-services'] .head {
+[data-page='about'] .head {
   position: fixed;
   inset: 0 0 auto;
   z-index: 100;
@@ -291,6 +287,7 @@
   color: var(--tan);
 }
 [data-page='our-craft'] .head.scrolled,
+[data-page='our-services'] .head.scrolled,
 [data-page='our-work'] .head.scrolled,
 [data-page='projects'] .head.scrolled {
   color: var(--ink);
@@ -533,7 +530,6 @@
   [data-page='styling-curation'] .head,
   [data-page='finer-living'] .head,
   [data-page='about'] .head,
-  [data-page='our-services'] .head,
   [data-page='contact'] .head {
     padding: 19px 24px;
   }
@@ -552,7 +548,6 @@
   [data-page='styling-curation'] .head,
   [data-page='finer-living'] .head,
   [data-page='about'] .head,
-  [data-page='our-services'] .head,
   [data-page='contact'] .head {
     padding-top: max(19px, calc(11px + env(safe-area-inset-top)));
     padding-right: max(24px, calc(16px + env(safe-area-inset-right)));

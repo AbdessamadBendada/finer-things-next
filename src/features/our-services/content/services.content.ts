@@ -146,3 +146,30 @@ export const SERVICES: readonly Service[] = [
     href: ROUTES.service('finer-living'),
   },
 ];
+
+/**
+ * The situation someone arrives with, and the service that answers it.
+ *
+ * Written as the reader's problem rather than as our offer — "the space is
+ * built but it feels unfinished" is the sentence a client actually says on a
+ * call, and it is what makes the choice obvious without them learning our
+ * vocabulary first. The `href` is a panel id, so choosing an answer opens it.
+ */
+export const CHOICES = [
+  {
+    situation:
+      'You are opening a property, and the details guests touch should exist nowhere else.',
+    service: 'Bespoke Accessories',
+    href: '#bespoke-accessories',
+  },
+  {
+    situation: 'The space is built and furnished, but it still feels unfinished.',
+    service: 'Styling & Curation',
+    href: '#styling-curation',
+  },
+  {
+    situation: 'You want considered pieces now, without commissioning them.',
+    service: 'Finer Living',
+    href: '#finer-living',
+  },
+] as const;

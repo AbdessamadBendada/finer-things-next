@@ -2,7 +2,7 @@ import { Media } from '@/shared/ui/Media';
 import { SiteCta } from '@/shared/layout/SiteCta';
 import Link from 'next/link';
 
-import { SERVICES } from '../content/services.content';
+import { CHOICES, SERVICES } from '../content/services.content';
 import { OurServicesShell } from './OurServicesShell';
 
 /**
@@ -27,16 +27,38 @@ export function OurServicesPage() {
   return (
     <OurServicesShell>
       <main>
-        <section className="intro">
-          <div className="wrap intro-grid">
-            <div className="eyebrow rise">Our services</div>
-            <div>
-              <h1 className="rise">Three services, one standard.</h1>
-              <p className="intro-note rise">
+        <section className="hero">
+          <div className="hero-bg">
+            {/*
+             * The entrance hall at Waldorf Astoria Osaka: architecture,
+             * objects and planting composed as one thing. A services overview
+             * needs the finished room rather than a single object, and this is
+             * the widest shot in the delivery that reads as a whole space. It
+             * appears on Home's filmstrip but is no other page's hero, so
+             * nothing is repeated in the position that matters.
+             */}
+            <Media
+              src="/assets/new-work-waldorf-16.webp"
+              alt="The entrance hall at Waldorf Astoria Osaka"
+              sizes="100vw"
+              priority
+            />
+          </div>
+          <div className="wrap hero-content">
+            <h1>
+              <span className="hero-line">
+                <span>Three services,</span>
+              </span>{' '}
+              <span className="hero-line">
+                <span>one standard.</span>
+              </span>
+            </h1>
+            <div className="hero-foot">
+              <p>
                 Bespoke accessories made for a single property, styling and curation that
-                complete a space, and the ready-made Finer Living collection. Open one to see
-                what it covers.
+                complete a space, and the ready-made Finer Living collection.
               </p>
+              <span className="scroll-cue">Open one to see what it covers ↓</span>
             </div>
           </div>
         </section>
@@ -91,6 +113,33 @@ export function OurServicesPage() {
                 </div>
               </details>
             ))}
+          </div>
+        </section>
+
+        {/*
+         * After the panels, not before them. Someone who already knows what
+         * they want should not have to read a decision aid to get to it; this
+         * is for the reader who has opened all three and is still deciding.
+         *
+         * Each answer links to its own panel by hash, which useServiceAccordion
+         * turns into "open that panel and take me to it" — so the section
+         * resolves back into the page rather than sending anyone away from it.
+         */}
+        <section className="chooser" aria-labelledby="chooser-title">
+          <div className="wrap">
+            <h2 className="rise" id="chooser-title">
+              Which one do you need?
+            </h2>
+            <ul className="chooser-list">
+              {CHOICES.map((choice) => (
+                <li key={choice.href} className="rise">
+                  <p className="chooser-case">{choice.situation}</p>
+                  <a className="chooser-answer" href={choice.href}>
+                    {choice.service}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
