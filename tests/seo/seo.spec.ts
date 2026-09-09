@@ -81,7 +81,7 @@ const EXPECTED_METADATA: Readonly<Record<string, { title: string; description: s
 const EXPECTED_CONTEXTUAL_LINKS: Readonly<
   Record<string, ReadonlyArray<{ href: string; label: string }>>
 > = {
-  [ROUTES.ourWork]: [
+  [ROUTES.ourServices]: [
     { href: ROUTES.service('bespoke-accessories'), label: 'Bespoke Accessories' },
     { href: ROUTES.service('styling-curation'), label: 'Styling & Curation' },
     { href: ROUTES.service('finer-living'), label: 'Finer Living' },

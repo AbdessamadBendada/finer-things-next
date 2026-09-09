@@ -1,6 +1,3 @@
-import Link from 'next/link';
-
-import { ROUTES } from '@/shared/config/routes';
 import { ArtisanWall } from '@/shared/ui/ArtisanWall';
 import { Media } from '@/shared/ui/Media';
 import { SiteCta } from '@/shared/layout/SiteCta';
@@ -58,89 +55,9 @@ export function OurWorkPage() {
           </div>
         </section>
 
-        <section className="services" id="services">
-          <article className="service">
-            <div className="service-media">
-              <Media
-                src="/assets/new-cover-bespoke-accessories.webp"
-                alt="A stitched leather tray on a walnut table"
-                sizes="100vw"
-              />
-            </div>
-            <div className="wrap service-content">
-              <div className="service-top">
-                <span className="service-number">01</span>
-              </div>
-              <h2>
-                <Link className="context-link" href={ROUTES.service('bespoke-accessories')}>
-                  {'Bespoke '}
-                  <em>Accessories</em>
-                </Link>
-              </h2>
-              <div className="service-bottom">
-                <p>
-                  The details guests touch. Every hanger, tray and bill folder individually
-                  designed and produced for one property only, in leather, marble, wood and
-                  brass that carry its story.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article className="service">
-            <div className="service-media">
-              <Media
-                src="/assets/new-cover-styling-curation.webp"
-                alt="Sculptural objects styled on a lacquered console"
-                sizes="100vw"
-              />
-            </div>
-            <div className="wrap service-content">
-              <div className="service-top">
-                <span className="service-number">02</span>
-              </div>
-              <h2>
-                <Link className="context-link" href={ROUTES.service('styling-curation')}>
-                  {'Styling '}
-                  <em>& Curation</em>
-                </Link>
-              </h2>
-              <div className="service-bottom">
-                <p>
-                  Books, objects, art and florals found with 100+ artisans around the world and
-                  arranged so every lobby and suite feels as unique as their story.
-                </p>
-              </div>
-            </div>
-          </article>
-
-          <article className="service">
-            <div className="service-media">
-              <Media
-                src="/assets/new-cover-finer-living.webp"
-                alt="An oak and brass footed bowl from the Finer Living collection"
-                sizes="100vw"
-              />
-            </div>
-            <div className="wrap service-content">
-              <div className="service-top">
-                <span className="service-number">03</span>
-              </div>
-              <h2>
-                <Link className="context-link" href={ROUTES.service('finer-living')}>
-                  {'Finer '}
-                  <em>Living</em>
-                </Link>
-              </h2>
-              <div className="service-bottom">
-                <p>
-                  The ready-made collection by Finer Things where european craftsmanship meets
-                  design: wood, marble and glass, in stock and fast to ship.
-                </p>
-              </div>
-            </div>
-          </article>
-        </section>
+        {/* The three services moved to /our-services, where each opens in
+            place instead of sending you to its own page. The links from here
+            to the three service pages went with them. */}
 
         <section className="continuity" id="materials">
           <div className="wrap">
