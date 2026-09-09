@@ -1368,7 +1368,6 @@ body.menu-open [data-page] .menu-toggle {
   from {
     opacity: 0;
     transform: translateY(16%) scale(1.06);
-  [data-page='our-work'] .artisan-tile:nth-child(2),
   }
   to {
     opacity: 1;
@@ -1396,6 +1395,7 @@ body.menu-open [data-page] .menu-toggle {
      dropped to keep the block complete. */
   [data-page='about'] .artisan-tile:nth-child(2),
   [data-page='our-craft'] .artisan-tile:nth-child(2),
+  [data-page='our-work'] .artisan-tile:nth-child(2),
   [data-page='about'] .artisan-tile:nth-child(9),
   [data-page='our-craft'] .artisan-tile:nth-child(9),
   [data-page='our-work'] .artisan-tile:nth-child(9) {
