@@ -559,6 +559,56 @@ Layout and polish, plus one page rebuilt speculatively.
   we do / 02", so the three service kickers are now intentionally inconsistent
   pending a client decision. No other service page was changed.
 
+### 30. Use the full artisan wall on Our Work
+
+- **Page:** `/our-work`, with shared implementation used by `/about` and
+  `/our-craft`
+- **Asked:** "The client wants the SAME gallery that /about has — the large
+  multi-image artisan wall. The 3-image strip is removed from the site
+  entirely."
+- **Read as:** keep the existing Our Work artisan eyebrow, heading and note,
+  but replace its three-image strip with the same rotating ten-tile wall used
+  on About and Our Craft.
+- **Status:** ✅ Done
+- **Done:** the byte-identical feature copies of `ArtisanWall` were replaced
+  by one shared component used on all three pages. Our Work now renders that
+  wall, and the strip component, strip-specific visual test, transition CSS,
+  keyframes and parity-freeze selectors were removed.
+- **Note:** the task named only three `.artisan-wall` selector groups to extend,
+  but every `.artisan-tile` rule was page-scoped too. Our Work was added to all
+  of those rules so the shared component actually has the same layout and
+  behavior. The requested eyebrow, heading and note still read coherently with
+  the larger wall and were not changed.
+
+### 31. Remove the founder experience badge
+
+- **Page:** `/about`
+- **Asked:** "delete the div className experience-fact block with the 20+ and
+  Years of international hospitality experience. The founder photograph itself
+  stays."
+- **Read as:** remove only the proof-point badge over Alex's portrait, leaving
+  the founder section, portrait and copy unchanged.
+- **Status:** ✅ Done
+- **Done:** the badge markup and every page-module and brand override for
+  `.experience-fact` were removed. Alex's photograph remains in place.
+- **Note:** contrary to the task's statement that only the reveal suite would
+  break, `tests/visual/about-founders.spec.ts` also explicitly required this
+  badge. That stale assertion was removed.
+
+### 32. Remove the global-eye section
+
+- **Page:** `/about`
+- **Asked:** "delete the whole section after MEET THE FOUNDER: the comment
+  GLOBAL POINT OF VIEW and section className world through its closing section."
+- **Read as:** remove the heading, paragraph and all three photographs in that
+  section, together with only their now-dead styling and reveal registration.
+- **Status:** ✅ Done
+- **Done:** the complete `.world` section, its responsive and reduced-motion
+  CSS, its reveal test case and its shared fail-open selector were removed. The
+  surrounding artisan and principles sections remain.
+- **Note:** no parity baseline was regenerated. The existing baseline set was
+  already stale across the original 39 route and viewport combinations.
+
 ---
 
 ## Cross-cutting notes

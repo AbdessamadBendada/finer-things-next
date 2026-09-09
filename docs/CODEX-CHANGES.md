@@ -25,6 +25,64 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-08: Replace the Our Work artisan strip with the shared wall
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: moved the byte-identical About and Our Craft artisan walls into one
+  shared component, rendered that wall on Our Work without changing its
+  eyebrow, heading or note, and removed the three-image strip component, test,
+  animation CSS, keyframes and parity-freeze selectors. Extended all
+  page-scoped wall and tile rules to Our Work.
+- Files: `src/shared/{ui/ArtisanWall.tsx,styles/brand.css,motion/useImageRotation.ts}`,
+  `src/features/{about/ui/ArtisanWall.tsx,our-craft/ui/ArtisanWall.tsx,our-craft/ui/OurCraftPage.tsx,our-work/ui/ArtisanStrip.tsx,our-work/ui/OurWorkPage.tsx,our-work/styles/our-work.module.css}`,
+  `tests/visual/{artisan-strip.spec.ts,pages.ts}`,
+  `docs/{FEEDBACK.md,CODEX-CHANGES.md}`
+- Verified: production Chromium screenshots at 1440x900 and 390x844 showed
+  the ten-tile wall on Our Work and the unchanged wall layout on About and Our
+  Craft, with no horizontal overflow. The focused founder, wall and reveal
+  suites passed all 12 tests. `pnpm verify` passed typecheck, lint with the
+  existing `_meta` warning, the production build and all 29 form/SEO tests,
+  then reproduced the known parity result of 39 stale failures and 3 passing
+  Imprint snapshots. No baseline was regenerated.
+- Follow-up: the 39 pre-existing parity baselines still need a separate
+  deliberate review and refresh.
+
+## 2026-09-08: Remove the About founder experience badge
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed the "20+ Years of international hospitality experience"
+  badge from Alex's founder portrait and deleted all of its page and brand
+  styles. Removed the stale visual-test assertion that required the badge.
+- Files: `src/features/about/{ui/AboutPage.tsx,styles/about.module.css}`,
+  `src/shared/styles/brand.css`, `tests/visual/about-founders.spec.ts`,
+  `docs/{FEEDBACK.md,CODEX-CHANGES.md}`
+- Verified: production Chromium at 1440x900 and 390x844 showed the badge gone
+  while the founder photograph and copy remain, with no horizontal overflow.
+  Both About founder tests passed; the full verification result is recorded in
+  the artisan-wall entry above.
+- Follow-up: None.
+
+## 2026-09-08: Remove the About global-eye section
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed the complete "A global eye, grounded in place" section and
+  its three photographs, all associated responsive and reduced-motion styles,
+  its reveal test case, and its shared fail-open selector.
+- Files: `src/features/about/{ui/AboutPage.tsx,styles/about.module.css}`,
+  `src/shared/motion/useFailOpenReveal.ts`, `tests/visual/reveal.spec.ts`,
+  `docs/{FEEDBACK.md,CODEX-CHANGES.md}`
+- Verified: production Chromium at 1440x900 and 390x844 confirmed the section
+  is absent and the surrounding About content remains overflow-free. The
+  retained experience-image reveal test passed; the full verification result
+  is recorded in the artisan-wall entry above.
+- Follow-up: None.
+
 ## 2026-09-08: Rename the Finer Living hero kicker
 
 **Codex change**
