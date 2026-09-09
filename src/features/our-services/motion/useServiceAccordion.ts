@@ -44,11 +44,28 @@ export function useServiceAccordion(root: RefObject<HTMLElement | null>) {
 
     const running = new Map<HTMLDetailsElement, Animation>();
 
-    /** Hand the element back to the stylesheet once an animation is done. */
-    const settle = (panel: HTMLDetailsElement) => {
-      panel.style.height = '';
-      panel.style.overflow = '';
+    /*
+     * What the panel is *meant* to be, which is not the same as `panel.open`.
+     *
+     * A closing panel keeps `open === true` for the whole animation, because
+     * the content has to stay in the box while the box shrinks. Deciding from
+     * the DOM flag therefore made a second click during a close read as "it is
+     * open, close it" and start the close again — the panel stopped responding
+     * until you stopped clicking. This map is the source of truth for what a
+     * click should do; `panel.open` is only ever the rendering of it.
+     */
+    const intent = new WeakMap<HTMLDetailsElement, boolean>();
+    panels.forEach((panel) => intent.set(panel, panel.open));
+
+    /* Stop the running animation without letting its handlers fire. Removing it
+       from the map first is what makes the guard in `animateTo` reject it: a
+       cancel event is delivered asynchronously, so a stale handler would
+       otherwise land after the replacement had started and strip its styles. */
+    const stop = (panel: HTMLDetailsElement) => {
+      const animation = running.get(panel);
+      if (!animation) return;
       running.delete(panel);
+      animation.cancel();
     };
 
     const animateTo = (
@@ -57,34 +74,46 @@ export function useServiceAccordion(root: RefObject<HTMLElement | null>) {
       to: number,
       after?: () => void,
     ) => {
-      running.get(panel)?.cancel();
       panel.style.overflow = 'hidden';
       const animation = panel.animate(
         { height: [`${from}px`, `${to}px`] },
         { duration: DURATION, easing: EASE },
       );
       running.set(panel, animation);
-      animation.onfinish = () => {
-        after?.();
-        settle(panel);
+
+      const done = (finished: boolean) => {
+        if (running.get(panel) !== animation) return; // superseded
+        running.delete(panel);
+        if (finished) after?.();
+        panel.style.height = '';
+        panel.style.overflow = '';
       };
-      // A cancelled animation must not run `after`, or a panel interrupted
-      // mid-close would close after the click that reopened it.
-      animation.oncancel = () => settle(panel);
+      animation.onfinish = () => done(true);
+      animation.oncancel = () => done(false);
     };
 
     const open = (panel: HTMLDetailsElement) => {
-      if (panel.open) return;
+      if (intent.get(panel)) return;
+      intent.set(panel, true);
+
+      // Measure where it is now — mid-animation is fine and is the point —
+      // then stop that animation so the natural full height can be read.
       const from = panel.offsetHeight;
+      stop(panel);
+      panel.style.height = '';
       panel.open = true;
       animateTo(panel, from, panel.offsetHeight);
     };
 
     const close = (panel: HTMLDetailsElement) => {
-      if (!panel.open) return;
+      if (!intent.get(panel)) return;
+      intent.set(panel, false);
+
+      const from = panel.offsetHeight;
+      stop(panel);
+      panel.style.height = '';
       const summary = panel.querySelector('summary');
-      const to = summary ? summary.offsetHeight : 0;
-      animateTo(panel, panel.offsetHeight, to, () => {
+      animateTo(panel, from, summary ? summary.offsetHeight : 0, () => {
         panel.open = false;
       });
     };
@@ -100,11 +129,16 @@ export function useServiceAccordion(root: RefObject<HTMLElement | null>) {
       // element would otherwise have finished opening before we measured it.
       event.preventDefault();
 
-      const wasOpen = panel.open;
+      const wasOpen = intent.get(panel) ?? panel.open;
 
       if (instant()) {
         panels.forEach((other) => {
-          other.open = other === panel ? !wasOpen : false;
+          const next = other === panel ? !wasOpen : false;
+          intent.set(other, next);
+          stop(other);
+          other.style.height = '';
+          other.style.overflow = '';
+          other.open = next;
         });
         return;
       }
@@ -123,9 +157,13 @@ export function useServiceAccordion(root: RefObject<HTMLElement | null>) {
       if (!target) return;
 
       panels.forEach((panel) => {
-        if (panel !== target) panel.open = false;
+        stop(panel);
+        panel.style.height = '';
+        panel.style.overflow = '';
+        const next = panel === target;
+        intent.set(panel, next);
+        panel.open = next;
       });
-      target.open = true;
       target.scrollIntoView({ block: 'start', behavior: instant() ? 'auto' : 'smooth' });
     };
 
