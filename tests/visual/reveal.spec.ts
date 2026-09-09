@@ -16,10 +16,7 @@ import { NEXT_ORIGIN } from '../../playwright.config';
  * that matters: the reveal happens while the element is still on its way in,
  * not once it has been scrolled past.
  */
-const CASES = [
-  { route: '/about', selector: '.experience-image', settle: 2500 },
-  { route: '/about', selector: '.world-image', settle: 2500 },
-];
+const CASES = [{ route: '/about', selector: '.experience-image', settle: 2500 }];
 
 test.describe('scroll reveals', () => {
   /*

@@ -52,7 +52,7 @@ function isVisibleEnough(target: HTMLElement): boolean {
 
 const GROUPS: ReadonlyArray<readonly [string, readonly string[]]> = [
   [
-    '.rise, .place, .shot, .story-figure, .story-small, .story-detail, .experience-image, .world-image, .person, .principle, .title-mask',
+    '.rise, .place, .shot, .story-figure, .story-small, .story-detail, .experience-image, .person, .principle, .title-mask',
     ['in'],
   ],
   ['.service, .chapter', ['in-view']],

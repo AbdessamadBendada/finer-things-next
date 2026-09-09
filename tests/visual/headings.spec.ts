@@ -63,9 +63,6 @@ const KNOWN_LONG: Readonly<Record<string, Readonly<Record<string, number>>>> = {
     'Three objects. Three expressions of craft.': 3,
     'The Finer Living point of view.': 3,
   },
-  '/about': {
-    'A global eye, grounded in place.': 3,
-  },
 };
 
 type Heading = { text: string; lines: number };
