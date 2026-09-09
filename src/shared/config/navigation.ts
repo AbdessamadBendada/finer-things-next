@@ -26,16 +26,17 @@ export type NavLink = {
 const HOME: NavLink = { href: ROUTES.home, label: 'Home' };
 const OUR_WORK: NavLink = { href: ROUTES.ourWork, label: 'What we do' };
 /*
- * Labelled "Our craft" rather than "Our Craft" to match the sentence case the
- * rest of the menu uses. It sits directly after "What we do" in both the menu
- * and the footer because the two pages are halves of the same story: what we
- * make, then how it is made.
+ * Neither of these is in SITE_MENU: the burger is back to the seven it had
+ * before this round, on the client's instruction, until the naming is settled.
+ * "What we do" (/our-work), "Our craft" and "Our services" all read as the same
+ * promise when they sit side by side in one short list, and which of them gets
+ * renamed is not a call to make here.
+ *
+ * Both keep their footer link, so neither page is orphaned at a URL nobody can
+ * find. Labelled in sentence case to match the rest of the list, for whenever
+ * they go back in.
  */
 const OUR_CRAFT: NavLink = { href: ROUTES.ourCraft, label: 'Our craft' };
-/* Deliberately NOT in SITE_MENU. The burger already carries "What we do" for
-   /our-work, and the two read as the same thing side by side; the naming is
-   waiting on the client. The footer keeps the link so the page is reachable
-   and not orphaned. */
 const OUR_SERVICES: NavLink = { href: ROUTES.ourServices, label: 'Our services' };
 const PROJECTS: NavLink = { href: ROUTES.projects, label: 'Projects' };
 const ABOUT: NavLink = { href: ROUTES.about, label: 'About' };
@@ -73,7 +74,6 @@ export const FOOTER_LEGAL = [PRIVACY, TERMS, IMPRINT] as const;
 export const SITE_MENU = [
   HOME,
   OUR_WORK,
-  OUR_CRAFT,
   PROJECTS,
   ABOUT,
   FINER_LIVING,
