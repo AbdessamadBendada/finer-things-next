@@ -609,6 +609,99 @@ Layout and polish, plus one page rebuilt speculatively.
 - **Note:** no parity baseline was regenerated. The existing baseline set was
   already stale across the original 39 route and viewport combinations.
 
+### 33. Link the Finer Living hero to the collection site
+
+- **Page:** `/services/finer-living`
+- **Asked:** replace the hero scroll cue with an orange button below the intro
+  that opens the Finer Living collection site in a new tab.
+- **Read as:** preserve the existing hero copy, stack its lower content, and
+  turn "Explore the collection" into an external brand-accent action.
+- **Status:** ✅ Done
+- **Done:** the non-interactive scroll cue and its page CSS were removed. The
+  hero now has an `noopener noreferrer` external button beneath the intro.
+- **Note:** one shared `.btn-accent` modifier now provides the requested clay
+  fill and oxblood hover/focus state without changing the base button used
+  elsewhere on the site.
+
+### 34. Add a Finer Living collection gallery
+
+- **Page:** `/services/finer-living`
+- **Asked:** add a responsive image gallery after the manifesto with a centred
+  orange "See more" link to the collection site.
+- **Read as:** build the gallery from existing local Finer Living assets until
+  the client supplies the intended photography.
+- **Status:** ✅ Done
+- **Done:** a six-image, three-column desktop and two-column small-screen grid
+  now sits between the manifesto and materials, followed by the requested
+  external action.
+- **Note:** all six images are explicitly marked in code as placeholders. They
+  are existing, registered stand-ins and must be replaced with the client's own
+  photography when it becomes available.
+
+### 35. Move Material character earlier
+
+- **Page:** `/services/finer-living`
+- **Asked:** move the complete "Material character" section directly after the
+  new gallery.
+- **Read as:** change only its position in the page sequence, not its content or
+  internal markup.
+- **Status:** ✅ Done
+- **Done:** the original section now follows the gallery and precedes "Chosen
+  for more than appearance." Nothing inside the section changed.
+
+### 36. Remove the Finer Living point-of-view section
+
+- **Page:** `/services/finer-living`
+- **Asked:** remove the complete "The Finer Living point of view." section and
+  its page CSS.
+- **Read as:** delete the process section, its four numbered rows, and every
+  style used only by that section on this page.
+- **Status:** ✅ Done
+- **Done:** the section and its base, responsive and reduced-motion CSS are
+  gone. No `#process` link existed, so no link target had to be redirected.
+
+### 37. Rename the Finer Living story heading
+
+- **Page:** `/services/finer-living`
+- **Asked:** replace "Three objects. Three expressions of craft." with "From
+  first sketch to final unique design."
+- **Read as:** change only the story headline and bring the rendered-heading
+  test backlog into sync.
+- **Status:** ✅ Done
+- **Done:** the exact new headline is rendered. It remains three lines at 1440,
+  860 and 390 pixels, so the old three-line exemption was rekeyed to the new
+  text; the deleted process heading's exemption was removed.
+
+### 38. Make Discover the collection readable
+
+- **Page:** `/services/finer-living`
+- **Asked:** add a dark overlay strongest behind the copy instead of changing
+  the clay eyebrow colour.
+- **Read as:** preserve the established colours and darken the image locally
+  until the smallest overlay copy has dependable contrast.
+- **Status:** ✅ Done
+- **Done:** the project image now has a layered left-and-bottom scrim. Rendered
+  pixels directly behind the clay eyebrow measure **5.23:1** at 1440, 860 and
+  390 pixels.
+- **Note:** the page already had a bottom-only gradient despite the work order
+  saying there was no scrim. It measured as low as 1.0:1 and did not protect the
+  copy, so it was replaced rather than duplicated.
+
+### 39. Rename and left-align the Contact heading
+
+- **Page:** `/contact`
+- **Asked:** replace "Perhaps it begins with a place." with "Contact Finer
+  Things", remove the second-line indent, and keep the result within two lines.
+- **Read as:** retain the two-mask entrance treatment but make both deliberate
+  lines share the same left edge and heading colour.
+- **Status:** ✅ Done
+- **Done:** the H1 is now "Contact" over "Finer Things" with all obsolete
+  second-mask indentation and emphasis rules removed. It measures exactly two
+  lines at 1440, 860 and 390 pixels without horizontal overflow.
+- **Note:** the unchanged eyebrow immediately above it also says "Contact Finer
+  Things", so the same words intentionally appear twice in a row pending any
+  further client direction.
+
 ---
 
 ## Cross-cutting notes

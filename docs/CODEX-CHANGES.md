@@ -25,6 +25,36 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-09: Apply Finer Living and Contact review changes
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: replaced the Finer Living hero cue with an external accent button;
+  added a responsive six-image placeholder collection gallery and external
+  action; moved the unchanged materials section ahead of scope; removed the
+  complete point-of-view process section and its dead CSS; replaced the story
+  headline; and strengthened the collection preview scrim. Renamed the Contact
+  H1, removed its second-line indent and obsolete emphasis, and updated both
+  heading-test expectations that depended on changed copy.
+- Files: `src/features/services/{ui/FinerLivingPage.tsx,styles/finer-living.module.css}`,
+  `src/features/contact/{ui/ContactPage.tsx,styles/contact.module.css}`,
+  `src/shared/styles/{primitives.css,brand.css}`,
+  `tests/{seo/seo.spec.ts,visual/headings.spec.ts}`,
+  `docs/{FEEDBACK.md,CODEX-CHANGES.md}`
+- Verified: production Chromium screenshots at 1440x900 and 390x844 showed the
+  final Finer Living and Contact layouts with no horizontal overflow; rendered
+  checks at 860px also passed. The new story headline is three lines at all
+  three widths and the Contact H1 is exactly two. The clay project eyebrow has
+  5.23:1 contrast against the pixels directly behind it. The 43-case heading
+  suite passed. On the final `pnpm verify`, typecheck, production build and all
+  29 form/SEO tests passed; lint reported only the existing `_meta` warning.
+  Parity then reproduced the known stale state with 39 failures and the 3
+  Imprint snapshots passing. No baseline was regenerated.
+- Follow-up: replace the six gallery stand-ins when the client supplies the
+  intended photography. The 39 pre-existing parity baselines still need a
+  separate deliberate review and refresh.
+
 ## 2026-09-08: Replace the Our Work artisan strip with the shared wall
 
 **Codex change**
