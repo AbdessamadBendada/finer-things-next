@@ -14,7 +14,7 @@ import styles from '../styles/bespoke-accessories.module.css';
  */
 export function BespokeAccessoriesShell({ children }: { children: ReactNode }) {
   const root = usePageRoot();
-  useServicePageMotion(root, { projectDrift: { x: 12, y: 28, scale: 1.025 } });
+  useServicePageMotion(root);
 
   return (
     <div ref={root} className={styles.page}>

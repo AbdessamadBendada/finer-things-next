@@ -92,7 +92,7 @@
   .page :global(.intro-note) {margin:34px 0 0}
   .page :global(.service) {min-height:78svh}
   .page :global(.service-content) {padding-bottom:40px}
-  .page :global(.service h2) {font-size:clamp(3.4rem,14vw,5.35rem);line-height:.92}
+  .page :global(.service h2) {font-size:clamp(3.05rem,12.4vw,5.1rem);line-height:.92}
   .page :global(.service h2 em) {margin-left:.16em}
   .page :global(.service-link) {display:inline-block;margin-top:28px}
   .page :global(.thread) {grid-template-columns:1fr}
@@ -100,7 +100,7 @@
   .page :global(.thread-item+.thread-item) {border-left:0;border-top:1px solid rgba(41,40,31,.2)}
 }
 @media(max-width:520px) {
-  .page :global(.hero h1) {max-width:8.5ch;font-size:clamp(3.25rem,13.8vw,4.55rem)}
+  .page :global(.hero h1) {max-width:8.5ch;font-size:clamp(3.4rem,14.4vw,4.7rem)}
   .page :global(.hero-line:nth-child(2)>span) {margin-left:0}
 }
 @media(prefers-reduced-motion:reduce) {

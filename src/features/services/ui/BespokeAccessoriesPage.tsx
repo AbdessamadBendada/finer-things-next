@@ -1,7 +1,5 @@
-import Link from 'next/link';
-
-import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
+import { OurProcess } from '@/shared/ui/OurProcess';
 import { BespokeAccessoriesShell } from './BespokeAccessoriesShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
@@ -19,11 +17,7 @@ export function BespokeAccessoriesPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="hero-kicker eyebrow">
-              <Link className="context-link" href={ROUTES.ourWork}>
-                What we do / 01
-              </Link>
-            </div>
+            <div className="hero-kicker eyebrow">Made for your place</div>
             <h1>
               <span className="hero-line">
                 <span>Bespoke</span>
@@ -174,69 +168,7 @@ export function BespokeAccessoriesPage() {
             </div>
           </div>
         </section>
-        {/* PROCESS */}
-        <section className="process" id="process">
-          <div className="wrap">
-            <div className="process-title">
-              <h2 className="rise">A considered journey.</h2>
-              <p className="rise">
-                From the first conversation to project rollout, each decision is guided by the
-                property’s identity, practical requirements and material character.
-              </p>
-            </div>
-            <div className="steps">
-              <article className="step rise">
-                <span className="step-num">01</span>
-                <h3>Understanding the story</h3>
-                <p>The property, its setting and the experience it wants to create.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">02</span>
-                <h3>Shaping the direction</h3>
-                <p>A visual and material language for its bespoke touchpoints.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">03</span>
-                <h3>Developing the details</h3>
-                <p>Colours, materials, forms, finishes and stitching considered together.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">04</span>
-                <h3>Supporting the rollout</h3>
-                <p>
-                  Customization and project rollout support shaped around each project’s
-                  requirements.
-                </p>
-              </article>
-            </div>
-          </div>
-        </section>
-        {/* SELECTED WORK */}
-        <section className="project" aria-labelledby="project-title">
-          <div className="project-bg" id="projectBg">
-            <Media
-              src="/assets/0678_Marsa_Al_Arab_Lobby_4_b7af1dee.webp"
-              alt="Bespoke accessories and sculptural objects at Marsa Al Arab"
-              sizes="100vw"
-            />
-          </div>
-          <div className="wrap project-copy">
-            <div className="eyebrow rise">Selected work</div>
-            <h2 id="project-title">
-              <Link className="context-link" href={ROUTES.project('marsa-al-arab')}>
-                <span className="title-mask">
-                  <span>Marsa Al Arab</span>
-                </span>
-              </Link>
-            </h2>
-            <div className="project-meta rise">
-              <span>Dubai</span>
-              <span>Selected details</span>
-              <span>Hospitality</span>
-            </div>
-          </div>
-        </section>
-        {/* PROJECT CTA */}
+        <OurProcess />
         <SiteCta />
       </main>
     </BespokeAccessoriesShell>

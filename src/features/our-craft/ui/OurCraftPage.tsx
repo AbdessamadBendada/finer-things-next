@@ -1,8 +1,9 @@
 import { Media } from '@/shared/ui/Media';
 import { ArtisanWall } from '@/shared/ui/ArtisanWall';
 import { SiteCta } from '@/shared/layout/SiteCta';
+import { PROCESS_STEPS } from '@/shared/content/process.content';
 
-import { DETAILS, MATERIALS, PROCESS_STEPS } from '../content/materials.content';
+import { DETAILS, MATERIALS } from '../content/materials.content';
 import { MaterialCards } from './MaterialCards';
 import { OurCraftShell } from './OurCraftShell';
 

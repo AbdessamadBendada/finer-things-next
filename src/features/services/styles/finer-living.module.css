@@ -35,7 +35,7 @@
 .page :global(.hero-intro) {max-width:53ch;color:rgba(243,240,234,.82);font-size: var(--text-body)}
 .page :global(.manifesto) {padding:clamp(110px,17vh,190px) 0;background:var(--paper)}
 .page :global(.manifesto-grid) {display:grid;grid-template-columns:.55fr 1.45fr;gap:8vw;align-items:start}
-.page :global(.manifesto h2) {max-width:18ch;font:500 clamp(2.8rem,5.3vw,5.5rem)/.98 var(--font-display),serif;letter-spacing:-.035em}
+.page :global(.manifesto h2) {max-width:27ch;font:500 clamp(2.8rem,5.3vw,5.5rem)/.98 var(--font-display),serif;letter-spacing:-.035em}
 .page :global(.manifesto h2 em) {color:var(--oxblood);font-weight:400}
 .page :global(.word-mask) {display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.06em;margin-bottom:-.06em}
 .page :global(.word-mask>span) {display:inline-block;opacity:0;transform:translateY(108%);transition:opacity .6s ease,transform .85s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i)*52ms)}
@@ -51,7 +51,7 @@
 }
 .page :global(.scope) {background:var(--stone);padding:clamp(90px,13vh,145px) 0}
 .page :global(.scope-head) {display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:62px}
-.page :global(.scope-head h2) {max-width:12ch;font:500 clamp(2.8rem,4.8vw,4.8rem)/.98 var(--font-display),serif;letter-spacing:-.03em}
+.page :global(.scope-head h2) {max-width:18ch;font:500 clamp(2.8rem,4.8vw,4.8rem)/.98 var(--font-display),serif;letter-spacing:-.03em}
 .page :global(.scope-head p) {max-width:47ch;color:var(--soft)}
 .page :global(.scope-row) {position:relative;display:grid;grid-template-columns:72px .85fr 1.15fr;gap:35px;align-items:start;padding:36px 0;transition:background .45s ease}
 .page :global(.scope-row::before) {content:"";position:absolute;left:0;right:0;top:0;height:1px;background:rgba(41,40,31,.19);transform:scaleX(0);transform-origin:left;transition:transform 1.15s cubic-bezier(.16,1,.3,1)}
@@ -68,7 +68,7 @@
 }
 .page :global(.story) {padding:clamp(110px,17vh,190px) 0;background:var(--ink);color:var(--paper);overflow:hidden}
 .page :global(.story-head) {display:flex;justify-content:space-between;align-items:end;gap:50px;margin-bottom:74px}
-.page :global(.story-head h2) {max-width:14ch;font:500 clamp(3rem,5vw,5rem)/.95 var(--font-display),serif;letter-spacing:-.035em}
+.page :global(.story-head h2) {max-width:21ch;font:500 clamp(3rem,5vw,5rem)/.95 var(--font-display),serif;letter-spacing:-.035em}
 .page :global(.story-head p) {max-width:36ch;color:rgba(243,240,234,.6);font-size: var(--text-body)}
 .page :global(.story-grid) {display:grid;grid-template-columns:1.35fr .65fr;grid-template-rows:auto auto;gap:18px;align-items:start}
 .page :global(.story-figure) {position:relative;overflow:hidden;background:#1f1e18;clip-path:inset(0 0 100% 0);
@@ -141,6 +141,9 @@
 .page :global(.closing h2 .cta-line:nth-child(2)>span) {transition-delay:.12s}
 .page :global(.closing p) {max-width:46ch;margin:28px auto 40px;color:var(--soft)}
 @media(max-width:860px) {
+  /* Two-line ceiling: the display scale below the tablet breakpoint is wider than the phone column. */
+  .page :global(.manifesto h2) {font-size:min(8.6vw,2.8rem)}
+  .page :global(.story-head h2) {font-size:min(9.6vw,3rem)}
   .page :global(.hero) {min-height:720px}
   .page :global(.hero-content) {padding-bottom:38px}
   .page :global(.hero h1) {font-size:clamp(4rem,18vw,6.3rem)}

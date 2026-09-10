@@ -25,6 +25,125 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-10: Restore mobile page-title hierarchy
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: increased the affected Home, What we do and project-page H1 sizes
+  on phone widths while reducing the competing Home carousel, What we do
+  service and project chapter headings. Page titles now remain the dominant
+  display level without changing desktop typography.
+- Files: `src/features/{home,our-work,projects}/styles`,
+  `docs/CODEX-CHANGES.md`
+- Verified: typecheck and production build passed; lint passed with the
+  existing `_meta` warning; the responsive heading suite passed; `git diff
+--check` passed.
+- Follow-up: the repository's stale visual-parity baselines still need a
+  separate deliberate review and refresh before these intentional typography
+  changes can be approved against updated snapshots.
+
+## 2026-09-10: Stabilize the home filmstrip endpoint controls
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: made the home filmstrip controls follow the active card index rather
+  than its pixel scroll position. The previous rule could leave Next enabled
+  at the fifth card after the aligned-track change, allowing repeated clicks
+  to jump between the final cards.
+- Files: `src/features/home/motion/useFilmstripSlider.ts`,
+  `docs/CODEX-CHANGES.md`
+- Verified: typecheck and production build passed; lint passed with the
+  existing `_meta` warning; `git diff --check` passed.
+- Follow-up: the repository's stale visual-parity baselines still need a
+  separate deliberate review and refresh before the preceding visual alignment
+  change can be approved against updated snapshots.
+
+## 2026-09-10: Align the home featured-project strip
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed the active home filmstrip's unnecessary divider and aligned
+  its first card with the featured section's content column. Card dimensions,
+  gaps and the position of the remaining cards are unchanged.
+- Files: `src/shared/styles/brand.css`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck and production build passed; lint passed with the
+  existing `_meta` warning; `git diff --check` passed.
+- Follow-up: the repository's stale visual-parity baselines still need a
+  separate deliberate review and refresh before this intentional layout change
+  can be approved against updated snapshots.
+
+## 2026-09-10: Add collection action to Finer Living preview
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: added the existing external “Explore the collection” accent button
+  to the Discover the collection preview. Both buttons now share one URL
+  constant, the same text, styling, new-tab behavior and security attributes.
+- Files: `src/features/services/ui/FinerLivingPage.tsx`,
+  `src/shared/styles/brand.css`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck and production build passed; lint passed with the
+  existing `_meta` warning; `git diff --check` passed.
+- Follow-up: the repository's stale visual-parity baselines still need a
+  separate deliberate review and refresh before this intentional layout change
+  can be approved against updated snapshots.
+
+## 2026-09-10: Remove service-page Selected Work sections
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed the Selected Work sections, project imagery and project
+  links from Bespoke Accessories and Styling & Curation. Deleted their dead
+  page-specific styles, removed the obsolete SEO link expectations, and made
+  selected-project motion optional because Finer Living remains its only user.
+- Files: `src/features/services/{ui/BespokeAccessoriesPage.tsx,ui/StylingCurationPage.tsx,ui/BespokeAccessoriesShell.tsx,ui/StylingCurationShell.tsx,motion/useServicePageMotion.ts,styles/bespoke-accessories.module.css,styles/styling-curation.module.css}`,
+  `tests/seo/seo.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck and production build passed; lint passed with the
+  existing `_meta` warning; `git diff --check` passed.
+- Follow-up: the repository's stale visual-parity baselines still need a
+  separate deliberate review and refresh before this intentional removal can
+  be approved against updated snapshots.
+
+## 2026-09-10: Share the What we do process on service pages
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: replaced the bespoke-accessories and styling-curation four-card
+  workflows with the exact seven-step Our process section from What we do.
+  Moved the process copy and markup into shared modules, removed obsolete
+  service-only workflow styles and their unused line-reveal trigger, and gave
+  the reused section its shared rows styling on both service pages.
+- Files: `src/shared/{content/process.content.ts,ui/OurProcess.tsx,styles/brand.css}`,
+  `src/features/{our-work,our-craft,services}`
+- Verified: typecheck and production build passed; lint passed with the
+  existing `_meta` warning; `git diff --check` passed.
+- Follow-up: the repository's stale visual-parity baselines still need a
+  separate deliberate review and refresh before this intentional layout change
+  can be approved against updated snapshots.
+
+## 2026-09-10: Make remaining service hero eyebrows service-specific
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: replaced the linked What we do-number hero eyebrows on Bespoke
+  Accessories and Styling & Curation with the client-approved plain-text labels
+  "Made for your place" and "Final touch". Retained their existing project
+  links and removed only the obsolete SEO expectations for the two hero links.
+- Files: `src/features/services/ui/{BespokeAccessoriesPage.tsx,StylingCurationPage.tsx}`,
+  `tests/seo/seo.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: all 30 form and SEO tests passed. `pnpm verify` passed typecheck,
+  lint (with the existing `_meta` warning), and the production build before
+  parity reproduced the existing stale legacy-snapshot failure on Home, ahead
+  of the affected service pages. `git diff --check` passed.
+- Follow-up: refresh the stale visual-parity baselines in a separate deliberate
+  review, then capture and approve the intended service-eyebrow differences.
+
 ## 2026-09-09: Apply Finer Living and Contact review changes
 
 **Codex change**

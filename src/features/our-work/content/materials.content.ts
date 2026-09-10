@@ -80,14 +80,3 @@ export const DETAILS: readonly MaterialCard[] = [
     alt: 'Contrast saddle stitching running along a leather edge',
   },
 ];
-
-/** The journey from first conversation to a finished, installed piece. */
-export const PROCESS_STEPS: readonly string[] = [
-  'Initial Research & Contextual Understanding',
-  'Scouting unique partnerships & concept development with artisans',
-  'Initial Design Pitching',
-  'Prototyping & Sampling',
-  'Production & Craftsmanship Execution',
-  'Delivery & Seamless Installation',
-  'Ongoing Support & Post-Completion Service',
-];

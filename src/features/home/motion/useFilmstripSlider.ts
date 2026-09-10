@@ -119,8 +119,13 @@ export function useFilmstripSlider(root: RefObject<HTMLElement | null>, enabled 
         progress.style.transform = `scaleX(${Math.max(1 / cards.length, ratio)})`;
       }
 
-      if (previous) previous.disabled = scroller.scrollLeft <= 1;
-      if (next) next.disabled = travel <= 0 || scroller.scrollLeft >= travel - 1;
+      // The first and final cards can be intentionally off-centre when the
+      // strip aligns with the page column. Pixel-based end detection then
+      // leaves an arrow enabled at a logical endpoint. The active card is the
+      // source of truth for both controls, so the final next click is always a
+      // no-op rather than a jump back through the strip.
+      if (previous) previous.disabled = active === 0;
+      if (next) next.disabled = active === cards.length - 1;
     };
 
     const schedule = () => {
@@ -130,7 +135,10 @@ export function useFilmstripSlider(root: RefObject<HTMLElement | null>, enabled 
 
     /** Scrolls one card in `direction`, letting the snap points do the landing. */
     const step = (direction: 1 | -1) => {
-      const target = cards[Math.min(cards.length - 1, Math.max(0, active + direction))];
+      const targetIndex = Math.min(cards.length - 1, Math.max(0, active + direction));
+      if (targetIndex === active) return;
+
+      const target = cards[targetIndex];
       if (!target) return;
       const view = scroller.getBoundingClientRect();
       const box = target.getBoundingClientRect();

@@ -2,6 +2,8 @@ import { Media } from '@/shared/ui/Media';
 import { FinerLivingShell } from './FinerLivingShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
+const FINER_LIVING_COLLECTION_URL = 'https://finerlivingcollection.com';
+
 export function FinerLivingPage() {
   return (
     <FinerLivingShell>
@@ -30,11 +32,11 @@ export function FinerLivingPage() {
             <div className="hero-bottom">
               <p className="hero-intro">
                 A curated selection of timeless pieces where exceptional craftsmanship meets
-                modern luxury, each chosen for its story and enduring quality.
+                modern luxury, each piece chosen for its story and enduring quality.
               </p>
               <a
                 className="btn btn-accent"
-                href="https://finerlivingcollection.com"
+                href={FINER_LIVING_COLLECTION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -110,7 +112,7 @@ export function FinerLivingPage() {
             <div className="gallery-action rise">
               <a
                 className="btn btn-accent"
-                href="https://finerlivingcollection.com"
+                href={FINER_LIVING_COLLECTION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -279,6 +281,16 @@ export function FinerLivingPage() {
               <span>Timeless pieces</span>
               <span>Exceptional craftsmanship</span>
               <span>Modern luxury</span>
+            </div>
+            <div className="project-action">
+              <a
+                className="btn btn-accent"
+                href="https://finerlivingcollection.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Explore the collection
+              </a>
             </div>
           </div>
         </section>

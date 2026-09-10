@@ -49,18 +49,15 @@ const KNOWN_LONG: Readonly<Record<string, Readonly<Record<string, number>>>> = {
     'Art Deco geometry meets the precision of Japanese craft.': 3,
     'Precision is felt in the quietest moments.': 3,
   },
-  '/services/bespoke-accessories': {
-    'The smallest object can carry the whole story.': 3,
-    'From narrative to final placement.': 3,
-  },
+  /*
+   * The last of the three service pages still over the ceiling, and the only
+   * one where a wider cap does not help: at 390px the column is 342px, and
+   * fitting 59 characters into two lines there needs the display face down at
+   * roughly 22px, which is body size. Two lines from 480px up; three below.
+   * Shorter copy is the only remaining fix, and the copy is the client's.
+   */
   '/services/styling-curation': {
-    'Styling & Curation': 3,
     'A space becomes memorable when every detail feels connected.': 3,
-  },
-  '/services/finer-living': {
-    'Objects with a story, made for the rituals of daily life.': 3,
-    'Chosen for more than appearance.': 3,
-    'From first sketch to final unique design.': 3,
   },
 };
 

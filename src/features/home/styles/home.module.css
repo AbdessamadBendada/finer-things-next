@@ -294,7 +294,7 @@
   .page :global(.filmstrip-track) {padding:0 7vw;gap:14px}
   .page :global(.film-card) {flex-basis:86vw;height:65vh}
   .page :global(.film-copy p) {display:none}
-  .page :global(.film-copy h3) {font-size:clamp(3rem,13vw,4.7rem)}
+  .page :global(.film-copy h3) {font-size:clamp(2.55rem,10.5vw,4.2rem)}
 }
 .page :global(.break) {position:relative;height:84vh;min-height:520px;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .page :global(.break .bg) {position:absolute;inset:-16% 0;z-index:0;will-change:transform}
@@ -436,7 +436,7 @@
   .page :global(.hero) {min-height:720px}
   .page :global(.hero-copy) {left:24px;bottom:36px;width:calc(100vw - 48px)}
   .page :global(.word) {top:20px;left:24px;right:24px}
-  .page :global(.hero-copy h1) {font-size:clamp(2.45rem,10vw,3.4rem)}
+  .page :global(.hero-copy h1) {font-size:clamp(2.9rem,11.8vw,3.7rem)}
   .page :global(.purpose h2) {font-size:clamp(2.15rem,8.5vw,3.5rem)}
 }
 @media(max-height:500px) and (orientation:landscape) {

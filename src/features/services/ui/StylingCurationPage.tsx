@@ -1,7 +1,5 @@
-import Link from 'next/link';
-
-import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
+import { OurProcess } from '@/shared/ui/OurProcess';
 import { StylingCurationShell } from './StylingCurationShell';
 import { SiteCta } from '@/shared/layout/SiteCta';
 
@@ -19,11 +17,7 @@ export function StylingCurationPage() {
             />
           </div>
           <div className="wrap hero-content">
-            <div className="hero-kicker eyebrow">
-              <Link className="context-link" href={ROUTES.ourWork}>
-                What we do / 02
-              </Link>
-            </div>
+            <div className="hero-kicker eyebrow">Final touch</div>
             <h1>
               <span className="hero-line">
                 <span>Styling</span>
@@ -174,66 +168,7 @@ export function StylingCurationPage() {
             </div>
           </div>
         </section>
-        {/* PROCESS */}
-        <section className="process" id="process">
-          <div className="wrap">
-            <div className="process-title">
-              <h2 className="rise">From story to setting.</h2>
-              <p className="rise">
-                A clear narrative guides the selections while customizable project support
-                responds to the needs of each space.
-              </p>
-            </div>
-            <div className="steps">
-              <article className="step rise">
-                <span className="step-num">01</span>
-                <h3>Reading the space</h3>
-                <p>Its purpose, setting and the experience it wants to create.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">02</span>
-                <h3>Building the narrative</h3>
-                <p>A clear point of view connecting the property and its story.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">03</span>
-                <h3>Curating the layers</h3>
-                <p>Objects, books, materials and florals considered together.</p>
-              </article>
-              <article className="step rise">
-                <span className="step-num">04</span>
-                <h3>Bringing it together</h3>
-                <p>Project fulfillment support adapted to the space and its requirements.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-        {/* SELECTED WORK */}
-        <section className="project" aria-labelledby="project-title">
-          <div className="project-bg" id="projectBg">
-            <Media
-              src="/assets/0686_Waldorf_Astoria_Osaka_16_948b5f8c.webp"
-              alt="A considered interior detail at Waldorf Astoria Osaka"
-              sizes="100vw"
-            />
-          </div>
-          <div className="wrap project-copy">
-            <div className="eyebrow rise">Selected work</div>
-            <h2 id="project-title">
-              <Link className="context-link" href={ROUTES.project('waldorf-astoria-osaka')}>
-                <span className="title-mask">
-                  <span>Waldorf Astoria Osaka</span>
-                </span>
-              </Link>
-            </h2>
-            <div className="project-meta rise">
-              <span>Osaka</span>
-              <span>Selected details</span>
-              <span>Hospitality</span>
-            </div>
-          </div>
-        </section>
-        {/* PROJECT CTA */}
+        <OurProcess />
         <SiteCta />
       </main>
     </StylingCurationShell>

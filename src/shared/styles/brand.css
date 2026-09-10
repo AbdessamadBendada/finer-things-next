@@ -380,9 +380,18 @@ body.menu-open [data-page] .menu-toggle {
 
 /* ---------------- Featured: no rule above the filmstrip ----------------
    The hairline sat between the section's copy and the first project and cut
-   the two apart. Addressed by id for the same specificity reason. */
-[data-page='home'] #filmstripScroll {
+   the two apart. The slider is the active home treatment; keep the equivalent
+   scroll-mode frame clear as well. */
+[data-page='home'] #filmstripScroll,
+[data-page='home'] #collection .filmstrip-slider {
   border-top: 0;
+}
+
+/* The first featured project begins on the same vertical edge as the section
+   copy: 44px inside the centred 1280px home wrap. Cards after it retain their
+   existing width and gap in the horizontal strip. */
+[data-page='home'] #collection .filmstrip-slider .filmstrip-track {
+  padding-left: max(44px, calc(50vw - 596px));
 }
 
 /* ---------------- The footer carries the mark, not the words ----------------
@@ -698,14 +707,14 @@ body.menu-open [data-page] .menu-toggle {
 
    Two columns rather than three: those rows carry a title and a description,
    and the process steps are titles only. */
-[data-page='our-work'] .process-steps,
+[data-page] .shared-process .process-steps,
 [data-page='our-craft'] .process-steps {
   list-style: none;
   margin: clamp(48px, 7vh, 78px) 0 0;
   padding: 0;
 }
 
-[data-page='our-work'] .process-step,
+[data-page] .shared-process .process-step,
 [data-page='our-craft'] .process-step {
   position: relative;
   display: grid;
@@ -716,7 +725,19 @@ body.menu-open [data-page] .menu-toggle {
   transition: background 0.45s ease;
 }
 
-[data-page='our-work'] .process-step::before,
+[data-page] .shared-process .process-step::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: rgba(41, 40, 31, 0.19);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 [data-page='our-craft'] .process-step::before {
   content: '';
   position: absolute;
@@ -731,24 +752,27 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 /* `.rise` is given `in` when it reveals, exactly as the scope rows are. */
-[data-page='our-work'] .process-step.in::before,
+[data-page] .shared-process .process-step.in::before {
+  transform: scaleX(1);
+}
+
 [data-page='our-craft'] .process-step.in::before {
   transform: scaleX(1);
 }
 
-[data-page='our-work'] .process-step:last-child,
+[data-page] .shared-process .process-step:last-child,
 [data-page='our-craft'] .process-step:last-child {
   border-bottom: 1px solid rgba(41, 40, 31, 0.19);
 }
 
-[data-page='our-work'] .process-number,
+[data-page] .shared-process .process-number,
 [data-page='our-craft'] .process-number {
   font-size: var(--text-eyebrow-sm);
   letter-spacing: 0.16em;
   color: var(--clay);
 }
 
-[data-page='our-work'] .process-label,
+[data-page] .shared-process .process-label,
 [data-page='our-craft'] .process-label {
   font:
     500 clamp(1.6rem, 2.7vw, 2.7rem) / 1.04 var(--font-display),
@@ -759,29 +783,72 @@ body.menu-open [data-page] .menu-toggle {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  [data-page='our-work'] .process-step:hover,
+  [data-page] .shared-process .process-step:hover,
   [data-page='our-craft'] .process-step:hover {
     background: rgba(243, 240, 234, 0.22);
   }
 
-  [data-page='our-work'] .process-label,
+  [data-page] .shared-process .process-label,
   [data-page='our-craft'] .process-label {
     transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  [data-page='our-work'] .process-step:hover .process-label,
+  [data-page] .shared-process .process-step:hover .process-label,
   [data-page='our-craft'] .process-step:hover .process-label {
     transform: translateX(9px);
   }
 }
 
 @media (max-width: 720px) {
-  [data-page='our-work'] .process-step,
+  [data-page] .shared-process .process-step,
   [data-page='our-craft'] .process-step {
     grid-template-columns: 42px 1fr;
     gap: 17px;
     padding: 26px 0;
   }
+}
+
+/* The service pages use the same shared process as What we do. Their legacy
+   styles only covered the removed four-card workflows, so the section base
+   lives here with the reusable rows. */
+[data-page='bespoke-accessories'] .shared-process,
+[data-page='styling-curation'] .shared-process {
+  background: var(--stone);
+  padding: clamp(105px, 16vh, 170px) 0;
+}
+
+[data-page='bespoke-accessories'] .shared-process .continuity-head,
+[data-page='styling-curation'] .shared-process .continuity-head {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 8vw;
+  align-items: start;
+  margin-bottom: 70px;
+}
+
+[data-page='bespoke-accessories'] .shared-process h2,
+[data-page='styling-curation'] .shared-process h2 {
+  max-width: 34ch;
+  font: 500 clamp(2.2rem, 3.9vw, 4rem) / 0.96 var(--font-display), serif;
+  letter-spacing: -0.035em;
+}
+
+[data-page='bespoke-accessories'] .shared-process h2 em,
+[data-page='styling-curation'] .shared-process h2 em {
+  color: var(--oxblood);
+  font-weight: 400;
+}
+
+[data-page='bespoke-accessories'] .shared-process .continuity-note,
+[data-page='styling-curation'] .shared-process .continuity-note {
+  max-width: 43ch;
+  color: var(--soft);
+}
+
+/* The collection preview repeats the hero's external action; this wrapper
+   supplies its section spacing without introducing a second button treatment. */
+[data-page='finer-living'] .project-action {
+  margin-top: 32px;
 }
 
 /* ---------------- About: the founder portraits ----------------

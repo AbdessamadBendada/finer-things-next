@@ -44,7 +44,7 @@ export const SERVICES: readonly Service[] = [
     slug: 'bespoke-accessories',
     number: '01',
     name: 'Bespoke Accessories',
-    lede: 'The details guests touch, designed and produced for one property only.',
+    lede: 'The details guests touch. Every hanger, tray and bill folder individually designed and produced for one property only.',
     statement:
       'We translate a property’s architecture, heritage and sense of place into distinctive accessories, considered as part of the experience, never added as an afterthought.',
     scope: [
@@ -79,7 +79,7 @@ export const SERVICES: readonly Service[] = [
     slug: 'styling-curation',
     number: '02',
     name: 'Styling & Curation',
-    lede: 'Objects, art and florals composed so every room feels like the place it is in.',
+    lede: 'Books, objects, art and florals found with 100+ artisans around the world and arranged so every lobby and suite feels as unique as their story.',
     statement:
       'Finer Things brings styling and storytelling together, sourcing the unexpected and composing each layer around the identity of the place.',
     scope: [
@@ -114,7 +114,7 @@ export const SERVICES: readonly Service[] = [
     slug: 'finer-living',
     number: '03',
     name: 'Finer Living',
-    lede: 'The ready-made collection: European craftsmanship, in stock and fast to ship.',
+    lede: 'The ready-made collection by Finer Things where european craftsmanship meets design: wood, marble and glass, in stock and fast to ship.',
     statement:
       'Finer Living carries the Finer Things point of view into a collection of distinctive pieces, bringing material character and considered design into the home.',
     scope: [

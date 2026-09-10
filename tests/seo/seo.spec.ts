@@ -98,14 +98,6 @@ const EXPECTED_CONTEXTUAL_LINKS: Readonly<
     { href: ROUTES.projects, label: 'Selected project' },
     { href: ROUTES.project('marsa-al-arab'), label: 'Jumeirah Marsa Al Arab' },
   ],
-  [ROUTES.service('bespoke-accessories')]: [
-    { href: ROUTES.ourWork, label: 'What we do / 01' },
-    { href: ROUTES.project('marsa-al-arab'), label: 'Marsa Al Arab' },
-  ],
-  [ROUTES.service('styling-curation')]: [
-    { href: ROUTES.ourWork, label: 'What we do / 02' },
-    { href: ROUTES.project('waldorf-astoria-osaka'), label: 'Waldorf Astoria Osaka' },
-  ],
 };
 const EXPECTED_H1: Readonly<Record<string, string>> = {
   [ROUTES.home]: 'Every place should tell a story.',

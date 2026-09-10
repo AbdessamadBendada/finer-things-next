@@ -14,7 +14,7 @@ import styles from '../styles/styling-curation.module.css';
  */
 export function StylingCurationShell({ children }: { children: ReactNode }) {
   const root = usePageRoot();
-  useServicePageMotion(root, { projectDrift: { x: 8, y: 24, scale: 1.025 } });
+  useServicePageMotion(root);
 
   return (
     <div ref={root} className={styles.page}>
