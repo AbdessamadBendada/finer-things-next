@@ -25,6 +25,19 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-11: Update burger-menu craft and services links
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: replaced the burger menu's What we do link with Our craft and added
+  Our services immediately below it. Our craft intentionally links to the
+  existing What we do route (`/our-work`); footer navigation is unchanged.
+- Files: `src/shared/config/navigation.ts`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck passed; lint passed with the existing `_meta` warning;
+  `git diff --check` passed.
+- Follow-up: None.
+
 ## 2026-09-10: Restore mobile page-title hierarchy
 
 **Codex change**

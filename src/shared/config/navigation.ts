@@ -25,17 +25,7 @@ export type NavLink = {
 
 const HOME: NavLink = { href: ROUTES.home, label: 'Home' };
 const OUR_WORK: NavLink = { href: ROUTES.ourWork, label: 'What we do' };
-/*
- * Neither of these is in SITE_MENU: the burger is back to the seven it had
- * before this round, on the client's instruction, until the naming is settled.
- * "What we do" (/our-work), "Our craft" and "Our services" all read as the same
- * promise when they sit side by side in one short list, and which of them gets
- * renamed is not a call to make here.
- *
- * Both keep their footer link, so neither page is orphaned at a URL nobody can
- * find. Labelled in sentence case to match the rest of the list, for whenever
- * they go back in.
- */
+const OUR_WORK_AS_CRAFT: NavLink = { href: ROUTES.ourWork, label: 'Our craft' };
 const OUR_CRAFT: NavLink = { href: ROUTES.ourCraft, label: 'Our craft' };
 const OUR_SERVICES: NavLink = { href: ROUTES.ourServices, label: 'Our services' };
 const PROJECTS: NavLink = { href: ROUTES.projects, label: 'Projects' };
@@ -73,7 +63,8 @@ export const FOOTER_LEGAL = [PRIVACY, TERMS, IMPRINT] as const;
 
 export const SITE_MENU = [
   HOME,
-  OUR_WORK,
+  OUR_WORK_AS_CRAFT,
+  OUR_SERVICES,
   PROJECTS,
   ABOUT,
   FINER_LIVING,
