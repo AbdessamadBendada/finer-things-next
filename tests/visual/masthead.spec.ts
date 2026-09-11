@@ -112,7 +112,17 @@ test.describe('masthead', () => {
   });
 
   test('the menu is the same on every page, and marks the current one', async ({ page }) => {
-    const labels = ['Home', 'What we do', 'Projects', 'About', 'Finer Living', 'Contact'];
+    const labels = [
+      'Home',
+      'Our craft',
+      'Explore all services',
+      'Bespoke accessories',
+      'Styling & curation',
+      'Finer Living',
+      'Projects',
+      'About',
+      'Contact',
+    ];
 
     for (const route of ['/', '/about', '/contact', '/privacy']) {
       await page.goto(`${NEXT_ORIGIN}${route}`, { waitUntil: 'domcontentloaded' });
@@ -126,6 +136,44 @@ test.describe('masthead', () => {
     await page.goto(`${NEXT_ORIGIN}/about`, { waitUntil: 'domcontentloaded' });
     await page.getByRole('button', { name: 'Open menu' }).click();
     await expect(page.locator('#mobileMenu a[aria-current="page"]')).toHaveText('About');
+
+    // One trigger reveals every services destination, including the overview.
+    await expect(page.locator('.mobile-menu-group')).toHaveCount(1);
+    const disclosure = page.getByRole('button', { name: 'Our services' });
+    await expect(disclosure).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('.mobile-menu-submenu')).toHaveAttribute('aria-hidden', 'true');
+
+    await disclosure.click();
+    await expect(disclosure).toHaveAttribute('aria-expanded', 'true');
+    await expect(page.locator('.mobile-menu-submenu')).toBeVisible();
+    await expect(page.locator('.mobile-menu-submenu a')).toHaveText([
+      'Explore all services',
+      'Bespoke accessories',
+      'Styling & curation',
+      'Finer Living',
+    ]);
+
+    await disclosure.click();
+    await expect(page.locator('.mobile-menu-submenu')).toHaveAttribute('aria-hidden', 'true');
+    await page.locator('.mobile-menu-group').hover();
+    await expect(page.locator('.mobile-menu-submenu')).toBeVisible();
+
+    await page.getByRole('link', { name: 'Explore all services' }).click();
+    await expect(page).toHaveURL(/\/our-services$/);
+    await expect(page.locator('#mobileMenu')).not.toHaveClass(/open/);
+
+    await page.goto(`${NEXT_ORIGIN}/services/styling-curation`, {
+      waitUntil: 'domcontentloaded',
+    });
+    await page.getByRole('button', { name: 'Open menu' }).click();
+    await expect(page.getByRole('button', { name: 'Our services' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    );
+    await page.getByRole('button', { name: 'Our services' }).click();
+    await expect(page.locator('.mobile-menu-submenu a[aria-current="page"]')).toHaveText(
+      'Styling & curation',
+    );
   });
 
   /**

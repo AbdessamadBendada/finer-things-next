@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { ROUTES } from '@/shared/config/routes';
 import { Media } from '@/shared/ui/Media';
 import Link from 'next/link';
 import { HeroCollage } from './HeroCollage';
@@ -93,7 +94,7 @@ export function HomePage() {
               alt="A stitched leather tray on a walnut table"
             />
           </div>
-          <Link href="/services/bespoke-accessories">
+          <Link href={ROUTES.service('bespoke-accessories')}>
             <span className="idx">01</span>
             <h3 className="serif">Bespoke Accessories</h3>
             <span className="desc">
@@ -116,7 +117,7 @@ export function HomePage() {
               alt="Sculptural objects styled on a lacquered console"
             />
           </div>
-          <Link href="/services/styling-curation">
+          <Link href={ROUTES.service('styling-curation')}>
             <span className="idx">02</span>
             <h3 className="serif">Styling & Curation</h3>
             <span className="desc">
@@ -135,7 +136,7 @@ export function HomePage() {
               alt="An oak and brass footed bowl from the Finer Living collection"
             />
           </div>
-          <Link href="/services/finer-living">
+          <Link href={ROUTES.service('finer-living')}>
             <span className="idx">03</span>
             <h3 className="serif">Finer Living</h3>
             <span className="desc">

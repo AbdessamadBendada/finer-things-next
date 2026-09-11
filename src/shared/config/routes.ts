@@ -18,7 +18,7 @@ export const ROUTES = {
   terms: '/terms',
   imprint: '/imprint',
   project: (slug: string) => `/projects/${slug}`,
-  service: (slug: string) => `/services/${slug}`,
+  service: (slug: string) => `/our-services/${slug}`,
 } as const;
 
 export const PROJECT_SLUGS = ['marsa-al-arab', 'waldorf-astoria-osaka'] as const;
@@ -46,6 +46,15 @@ export const ALL_ROUTES: readonly string[] = [
   ROUTES.terms,
   ROUTES.imprint,
 ];
+
+/**
+ * Previous service URLs preserved so bookmarks and indexed links reach the
+ * canonical `/our-services` hierarchy without a dead end.
+ */
+export const MIGRATED_ROUTE_REDIRECTS = [
+  { source: '/services', destination: ROUTES.ourServices },
+  { source: '/services/:slug', destination: ROUTES.service(':slug') },
+] as const;
 
 /**
  * Legacy static-site paths preserved as permanent redirects so no inbound

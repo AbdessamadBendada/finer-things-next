@@ -56,7 +56,7 @@ const KNOWN_LONG: Readonly<Record<string, Readonly<Record<string, number>>>> = {
    * roughly 22px, which is body size. Two lines from 480px up; three below.
    * Shorter copy is the only remaining fix, and the copy is the client's.
    */
-  '/services/styling-curation': {
+  '/our-services/styling-curation': {
     'A space becomes memorable when every detail feels connected.': 3,
   },
 };

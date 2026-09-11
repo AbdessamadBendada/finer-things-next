@@ -188,11 +188,11 @@
 
 /* Centred by auto margins rather than `justify-content`, which clips the
    first link out of reach when the list is taller than a short viewport. */
-[data-page] .mobile-menu a:first-of-type {
+[data-page] .mobile-menu > :first-child {
   margin-top: auto;
 }
 
-[data-page] .mobile-menu a:last-of-type {
+[data-page] .mobile-menu > :last-child {
   margin-bottom: auto;
 }
 
@@ -201,7 +201,8 @@
   visibility: visible;
 }
 
-[data-page] .mobile-menu a {
+[data-page] .mobile-menu a,
+[data-page] .mobile-menu-group-trigger {
   display: block;
   padding: 16px 0;
   border-bottom: 1px solid var(--line);
@@ -212,9 +213,90 @@
   line-height: 1;
 }
 
-[data-page] .mobile-menu a:focus-visible {
+[data-page] .mobile-menu-group-trigger {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border-inline: 0;
+  border-top: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+[data-page] .mobile-menu-disclosure-icon {
+  width: 10px;
+  height: 10px;
+  margin-right: 12px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+[data-page] .mobile-menu-group-trigger[aria-expanded='true'] .mobile-menu-disclosure-icon {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+[data-page] .mobile-menu a:focus-visible,
+[data-page] .mobile-menu-group-trigger:focus-visible {
   outline: 1px solid var(--ink);
   outline-offset: 4px;
+}
+
+[data-page] .mobile-menu-submenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
+}
+
+[data-page] .mobile-menu-submenu[aria-hidden='false'] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+[data-page] .mobile-menu-submenu-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 4px 0 8px 18px;
+}
+
+[data-page] .mobile-menu-submenu a {
+  padding-block: 8px;
+  font-family: var(--font-body), Arial, sans-serif;
+  font-size: clamp(0.95rem, 4.4vw, 1.25rem);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.24s ease,
+    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-page] .mobile-menu-submenu[aria-hidden='false'] a {
+  opacity: 1;
+  transform: none;
+}
+
+[data-page] .mobile-menu-submenu[aria-hidden='false'] a:nth-child(1) {
+  transition-delay: 0.04s;
+}
+
+[data-page] .mobile-menu-submenu[aria-hidden='false'] a:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+[data-page] .mobile-menu-submenu[aria-hidden='false'] a:nth-child(3) {
+  transition-delay: 0.12s;
+}
+
+[data-page] .mobile-menu-submenu[aria-hidden='false'] a:nth-child(4) {
+  transition-delay: 0.16s;
 }
 
 /* A phone held sideways is height-constrained, not width-constrained. Keep
@@ -226,9 +308,23 @@
     padding-bottom: max(20px, env(safe-area-inset-bottom));
   }
 
-  [data-page] .mobile-menu a {
+  [data-page] .mobile-menu a,
+  [data-page] .mobile-menu-group-trigger {
     padding-block: 8px;
     font-size: clamp(2rem, 7vh, 2.7rem);
+  }
+
+  [data-page] .mobile-menu-submenu a {
+    padding-block: 5px;
+    font-size: clamp(0.85rem, 3.4vh, 1rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-page] .mobile-menu-disclosure-icon,
+  [data-page] .mobile-menu-submenu,
+  [data-page] .mobile-menu-submenu a {
+    transition: none;
   }
 }
 

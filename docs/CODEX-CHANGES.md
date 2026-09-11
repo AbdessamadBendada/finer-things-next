@@ -25,6 +25,118 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-09-11: Move service detail pages under Our services
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: made `/our-services` the sole live service hierarchy: its three
+  detail pages now use `/our-services/<service>`. Updated navigation, cards,
+  metadata, JSON-LD, sitemap and visual tests through the shared route builder.
+  The former `/services` URLs permanently redirect to their matching new path
+  so existing bookmarks remain valid.
+- Files: `src/app/(site)/our-services/[slug]/page.tsx`,
+  `src/app/(site)/services/[slug]/page.tsx`, `src/shared/config/routes.ts`,
+  `next.config.ts`, `src/features/home/ui/HomePage.tsx`,
+  `tests/{seo,visual}`, `docs/CODEX-CHANGES.md`
+- Verified: production build, typecheck and lint passed with the existing
+  `_meta` warning; form/SEO, masthead and responsive-heading Playwright suites
+  passed; Prettier and `git diff --check` passed.
+- Follow-up: None.
+
+## 2026-09-11: Redirect the services parent URL
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: added `/services` as a permanent alias for the canonical
+  `/our-services` overview route. Individual `/services/<service>` paths are
+  unchanged.
+- Files: `src/shared/config/routes.ts`, `next.config.ts`,
+  `tests/seo/seo.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck passed; lint passed with the existing `_meta` warning;
+  production build and focused HTTP redirect test passed; Prettier and
+  `git diff --check` passed.
+- Follow-up: None.
+
+## 2026-09-11: Animate the services-menu reveal
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: added a layered services-menu reveal: expanding panel, rotating
+  chevron and short staggered link entrance. The collapsed submenu is inert
+  and hidden from assistive technology; reduced-motion visitors receive no
+  animation.
+- Files: `src/shared/layout/SiteHeader.tsx`, `src/shared/styles/brand.css`,
+  `tests/visual/masthead.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck passed; lint passed with the existing `_meta` warning;
+  production build and focused masthead Playwright suite passed; Prettier and
+  `git diff --check` passed.
+- Follow-up: None.
+
+## 2026-09-11: Simplify the services-menu interaction
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: made Our services one dropdown trigger. It reveals Explore all
+  services first, then the three individual services, on click and mouse
+  hover. This replaces competing parent-link and disclosure-button actions.
+- Files: `src/shared/config/navigation.ts`,
+  `src/shared/layout/SiteHeader.tsx`, `src/shared/styles/brand.css`,
+  `tests/visual/masthead.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck passed; lint passed with the existing `_meta` warning;
+  production build and focused masthead Playwright suite passed, including
+  click and hover coverage; Prettier and `git diff --check` passed.
+- Follow-up: None.
+
+## 2026-09-11: Add the services-menu disclosure
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: replaced the always-visible service links with a chevron disclosure.
+  Our services remains a normal link to its overview; the separate accessible
+  button controls the child links. The group opens automatically on the
+  overview and service routes, and stays collapsed elsewhere.
+- Files: `src/shared/layout/SiteHeader.tsx`, `src/shared/styles/brand.css`,
+  `tests/visual/masthead.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck passed; lint passed with the existing `_meta` warning;
+  production build and focused masthead Playwright suite passed; Prettier and
+  `git diff --check` passed.
+- Follow-up: None.
+
+## 2026-09-11: Remove the duplicate Finer Living menu link
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed Finer Living as a top-level burger item. It remains within
+  the visible Our services group, alongside the other two service pages.
+- Files: `src/shared/config/navigation.ts`, `tests/visual/masthead.spec.ts`,
+  `docs/CODEX-CHANGES.md`
+- Verified: typecheck and focused masthead navigation tests passed; Prettier
+  and `git diff --check` passed.
+- Follow-up: None.
+
+## 2026-09-11: Group service pages in the burger menu
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: made the clickable Our services overview link a compact visible
+  group containing Bespoke accessories, Styling & curation and Finer Living.
+  The group remains within the site's single burger navigation, and the active
+  child route receives `aria-current="page"`.
+- Files: `src/shared/config/navigation.ts`,
+  `src/shared/layout/SiteHeader.tsx`, `src/shared/styles/brand.css`,
+  `tests/visual/masthead.spec.ts`, `docs/CODEX-CHANGES.md`
+- Verified: typecheck passed; lint passed with the existing `_meta` warning;
+  production build passed; the masthead Playwright suite passed; Prettier and
+  `git diff --check` passed.
+- Follow-up: None.
+
 ## 2026-09-11: Update burger-menu craft and services links
 
 **Codex change**

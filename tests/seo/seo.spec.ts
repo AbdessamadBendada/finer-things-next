@@ -394,3 +394,20 @@ test('non-root trailing slashes redirect to the canonical path', async ({ reques
     expect(response.headers().location, route).toBe(route);
   }
 });
+
+test('previous services URLs redirect to the canonical overview hierarchy', async ({
+  request,
+}) => {
+  const redirects = [
+    ['/services', ROUTES.ourServices],
+    ['/services/bespoke-accessories', ROUTES.service('bespoke-accessories')],
+    ['/services/styling-curation', ROUTES.service('styling-curation')],
+    ['/services/finer-living', ROUTES.service('finer-living')],
+  ] as const;
+
+  for (const [source, destination] of redirects) {
+    const response = await request.get(`${NEXT_ORIGIN}${source}`, { maxRedirects: 0 });
+    expect(response.status(), source).toBe(308);
+    expect(response.headers().location, source).toBe(destination);
+  }
+});

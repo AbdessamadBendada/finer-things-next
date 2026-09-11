@@ -1,17 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { useMobileMenu } from '@/shared/motion/useMobileMenu';
 import { useScrollHeader } from '@/shared/motion/useScrollHeader';
 import { useWordmark } from '@/shared/motion/useWordmark';
+import type { NavLink, NavMenuItem } from '@/shared/config/navigation';
 
-import { isAnchorLink, type NavLink } from './navigation';
+import { isAnchorLink } from './navigation';
 
 type SiteHeaderProps = {
   /** The site menu. One set, every page — see config/navigation.ts. */
-  menu: readonly NavLink[];
+  menu: readonly NavMenuItem[];
   /**
    * Fraction of viewport height after which the header takes its `scrolled`
    * state. Omit to leave the header static.
@@ -54,6 +55,7 @@ export function SiteHeader({ menu, scrollThreshold, heroHandoff = false }: SiteH
   const toggleRef = useRef<HTMLButtonElement>(null);
   const { open, toggle, close } = useMobileMenu(menuRef, toggleRef);
   const scrolled = useScrollHeader(scrollThreshold ?? 0.72);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   // On home the masthead stays hidden until the oversized hero wordmark has
   // finished shrinking into it. Inert on every other page.
@@ -115,12 +117,49 @@ export function SiteHeader({ menu, scrollThreshold, heroHandoff = false }: SiteH
          * route-change close in useMobileMenu would not fire for them.
          */
         onClick={(event) => {
-          if ((event.target as HTMLElement).closest('a')) close();
+          if ((event.target as HTMLElement).closest('a')) {
+            setServicesOpen(false);
+            close();
+          }
         }}
       >
-        {menu.map((link) => (
-          <NavAnchor key={`${link.href}-${link.label}`} {...link} />
-        ))}
+        {menu.map((item) =>
+          'children' in item ? (
+            <div
+              className="mobile-menu-group"
+              key={`${item.href}-${item.label}`}
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <button
+                className="mobile-menu-group-trigger"
+                type="button"
+                aria-controls="services-submenu"
+                aria-expanded={servicesOpen}
+                onClick={() => setServicesOpen((current) => !current)}
+              >
+                <span>{item.label}</span>
+                <span className="mobile-menu-disclosure-icon" aria-hidden="true" />
+              </button>
+              <div
+                className="mobile-menu-submenu"
+                id="services-submenu"
+                aria-label={`${item.label} pages`}
+                role="group"
+                aria-hidden={!servicesOpen}
+                inert={!servicesOpen}
+              >
+                <div className="mobile-menu-submenu-inner">
+                  {item.children.map((link) => (
+                    <NavAnchor key={`${link.href}-${link.label}`} {...link} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <NavAnchor key={`${item.href}-${item.label}`} {...item} />
+          ),
+        )}
       </nav>
     </>
   );

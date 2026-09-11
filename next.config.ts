@@ -1,6 +1,6 @@
 import type { NextConfig } from 'next';
 
-import { LEGACY_REDIRECTS } from './src/shared/config/routes';
+import { LEGACY_REDIRECTS, MIGRATED_ROUTE_REDIRECTS } from './src/shared/config/routes';
 import { SECURITY_HEADERS } from './src/shared/config/security-headers';
 
 /**
@@ -48,7 +48,10 @@ const nextConfig: NextConfig = {
   },
 
   async redirects() {
-    return LEGACY_REDIRECTS.map((redirect) => ({ ...redirect, permanent: true }));
+    return [...MIGRATED_ROUTE_REDIRECTS, ...LEGACY_REDIRECTS].map((redirect) => ({
+      ...redirect,
+      permanent: true,
+    }));
   },
 
   async headers() {

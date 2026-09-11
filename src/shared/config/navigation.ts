@@ -8,6 +8,14 @@ export type NavLink = {
   current?: boolean;
 };
 
+/** A top-level link with a visibly nested set of related destinations. */
+export type NavGroup = NavLink & {
+  children: readonly NavLink[];
+};
+
+/** Every item that can appear in the site's one burger menu. */
+export type NavMenuItem = NavLink | NavGroup;
+
 /**
  * Every navigation set on the site, in one file.
  *
@@ -28,6 +36,13 @@ const OUR_WORK: NavLink = { href: ROUTES.ourWork, label: 'What we do' };
 const OUR_WORK_AS_CRAFT: NavLink = { href: ROUTES.ourWork, label: 'Our craft' };
 const OUR_CRAFT: NavLink = { href: ROUTES.ourCraft, label: 'Our craft' };
 const OUR_SERVICES: NavLink = { href: ROUTES.ourServices, label: 'Our services' };
+const SERVICE_LINKS = [
+  { ...OUR_SERVICES, label: 'Explore all services' },
+  { href: ROUTES.service('bespoke-accessories'), label: 'Bespoke accessories' },
+  { href: ROUTES.service('styling-curation'), label: 'Styling & curation' },
+  { href: ROUTES.service('finer-living'), label: 'Finer Living' },
+] as const satisfies readonly NavLink[];
+const OUR_SERVICES_WITH_CHILDREN: NavGroup = { ...OUR_SERVICES, children: SERVICE_LINKS };
 const PROJECTS: NavLink = { href: ROUTES.projects, label: 'Projects' };
 const ABOUT: NavLink = { href: ROUTES.about, label: 'About' };
 const CONTACT: NavLink = { href: ROUTES.contact, label: 'Contact' };
@@ -64,12 +79,11 @@ export const FOOTER_LEGAL = [PRIVACY, TERMS, IMPRINT] as const;
 export const SITE_MENU = [
   HOME,
   OUR_WORK_AS_CRAFT,
-  OUR_SERVICES,
+  OUR_SERVICES_WITH_CHILDREN,
   PROJECTS,
   ABOUT,
-  FINER_LIVING,
   CONTACT,
-] as const satisfies readonly NavLink[];
+] as const satisfies readonly NavMenuItem[];
 
 export type ChromeConfig = {
   /** Fraction of viewport height after which the header takes its scrolled state. */
@@ -129,7 +143,19 @@ export const FOOTER_COPY = {
 } as const;
 
 /** Marks the link matching the current route, so `aria-current` is never stale. */
-export const withCurrent = (links: readonly NavLink[], pathname: string): NavLink[] =>
-  links.map((link) => (link.href === pathname ? { ...link, current: true } : link));
+export const withCurrent = (links: readonly NavMenuItem[], pathname: string): NavMenuItem[] =>
+  links.map((link) => {
+    const current = link.href === pathname;
+
+    if ('children' in link) {
+      return {
+        ...link,
+        ...(current ? { current: true } : {}),
+        children: withCurrent(link.children, pathname) as NavLink[],
+      };
+    }
+
+    return current ? { ...link, current: true } : link;
+  });
 
 export const chromeFor = (pathname: string): ChromeConfig | undefined => CHROME[pathname];

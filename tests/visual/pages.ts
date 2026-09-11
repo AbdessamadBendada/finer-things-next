@@ -66,19 +66,19 @@ export const PARITY_PAGES = [
   {
     name: 'bespoke-accessories',
     legacy: '/bespoke-accessories.html',
-    route: '/services/bespoke-accessories',
+    route: '/our-services/bespoke-accessories',
     baseline: 'current',
   },
   {
     name: 'styling-curation',
     legacy: '/styling-curation.html',
-    route: '/services/styling-curation',
+    route: '/our-services/styling-curation',
     baseline: 'current',
   },
   {
     name: 'finer-living',
     legacy: '/finer-living.html',
-    route: '/services/finer-living',
+    route: '/our-services/finer-living',
     baseline: 'current',
   },
   { name: 'about', legacy: '/about.html', route: '/about', baseline: 'current' },
