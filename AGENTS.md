@@ -93,6 +93,17 @@ in a shared layer instead.
   stylesheet. It has been hand-maintained since the import (as
   `tools/legacy-import/` warns below). Treat `chrome.css` as source, and edit
   it by hand — carefully, and only for chrome that genuinely varies per page.
+- **Security headers are production-only where they would break dev.**
+  `upgrade-insecure-requests` and `Strict-Transport-Security` are scoped to
+  `NODE_ENV === 'production'` in `shared/config/security-headers.ts`. Sent
+  over the plain-http dev server they rewrite every subresource to `https`
+  and the page renders as unstyled HTML. Chrome exempts localhost; WebKit
+  does not, so it presents as a Safari-only bug. HSTS is worse: a stored
+  entry for `localhost` outlives the header by two years and affects every
+  project on the machine. Do not un-scope them.
+- **`grid-column: span 2` puts `span 2` in the _start_ slot.** A following
+  `grid-column-start: N` replaces that start, leaves the end `auto`, and the
+  item silently collapses to one track. Write `grid-column: N / span 2`.
 - **Never put a pseudo-element in a selector that shares a declaration block
   with another selector.** Lightning CSS merges them into `:is(...)`, and a
   pseudo-element inside `:is()` is invalid, so the browser drops the whole rule

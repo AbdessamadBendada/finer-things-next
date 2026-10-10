@@ -25,6 +25,444 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-10-10: Remove every location caption beneath an image
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: removed fourteen `figcaption` elements naming a property, city or
+  room, across `/projects`, both project detail pages, and the Bespoke
+  Accessories and Styling & Curation detail pages. Kept three captions that
+  name no location: Contact, About and the Finer Living material labels.
+- Changed, to avoid a regression: the `/projects` caption contained the only
+  link on that page. The tile is now the link, with an `aria-label` built
+  from the property and space so the destination is still announced. A
+  `.wall-tile-link` rule in `brand.css` makes the anchor fill the tile, since
+  `.wall-tile img` sizes to 100% of its parent and that parent changed.
+- Files: `src/features/projects/ui/ProjectsPage.tsx`,
+  `src/features/projects/ui/{MarsaAlArabPage,WaldorfAstoriaOsakaPage}.tsx`,
+  `src/features/services/ui/{BespokeAccessoriesPage,StylingCurationPage}.tsx`,
+  `src/shared/styles/brand.css`, `docs/FEEDBACK.md`
+- Verified: swept all twelve routes, every one 200 with no page errors and no
+  location captions remaining. `/projects` links went 18 to 21; clicking a
+  tile navigates to `/projects/marsa-al-arab`; link box measures exactly the
+  figure box. Scrolled the wall end to end: 20 tiles, 0 still faded, 0
+  images unloaded, so the `.rise` reveal survives the new DOM. Typecheck,
+  lint (existing `_meta` warning only) and Prettier passed.
+- Follow-up: the tile scrim disappeared with the captions, because it was
+  painted on the `figcaption` rather than a pseudo-element. That is an
+  improvement but it is a visible change beyond the text. The now-dead
+  `.wall-tile figcaption`, `.wall-property`, `.wall-location` and
+  `.wall-space` rules are left in `projects.module.css`, which is kept
+  diffable against `legacy/`. `/projects` and four other baselines are stale.
+
+## 2026-10-10: Replace three Finer Living gallery images and the panel image
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: `/our-services/finer-living` gallery positions 1, 2 and 6 now use
+  `new-finer-living-cloche.webp`, `new-finer-living-marble-bowl.webp` and
+  `new-finer-living-walnut-tray.webp`, replacing the collection still, the
+  wooden stools and the stone samples. The Finer Living entry in
+  `services.content.ts` points at `new-finer-living-cherry-bowl.webp`.
+- Files: `public/assets/new-finer-living-{cloche,marble-bowl,walnut-tray,cherry-bowl}.webp`,
+  `src/features/services/ui/FinerLivingPage.tsx`,
+  `src/features/our-services/content/services.content.ts`,
+  `src/shared/config/image-registry.ts` (regenerated), `docs/FEEDBACK.md`
+- Verified: read the rendered gallery order and the panel image back from
+  both pages, all six tiles and the panel loaded, no failed image requests.
+  Typecheck, lint (existing `_meta` warning only) and Prettier passed.
+- Follow-up: three source files were 5906px wide and 500-700KB; re-encoded at
+  2400px to match the rest of the library. The panel uses a new asset rather
+  than overwriting `new-cover-finer-living.webp`, which is shared with the
+  home service row and the service registry, so home still shows the older
+  photograph. Two of the removed images remain on the same page in bigger
+  placements: `0698_...` is the hero and `0694_...` is a full-bleed
+  background. Both flagged in FEEDBACK.md 51.
+
+## 2026-10-10: Reword Styling & Curation, drop florals from scope item 02
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: the `styling-curation` `lede` in `services.content.ts` now reads
+  "Books, objects, art and decorative pieces sourced through a global network
+  of 100+ artisans and thoughtfully arranged to give every space its own
+  distinctive character and story." Its `02 / Sourcing & selection` note
+  drops "florals" and reads "Books, objects and art found with artisans
+  around the world."
+- Files: `src/features/our-services/content/services.content.ts`
+- Verified: read both strings back from the rendered page and opened the
+  panel to confirm the scope list. Measured the lede at 1440, 1024 and 390.
+  Typecheck, lint (existing `_meta` warning only) and Prettier passed.
+- Follow-up: the new lede is 178 characters and sets on **three lines**
+  against two for the other two services, six against four on a phone, so
+  the closed panel rows are no longer equal height. "florals" also remains in
+  nine other places, including the Styling & Curation detail page and its
+  registry description, so overview and detail now disagree. Both flagged in
+  FEEDBACK.md 50.
+
+## 2026-10-09: Reword the Bespoke Accessories description
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: the `lede` for `bespoke-accessories` in `services.content.ts` now
+  reads "The details that define the experience. Every piece is individually
+  designed and produced exclusively for one setting."
+- Files: `src/features/our-services/content/services.content.ts`
+- Verified: read the rendered text back from `/our-services`; two lines at
+  1440, unchanged from before. Typecheck, lint (existing `_meta` warning
+  only) and Prettier passed.
+- Follow-up: a full stop was added, since the supplied wording had none and
+  the sibling ledes are full sentences. The field renders only in
+  `OurServicesPage`; it is not used in metadata or on the detail pages.
+
+## 2026-10-09: Darken secondary copy to clear WCAG AA
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: `--soft` and `--ink-soft` are set to `rgba(41,40,31,.78)` on
+  `[data-page] main`, raising the services copy from 4.62:1 to 6.69:1 against
+  the paper ground. Also corrected two footnote rules that hardcoded .5 alpha
+  rather than using the token: `/about`'s artisan footnote (2.77:1, the worst
+  on the site) and its twin on the dark section of What we do and Our craft
+  (4.40:1).
+- Files: `src/shared/styles/brand.css`, `docs/FEEDBACK.md`
+- Verified: measured every `p`, `li`, `span` and `h4` inside `main` on six
+  routes, computing the real composited ratio against the nearest painted
+  background. Before: services worst 4.62:1, about 2.77:1, our-craft 4.40:1.
+  After: **every route clear of AA, worst case 5:1**. Typecheck, lint
+  (existing `_meta` warning only) and Prettier passed.
+- Follow-up: the correction is set on `main`, not at the root, on purpose.
+  Page stylesheets declare `--soft` on their own hashed `.page` class which
+  wraps `main`, so a declaration on an ancestor is simply overridden again;
+  declaring it on a descendant wins by inheritance and is immune to load
+  order. Separately, the dark-section footnote rule **first shipped doing
+  nothing**: written with three classes it tied the page rule's specificity
+  and lost on load order, and the measurement still read 4.40:1. It is now
+  scoped by the section's id. The **"Start a project" button still fails** at
+  3.53:1 (paper on clay `#B56D43`); fixing it changes a brand colour on nine
+  pages, so it is flagged in FEEDBACK.md 48 rather than taken. Text over
+  photographs is excluded from the sweep: its contrast cannot be computed
+  from CSS.
+
+## 2026-10-09: Move Marble to the end of the first materials row
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: reordered `MATERIALS` on `/our-work` so Marble sits fourth and
+  closes the first row. The array order is the page order, so no layout rule
+  changed.
+- Files: `src/features/our-work/content/materials.content.ts`
+- Verified: read the rendered rows back at 1440 - row one Lustrous Leather,
+  Wood, Horn, Marble; row two Lacquer, Resin, Elegant Shells, still centred
+  at 152px clear on both sides. Typecheck, lint (existing `_meta` warning
+  only) and Prettier passed.
+- Follow-up: `/our-craft` keeps its **own copy** of the materials content,
+  still six entries in three columns with no Marble. The 2026-10-09 materials
+  work has all been `/our-work` only, as asked, so the two pages now disagree
+  on both content and layout. Flagged in FEEDBACK.md 47 as needing a
+  decision.
+
+## 2026-10-09: A tall tile in the artisan wall, and shape-aware rotation
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: `.artisan-tile:nth-child(9)` was a second double-width tile; it is
+  gone and `:nth-child(4)` now spans two rows instead, giving the wall one
+  wide tile and one tall one. `useImageRotation` gained `tileShapes` and
+  `imageShapes`: a slot only ever receives a photograph whose orientation
+  suits it, and the deterministic opening arrangement honours the same
+  constraint. `ArtisanWall` derives each image's shape from the pixel
+  dimensions in `IMAGE_REGISTRY` and opens the tall slot on the workshop
+  door.
+- Files: `src/shared/motion/useImageRotation.ts`, `src/shared/motion/index.ts`,
+  `src/shared/ui/ArtisanWall.tsx`, `src/shared/styles/brand.css`,
+  `docs/FEEDBACK.md`
+- Verified: grid measured at 1440 as 10 tiles in 3 rows (3/4/3), tile 2 at
+  589x294 and tile 4 at 287x603, wall 912px tall with no holes. Ran 26 swaps
+  watching both shaped slots: the wide slot held only landscape images, the
+  tall slot only portrait, zero violations either way. The door opens in the
+  tall slot on all three pages with no page errors.
+- Follow-up: the tall tile **replaces** a wide one rather than adding to it,
+  because the wall must consume a multiple of four cells or the last row
+  gains a hole. `TILE_SHAPES` in `ArtisanWall.tsx` mirrors the `nth-child`
+  rules in `brand.css` and the two must be changed together. The tall tile
+  deliberately sets `aspect-ratio: auto` rather than `1 / 2`: the row height
+  comes from the square tiles and `grid-auto-rows: 1fr`, so a stated ratio
+  would be short by exactly one gap. Parity baselines for the three pages are
+  stale, though `--frozen` limits the effect.
+
+## 2026-10-09: Swap four photographs in the artisan wall
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: `ARTISAN_WALL` drops `new-artisan-wood-12`, `new-artisan-fl-13`,
+  `new-artisan-fl-33` and `new-artisan-ceramics-29`, and gains
+  `new-artisan-ft-05` (workshop door) and `new-artisan-fl-62` (marble yard).
+  Pool 20 to 18 against 10 tiles. No files were imported or converted: all
+  four of the client's "new" images were already in the repository.
+- Files: `src/shared/content/artisans.content.ts`
+- Verified: identified the four removals from a generated contact sheet of
+  the pool rather than by tile position, since the wall rotates; disambiguated
+  the scalloped tile shot against its near-twin `fl-29` by rendering both.
+  Ran the wall for 60 seconds afterwards: 17 of 18 images surfaced, none of
+  the four removed ones appeared, no duplicates on screen, no failed image
+  requests, no page errors. Typecheck, lint (existing `_meta` warning only)
+  and Prettier passed.
+- Follow-up: two of the four supplied "new" files were pixel-identical to
+  images already live in the wall (`Our Artisans 1` = `glass-26`,
+  `Our Artisans 4` = `ft-08`); worth checking against the pool before
+  treating a client's image as new. The marble yard is one of the phone
+  snapshots the curation note holds back, included as supplied on the
+  client's explicit decision. Five unused photographs remain for topping the
+  pool back up: `fl-02`, `fl-03`, `fl-38`, `fl-56`, `fl-64`. Parity baselines
+  for `/our-craft`, `/our-work` and `/about` are stale, though the wall is
+  frozen for the gate via `--frozen` so the effect there is limited.
+
+## 2026-10-09: Stop the artisan wall swapping the same tile twice running
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: `useImageRotation` chose the tile to swap with
+  `Math.floor(Math.random() * tiles)`, which has no memory of the previous
+  pick. With ten tiles that reselects the same tile about one tick in ten, and
+  sometimes several ticks running, so a single tile would change, change again
+  2.6 seconds later, and read as a glitch rather than drift. The pick now
+  excludes the tile that changed last, drawing uniformly from `tiles - 1` and
+  stepping over the excluded index so the rest stay equally likely.
+- Files: `src/shared/motion/useImageRotation.ts`
+- Verified: instrumented the rising edge of `is-fading` on every tile and
+  recorded the swap sequence over 90 seconds, before and after. Before: **7
+  immediate repeats in 34 swaps**, including three separate triples
+  (`3 3 3`, `9 9 9`, `0 0 0`), each pair exactly one 2600ms interval apart.
+  After: **0 immediate repeats in 36 swaps**, per-tile counts still roughly
+  even, no duplicate images on screen. Re-checked the `--frozen` escape hatch
+  the visual gate depends on: still halts rotation. Typecheck, lint (existing
+  `_meta` warning only) and Prettier passed.
+- Follow-up: the hook has one consumer, `ArtisanWall`, which renders on
+  `/our-craft`, `/our-work` and `/about`, so the fix lands on all three. Note
+  a first measurement attempt reported 0 repeats and was wrong: it deduplicated
+  consecutive identical values, which filters out exactly the event being
+  counted. Dedupe swap events by timestamp, not by value.
+
+## 2026-10-09: Seven materials, four above a centred three
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: added Marble as a seventh material on `/our-work`, reusing
+  `new-material-marble.webp` from the hero collage, and reshaped the grid.
+  Above 1200px `data-columns='4'` renders eight narrow columns with each card
+  spanning two and the fifth card starting at column 2, which centres three
+  cards under four while keeping every card the same width. Below 1200px the
+  attribute falls through to the existing 3 / 2 / 1 column breakpoints, so no
+  span or offset survives into the narrow layouts and nothing needs resetting.
+- Files: `src/features/our-work/content/materials.content.ts`,
+  `src/features/our-work/ui/MaterialCards.tsx`,
+  `src/features/our-work/ui/OurWorkPage.tsx`, `src/shared/styles/brand.css`,
+  `docs/FEEDBACK.md`, `docs/HANDOFF.md`
+- Verified: measured at 1440, 1300, 1201, 1150, 1000, 800 and 500. Above
+  1200: rows of 4 and 3, all cards 282px wide, second row 152px clear at both
+  ends. Below: 3+3+1, 2+2+2+1 and 1-per-row as expected. Hovered all seven
+  cards and checked the copy block against the card bounds, no overflow.
+  Typecheck, lint (existing `_meta` warning only) and Prettier passed.
+- Follow-up: `grid-column: span 2` puts `span 2` in the start slot, so the
+  fifth card needs `grid-column: 2 / span 2`; a bare `grid-column-start: 2`
+  silently collapses it to one track. Seven cards leave an orphan on the last
+  row at the 3-column and 2-column breakpoints, which is flagged in
+  FEEDBACK.md 44 as needing a decision. `/our-work` parity baseline is stale.
+  HANDOFF.md's "a sixth material" row is now marked resolved.
+
+## 2026-10-09: Add a sixth featured card, Exclusive Collections
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: added a sixth filmstrip card to the home page using the client's
+  supplied still, and renumbered the strip to `/ 06` including the slider's
+  counter total. The photograph is portrait (1200x1600) against a 1.75:1
+  card, so a cover fit keeps about 43% of its height; centred that band shows
+  the wall above the subject. The card carries `data-focal="low"` with a
+  matching `object-position: center 88%` in `brand.css` to bring the band down
+  onto the book and its marble stand.
+- Files: `public/assets/new-work-exclusive-collections.webp`,
+  `src/features/home/ui/HomePage.tsx`, `src/shared/styles/brand.css`,
+  `src/shared/config/image-registry.ts` (regenerated via `pnpm migrate:images`),
+  `docs/FEEDBACK.md`
+- Verified: drove the slider to the last card and read back 6 cards, titles
+  and numbers correct, counter `06 / 06`, next arrow disabled, 43% visible
+  height with `object-position` applied, and looked at the rendered crop.
+  Typecheck, lint (existing `_meta` warning only) and Prettier passed.
+- Follow-up: no hook changes were needed - both filmstrip hooks size progress,
+  bounds and arrow state from `cards.length`. Only hardcoded `/ 05` strings
+  and two stale comments referring to "five cards" needed updating. Home
+  parity baseline is stale.
+
+## 2026-10-09: Home copy round - service text, intros, project names
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: three client copy requests on the home page. The `01 / Bespoke
+Accessories` row description is now "Design and production of bespoke
+  accessories to see, touch and feel." The Featured intro joins the "What we
+  do" paragraph on two lines via a `max-width` override. The five filmstrip
+  cards are renamed The Living Room, Private Residences, Dining Destinations,
+  Residential Suites and Elegant Residences, replacing The Lobby, Private
+  Suites, Iliana, Bombay Club and Waldorf Osaka, and their bottom-right venue
+  captions are deleted.
+- Changed, correction: the rename was applied to the wrong element first. The
+  client said "bottom right", which is the venue caption; the heading is
+  bottom-left. On being told, they chose to keep the renamed headings and
+  drop the captions altogether rather than move the names across, so all five
+  `<p>` elements are gone from `.film-copy`.
+- Files: `src/features/home/ui/HomePage.tsx`, `src/shared/styles/brand.css`,
+  `docs/FEEDBACK.md`
+- Verified: both paragraphs measured at two lines at 1440, 1280, 1100, 1024
+  and 900; all five headings, the new description and `.film-copy p` count of
+  zero read back from the DOM. Typecheck, lint (existing `_meta` warning
+  only) and Prettier passed.
+- Follow-up: recorded in full as FEEDBACK.md entries 40-42. Three that need a
+  decision: the Featured intro needs an 84ch measure to hold two lines, about
+  99 characters per line, so shorter copy is the better fix; the renamed
+  cards disagree with `/projects/marsa-al-arab`, the photograph `alt` text
+  and the SEO plan, all of which still say Bombay Club and Iliana; and the
+  `.film-copy p` rules in `home.module.css` are now dead, left in place to
+  keep that file diffable against `legacy/`.
+
+## 2026-10-09: Set the home "What we do" copy on two lines
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: widened the measure on the `#work` section's supporting paragraph
+  from the legacy 44ch to 58ch, so its 139 characters set on two lines rather
+  than three. Measured the threshold: 44ch gives three lines, 50ch and above
+  give two; 58ch takes the middle and sits inside the usual 55-75 character
+  measure instead of at its edge.
+- Files: `src/shared/styles/brand.css`
+- Verified: two lines at 1440, 1280, 1024 and 900. Typecheck and lint
+  (existing `_meta` warning only) passed.
+- Follow-up: two things noticed in the same section and deliberately left
+  alone, both inherited verbatim from `legacy/index.html` rather than
+  introduced here. The section has **no heading**: `.svc-head` is an eyebrow
+  followed straight by a paragraph, so the three service `h3`s below it hang
+  off the previous section's `h2`. And the copy says "touch points" where the
+  industry sets "touchpoints". Both are client-facing decisions.
+
+## 2026-10-09: Make the contact photograph legible
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: the contact image frame was a tall portrait slot (measured 425x730,
+  0.53:1) holding a 1.5:1 landscape photograph, so `object-fit: cover` kept
+  only **35% of the image width**. Both of the artisan's hands and the whole
+  workbench fell outside the crop and what remained read as an unidentifiable
+  dark smear. The frame now takes the photograph's own 3:2 aspect ratio, the
+  grid gives that column more width, and the parallax overscan drops from 110%
+  to 106% - under `cover`, excess height is paid for in width, so the overscan
+  had to shrink with the frame. Measured result: **94% of the width visible**
+  at desktop, 95% on a phone. Also eased the darkening filter
+  (`brightness .75 -> .86`) and the bottom scrim, which were adding to the
+  murk.
+- Files: `src/features/contact/styles/contact.module.css`,
+  `src/features/contact/motion/useContactMotion.ts`
+- Verified: measured the visible-width fraction before and after at 1440 and 390. Swept the page through 2600px of scroll at both widths checking the
+  frame edges: worst gap -11px desktop, -6px mobile, so the drift never
+  exposes the background. Typecheck and lint (existing `_meta` warning only)
+  passed.
+- Follow-up: the drift in `useContactMotion` went 28 -> 4 because the shorter
+  frame has far less room to move in; the parallax is now subtle. If it should
+  be more pronounced, the frame needs to grow and that costs image width.
+  Contact parity baseline is stale.
+
+  A first pass centred a 3:2 frame in the column, which fixed the crop but
+  left the plate marooned in dead space. Settled on a 1.4:1 frame in a wider
+  column, top-aligned to the heading (frame top 170px against heading top
+  167px) so the whitespace pools at the foot of the column instead. Frame is
+  576x412 at desktop and 91% of the image width survives at all three widths.
+  The full-bleed-band alternative was offered and not taken.
+
+  Top-aligning alone then left a large void under the image, because the form
+  column is ~870px against a 412px photograph and no landscape crop can fill
+  that without putting the hands back outside the frame. Resolved by pinning
+  the figure: `.image-col` is a sticky grid item (hence no `align-items` on
+  the grid, which would collapse the column and leave sticky nothing to travel
+  in) and the photograph now moves alongside the form. Sticky is off below
+  860px, where the image sits under the form and would otherwise overhang the
+  following section.
+
+## 2026-10-09: Stop the dev server serving an unstyled page in Safari
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: scoped `upgrade-insecure-requests` to production builds. The
+  directive rewrites every http subresource URL to https before the request is
+  made; the dev server is plain http, so every stylesheet, script, font and
+  image was redirected to `https://localhost:3000`, where nothing is
+  listening. All of them failed TLS and the page rendered as unstyled HTML.
+  It presented as a Safari-only bug because Chrome exempts localhost from the
+  upgrade and WebKit, correctly, does not. Production is unchanged and still
+  sends the directive.
+- Files: `src/shared/config/security-headers.ts`
+- Verified: reproduced in Playwright's WebKit before the change (every
+  subresource failed, `h1` computed to `-webkit-standard`); after it, zero
+  failed requests, four stylesheets parsed and `h1` computed to `Goudy Local`.
+  Confirmed the header is absent in `next dev` and present in `next start`.
+  `node tools/check-csp.mjs` against the production build reports 0
+  violations, 0 page errors, 12/12 sections revealed. Typecheck, lint (the
+  existing `_meta` warning only) and production build all passed.
+- Follow-up: the parity and visual suites run Chromium only, which is why this
+  went unnoticed. Worth adding a WebKit project to `playwright.config.ts` for
+  at least one smoke route before launch.
+
+## 2026-10-09: Reword the home hero subheading
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: the hero subheading now opens "We work with the world's finest
+  hotels and residences to express their character ...". Client wording. The
+  verb change needed "to" added, since "we help X express" is grammatical
+  where "we work with X express" is not.
+- Files: `src/features/home/ui/HomePage.tsx`
+- Verified: rendered text confirmed in the browser; typecheck, lint and
+  production build passed.
+- Follow-up: home parity baseline is stale and needs regenerating after
+  review.
+
+## 2026-10-09: Add the client's marble still to the hero strip
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: added the client's intro-page marble artwork as an eighth still in
+  the home hero collage. Converted the supplied PNG to WebP, registered it and
+  placed it last in `COLLAGE_STILLS`, which is also the loop's seam: pale
+  marble now sits between dark lacquer and the dark leather the strip restarts
+  on, so the deliberate light/dark alternation holds across the join.
+- Files: `public/assets/new-material-marble.webp`,
+  `src/features/home/content/collage.content.ts`,
+  `src/shared/config/image-registry.ts` (regenerated via `pnpm migrate:images`)
+- Verified: typecheck passed; lint passed with the existing `_meta` warning;
+  looked at the strip parked on the marble cell at 1440 and the crop reads as
+  three slabs. Browser console on `/` shows only the pre-existing dev-mode
+  warnings (CSP/eval, the leather LCP notice), nothing from the new cell.
+- Follow-up: the supplied original is 700x1086, the smallest still in the set,
+  against a cell that renders at 506px. It cannot be served at native density
+  on a 2x screen. Ask the client for a larger original before launch. The home
+  parity baseline is now stale and needs regenerating after review.
+
 ## 2026-09-11: Move service detail pages under Our services
 
 **Codex change**

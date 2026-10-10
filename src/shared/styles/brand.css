@@ -474,6 +474,46 @@ body.menu-open [data-page] .menu-toggle {
   gap: 14px;
 }
 
+/* Two lines, not three. The page rule carries the legacy measure of 44ch,
+   which broke this sentence of 139 characters across three short lines and
+   left it stranded against the width beside it. Measured: 44ch runs to three
+   lines, anything from 50ch holds two. 58ch takes the comfortable middle and
+   sits inside the usual 55-75 character measure rather than at its edge.
+
+   Same id scoping as the rule above, and for the same reason: the page rule
+   is `.page :global(.svc-head p)`, which a class-based override here would
+   tie with and then lose to on load order. */
+[data-page='home'] #work .svc-head p {
+  max-width: 58ch;
+}
+
+/* The same two-line treatment on the Featured intro, which carries the page
+   rule's 48ch and broke across four lines.
+
+   This sentence is 199 characters against the 139 above, so two lines costs
+   a far wider measure: measured, 48ch gives four lines, 70ch three, and two
+   lines do not arrive until 80ch. 84ch is that threshold plus headroom, and
+   it still sits well inside the 1192px column. Note this puts about 99
+   characters on a line, beyond the comfortable measure; the better fix is
+   shorter copy, and that is a client decision rather than a CSS one. */
+[data-page='home'] #collection .featured-head .intro {
+  max-width: 84ch;
+}
+
+/* ---------------- Exclusive Collections: a portrait still in a landscape card
+   The client supplied this one at 1200x1600 against a card that runs about
+   1.75:1, so object-fit:cover keeps roughly 43% of the image height and
+   discards the rest. Centred, that band lands on the wall panelling and the
+   framed print above the subject, and the card reads as a photograph of a
+   wall. The book and its marble stand sit low in the frame, so the band is
+   pulled down to them.
+
+   88% rather than 100% leaves a little of the panelling above the book,
+   which is what gives the object somewhere to sit. */
+[data-page='home'] #collection .film-card[data-focal='low'] > .film-image {
+  object-position: center 88%;
+}
+
 /* ---------------- Featured: no rule above the filmstrip ----------------
    The hairline sat between the section's copy and the first project and cut
    the two apart. The slider is the active home treatment; keep the equivalent
@@ -677,6 +717,37 @@ body.menu-open [data-page] .menu-toggle {
 
 [data-page] .material-grid[data-columns='2'] {
   --material-columns: 2;
+}
+
+/* Seven materials as four above a centred three.
+
+   Three cards cannot be centred under four columns, so the grid is built as
+   eight narrow columns and every card spans two. A span-2 card measures
+   `2c + g`, four of them with their gaps come to exactly the full width, and
+   starting the fifth card at column 2 leaves `c + g` free at both ends. The
+   two rows are symmetric and, importantly, every card is the same width.
+
+   Only above 1200px. Below it the attribute falls through to the default
+   `repeat(var(--material-columns, 3), 1fr)` and the existing 900 and 620
+   breakpoints take over, so no span or offset survives into the narrower
+   layouts and nothing needs resetting. That is why this is a min-width query
+   rather than overrides stacked on top of the base rule. */
+@media (min-width: 1201px) {
+  [data-page] .material-grid[data-columns='4'] {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  [data-page] .material-grid[data-columns='4'] > .material-card {
+    grid-column: span 2;
+  }
+
+  /* Both ends, deliberately. `grid-column: span 2` above puts `span 2` in the
+     *start* slot with the end left auto, so a bare `grid-column-start: 2`
+     here replaces that start and leaves the card spanning a single 130px
+     track. It renders as one skinny card and the row quietly decentres. */
+  [data-page] .material-grid[data-columns='4'] > .material-card:nth-child(5) {
+    grid-column: 2 / span 2;
+  }
 }
 
 @media (max-width: 900px) {
@@ -925,7 +996,9 @@ body.menu-open [data-page] .menu-toggle {
 [data-page='bespoke-accessories'] .shared-process h2,
 [data-page='styling-curation'] .shared-process h2 {
   max-width: 34ch;
-  font: 500 clamp(2.2rem, 3.9vw, 4rem) / 0.96 var(--font-display), serif;
+  font:
+    500 clamp(2.2rem, 3.9vw, 4rem) / 0.96 var(--font-display),
+    serif;
   letter-spacing: -0.035em;
 }
 
@@ -1527,11 +1600,29 @@ body.menu-open [data-page] .menu-toggle {
   aspect-ratio: 2 / 1;
 }
 
-[data-page='about'] .artisan-tile:nth-child(9),
-[data-page='our-craft'] .artisan-tile:nth-child(9),
-[data-page='our-work'] .artisan-tile:nth-child(9) {
-  grid-column: span 2;
-  aspect-ratio: 2 / 1;
+/* One tall tile, for the portrait photography.
+
+   It replaces a second wide tile rather than being added to it: the wall has
+   to consume a multiple of four cells or the last row ends in a hole. Eight
+   square tiles plus one double-wide plus one double-tall is twelve, which is
+   three full rows, and the tile count stays at ten.
+
+   Placed fourth so it begins the second row and spans rows two and three.
+   Ordinary auto-placement then flows the rest around it with no gaps.
+
+   No `aspect-ratio` here, deliberately. The square tiles set the row height
+   and `grid-auto-rows: 1fr` makes spanning two rows come to twice that plus
+   the gap. Stating `1 / 2` instead would be short by exactly one gap, and
+   the tile would not line up with its neighbours.
+
+   `TILE_SHAPES` in ArtisanWall.tsx mirrors this. The rotation reads it to
+   keep portrait photographs in this slot: left to itself it put the workshop
+   door in the double-wide tile and cropped it to a letterbox. */
+[data-page='about'] .artisan-tile:nth-child(4),
+[data-page='our-craft'] .artisan-tile:nth-child(4),
+[data-page='our-work'] .artisan-tile:nth-child(4) {
+  grid-row: span 2;
+  aspect-ratio: auto;
 }
 
 [data-page='about'] .artisan-tile img,
@@ -1644,7 +1735,11 @@ body.menu-open [data-page] .menu-toggle {
 [data-page='about'] .artisans-foot {
   margin: clamp(38px, 5vh, 58px) 0 0;
   max-width: 46ch;
-  color: rgba(41, 40, 31, 0.5);
+  /* 0.5 alpha over the stone background measured 2.77:1, the worst contrast
+     on the site and well under the 4.5 body text needs. 0.82 gives 6.51:1.
+     The twin of this rule on What we do sits on the dark section instead and
+     is corrected separately; same 0.5, different direction. */
+  color: rgba(41, 40, 31, 0.82);
   font-size: var(--text-body-sm);
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -2027,4 +2122,58 @@ body.menu-open [data-page] .menu-toggle {
 [data-page] .wrap {
   max-width: 1280px;
   margin-inline: auto;
+}
+
+/* ================================================================
+   Secondary copy, dark enough to read
+   ================================================================
+   The client reported the small grey write-ups on the services page as hard
+   to read. Measured: `--soft` at 0.66 alpha over #F3F0EA gives 4.62:1, which
+   clears WCAG AA for body text by 0.12 and no more, at 15.7px. Technically a
+   pass, legitimately hard work to read. 0.78 gives 6.69:1, comfortably clear
+   while staying visibly secondary to full ink at 13.02:1.
+
+   Not a services-only problem. `tokens.css` sets `--soft` to 0.72, and then
+   almost every page stylesheet redeclares it at 0.66 (contact at 0.64, which
+   is 4.36:1 and actually fails). Those files are kept diffable against
+   `legacy/`, so the correction belongs here instead.
+
+   Set on `main` rather than at the root on purpose. The page stylesheets
+   declare `--soft` on their own hashed `.page` class, which wraps `main`, so
+   a declaration on an ancestor would simply be overridden again. Declaring it
+   on a descendant wins by inheritance and needs no specificity fight, which
+   also means it does not care that page modules load after this file.
+
+   Chrome is unaffected: the masthead and footer render outside `.page` and
+   keep the token value. */
+[data-page] main {
+  --soft: rgba(41, 40, 31, 0.78);
+  --ink-soft: rgba(41, 40, 31, 0.78);
+}
+
+/* The same footnote on the dark artisan section, which the page stylesheet
+   sets to `rgba(243,240,234,.5)`: 4.40:1 against #29281F, just under the 4.5
+   body text needs. 0.72 gives 7.46:1.
+
+   Scoped by the section's **id**, not its class. The page rule is
+   `.page :global(.artisans-section .artisans-foot)`, three classes; matching
+   that here with three classes ties, and page modules load after this file,
+   so the tie goes to them. Written with the class first, this rule silently
+   did nothing and the measurement still read 4.40:1. The id outweighs it. */
+[data-page='our-craft'] #artisans .artisans-foot,
+[data-page='our-work'] #artisans .artisans-foot {
+  color: rgba(243, 240, 234, 0.72);
+}
+
+/* The project wall's tiles are links now that their captions are gone.
+
+   `.wall-tile img` sizes to 100% of its parent, and that parent is this
+   anchor rather than the figure, so it has to fill the tile or every
+   photograph collapses to its intrinsic height. The focus ring is kept: the
+   tiles are the only way off `/projects`, and with no caption text a
+   keyboard user has nothing else to aim at. */
+[data-page='projects'] .wall-tile-link {
+  display: block;
+  width: 100%;
+  height: 100%;
 }

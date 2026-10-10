@@ -704,6 +704,354 @@ Layout and polish, plus one page rebuilt speculatively.
 
 ---
 
+## Round 6 — 2026-10-09
+
+### 40. Shorten the first service description
+
+- **Page:** `/` (home)
+- **Asked:** turn the first service description into "Design and production of
+  bespoke accessories to see, touch and feel."
+- **Status:** ✅ Done
+- **Done:** the `01 / Bespoke Accessories` row description in
+  `features/home/ui/HomePage.tsx`. It previously read "...bespoke accessories
+  guests can see, touch and feel."
+- **Note:** drops the explicit "guests", who are still named in the section
+  copy above the rows.
+
+### 41. Set the Home section intros on two lines
+
+- **Page:** `/` (home)
+- **Asked:** set the "What we do" paragraph on two lines instead of three, and
+  the Featured intro the same way.
+- **Read as:** a measure change, not a copy cut: keep both sentences as written
+  and widen the column until each falls on two lines.
+- **Status:** ✅ Done
+- **Done:** two `max-width` overrides in `brand.css`, id-scoped so they beat
+  the page module (which loads after `brand.css` and would otherwise win the
+  tie). "What we do" goes 44ch to 58ch; the Featured intro 48ch to 84ch.
+  Measured two lines at 1440, 1280, 1100, 1024 and 900.
+- **Note:** the two are not equivalent. "What we do" is 139 characters and two
+  lines arrive at 50ch, so 58ch is comfortable. The Featured intro is 199
+  characters and two lines do not arrive until **80ch**, which puts about 99
+  characters on a line — well beyond the 55-75 that reads comfortably. The
+  honest fix there is shorter copy, which is a client decision. Flagged rather
+  than taken.
+
+### 42. Rename the five featured projects
+
+- **Page:** `/` (home)
+- **Asked:** rename the filmstrip cards to The Living Room, Private
+  Residences, Dining Destinations, Residential Suites and Elegant Residences,
+  in that order.
+- **Read as:** **wrongly, first time round.** The comment said "bottom right",
+  and the bottom-right element is the venue caption ("Marsa Al Arab · Dubai" /
+  "Bespoke accessories and styling"); the heading is bottom-left. It was read
+  as the headings, on the reasoning that five room names map one-to-one onto
+  five cards. The client meant the captions. Corrected below.
+- **Status:** ✅ Done
+- **Done:** the five `<h3>` headings in the filmstrip now read The Living
+  Room, Private Residences, Dining Destinations, Residential Suites and
+  Elegant Residences. On being told of the misreading the client chose to
+  **keep** those headings and **delete the bottom-right captions entirely**
+  rather than move the names across, so all five `<p>` elements are gone from
+  `.film-copy`.
+- **Note:** consequences of dropping the captions.
+  1. The home page no longer names any venue or discipline on these cards.
+     "Marsa Al Arab · Dubai", "Osaka · Japan" and the four service lines were
+     the only place either appeared in the filmstrip.
+  2. `.film-copy` is `display: flex; justify-content: space-between` with one
+     child left, so the heading sits left as before. Its `.film-copy p` rules
+     in `home.module.css` are now dead, and were left in place rather than
+     edited: that file is kept diffable against `legacy/`.
+  3. The captions were already `display: none` below 860px, so mobile is
+     unchanged by this.
+  4. The photograph `alt` text still names Iliana and the Bombay Club, and
+     `/projects/marsa-al-arab` plus the page description in
+     [SEO-LAUNCH-ACTION-PLAN.md](SEO-LAUNCH-ACTION-PLAN.md) still call these
+     spaces by their venue names. Home and the project page now disagree.
+  5. Three of the five names are residence or suite words — Private
+     Residences, Residential Suites, Elegant Residences — which read as
+     similar at a glance in a strip the reader moves through quickly.
+
+### 43. Add a sixth featured card, Exclusive Collections
+
+- **Page:** `/` (home)
+- **Asked:** add a sixth image to the filmstrip called Exclusive Collections.
+  The client supplied a portrait photograph.
+- **Status:** ✅ Done
+- **Done:** a sixth `.film-card` with the supplied still, converted to WebP as
+  `new-work-exclusive-collections.webp` and registered through
+  `pnpm migrate:images`. All six cards renumbered to `/ 06`, and the slider's
+  counter total with them.
+- **Note:** the shape had to be solved, not just dropped in. The photograph is
+  1200x1600 and the card runs 1.75:1, so `object-fit: cover` keeps about
+  **43% of the image height**. Centred, that band lands on the wall panelling
+  and the framed print above the subject and the card reads as a photograph
+  of a wall. The card carries `data-focal="low"` and a matching
+  `object-position: center 88%` in `brand.css`, which pulls the band down onto
+  the book and its marble stand while leaving a little panelling above them.
+  Verified by driving the slider to the last card: 43% visible height,
+  `object-position` applied, counter reads `06 / 06`, next arrow disabled.
+- **Note:** no code change was needed for the count itself. Both filmstrip
+  hooks derive progress, arrow state and bounds from `cards.length`, so the
+  strip, rail and arrows took the sixth card without edits. Only the hardcoded
+  `/ 05` strings in the markup and two stale comments needed updating.
+
+### 44. A seventh material, in four above a centred three
+
+- **Page:** `/our-work`, Our materials
+- **Asked:** make the six materials seven, with the cards a little smaller,
+  four on the first row and three centred on the second. Left-align the
+  second row instead if centring looks odd. The seventh is marble, using the
+  still added to the hero collage.
+- **Status:** ✅ Done, centred
+- **Done:** Marble added as the seventh card, reusing
+  `new-material-marble.webp`. The grid takes `columns={4}` and, above 1200px,
+  renders as **eight narrow columns with every card spanning two**, the fifth
+  card starting at column 2. That is the only way to centre three under four
+  while keeping every card the same width. Measured at 1440: two rows of 4
+  and 3, all cards 282px, 152px clear at both ends of the second row.
+- **Note:** the cards got smaller on their own. Three columns to four takes
+  them from about 412px wide to 282px, so no separate size rule was needed.
+  The hover paragraphs were written for the larger card and were checked
+  rather than assumed: the longest, Leather at 246 characters, starts 45px
+  down a 352px card. Tight, but nothing overflows.
+- **Note:** `grid-column: span 2` puts `span 2` in the _start_ slot. Adding a
+  bare `grid-column-start: 2` for the fifth card replaced that start and left
+  the end auto, so the card rendered one 130px track wide and the row
+  decentred. It needs `grid-column: 2 / span 2`. Worth knowing before anyone
+  edits this block.
+- **Note, needs a decision:** seven cards divide awkwardly below 1200px.
+  The grid falls back to three columns (3 + 3 + 1) and then two (2 + 2 + 2 +
+  1), leaving a single orphan card on the last row at both. Six used to fill
+  those rows evenly. The same eight-column trick could centre those too, if
+  the orphan looks wrong.
+
+### 45. Swap four photographs in the artisan wall
+
+- **Page:** `/our-craft`, `/our-work` and `/about` (one shared wall)
+- **Asked:** remove four images, supplied as screenshots with crosses drawn
+  over them, and add four others supplied as files.
+- **Read as:** matched the four crossed thumbnails against a contact sheet of
+  the pool rather than by position, since the wall rotates and a screenshot
+  does not identify a tile. Removed: `new-artisan-wood-12` (walnut boards),
+  `new-artisan-fl-13` (open book, gilt edges), `new-artisan-fl-33` (scalloped
+  tile field, checked against its near-twin `fl-29`) and
+  `new-artisan-ceramics-29` (clay in a tub).
+- **Status:** ✅ Done, with a correction to the brief
+- **Done:** the four are out of `ARTISAN_WALL`. Two went in: the workshop door
+  and the marble yard. The pool is now **18**.
+- **Note:** only two of the four "new" files were new. Compared side by side,
+  **"Our Artisans 1" is the same photograph as `new-artisan-glass-26` and
+  "Our Artisans 4" is the same as `new-artisan-ft-08`**, both already live in
+  the wall. The client had most likely seen them there. Nothing was imported:
+  the other two were already on disk among the held-back set, as
+  `new-artisan-ft-05` (door) and `new-artisan-fl-62` (marble). So the whole
+  change is which images the pool draws from.
+- **Note:** the marble yard is one of the phone snapshots the curation note
+  describes, and goes in **as supplied on the client's explicit call**. It
+  reads as lower quality than the workshop photography beside it. It is also
+  the only picture in the wall showing raw material before it is worked.
+- **Note:** 18 against 10 tiles still leaves the rotation room to breathe, but
+  the pool has to stay comfortably above the tile count or the wall gets
+  repetitive. Five unused photographs remain if it needs topping back up:
+  `fl-02`, `fl-03`, `fl-38`, `fl-56`, `fl-64`.
+
+### 46. Give the workshop door a tall tile, and keep tall pictures in it
+
+- **Page:** `/our-craft`, `/our-work` and `/about` (one shared wall)
+- **Asked:** the door should take two spaces, stacked vertically rather than
+  side by side, and the images that rotate through that slot should also be
+  tall ones.
+- **Status:** ✅ Done
+- **Done:** one of the two double-width tiles is now double-height instead,
+  and the rotation became shape-aware. The door opens in the tall slot on
+  first paint; after that the slot rotates, drawing only from the portrait
+  photographs.
+- **Note:** the two halves had to be done together. The door was landing in a
+  **double-width** tile, which is the worst possible slot for a portrait
+  photograph: `object-fit: cover` cropped it to a letterbox showing the
+  middle of the doors. Widening the grid alone would not have fixed it,
+  because nothing stopped the rotation putting a portrait back in a wide slot
+  five seconds later. `useImageRotation` now takes `tileShapes` and
+  `imageShapes` and will only place a picture in a slot whose proportions
+  suit it.
+- **Note:** the tall tile **replaces** a wide one rather than being added.
+  The wall has to consume a multiple of four cells or the last row ends in a
+  hole: eight square plus one double-wide plus one double-tall is twelve,
+  which is three full rows, and the tile count stays at ten.
+- **Note:** image shapes are derived from the real pixel dimensions already
+  in `IMAGE_REGISTRY`, not hand-listed, so they cannot drift out of step with
+  the files. Of the 18 in the pool, 11 are portrait and 7 landscape, so both
+  shaped slots have plenty to draw on.
+- **Note:** `TILE_SHAPES` in `ArtisanWall.tsx` mirrors the `nth-child` rules
+  in `brand.css`. Change one and you must change the other, and re-check the
+  cell count.
+
+### 47. Move Marble to the end of the first row
+
+- **Page:** `/our-work`, Our materials
+- **Asked:** Marble should sit fourth, closing the first row.
+- **Status:** ✅ Done
+- **Done:** reordered `MATERIALS`. The array order is the page order, so this
+  was a move rather than a layout change. Row one is now Lustrous Leather,
+  Wood, Horn, Marble; row two is Lacquer, Resin, Elegant Shells, still
+  centred with 152px clear at both ends.
+- **Note, needs a decision:** `/our-craft` has its **own copy** of the
+  materials content and still shows the original six, in three columns, with
+  no Marble. Entry 44 and this one both applied to `/our-work` only, as
+  asked, so the two pages now show different material sets in different
+  layouts. Worth deciding whether they should match.
+
+### 48. The small grey write-ups are hard to read
+
+- **Page:** `/our-services`, and in the event every page
+- **Asked:** "review the small grey write-ups, they are a bit difficult to
+  read. Maybe the colour tone needs to be a bit darker or the background
+  colour a different one to create more of a contrast."
+- **Read as:** darken the type rather than change the background. The paper
+  and stone grounds are the brand; the secondary grey is not.
+- **Status:** ✅ Done
+- **Done:** `--soft` is now `rgba(41,40,31,.78)` inside `main`, up from .66.
+  Measured against the paper ground that is **4.62:1 to 6.69:1**. Two
+  footnote rules that hardcoded .5 alpha rather than using the token were
+  corrected as well.
+- **Note:** the client was right, and the numbers are closer than they look.
+  At .66 the services copy measured **4.62:1**, which clears WCAG AA for body
+  text by 0.12 and no more, at 15.7px. A technical pass and genuinely hard
+  work to read.
+- **Note:** not a services problem. `tokens.css` sets `--soft` to .72 and
+  then nearly every page stylesheet redeclares it at .66, contact at .64.
+  The fix is one rule on `main`, which sits inside the element the page
+  stylesheets declare the variable on, so it wins by inheritance instead of
+  fighting specificity and load order.
+- **Note:** two worse cases turned up in the sweep, both hardcoding .5 alpha
+  instead of the token. `/about`'s artisan footnote was **2.77:1**, the worst
+  on the site; `/our-craft`'s twin on the dark section was 4.40:1. Both now
+  pass. Every page checked is clear of AA, worst case 5:1.
+- **Note, needs a decision:** the **"Start a project" button fails**, and is
+  not fixed here. Paper text on clay `#B56D43` is **3.53:1** against the 4.5
+  it needs. Fixing it means either darkening the clay to about `#9C5733`
+  (4.83:1) or using the oxblood (7.69:1), and both change a brand colour on
+  a button that appears on nine pages. Ink text on the existing clay does not
+  help: 3.69:1.
+- **Note:** project captions sit over photographs, so their contrast cannot
+  be computed from the CSS and is excluded above rather than reported as a
+  pass. Judging those needs the actual pixels behind the type.
+
+### 49. Reword the Bespoke Accessories description
+
+- **Page:** `/our-services`
+- **Asked:** change the Bespoke Accessories description to "The details that
+  define the experience. Every piece is individually designed and produced
+  exclusively for one setting".
+- **Status:** ✅ Done
+- **Done:** the `lede` on the bespoke-accessories entry in
+  `services.content.ts`. It was "The details guests touch. Every hanger, tray
+  and bill folder individually designed and produced for one property only."
+  Two lines at 1440, as before.
+- **Note:** a full stop was added at the end. The supplied wording had none
+  and the other two service ledes are full sentences; say so if it was meant
+  to run without one.
+- **Note:** the wording drops the concrete examples, "hanger, tray and bill
+  folder", in favour of "every piece", and "property" becomes "setting".
+  Worth knowing that those nouns were the only place on the overview page
+  that said what the accessories actually are.
+
+### 50. Reword Styling & Curation, and drop florals from its second scope item
+
+- **Page:** `/our-services`
+- **Asked:** set the Styling & Curation description to "Books, objects, art
+  and decorative pieces sourced through a global network of 100+ artisans and
+  thoughtfully arranged to give every space its own distinctive character and
+  story", and remove "florals" from the second scope item so it reads "Books,
+  objects and art found with...".
+- **Status:** ✅ Done
+- **Done:** the `lede` and the `02 / Sourcing & selection` note in
+  `services.content.ts`.
+- **Note:** the new lede is 178 characters against the previous 141, and runs
+  to **three lines** where the other two services sit on two. On a 390px
+  phone it is six lines against their four. Nothing breaks, but the panel
+  rows are no longer the same height when closed.
+- **Note, needs a decision:** "florals" is gone from the overview panel but
+  survives in nine other places, including the **Styling & Curation detail
+  page** itself ("Books, objects, art and florals considered together...",
+  and a "Decoration, styling, florals" caption) and the service registry
+  entry used for that page's search description. The overview and the detail
+  page for the same service now describe it differently. Say the word and
+  the rest follow.
+
+### 51. Replace three Finer Living gallery images, and the panel image
+
+- **Page:** `/our-services/finer-living` and `/our-services`
+- **Asked:** three images crossed out in the six-image collection gallery,
+  with named replacements, and a new photograph for the Finer Living image on
+  the services overview.
+- **Status:** ✅ Done
+- **Done:** gallery positions 1, 2 and 6 now show the oak-stand cloche, the
+  red marble footed bowl and the walnut tray. The overview panel shows the
+  new cherry-bowl photograph. Four assets converted to WebP and registered.
+- **Note:** three of the supplied files were **5906px wide**, two to three
+  times anything else in the library and 500 to 700KB each. Re-encoded at
+  2400px, which is still ample for a tile that renders at a third of the
+  page, and they came down to 150 to 185KB.
+- **Note:** the panel points at a **new** asset rather than overwriting
+  `new-cover-finer-living.webp`. That file is also the home page service row
+  and the detail page's registry image, so replacing it would have changed
+  three places when one was asked for. The consequence is that home still
+  shows the older cherry-bowl photograph; worth deciding whether it should
+  follow.
+- **Note, needs a decision:** two of the three removed photographs are
+  **still on the same page in larger placements**. The wooden stools
+  (`0698_...`) is the page's **hero image**, and the stone samples
+  (`0694_...`) is a **full-bleed background** behind the closing section.
+  The client crossed them out as thumbnails and may not have realised; if
+  they are out, those two placements matter more than the grid did.
+
+### 52. Remove every location caption beneath an image
+
+- **Page:** site-wide
+- **Asked:** "go through the whole website and remove all locations
+  underneath the images."
+- **Read as:** the captions naming a property, city or room beneath a
+  photograph. Not every caption: three were left, see below.
+- **Status:** ✅ Done
+- **Done:** fourteen captions removed across five pages.
+
+  | Page                                | Removed                                                        |
+  | ----------------------------------- | -------------------------------------------------------------- |
+  | `/projects`                         | the whole tile caption: property, city and space, 20 tiles     |
+  | `/projects/marsa-al-arab`           | Lobby, Guest suite, The Bombay Club, Iliana                    |
+  | `/projects/waldorf-astoria-osaka`   | Bedside detail, Material contrast, Guest room, Selected detail |
+  | `/our-services/bespoke-accessories` | three "Marsa Al Arab / ..." captions                           |
+  | `/our-services/styling-curation`    | three venue captions                                           |
+
+- **Note:** the `/projects` caption held **the only link on that page**.
+  Removing it would have left the project wall a dead end with no route to
+  either project. The whole tile is the link now, with the property and space
+  supplying an `aria-label` so the destination is still announced even though
+  nothing is printed. Verified: clicking a tile reaches
+  `/projects/marsa-al-arab`, and the page went from 18 links to 21.
+- **Note:** the dark scrim on the project tiles went with the captions. It
+  was painted on the `figcaption` itself rather than a pseudo-element, so
+  deleting the element removed the wash too. The photographs are now clean,
+  which is the bigger visible change.
+- **Note:** two of the Waldorf captions, "Material contrast" and "Selected
+  detail", were descriptive rather than locations. They were removed anyway:
+  they sit in a four-up gallery with two that were locations, and captioning
+  half a row reads as an accident.
+- **Note:** three captions **kept**, none of them locations. Contact's "Begin
+  a conversation", About's "Malika and Alex", and Finer Living's three
+  material labels ("Glass / Cloche" and so on). Say the word if those should
+  go too.
+- **Note:** place names remain in page headings, hero eyebrows and body copy,
+  which are not captions. One stray: the chapter label on
+  `/projects/marsa-al-arab` reads "Indian dining · Dubai" where its siblings
+  are descriptive ("Arrival · Public space"). Left alone, but it is the one
+  remaining location sitting over a photograph.
+
+---
+
 ## Cross-cutting notes
 
 Things that came up more than once, or that change every page at once. Worth
