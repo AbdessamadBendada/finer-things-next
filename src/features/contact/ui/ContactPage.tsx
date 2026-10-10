@@ -82,6 +82,10 @@ export function ContactPage() {
                   <a href={`tel:${SITE.contact.phone.replace(/\s/g, '')}`}>
                     {SITE.contact.phone}
                   </a>
+                  <br />
+                  <a href={`tel:${SITE.contact.phoneAlt.replace(/\s/g, '')}`}>
+                    {SITE.contact.phoneAlt}
+                  </a>
                 </p>
               </div>
               <div className="rise">

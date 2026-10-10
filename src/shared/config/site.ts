@@ -19,23 +19,30 @@ export const SITE = {
   /*
    * How to reach the studio.
    *
-   * Placeholders until the client supplies the real ones, and deliberately
-   * plausible rather than obviously fake: the page has to be reviewable, and a
-   * block reading "TBC" tells a visitor the site is unfinished.
+   * Address, email and both telephone numbers were supplied by the client on
+   * 2026-10-10 and are real. `placeholder` is false from that date; it is the
+   * flag the pre-launch check in docs/PRELAUNCH.md looks for.
    *
-   * Everything here is in one object so replacing it is a single edit. Search
-   * `contact.placeholder` before launch; the flag is what the pre-launch check
-   * in docs/HANDOFF.md looks for.
+   * Two fields below are still invented and are flagged separately, because
+   * one `placeholder` boolean can no longer describe the whole object: the
+   * opening hours and the LinkedIn URL have never been supplied. Do not let
+   * `placeholder: false` be read as "every field here is confirmed".
    */
   contact: {
-    placeholder: true,
-    email: 'studio@finerthings.com',
-    phone: '+971 4 000 0000',
-    street: 'Unit 14, Alserkal Avenue',
-    district: 'Al Quoz 1',
+    placeholder: false,
+    email: 'alex.lahmer@finerthingsdesigns.com',
+    /* Austria first: the number the client listed first. */
+    phone: '+43 664 428 7294',
+    phoneAlt: '+971 50 362 0480',
+    /* Split on the client's own line breaks, so "DDP" is not left orphaned. */
+    street: 'IFZA Business Park',
+    district: 'DDP, PO Box 342001',
     city: 'Dubai',
     country: 'United Arab Emirates',
+    /* Still invented. Ask before launch. */
+    hoursPlaceholder: true,
     hours: 'Sunday to Thursday, 9am to 6pm GST',
+    linkedInPlaceholder: true,
     linkedIn: '#',
   },
 } as const;
