@@ -76,7 +76,7 @@ export function OurWorkPage() {
                 </p>
               </div>
             </div>
-            <MaterialCards cards={MATERIALS} columns={3} />
+            <MaterialCards cards={MATERIALS} columns={4} />
           </div>
         </section>
 

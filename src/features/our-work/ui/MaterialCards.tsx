@@ -20,8 +20,15 @@ export function MaterialCards({
   columns,
 }: {
   cards: readonly MaterialCard[];
-  /** 3 for the materials grid, 2 for the finishing details. */
-  columns: 2 | 3;
+  /**
+   * 4 for the materials grid, 2 for the finishing details.
+   *
+   * 4 is a wide-viewport maximum rather than a fixed count: seven cards set
+   * as four above a centred three, falling back to three columns and then
+   * two as the viewport narrows. The arithmetic is in the `data-columns='4'`
+   * block in brand.css.
+   */
+  columns: 2 | 3 | 4;
 }) {
   return (
     <div className="material-grid" data-columns={columns}>

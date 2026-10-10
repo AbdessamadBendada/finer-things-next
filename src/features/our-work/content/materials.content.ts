@@ -11,17 +11,20 @@ export type MaterialCard = {
  * The materials, from the photography the client supplied.
  *
  * This replaces a set paraphrased from their old website. It is a different
- * list: no marble and no metal, and horn, lacquer, resin and fabric are new.
- * The copy is written to the photographs rather than carried over, because
- * four of the six cards previously described materials that are not in the
- * set they sent.
+ * list: no metal, and horn, lacquer, resin and fabric are new. The copy is
+ * written to the photographs rather than carried over, because four of the
+ * cards previously described materials that are not in the set they sent.
  *
- * Nine were supplied and six are shown, which fills two even rows and retires
- * the duplicate that stood in while only five existed. Stitching moved to the
- * finishing details below, where it belongs: it is a choice made on leather
- * rather than a material of its own. Fabric and glass are held back for the
- * same reason space allows only six, and are the first candidates if this
- * grows to nine.
+ * Seven are shown, in a row of four above a centred row of three. Marble is
+ * the seventh and arrived later than the rest, from the artwork the client
+ * supplied for the home intro; it is the same still the hero collage uses.
+ * Note that an early version of this list carried a marble card as a
+ * placeholder and it was retired as a duplicate. This one is real.
+ *
+ * Stitching moved to the finishing details below, where it belongs: it is a
+ * choice made on leather rather than a material of its own. Glass is the only
+ * supplied photograph still unused, and is the first candidate if this grows
+ * again.
  */
 export const MATERIALS: readonly MaterialCard[] = [
   {
@@ -41,6 +44,14 @@ export const MATERIALS: readonly MaterialCard[] = [
     copy: 'No two plates are alike. Polished horn moves from honey through amber to near black in the space of a single piece, which is why we use it where a repeated pattern would flatten the work.',
     image: '/assets/new-material-horn.webp',
     alt: 'Polished horn plates, banded from honey through amber to black',
+  },
+  /* Fourth, closing the first row, at the client's request. The order here is
+     the order on the page: four cards across, then three centred beneath. */
+  {
+    name: 'Marble',
+    copy: 'Portoro, calacatta, golden onyx. Each block is cut for its veining rather than its evenness, so the figure running through a finished piece belongs to that stone and cannot be specified twice.',
+    image: '/assets/new-material-marble.webp',
+    alt: 'Stacked slabs of dark portoro, pale calacatta and golden onyx',
   },
   {
     name: 'Lacquer',
