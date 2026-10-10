@@ -37,6 +37,110 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-10-10: Company registrations on the imprint
+
+**Codex change**
+
+- Commit: `2992529 Imprint: rebuilt around the three real legal entities`
+- Changed: the client supplied three legal entities across two jurisdictions.
+  The imprint had four generic sections written before we knew anything
+  (identity, registered office, registration, tax), which would have split
+  each company's name from its own numbers. Restructured to one section per
+  entity: Austria, Dubai free zone, Dubai mainland, each with its registered
+  address and its registration and tax numbers, followed by the existing
+  Responsible management and Contact details. The reading index is generated
+  from the same data.
+- Changed: hero eyebrow and notice from "Legal placeholder / Draft only" to
+  "Legal notice / Pending legal review".
+- Changed: four CSS rules in the shared legal module for the entity name and
+  the label/value rail, collapsing to stacked rows below 760px so a 15-digit
+  TRN is not squeezed into a 150px column.
+- Files: `src/features/legal/content/entities.content.ts` (new),
+  `src/features/legal/ui/ImprintPage.tsx`,
+  `src/features/legal/styles/terms.module.css`, `docs/FEEDBACK.md`
+- Verified: `pnpm typecheck` and `pnpm lint` clean. Headings and SEO suites,
+  63 passed and 3 failed; all three (SEO contextual links, two
+  `/our-services` mobile headings) reproduce on a stashed clean tree and are
+  pre-existing. The new entity headings pass the two-line rule at 390px
+  including "United Arab Emirates, Dubai free zone". Rendered and read at
+  1440px and 390px.
+- Follow-up: counsel must name the **one** entity that legally operates the
+  site; all three are currently listed as peers. The mainland address reads
+  "DIGIBIZ BUSIENSS CENTER" as supplied and needs confirming. Tax number
+  labels were changed from the supplied "TNR" to "TRN"; figures untouched.
+  See FEEDBACK.md 55.
+
+## 2026-10-10: Real contact details replace the placeholder block
+
+**Codex change**
+
+- Commit: `48ebe8f Contact: real details replace the invented block`
+- Changed: `SITE.contact` held plausible invented details, flagged
+  `placeholder: true`, feeding the Contact page and the footer. The client
+  supplied the real email, two telephone numbers and the IFZA address.
+  Replaced wholesale. The placeholder email was `studio@finerthings.com`,
+  which was not only unconfirmed but on the wrong domain; the real one is
+  `finerthingsdesigns.com`.
+- Changed: added `phoneAlt`, since the object held one number and the client
+  gave two. Both render as separate `tel:` links on `/contact`. The address
+  is split across `street` and `district` on the client's own line breaks so
+  "DDP" is not orphaned.
+- Changed: `placeholder: false`, but **hours and LinkedIn were never
+  supplied** and are still invented, so one boolean no longer describes the
+  object. Added `hoursPlaceholder` and `linkedInPlaceholder` so
+  `placeholder: false` cannot be read as "every field is confirmed", and
+  rewrote the PRELAUNCH entry to match.
+- Changed: `/imprint` Registered office and Contact details now read from the
+  same config rather than being placeholders.
+- Files: `src/shared/config/site.ts`,
+  `src/features/contact/ui/ContactPage.tsx`,
+  `src/features/legal/ui/ImprintPage.tsx`, `docs/PRELAUNCH.md`,
+  `docs/FEEDBACK.md`
+- Verified: `pnpm typecheck` and `pnpm lint` clean. Forms, SEO,
+  about-founders, headings and masthead suites: 124 passed, 4 failed, all
+  four reproduced on a stashed clean tree. Rendered `/contact` and
+  `/imprint`.
+- Follow-up: opening hours and the LinkedIn URL. See FEEDBACK.md 54.
+
+## 2026-10-10: Malika's own portrait, and the joint photograph removed
+
+**Codex change**
+
+- Commit: `6cd3d53 About: Malika's own portrait, and the joint photograph removed`
+- Changed: the client withdrew the photograph of Alex and Malika together. It
+  was used twice on `/about`, as the hero's right half and as the image for
+  the co-founder section, and nowhere else on the site. The hero now shows
+  `new-work-detail-01.webp`; the co-founder section shows a new
+  `founder-malika-lahmer.webp`, converted from the supplied JPEG at q82.
+  `finer-things-family.webp` is unreferenced.
+- Changed: the "Malika and Alex" hero caption is gone with the image it
+  named, which also matches the caption sweep in `cd69c05`.
+- Changed: heading and alt text to **Malika Yilmaz**, and her biography to
+  the supplied copy.
+- Changed: three `object-position` values, each commented at its rule. The
+  co-founder tile's 4/5 crop clipped the chair back; the hero's inherited
+  crop was positioned for the withdrawn portrait; and below 860px the hero
+  goes full width and crops to a band that missed the subject entirely.
+- Files: `src/features/about/ui/AboutPage.tsx`,
+  `src/features/about/styles/about.module.css`,
+  `public/assets/founder-malika-lahmer.webp` (new),
+  `src/shared/config/image-registry.ts` (regenerated),
+  `tests/visual/about-founders.spec.ts`, `docs/FEEDBACK.md`
+- Verified: `pnpm typecheck` and `pnpm lint` clean. `about-founders.spec.ts`
+  2/2 after updating it; `headings.spec.ts` 46 passed with the two
+  `/our-services` mobile failures confirmed pre-existing on a clean tree.
+  Rendered at 1440px and 390px.
+- Note, for the next person: `about-founders.spec.ts` guards this exact
+  section and asserted the caption, the old alt text and the old copy. It was
+  not run before the work was first reported complete, so a green report
+  covered a red test. The visual suites run `pnpm start`, not the dev server,
+  so a stale `.next` makes a correct change look like it did not apply.
+- Follow-up: the surname is `Yilmaz` on `/about` only; nothing else on the
+  site named her. `brand.css` still carries a `.portrait-placeholder` block
+  commented "Malika's portrait has not been supplied" and a
+  `#malika-founder-heading em` rule for an `em` the heading does not have.
+  Both are now dead; left in place rather than removed unasked.
+
 ## 2026-10-10: Remove every location caption beneath an image
 
 **Codex change**

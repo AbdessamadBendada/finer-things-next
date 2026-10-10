@@ -1052,6 +1052,103 @@ Layout and polish, plus one page rebuilt speculatively.
 
 ---
 
+## Round 7 — 2026-10-10
+
+Three comments, all supplying content the build had been waiting for: a
+photograph of Malika, the real contact details, and the company registrations.
+Between them they clear the oldest placeholder on the site.
+
+### 53. Remove the joint portrait, and give Malika her own
+
+- **Page:** `/about`
+- **Asked:** remove the photograph where Alex and Malika appear together.
+  Supplied a portrait of Malika, her name as **Malika Yilmaz**, and a revised
+  biography.
+- **Read as:** the image is out everywhere it appears, not only from the one
+  placement that was pointed at. It was on the page twice.
+- **Status:** ✅ Done
+- **Discussed:** the suggestion was a hero diptych of both founders, then
+  both again below. Pushed back on the duplication: the same two files twice
+  on one page reads as a shortage of photography, which is the impression to
+  avoid while real photography is still the open item. The two portraits also
+  disagree tonally — his is warm leather and wood, hers a cool teal curtain
+  and a red chair — and the hero's light filter cannot reconcile them where
+  the founder sections' heavier one can. Agreed instead: a non-portrait hero,
+  and one full section per founder.
+- **Done:** hero right half now shows `new-work-detail-01.webp`, the open
+  book on a marble stand. Malika's section shows `founder-malika-lahmer.webp`,
+  converted from the supplied JPEG. `finer-things-family.webp` is no longer
+  referenced. The "Malika and Alex" hero caption went with it, consistent
+  with comment 52.
+- **Note:** the first choice for the hero was the lit marble alcove
+  (`new-work-marsa-shelfs.webp`). A 2:3 image in a tall half-viewport column
+  crops to the middle shelf and loses the composition. The book photograph is
+  3:4 against a ~4:5 slot and barely crops at all. Aspect ratio decided this,
+  not taste.
+- **Note:** three crop positions were needed and are commented where they
+  sit. Below 860px the hero goes full width and crops to a wide band that
+  landed on the framed print rather than the book.
+- **Note:** the supplied copy read "until a **every** tells a story"; set as
+  "until a **space** tells a story". The new second line also drops "from
+  Jumeirah to private residences" for "the most wonderful and loved
+  projects", so the only mention of a named hotel in her biography is gone.
+  Assumed deliberate.
+- **Note:** the surname was flagged as a question rather than applied, and
+  shipped as the old "Malika Lahmer" for one build. Wrong call — a name in
+  the brief is an instruction, not an open question. Now **Malika Yilmaz**.
+
+### 54. The real contact details
+
+- **Page:** `/contact`, `/imprint`, and the footer
+- **Asked:** supplied Alex Lahmer, Founder,
+  `alex.lahmer@finerthingsdesigns.com`, two telephone numbers (+43 and +971)
+  and the IFZA Business Park address.
+- **Status:** ✅ Done
+- **Done:** `SITE.contact` replaced wholesale and `placeholder` set to
+  `false`. The Contact page shows both numbers as separate `tel:` links; the
+  config only had one `phone`, so `phoneAlt` was added.
+- **Note:** the placeholder email was `studio@finerthings.com` — not merely
+  unconfirmed but on the **wrong domain**. The real one is
+  `finerthingsdesigns.com`. It had been feeding the Contact page and the
+  footer.
+- **Note:** the address is split across `street` and `district` on the
+  client's own line breaks, so "DDP" is not orphaned on its own line.
+- **Note, needs a decision:** `placeholder: false` no longer describes the
+  whole object. **Opening hours** ("Sunday to Thursday, 9am to 6pm GST") and
+  the **LinkedIn URL** were never supplied and are still invented. Both are
+  now flagged individually as `hoursPlaceholder` and `linkedInPlaceholder`.
+  The hours render on `/contact` beside the real address, which is the same
+  hazard the wrong address was: nothing announces them as fake and the
+  aggregators pick them up.
+
+### 55. The company registrations
+
+- **Page:** `/imprint`
+- **Asked:** supplied three entities — Finer Things GmbH (Austria, UID and
+  EORI), FINER THINGS DESIGNS FZCO (Dubai free zone, licence and TRN) and
+  Finer Things Decoration Materials L.L.C. (Dubai mainland, licence and TRN).
+- **Status:** ✅ Done
+- **Done:** the imprint is restructured around one section per entity, each
+  with its registered address and its numbers. The page previously had four
+  generic sections (identity, registered office, registration, tax) written
+  when we knew nothing; that shape would have put the Austrian company's name
+  in one section and its VAT number two sections below. Data lives in
+  `src/features/legal/content/entities.content.ts`.
+- **Done:** hero changed from "Legal placeholder / Draft only" to "Legal
+  notice / Pending legal review", since five of six sections are no longer
+  placeholders.
+- **Note, needs a decision:** an imprint normally names the **one** entity
+  that operates the website. With three, that is a legal determination and
+  not ours to make, so all three are listed as peers. If counsel names the
+  operating company it should lead the page.
+- **Note:** the mainland address reads "DIGIBIZ **BUSIENSS** CENTER" as
+  supplied. Carried through uncorrected: a silently tidied legal address is
+  worse than a visibly wrong one. Needs confirming.
+- **Note:** both tax numbers were labelled **TNR**; set as **TRN**, the UAE
+  term. Labels only, the figures are untouched.
+
+---
+
 ## Cross-cutting notes
 
 Things that came up more than once, or that change every page at once. Worth
@@ -1078,6 +1175,8 @@ Motion Study`. A mockup artefact that would ship to search results.
 - **The contact form does not deliver anywhere.** It validates end to end and
   logs, by design, until the consent checkbox exists
   ([adr/0002](adr/0002-deferred-compliance.md)).
-- **Legal pages are placeholder text**, `noindex`, excluded from the sitemap.
+- **Privacy and Terms are placeholder text**, `noindex`, excluded from the
+  sitemap. Imprint no longer is, as of comment 55, but keeps the same
+  `noindex` until counsel has reviewed it.
 - **LinkedIn link is `href="#"`**, and the contact form still says "The final
   privacy-policy link will be added before launch."

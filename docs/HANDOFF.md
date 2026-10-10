@@ -1,6 +1,6 @@
 # Where the project is
 
-Last updated **2026-10-10**, after the round 6 client review.
+Last updated **2026-10-10**, after the round 7 client review.
 
 Read this first if you are picking the project up. It is the state of play:
 what is settled, what is waiting on the client, and what is known to be broken.
@@ -37,6 +37,15 @@ Living photography, and every location caption beneath an image removed
 site-wide. Two genuine bugs were found and fixed along the way: the
 artisan wall swapping the same tile twice running, and the dev server
 serving an unstyled page in Safari.
+
+**Round 7 (2026-10-10) follows it**, three comments recorded as FEEDBACK.md
+53 to 55, with three matching CODEX-CHANGES entries. All three supplied
+content the build had been waiting on. The joint portrait of Alex and Malika
+is withdrawn: the About hero now carries a still life and each founder has
+their own section, with her name corrected to **Malika Yilmaz**. The invented
+contact block is gone, replaced by the real email, two telephone numbers and
+the IFZA address. And the imprint is rebuilt around the three real legal
+entities. Between them these clear the two oldest placeholders on the site.
 
 ## What changed in review, in brief
 
@@ -80,17 +89,35 @@ deliberately unchanged.
 
 Nothing here is a bug. Each is a placeholder that ships until they answer.
 
-| What                     | Where                                            | Notes                                                         |
-| ------------------------ | ------------------------------------------------ | ------------------------------------------------------------- |
-| Remaining project images | `features/projects/content`                      | 20 of the 22 supplied photographs are used                    |
-| ~~A sixth material~~     | `features/our-work/content/materials.content.ts` | Resolved 2026-10-09. Seven real materials now, no placeholder |
-| All real photography     | everywhere                                       | 34 distinct images across 81 placements                       |
+| What                     | Where                                            | Notes                                                           |
+| ------------------------ | ------------------------------------------------ | --------------------------------------------------------------- |
+| Remaining project images | `features/projects/content`                      | 20 of the 22 supplied photographs are used                      |
+| ~~A sixth material~~     | `features/our-work/content/materials.content.ts` | Resolved 2026-10-09. Seven real materials now, no placeholder   |
+| ~~Contact details~~      | `shared/config/site.ts`                          | Resolved 2026-10-10. Real email, two numbers, IFZA address      |
+| Opening hours            | `shared/config/site.ts`                          | Still invented, `hoursPlaceholder: true`, renders on `/contact` |
+| The LinkedIn URL         | `shared/config/site.ts`                          | Still `#`, `linkedInPlaceholder: true`                          |
+| The operating entity     | `features/legal/content/entities.content.ts`     | Three companies listed as peers; counsel must name one          |
+| All real photography     | everywhere                                       | 34 distinct images across 81 placements                         |
 
 An email has gone to the client asking them to walk the site and say what
 replaces what. An upload app was built for this and then scrapped as
 overkill; do not rebuild it without being asked.
 
 ## Known and unfixed
+
+**`contact.placeholder: false` does not mean the object is clean.** Address,
+email and both numbers are real as of round 7. The **opening hours** and the
+**LinkedIn URL** were never supplied, are still invented, and are flagged
+separately as `hoursPlaceholder` and `linkedInPlaceholder`. The hours render
+on `/contact` immediately beside the real address, which is exactly the
+hazard the invented address used to be. See FEEDBACK.md 54.
+
+**The imprint names three companies and promotes none of them.** An imprint
+normally identifies the single entity operating the site; the client supplied
+an Austrian GmbH, a Dubai free zone company and a Dubai mainland LLC. Which
+one is a legal determination, so all three are listed as peers and the page
+says counsel must confirm. The mainland address also reads "DIGIBIZ BUSIENSS
+CENTER" as supplied and is carried through uncorrected. See FEEDBACK.md 55.
 
 **The "Start a project" button fails WCAG AA.** Paper text on clay `#B56D43`
 measures **3.53:1** against the 4.5 small text requires. It is the shared
@@ -178,6 +205,18 @@ looking. See PARITY.md.
 **Baselines are gitignored**, so `git status` will never show that they are
 stale. Check file mtimes.
 
+**The Playwright suites run `pnpm start`, not `pnpm dev`.** They serve the
+production build, so a change that is visibly correct in the browser still
+fails the test until you `pnpm build`. In round 7 a copy change looked like
+it had not applied at all. Kill port 3000 first as well, or the config
+reuses whatever is already listening.
+
+**Run the spec that guards the thing you are changing, not just the
+site-wide ones.** `tests/visual/about-founders.spec.ts` asserts the About
+founder sections down to the alt text, and it was left red while the broader
+`headings.spec.ts` passed and the work was reported complete. Look for a spec
+named after the area before reporting.
+
 **`chrome.css` says it is generated. It is not, any more.** Running
 `build-chrome.mjs` emits about 113 lines against the file's ~570 and would
 delete most of it. Treat it as hand-maintained source.
@@ -207,13 +246,22 @@ snapshots. Parity takes about seven minutes; the whole thing about nine.
 `tests/visual/masthead.spec.ts` is separate and runs in twenty seconds.
 
 A design change means reviewing the parity diff first, then re-baselining that
-page. Ten of the twelve pages now compare against the last approved build
-rather than against `legacy/`; only Privacy and Terms still verify against the
-original.
+page. **Every** page in `tests/visual/pages.ts` now carries
+`baseline: 'current'`, so all of them compare against the last approved build
+and none against `legacy/`. An earlier version of this file said Privacy and
+Terms were still checked against the original; that has not been true for
+some time. Note that `baselineSourceFor` still _defaults_ to `'legacy'`, so a
+newly added page opts in to the original unless it says otherwise.
 
-**After round 6 the baselines are stale on every page that changed**, which
-is home, contact, What we do, Our craft, About, Projects and both project
-pages, Our services and Finer Living. None were regenerated: that wants a diff review first, and the
-decisions still open above may move things again. The artisan wall is frozen
-for the gate through `--frozen`, so the wall edits themselves do not show up
-as diffs; the tall tile does, because it changes the grid.
+**After rounds 6 and 7 the baselines are stale on every page that changed**,
+which is home, contact, What we do, Our craft, About, Projects and both
+project pages, Our services, Finer Living, and now Imprint. None were
+regenerated: that wants a diff review first, and the decisions still open
+above may move things again. The artisan wall is frozen for the gate through
+`--frozen`, so the wall edits themselves do not show up as diffs; the tall
+tile does, because it changes the grid.
+
+Imprint is the one to look at least hard at: round 7 replaced its placeholder
+body wholesale with real company data, so its diff is expected to be total
+and there is nothing to review against. Re-baseline it rather than reading
+the diff.

@@ -54,8 +54,13 @@ real provider is connected, all of the following must already be true.** See
       deletion requests are handled — **Legal / Client**
 - [ ] **Real privacy policy and terms**, reviewed by counsel, replacing the
       placeholder text — **Legal**
-- [ ] Once the legal copy is real: remove `noIndex` from both pages and add
-      them to the sitemap — **Dev**
+- [ ] **The imprint reviewed, and the operating entity named.** Its company
+      data is real as of 2026-10-10, but it lists all three Finer Things
+      companies as peers because choosing which one operates the website is a
+      legal determination. Also confirm the mainland address, which reads
+      "DIGIBIZ BUSIENSS CENTER" as supplied — **Legal / Client**
+- [ ] Once the legal copy is real: remove `noIndex` from all three legal
+      pages and add them to the sitemap — **Dev**
 - [ ] A real `FORM_PROVIDER` connected, and a **test enquiry actually
       received** at the client's inbox — **Dev / Client**
 
@@ -69,16 +74,21 @@ real provider is connected, all of the following must already be true.** See
 - [ ] `NEXT_PUBLIC_SITE_URL` set to it in the production environment. There is
       no production default on purpose: a build without it warns loudly and
       falls back to `http://localhost:3000` — **Dev**
-- [ ] **Real contact details** replacing the placeholders in
-      `src/shared/config/site.ts` (`contact.placeholder: true`): email, phone,
-      street, district, city, hours — **Client**
+- [x] ~~**Real contact details** replacing the placeholders in
+      `src/shared/config/site.ts`: email, phone, street, district, city~~ —
+      supplied by the client 2026-10-10. `contact.placeholder` is now `false`.
+      Email `alex.lahmer@finerthingsdesigns.com`, two numbers (+43 and +971),
+      IFZA Business Park, DDP, PO Box 342001, Dubai
+- [ ] **Opening hours** — still invented, flagged in the same object as
+      `contact.hoursPlaceholder: true`, and shown on `/contact` — **Client**
+- [ ] **The LinkedIn URL** — still `#`, flagged as
+      `contact.linkedInPlaceholder: true` — **Client**
 
-> The placeholder contact details are deliberately plausible so the site stays
-> reviewable. That is also what makes them dangerous: nothing on the page
-> announces they are fake. Publishing them puts a wrong address and phone
-> number into Google, Bing and the aggregators, which is slow and partly
-> outside our control to undo. Search `contact.placeholder` before shipping.
-> Full detail: SEO-18.
+> The two fields above are the whole of what remains invented in that object.
+> `contact.placeholder: false` means the address, email and numbers are real;
+> it does **not** mean the hours are. Publishing invented hours is the same
+> hazard as the old address was: nothing on the page announces they are fake,
+> and Google and the aggregators pick them up. Full detail: SEO-18.
 
 ### Email delivery, at launch
 
