@@ -28,8 +28,8 @@ export function HomePage() {
         <div className="hero-copy">
           <h1>Every place should tell a story.</h1>
           <div className="sub">
-            We help the world’s finest hotels and residences express their character through
-            bespoke accessories, thoughtful styling and distinctive designs.
+            We work with the world’s finest hotels and residences to express their character
+            through bespoke accessories, thoughtful styling and distinctive designs.
           </div>
           <div className="cta-wrap">
             <Link href="/contact" className="btn">
@@ -98,7 +98,7 @@ export function HomePage() {
             <span className="idx">01</span>
             <h3 className="serif">Bespoke Accessories</h3>
             <span className="desc">
-              Design and production of bespoke accessories guests can see, touch and feel.
+              Design and production of bespoke accessories to see, touch and feel.
             </span>
             {/* The row is a link and did not look like one. Decorative: the
                 anchor already carries the accessible name. */}
@@ -167,7 +167,7 @@ export function HomePage() {
           </div>
         </div>
         {/*
-         * Two shapes for the same five cards, chosen by FILMSTRIP_MODE.
+         * Two shapes for the same six cards, chosen by FILMSTRIP_MODE.
          *
          * `slider` puts the scroll container on the element the hook listens
          * to, so `#filmstripScroll` is the overflow box itself rather than a
@@ -202,14 +202,9 @@ export function HomePage() {
                 <div className="film-shade" />
                 <div className="film-copy">
                   <div>
-                    <span className="film-num">01 / 05</span>
-                    <h3>The Lobby</h3>
+                    <span className="film-num">01 / 06</span>
+                    <h3>The Living Room</h3>
                   </div>
-                  <p>
-                    {'Marsa Al Arab · Dubai'}
-                    <br />
-                    {'Bespoke accessories and styling'}
-                  </p>
                 </div>
               </article>
               <article className="film-card" style={{ '--f': '1' } as CSSProperties}>
@@ -222,14 +217,9 @@ export function HomePage() {
                 <div className="film-shade" />
                 <div className="film-copy">
                   <div>
-                    <span className="film-num">02 / 05</span>
-                    <h3>Private Suites</h3>
+                    <span className="film-num">02 / 06</span>
+                    <h3>Private Residences</h3>
                   </div>
-                  <p>
-                    {'Marsa Al Arab · Dubai'}
-                    <br />
-                    {'Objects shaped around a sense of place'}
-                  </p>
                 </div>
               </article>
               <article className="film-card" style={{ '--f': '2' } as CSSProperties}>
@@ -242,14 +232,9 @@ export function HomePage() {
                 <div className="film-shade" />
                 <div className="film-copy">
                   <div>
-                    <span className="film-num">03 / 05</span>
-                    <h3>Iliana</h3>
+                    <span className="film-num">03 / 06</span>
+                    <h3>Dining Destinations</h3>
                   </div>
-                  <p>
-                    {'Marsa Al Arab · Dubai'}
-                    <br />
-                    {'A collection with warmth and character'}
-                  </p>
                 </div>
               </article>
               <article className="film-card" style={{ '--f': '3' } as CSSProperties}>
@@ -262,14 +247,9 @@ export function HomePage() {
                 <div className="film-shade" />
                 <div className="film-copy">
                   <div>
-                    <span className="film-num">04 / 05</span>
-                    <h3>Bombay Club</h3>
+                    <span className="film-num">04 / 06</span>
+                    <h3>Residential Suites</h3>
                   </div>
-                  <p>
-                    {'Marsa Al Arab · Dubai'}
-                    <br />
-                    {'Layered objects and storied materials'}
-                  </p>
                 </div>
               </article>
               <article className="film-card" style={{ '--f': '4' } as CSSProperties}>
@@ -282,14 +262,36 @@ export function HomePage() {
                 <div className="film-shade" />
                 <div className="film-copy">
                   <div>
-                    <span className="film-num">05 / 05</span>
-                    <h3>Waldorf Osaka</h3>
+                    <span className="film-num">05 / 06</span>
+                    <h3>Elegant Residences</h3>
                   </div>
-                  <p>
-                    {'Osaka · Japan'}
-                    <br />
-                    {'Quiet luxury through crafted detail'}
-                  </p>
+                </div>
+              </article>
+              {/*
+               * The one portrait photograph in the strip. The client supplied
+               * it at 1200x1600 for a card that is 1.75:1, so a cover fit
+               * keeps only about 43% of its height. `data-focal="low"` pulls
+               * that band down to the book and its marble stand; centred, the
+               * card would show the wall panelling above them instead. See
+               * the rule in brand.css.
+               */}
+              <article
+                className="film-card"
+                data-focal="low"
+                style={{ '--f': '5' } as CSSProperties}
+              >
+                <Media
+                  src="/assets/new-work-exclusive-collections.webp"
+                  className="film-image"
+                  alt="An open book displayed on a marble stand"
+                  sizes="(max-width: 860px) 100vw, 80vw"
+                />
+                <div className="film-shade" />
+                <div className="film-copy">
+                  <div>
+                    <span className="film-num">06 / 06</span>
+                    <h3>Exclusive Collections</h3>
+                  </div>
                 </div>
               </article>
             </div>
@@ -300,9 +302,9 @@ export function HomePage() {
            * overflow box so the arrows are not themselves scrolled away.
            *
            * The counter is not a live region. It changes on every swipe, and
-           * announcing "03 of 05" mid-drag talks over the card titles, which
+           * announcing "03 of 06" mid-drag talks over the card titles, which
            * are what a screen reader user is actually there for. The cards
-           * each carry their own "03 / 05" in the copy already.
+           * each carry their own "03 / 06" in the copy already.
            */}
           {IS_SLIDER && (
             <div className="wrap film-controls">
@@ -312,7 +314,7 @@ export function HomePage() {
               <div className="film-controls-right">
                 <p className="film-counter" aria-hidden="true">
                   <span data-film-counter>01</span>
-                  <span className="film-counter-total"> / 05</span>
+                  <span className="film-counter-total"> / 06</span>
                 </p>
                 <button
                   type="button"

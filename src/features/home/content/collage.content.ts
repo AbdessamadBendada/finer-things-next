@@ -16,7 +16,8 @@ export const COLLAGE_STILLS: readonly RegisteredImage[] = [
    * band sliding past. Dark leather, pale shell, wood, glass, horn, fabric,
    * lacquer.
    *
-   * Nine were supplied and seven are used. Resin and stitching are held back:
+   * Nine materials were supplied and seven are used; marble joins them from the
+   * client's own intro-page artwork. Resin and stitching are held back:
    * stitching is a detail of leather rather than a material of its own, and
    * resin reads as glass at the size a moving cell allows.
    *
@@ -31,4 +32,16 @@ export const COLLAGE_STILLS: readonly RegisteredImage[] = [
   '/assets/new-material-horn.webp',
   '/assets/new-material-fabric.webp',
   '/assets/new-material-lacquer.webp',
+  /*
+   * Marble closes the strip, which is also the seam: pale marble sits between
+   * dark lacquer and the dark leather the loop restarts on, so the alternation
+   * holds across the join rather than breaking there.
+   *
+   * It is the one still that was supplied already tall (700x1086), so the 9/16
+   * crop takes a little from its sides instead of most of its height. It is
+   * also the smallest file of the seven, and a cell renders at 506px: on a
+   * 2x screen this is the one cell that cannot be served at native density.
+   * Ask the client for a larger original before launch.
+   */
+  '/assets/new-material-marble.webp',
 ];
