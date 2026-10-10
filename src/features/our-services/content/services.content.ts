@@ -44,7 +44,7 @@ export const SERVICES: readonly Service[] = [
     slug: 'bespoke-accessories',
     number: '01',
     name: 'Bespoke Accessories',
-    lede: 'The details guests touch. Every hanger, tray and bill folder individually designed and produced for one property only.',
+    lede: 'The details that define the experience. Every piece is individually designed and produced exclusively for one setting.',
     statement:
       'We translate a property’s architecture, heritage and sense of place into distinctive accessories, considered as part of the experience, never added as an afterthought.',
     scope: [
@@ -79,7 +79,7 @@ export const SERVICES: readonly Service[] = [
     slug: 'styling-curation',
     number: '02',
     name: 'Styling & Curation',
-    lede: 'Books, objects, art and florals found with 100+ artisans around the world and arranged so every lobby and suite feels as unique as their story.',
+    lede: 'Books, objects, art and decorative pieces sourced through a global network of 100+ artisans and thoughtfully arranged to give every space its own distinctive character and story.',
     statement:
       'Finer Things brings styling and storytelling together, sourcing the unexpected and composing each layer around the identity of the place.',
     scope: [
@@ -91,7 +91,7 @@ export const SERVICES: readonly Service[] = [
       {
         number: '02',
         title: 'Sourcing & selection',
-        note: 'Books, objects, art and florals found with artisans around the world.',
+        note: 'Books, objects and art found with artisans around the world.',
       },
       {
         number: '03',
@@ -139,9 +139,13 @@ export const SERVICES: readonly Service[] = [
         note: 'A collection considered for modern living and lasting relevance.',
       },
     ],
+    /* A new photograph of the same piece, supplied by the client. Pointed at
+       a separate asset rather than replacing `new-cover-finer-living.webp`,
+       which is also the home service row and the detail page's registry
+       image; overwriting it would have changed all three. */
     image: {
-      src: '/assets/new-cover-finer-living.webp',
-      alt: 'An oak and brass footed bowl from the Finer Living collection',
+      src: '/assets/new-finer-living-cherry-bowl.webp',
+      alt: 'An oak and brass footed bowl filled with cherries',
     },
     href: ROUTES.service('finer-living'),
   },

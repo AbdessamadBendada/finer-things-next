@@ -68,15 +68,15 @@ export function FinerLivingPage() {
             <div className="gallery-grid">
               <figure className="gallery-item rise">
                 <Media
-                  src="/assets/new-cover-finer-living-collection.webp"
-                  alt="Objects from the Finer Living collection"
+                  src="/assets/new-finer-living-cloche.webp"
+                  alt="A glass cloche on a turned oak stand, a pastry and raspberries beneath"
                   sizes="(max-width: 860px) 50vw, 33vw"
                 />
               </figure>
               <figure className="gallery-item rise">
                 <Media
-                  src="/assets/0698_Finer_Living_July_2025_edited_1_a006768d.webp"
-                  alt="Sculptural wooden stools from the Finer Living collection"
+                  src="/assets/new-finer-living-marble-bowl.webp"
+                  alt="A footed bowl turned from red and grey veined marble"
                   sizes="(max-width: 860px) 50vw, 33vw"
                 />
               </figure>
@@ -103,8 +103,8 @@ export function FinerLivingPage() {
               </figure>
               <figure className="gallery-item rise">
                 <Media
-                  src="/assets/0694_27I6900-6copy_51177df8.webp"
-                  alt="Marble and stone samples from the Finer Living collection"
+                  src="/assets/new-finer-living-walnut-tray.webp"
+                  alt="A walnut serving tray with curved, lifted ends"
                   sizes="(max-width: 860px) 50vw, 33vw"
                 />
               </figure>
