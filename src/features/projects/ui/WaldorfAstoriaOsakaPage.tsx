@@ -140,28 +140,24 @@ export function WaldorfAstoriaOsakaPage() {
                   src="/assets/0662_Waldorf_Astoria_Osaka_13_c71bc2ac.webp"
                   alt="Bedside clock and writing set at Waldorf Astoria Osaka"
                 />
-                <figcaption>Bedside detail</figcaption>
               </figure>
               <figure className="shot rise" data-drift="13">
                 <Media
                   src="/assets/0682_Waldorf_Astoria_Osaka_12_ef1532bb.webp"
                   alt="Lacquer, glass and brass guest-room objects"
                 />
-                <figcaption>Material contrast</figcaption>
               </figure>
               <figure className="shot rise" data-drift="-9">
                 <Media
                   src="/assets/0669_Waldorf_Astoria_Osaka_18_536d1f9e.webp"
                   alt="Guest-room objects against a patterned wall at Waldorf Astoria Osaka"
                 />
-                <figcaption>Guest room</figcaption>
               </figure>
               <figure className="shot rise" data-drift="11">
                 <Media
                   src="/assets/0686_Waldorf_Astoria_Osaka_16_948b5f8c.webp"
                   alt="Selected guest-room detail at Waldorf Astoria Osaka"
                 />
-                <figcaption>Selected detail</figcaption>
               </figure>
             </div>
           </div>

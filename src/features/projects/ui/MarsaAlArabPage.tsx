@@ -162,28 +162,24 @@ export function MarsaAlArabPage() {
                   src="/assets/0681_Marsa_Al_Arab_Lobby_2_d21675ab.webp"
                   alt="Lobby detail at Jumeirah Marsa Al Arab"
                 />
-                <figcaption>Lobby</figcaption>
               </figure>
               <figure className="shot rise" data-drift="13">
                 <Media
                   src="/assets/0664_Marsa_Al_Arab_Suite2_4_78452d9c.webp"
                   alt="Guest suite at Jumeirah Marsa Al Arab"
                 />
-                <figcaption>Guest suite</figcaption>
               </figure>
               <figure className="shot rise" data-drift="-9">
                 <Media
                   src="/assets/0679_Marsa_Al_Arab_Bombay_3_09aae676.webp"
                   alt="Decorative details at The Bombay Club"
                 />
-                <figcaption>The Bombay Club</figcaption>
               </figure>
               <figure className="shot rise" data-drift="11">
                 <Media
                   src="/assets/0689_Marsa_Al_Arab_Iliana_5_0c49bd95.webp"
                   alt="Books and objects at Iliana"
                 />
-                <figcaption>Iliana</figcaption>
               </figure>
             </div>
           </div>

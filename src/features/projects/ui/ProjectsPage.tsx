@@ -45,20 +45,28 @@ export function ProjectsPage() {
               className={`wall-tile rise${tile.size ? ` wall-tile-${tile.size}` : ''}`}
               key={tile.image}
             >
-              <Media
-                src={tile.image}
-                alt={tile.alt}
-                sizes="(max-width: 720px) 100vw, (max-width: 860px) 70vw, 50vw"
-              />
-              <figcaption>
-                <span className="wall-property">
-                  <Link className="context-link" href={tile.path}>
-                    {tile.property}
-                  </Link>
-                  <span className="wall-location"> &middot; {tile.location}</span>
-                </span>
-                <span className="wall-space">{tile.space}</span>
-              </figcaption>
+              {/*
+               * The caption under each tile carried the property, the city and
+               * the space, and was removed in review along with every other
+               * location on the site.
+               *
+               * The link has to stay. That caption held the only link on this
+               * page: without it `/projects` is a dead end with no route to
+               * either project. The whole tile is the link now, and the
+               * property and space still supply its accessible name, so the
+               * destination is announced even though nothing is printed.
+               */}
+              <Link
+                className="wall-tile-link"
+                href={tile.path}
+                aria-label={`${tile.property}: ${tile.space}`}
+              >
+                <Media
+                  src={tile.image}
+                  alt={tile.alt}
+                  sizes="(max-width: 720px) 100vw, (max-width: 860px) 70vw, 50vw"
+                />
+              </Link>
             </figure>
           ))}
         </section>

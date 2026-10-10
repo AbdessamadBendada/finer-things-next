@@ -108,14 +108,12 @@ export function BespokeAccessoriesPage() {
                   src="/assets/0663_Marsa_Al_Arab_Suite1_7_a51be4a1.webp"
                   alt="Crystal decanters and a brass service trolley in a Marsa Al Arab suite"
                 />
-                <figcaption>Marsa Al Arab / Suite</figcaption>
               </figure>
               <figure className="story-figure story-small rise" data-drift="14">
                 <Media
                   src="/assets/0670_Marsa_Al_Arab_Bombay_5_95764db5.webp"
                   alt="Decorative accessories and florals at Bombay Club"
                 />
-                <figcaption>Marsa Al Arab / Bombay Club</figcaption>
               </figure>
               <figure className="story-figure story-detail rise" data-drift="-7">
                 <Media
@@ -123,7 +121,6 @@ export function BespokeAccessoriesPage() {
                   alt="Books, ceramics and decorative bowls within an illuminated niche"
                   sizes="(max-width: 860px) 80vw, 20vw"
                 />
-                <figcaption>Marsa Al Arab / Iliana</figcaption>
               </figure>
             </div>
           </div>

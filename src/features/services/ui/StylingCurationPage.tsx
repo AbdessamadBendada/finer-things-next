@@ -108,14 +108,12 @@ export function StylingCurationPage() {
                   src="/assets/0680_Marsa_Al_Arab_Iliana_3_e20bcd92.webp"
                   alt="Ceramic installation and styled display niche at Iliana"
                 />
-                <figcaption>Marsa Al Arab / Iliana</figcaption>
               </figure>
               <figure className="story-figure story-small rise" data-drift="14">
                 <Media
                   src="/assets/0662_Waldorf_Astoria_Osaka_13_c71bc2ac.webp"
                   alt="Clock and writing accessories on a guest-room bedside table"
                 />
-                <figcaption>Waldorf Astoria Osaka / Guest room</figcaption>
               </figure>
               <figure className="story-figure story-detail rise" data-drift="-7">
                 <Media
@@ -123,7 +121,6 @@ export function StylingCurationPage() {
                   alt="Books and decorative objects arranged at Bombay Club"
                   sizes="(max-width: 860px) 80vw, 20vw"
                 />
-                <figcaption>Marsa Al Arab / Bombay Club</figcaption>
               </figure>
             </div>
           </div>
