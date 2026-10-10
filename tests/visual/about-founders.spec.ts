@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { NEXT_ORIGIN } from '../../playwright.config';
 
 test.describe('About founders', () => {
-  test('names both founders and renders Malika’s supplied content and image', async ({
+  test('names both founders and renders Malika Yilmaz’s supplied content and image', async ({
     page,
   }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -38,15 +38,17 @@ test.describe('About founders', () => {
     expect(gridGeometry[0]?.imageWidth).toBe(gridGeometry[0]?.copyWidth);
     await expect(sections.nth(0).locator('h2')).toContainText('Alex Lahmer');
     const malikaHeading = sections.nth(1).locator('h2');
-    await expect(malikaHeading).toContainText('Malika Lahmer');
-    await expect(page.locator('.hero-caption')).toHaveText('Malika and Alex');
+    await expect(malikaHeading).toContainText('Malika Yilmaz');
+    // The joint portrait was withdrawn by the client, and the caption that
+    // named it went with it. Each founder now has their own photograph.
+    await expect(page.locator('.hero-caption')).toHaveCount(0);
     await expect(sections.nth(1)).toContainText('While Alex builds the pieces');
-    await expect(sections.nth(1)).toContainText('from Jumeirah to private residences');
+    await expect(sections.nth(1)).toContainText('carry her signature touch');
     await expect(page.locator('[data-placeholder="true"]')).toHaveCount(0);
     await expect(page.getByText('Portrait to follow')).toHaveCount(0);
 
     const portrait = sections.nth(1).getByRole('img', {
-      name: 'Malika Lahmer with Alex Lahmer, founders of Finer Things',
+      name: 'Malika Yilmaz, co-founder of Finer Things, seated in a red leather armchair',
     });
     await expect(portrait).toBeVisible();
     await expect
@@ -79,7 +81,7 @@ test.describe('About founders', () => {
         line.map(({ text }) => text).join(' '),
       );
     });
-    expect(headingLines).toEqual(['Malika Lahmer']);
+    expect(headingLines).toEqual(['Malika Yilmaz']);
   });
 
   test('the founder sections remain overflow-free on mobile', async ({ page }) => {

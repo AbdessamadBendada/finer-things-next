@@ -29,10 +29,9 @@ export function AboutPage() {
           </div>
           <figure className="hero-portrait">
             <Media
-              src="/assets/finer-things-family.webp"
-              alt="Alex and Malika, founders of Finer Things"
+              src="/assets/new-work-detail-01.webp"
+              alt="An open book resting on a marble stand beneath a framed print"
             />
-            <figcaption className="hero-caption">Malika and Alex</figcaption>
           </figure>
         </section>
         {/* MEET THE FOUNDER */}
@@ -68,25 +67,24 @@ export function AboutPage() {
         {/* MEET MALIKA */}
         <section className="experience experience-reverse">
           <div className="wrap experience-grid">
-            <figure className="experience-image rise" data-drift="-20">
+            <figure className="experience-image rise" id="malika-portrait" data-drift="-20">
               <Media
-                src="/assets/finer-things-family.webp"
-                alt="Malika Lahmer with Alex Lahmer, founders of Finer Things"
+                src="/assets/founder-malika-lahmer.webp"
+                alt="Malika Yilmaz, co-founder of Finer Things, seated in a red leather armchair"
               />
             </figure>
             <div className="experience-copy">
               <div className="eyebrow rise">Meet the co-founder</div>
               <h2 id="malika-founder-heading" className="rise">
-                {'Malika Lahmer'}
+                {'Malika Yilmaz'}
               </h2>
               <p className="rise">
                 While Alex builds the pieces, Malika gives spaces their soul. With her eye for
                 styling and an instinct for the unexpected, she layers books, ceramics, art and
-                found objects until a lobby tells a story no one else could write.
+                found objects until a space tells a story no one else could write.
               </p>
               <p className="rise">
-                Some of the most loved projects, from Jumeirah to private residences, carry her
-                signature touch.
+                Some of the most wonderful and loved projects carry her signature touch.
               </p>
             </div>
           </div>
