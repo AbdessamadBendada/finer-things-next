@@ -26,8 +26,9 @@ substantially redesigned across six rounds of client review. It is not live.
 Launch is blocked on the open decisions in AGENTS.md, chiefly the consent
 checkbox, and on the client supplying real photography.
 
-**Round 6 (2026-10-09 and 10) is uncommitted.** Twelve review comments,
-recorded as FEEDBACK.md 40 to 51, with sixteen matching CODEX-CHANGES
+**Round 6 (2026-10-09 and 10) is on `main` and pushed**, as
+`ede8085..0478f7d`, nine commits grouped by area. Twelve review comments,
+recorded as FEEDBACK.md 40 to 52, with seventeen matching CODEX-CHANGES
 entries. In brief: home copy and the five featured cards renamed with their
 captions removed, a sixth featured card, a seventh material in a four-above-
 three grid, the artisan wall edited and given a tall tile, the contact
@@ -211,8 +212,8 @@ rather than against `legacy/`; only Privacy and Terms still verify against the
 original.
 
 **After round 6 the baselines are stale on every page that changed**, which
-is home, contact, What we do, Our craft, About, Our services and Finer
-Living. None were regenerated: that wants a diff review first, and the
+is home, contact, What we do, Our craft, About, Projects and both project
+pages, Our services and Finer Living. None were regenerated: that wants a diff review first, and the
 decisions still open above may move things again. The artisan wall is frozen
 for the gate through `--frozen`, so the wall edits themselves do not show up
 as diffs; the tall tile does, because it changes the grid.

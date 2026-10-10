@@ -21,6 +21,18 @@ Every completed AI task must add an entry with this structure:
 - Follow-up: remaining work, or `None`
 ```
 
+## A note on round 6 commit references
+
+The round 6 entries below (2026-10-09 and 10, pushed as `ede8085..0478f7d`)
+were written task by task and committed area by area, so the mapping is not
+one to one: several entries share `337d261`, and anything that needed a rule
+in `brand.css` also names `0478f7d`. Each entry states which commit carries
+which part.
+
+Entries older than that still read `uncommitted`. They were left that way
+when written and have not been back-filled; `git log` is the source of truth
+for those.
+
 Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
@@ -29,7 +41,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `cd69c05 Remove every location caption beneath an image`, with the `.wall-tile-link` rule in `0478f7d`
 - Changed: removed fourteen `figcaption` elements naming a property, city or
   room, across `/projects`, both project detail pages, and the Bespoke
   Accessories and Styling & Curation detail pages. Kept three captions that
@@ -60,7 +72,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `337d261 Our services: reworded copy and new Finer Living photography`
 - Changed: `/our-services/finer-living` gallery positions 1, 2 and 6 now use
   `new-finer-living-cloche.webp`, `new-finer-living-marble-bowl.webp` and
   `new-finer-living-walnut-tray.webp`, replacing the collection still, the
@@ -85,7 +97,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `337d261 Our services: reworded copy and new Finer Living photography`
 - Changed: the `styling-curation` `lede` in `services.content.ts` now reads
   "Books, objects, art and decorative pieces sourced through a global network
   of 100+ artisans and thoughtfully arranged to give every space its own
@@ -107,7 +119,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `337d261 Our services: reworded copy and new Finer Living photography`
 - Changed: the `lede` for `bespoke-accessories` in `services.content.ts` now
   reads "The details that define the experience. Every piece is individually
   designed and produced exclusively for one setting."
@@ -123,7 +135,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `0478f7d brand.css, registry and docs for the round 6 review`
 - Changed: `--soft` and `--ink-soft` are set to `rgba(41,40,31,.78)` on
   `[data-page] main`, raising the services copy from 4.62:1 to 6.69:1 against
   the paper ground. Also corrected two footnote rules that hardcoded .5 alpha
@@ -153,7 +165,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `027ecae What we do: a seventh material, four above a centred three`
 - Changed: reordered `MATERIALS` on `/our-work` so Marble sits fourth and
   closes the first row. The array order is the page order, so no layout rule
   changed.
@@ -172,7 +184,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `3b9f7eb` (the hook), `b895e06` (the wall) and `0478f7d` (the grid rules)
 - Changed: `.artisan-tile:nth-child(9)` was a second double-width tile; it is
   gone and `:nth-child(4)` now spans two rows instead, giving the wall one
   wide tile and one tall one. `useImageRotation` gained `tileShapes` and
@@ -202,7 +214,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `b895e06 Artisan wall: swap four photographs, add a tall tile`
 - Changed: `ARTISAN_WALL` drops `new-artisan-wood-12`, `new-artisan-fl-13`,
   `new-artisan-fl-33` and `new-artisan-ceramics-29`, and gains
   `new-artisan-ft-05` (workshop door) and `new-artisan-fl-62` (marble yard).
@@ -230,7 +242,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `3b9f7eb Artisan wall: stop the same tile swapping twice running`
 - Changed: `useImageRotation` chose the tile to swap with
   `Math.floor(Math.random() * tiles)`, which has no memory of the previous
   pick. With ten tiles that reselects the same tile about one tick in ten, and
@@ -257,7 +269,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `027ecae` (content and component) and `0478f7d` (the eight-column grid)
 - Changed: added Marble as a seventh material on `/our-work`, reusing
   `new-material-marble.webp` from the hero collage, and reshaped the grid.
   Above 1200px `data-columns='4'` renders eight narrow columns with each card
@@ -285,7 +297,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `5153944` (card and asset) and `0478f7d` (the focal-point rule)
 - Changed: added a sixth filmstrip card to the home page using the client's
   supplied still, and renumbered the strip to `/ 06` including the slider's
   counter total. The photograph is portrait (1200x1600) against a 1.75:1
@@ -310,7 +322,7 @@ decision, update its authoritative document too and link it from the entry.
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `5153944` (copy and renames) and `0478f7d` (the two measures)
 - Changed: three client copy requests on the home page. The `01 / Bespoke
 Accessories` row description is now "Design and production of bespoke
   accessories to see, touch and feel." The Featured intro joins the "What we
@@ -342,7 +354,7 @@ Accessories` row description is now "Design and production of bespoke
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `0478f7d brand.css, registry and docs for the round 6 review`
 - Changed: widened the measure on the `#work` section's supporting paragraph
   from the legacy 44ch to 58ch, so its 139 characters set on two lines rather
   than three. Measured the threshold: 44ch gives three lines, 50ch and above
@@ -362,7 +374,7 @@ Accessories` row description is now "Design and production of bespoke
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `c771d72 Contact: make the photograph legible`
 - Changed: the contact image frame was a tall portrait slot (measured 425x730,
   0.53:1) holding a 1.5:1 landscape photograph, so `object-fit: cover` kept
   only **35% of the image width**. Both of the artisan's hands and the whole
@@ -405,7 +417,7 @@ Accessories` row description is now "Design and production of bespoke
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `0792e92 Dev server: stop Safari rendering an unstyled page`
 - Changed: scoped `upgrade-insecure-requests` to production builds. The
   directive rewrites every http subresource URL to https before the request is
   made; the dev server is plain http, so every stylesheet, script, font and
@@ -430,7 +442,7 @@ Accessories` row description is now "Design and production of bespoke
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `5153944 Home: hero copy, renamed featured cards, a sixth card`
 - Changed: the hero subheading now opens "We work with the world's finest
   hotels and residences to express their character ...". Client wording. The
   verb change needed "to" added, since "we help X express" is grammatical
@@ -445,7 +457,7 @@ Accessories` row description is now "Design and production of bespoke
 
 **Codex change**
 
-- Commit: `uncommitted`
+- Commit: `5153944` (collage) and `b895e06` (the asset)
 - Changed: added the client's intro-page marble artwork as an eighth still in
   the home hero collage. Converted the supplied PNG to WebP, registered it and
   placed it last in `COLLAGE_STILLS`, which is also the loop's seam: pale
