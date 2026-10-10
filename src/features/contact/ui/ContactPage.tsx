@@ -10,13 +10,21 @@ export function ContactPage() {
       <main>
         <section className="contact">
           <div className="wrap contact-grid">
-            <figure className="image-wrap">
-              <Media
-                src="/assets/new-contact.webp"
-                alt="An artisan cutting leather by hand at a workbench"
-              />
-              <figcaption className="image-caption">Begin a conversation</figcaption>
-            </figure>
+            {/* The column stretches to the form's height; the figure inside it
+                is sticky. A landscape photograph cannot fill a column as tall
+                as this form, and the leftover space read as the page being
+                unfinished. Pinning it means the photograph travels alongside
+                the form instead, and the space below becomes the track it
+                moves in. */}
+            <div className="image-col">
+              <figure className="image-wrap">
+                <Media
+                  src="/assets/new-contact.webp"
+                  alt="An artisan cutting leather by hand at a workbench"
+                />
+                <figcaption className="image-caption">Begin a conversation</figcaption>
+              </figure>
+            </div>
             <div className="copy">
               {/* No eyebrow. It read "Contact Finer Things" to name the page
                   while the heading was "Perhaps it begins with a place."; the
