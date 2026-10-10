@@ -9,12 +9,18 @@ export type ArtisanShot = {
  * The pool the artisan wall draws from.
  *
  * Curated rather than the whole delivery: of the twenty-seven photographs the
- * client sent, a few are phone snapshots of stone yards and pallets that would
- * drag the wall down beside the workshop photography. Twenty are strong enough
- * to appear at any moment, which is what a wall that changes itself requires.
+ * client sent, several are phone snapshots of stone yards and pallets that sit
+ * oddly beside the workshop photography.
  *
- * Twelve tiles are on screen and one swaps every few seconds, so roughly half
- * the set is visible at once and the arrangement never settles.
+ * Eighteen are in the pool. The client reviewed the wall on 2026-10-09 and cut
+ * four (clay in a tub, a scalloped tile field, timber offcuts and a book at
+ * the bench) and asked for two back in, the workshop door and the marble yard.
+ * Both of those were already in the delivery, among the ones held back.
+ *
+ * Ten tiles are on screen and one swaps every few seconds, so a little over
+ * half the set is visible at once and the arrangement never settles. The hook
+ * needs the pool to stay comfortably above the tile count: at 18 against 10
+ * there is room, but removing many more would make the rotation repetitive.
  */
 export const ARTISAN_WALL: readonly ArtisanShot[] = [
   {
@@ -46,20 +52,12 @@ export const ARTISAN_WALL: readonly ArtisanShot[] = [
     alt: 'Metal moulds and tools racked along a workshop wall',
   },
   {
-    image: '/assets/new-artisan-ceramics-29.webp',
-    alt: 'Hand-formed clay pieces waiting to be fired',
-  },
-  {
     image: '/assets/new-artisan-ft-14.webp',
     alt: 'A ceramics studio of plaster moulds and unglazed figures',
   },
   {
     image: '/assets/new-artisan-ft-13.webp',
     alt: 'A newly formed clay dish drying on a board',
-  },
-  {
-    image: '/assets/new-artisan-fl-33.webp',
-    alt: 'Rows of scalloped tiles laid out to dry',
   },
   {
     image: '/assets/new-artisan-glass-20.webp',
@@ -70,20 +68,12 @@ export const ARTISAN_WALL: readonly ArtisanShot[] = [
     alt: 'A glass workshop bench at work',
   },
   {
-    image: '/assets/new-artisan-wood-12.webp',
-    alt: 'Timber offcuts and templates in a joinery',
-  },
-  {
     image: '/assets/new-artisan-fl-11.webp',
     alt: 'A workshop in the middle of a production run',
   },
   {
     image: '/assets/new-artisan-fl-12.webp',
     alt: 'Finished pieces set out for inspection',
-  },
-  {
-    image: '/assets/new-artisan-fl-13.webp',
-    alt: 'A maker at the bench, mid-process',
   },
   {
     image: '/assets/new-artisan-fl-16.webp',
@@ -96,5 +86,21 @@ export const ARTISAN_WALL: readonly ArtisanShot[] = [
   {
     image: '/assets/new-artisan-fl-29.webp',
     alt: 'A workshop interior, tools at rest',
+  },
+  /*
+   * Both added at the client's request, and both were already in the
+   * delivery rather than newly supplied: they sat among the photographs held
+   * back below. The marble yard in particular is one of the phone snapshots
+   * that note describes. It goes in as supplied, on the client's call, and
+   * it is the only picture in the wall that shows raw material before it is
+   * worked.
+   */
+  {
+    image: '/assets/new-artisan-ft-05.webp',
+    alt: 'A workshop door, hand planes carved into its panels',
+  },
+  {
+    image: '/assets/new-artisan-fl-62.webp',
+    alt: 'Blocks of red and white veined marble in the yard',
   },
 ];
