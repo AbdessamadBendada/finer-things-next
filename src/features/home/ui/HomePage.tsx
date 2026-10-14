@@ -31,11 +31,6 @@ export function HomePage() {
             We work with the world’s finest hotels and residences to express their character
             through bespoke accessories, thoughtful styling and distinctive designs.
           </div>
-          <div className="cta-wrap">
-            <Link href="/contact" className="btn">
-              Let’s tell your story
-            </Link>
-          </div>
         </div>
       </section>
       {/* INTRO COVER */}

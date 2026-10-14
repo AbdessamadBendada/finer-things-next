@@ -1147,6 +1147,54 @@ Between them they clear the oldest placeholder on the site.
 - **Note:** both tax numbers were labelled **TNR**; set as **TRN**, the UAE
   term. Labels only, the figures are untouched.
 
+### 56. Remove the main CTA from the home hero
+
+- **Page:** `/`
+- **Asked:** remove the hero's call to action.
+- **Status:** ✅ Done
+- **Done:** the "Let's tell your story" button and its `.cta-wrap` are gone
+  from `HomePage.tsx`, with the five CSS rules that could no longer match
+  anything (`.hero-copy .cta-wrap` ×3, `.hero-copy .btn` ×2, and the hero half
+  of a shared font-size rule). The hero now ends on the subheading.
+- **Note:** `/contact` is still reached from home by the shared `SiteCta` at
+  the foot of the page and by the masthead, so nothing is orphaned.
+- **Note, needs a decision:** comment 4 made the masthead's contact button
+  **outlined rather than solid**, and the recorded reason was that "the hero
+  already carries a full-size solid CTA lower down the same screen; two solid
+  buttons would compete". That reason no longer holds. The first screen now
+  has one call to action and it is the quieter treatment. One line in
+  `brand.css` makes it solid, if a quieter opening screen was not the point.
+
+### 57. Do not repeat the same artisan photographs across the walls
+
+- **Page:** `/about`, `/our-work`, `/our-craft`
+- **Asked:** "just about not to double up images — I believe we have a good
+  selection — so that way we can choose some that we do not have yet".
+- **Status:** ⏸️ Deferred, waiting on photographs
+- **Read as:** each wall gets its own set, with no photograph appearing on
+  more than one page.
+- **Note:** there are **three** walls, not two. `/about`, `/our-work` and
+  `/our-craft` all render the same `<ArtisanWall />` from the same pool, so
+  all three show the same photographs.
+- **Note, the blocker:** the library does not stretch to it. 27 artisan
+  photographs exist, **4 of which the client himself cut** on 2026-10-09
+  (`wood-12`, `fl-13`, `fl-33`, `ceramics-29`), leaving **23 usable**. Three
+  walls at ten tiles need **30** distinct images before any rotation headroom
+  at all. Searched for more and found none: the delivery folder's only
+  artisan files are `Our Artisans 1-4`, two of which are pixel-identical to
+  photographs already in the wall, and the older `alex-mockups/assets`
+  folder is the pre-delivery set — hotel interiors, heroes and product shots,
+  no workshops.
+- **Note:** options were discussed and the design is approved as it stands, so
+  shrinking the wall to six tiles (which would fit three disjoint pools inside 23) was declined. The client is sourcing more photographs. Roughly **15
+  more** makes three pools of ten work properly.
+- **Note, for whoever picks this up:** do this as one component taking a
+  `pool` prop, not as two or three copies of `ArtisanWall.tsx`. `TILE_SHAPES`
+  there is manually mirrored by `nth-child` rules in `brand.css` and the two
+  must change together; forking the component duplicates that coupling. This
+  repository already has `/our-work` and `/our-craft` holding separate copies
+  of the materials content and disagreeing as a result (comment 47).
+
 ---
 
 ## Cross-cutting notes

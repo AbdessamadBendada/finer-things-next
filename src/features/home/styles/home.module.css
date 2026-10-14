@@ -41,7 +41,6 @@
 }
 .page :global(.hero-copy .sub) {font-family:var(--font-display),Georgia,serif;font-style:italic;font-weight:400;
     font-size:clamp(1.25rem,2.2vw,1.85rem);line-height:1.3;max-width:24ch;color:rgba(241,237,231,.96)}
-.page :global(.hero-copy .cta-wrap) {display:flex;flex-direction:column;align-items:flex-end;gap:16px;white-space:nowrap}
 .page :global(.btn) {display:inline-block;background:var(--paper);color:var(--ink);text-decoration:none;padding:16px 36px;
     font-size: var(--text-ui);letter-spacing:.16em;text-transform:uppercase;transition:background .35s,color .35s}
 .page :global(.btn:hover) {background:var(--brass);color:var(--paper)}
@@ -49,7 +48,6 @@
 @media(max-width:860px) {
   .page :global(.word) {left:22px;width:calc(100vw - 44px)}
   .page :global(.hero-copy) {flex-direction:column;align-items:flex-start;gap:26px}
-  .page :global(.hero-copy .cta-wrap) {align-items:flex-start}
 }
 .page :global(.cover) {position:fixed;inset:0;z-index:9500;background:var(--paper);
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;
@@ -344,7 +342,7 @@
   .page :global(.newsletter-form) {margin-bottom:-1px}
   .page :global(.newsletter-form input) {min-height:44px;font-size: var(--text-body)}
   .page :global(.newsletter-form button) {min-height:44px;font-size:var(--text-ui)}
-  .page :global(.hero-copy .btn), .page :global(.closing .btn) {font-size:var(--text-ui)}
+  .page :global(.closing .btn) {font-size:var(--text-ui)}
   .page :global(.film-copy p) {font-size:var(--text-fine)}
 }
 @media(prefers-reduced-motion:reduce) {
@@ -405,9 +403,6 @@
    The measure is left at 76ch. It is generous, but the hero column is capped
    at 980px, so the line breaks well before the measure does. */
 .page :global(.hero-copy .sub) {max-width:76ch;margin-top:19px;font-family:'Jost',sans-serif;font-size: var(--text-lead);font-style:normal;font-weight:300;line-height:1.65;color:rgba(241,237,231,.82)}
-.page :global(.hero-copy .cta-wrap) {align-items:flex-start;margin-top:28px}
-.page :global(.hero-copy .btn) {padding:14px 24px;background:var(--paper);font-size: var(--text-ui)}
-.page :global(.hero-copy .btn:hover) {background:var(--oxblood);color:var(--paper)}
 /* A good deal more air than the other sections get. This is the rule that now
    decides the statement's height — the full-viewport treatment is gone — and
    it has been walked up twice from the 12vh it inherited, which read as
@@ -472,5 +467,5 @@
 .page h1 em, .page h2 em, .page h3 em {padding-inline:.035em;font-style:normal}
 @media(max-width:560px) {
   .page h1, .page h2, .page h3 {letter-spacing:-.035em!important}
-  .page :global(.hero-copy .btn), .page :global(.closing .btn) {font-size:var(--text-ui)}
+  .page :global(.closing .btn) {font-size:var(--text-ui)}
 }
