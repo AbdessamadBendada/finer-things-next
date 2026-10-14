@@ -94,22 +94,44 @@ deliberately unchanged.
 
 Nothing here is a bug. Each is a placeholder that ships until they answer.
 
-| What                     | Where                                            | Notes                                                           |
-| ------------------------ | ------------------------------------------------ | --------------------------------------------------------------- |
-| Remaining project images | `features/projects/content`                      | 20 of the 22 supplied photographs are used                      |
-| ~~A sixth material~~     | `features/our-work/content/materials.content.ts` | Resolved 2026-10-09. Seven real materials now, no placeholder   |
-| ~~Contact details~~      | `shared/config/site.ts`                          | Resolved 2026-10-10. Real email, two numbers, IFZA address      |
-| Opening hours            | `shared/config/site.ts`                          | Still invented, `hoursPlaceholder: true`, renders on `/contact` |
-| The LinkedIn URL         | `shared/config/site.ts`                          | Still `#`, `linkedInPlaceholder: true`                          |
-| The operating entity     | `features/legal/content/entities.content.ts`     | Three companies listed as peers; counsel must name one          |
-| ~15 more artisan photos  | `shared/content/artisans.content.ts`             | Blocks the per-wall split. 23 usable against 30 needed          |
-| All real photography     | everywhere                                       | 34 distinct images across 81 placements                         |
+| What                         | Where                                            | Notes                                                                                                        |
+| ---------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| ~~Remaining project images~~ | `features/projects/content`                      | Resolved 2026-10-14. The wall is 39 tiles: 20 of the 22 from the first handover, plus all 19 from the second |
+| Properties for 19 tiles      | `features/projects/content/wall.content.ts`      | The second handover arrived with no property names. Those 19 tiles render uncredited and unlinked; see below |
+| ~~A sixth material~~         | `features/our-work/content/materials.content.ts` | Resolved 2026-10-09. Seven real materials now, no placeholder                                                |
+| ~~Contact details~~          | `shared/config/site.ts`                          | Resolved 2026-10-10. Real email, two numbers, IFZA address                                                   |
+| Opening hours                | `shared/config/site.ts`                          | Still invented, `hoursPlaceholder: true`, renders on `/contact`                                              |
+| The LinkedIn URL             | `shared/config/site.ts`                          | Still `#`, `linkedInPlaceholder: true`                                                                       |
+| The operating entity         | `features/legal/content/entities.content.ts`     | Three companies listed as peers; counsel must name one                                                       |
+| ~15 more artisan photos      | `shared/content/artisans.content.ts`             | Blocks the per-wall split. 23 usable against 30 needed                                                       |
+| All real photography         | everywhere                                       | 53 distinct images across 100 placements, after the 19 added 2026-10-14                                      |
 
 An email has gone to the client asking them to walk the site and say what
 replaces what. An upload app was built for this and then scrapped as
 overkill; do not rebuild it without being asked.
 
 ## Started and unfinished
+
+**Nineteen project photographs are on the wall but uncredited.** The second
+client handover (`wetransfer_…_2026-10-04_0735`, files named `Project 1`
+through `Project 19`) was never imported; none of those images appeared
+anywhere on the site until 2026-10-14. They are now the back half of
+`/projects`, converted to webp under `public/assets/new-work-*`.
+
+What is missing is attribution. Every tile in the first run names its
+property and links to a project page; these nineteen can do neither, because
+the handover supplied no property names and neither `website - final
+comments.ppt` nor `Overall Company Details…xls` in the same folder names them.
+The deck's only line about the section is "Some of the most wonderful and
+loved projects, carry her signature touch."
+
+So `property`, `location`, `path` and `space` are optional on `WallTile`, and
+`ProjectsPage` renders a tile without them as a plain photograph — no link,
+no hover credit, alt text only. The images are clearly not Marsa Al Arab or
+Waldorf Astoria Osaka: one reads as The Puli, one as a Tokyo property, and
+four as a single toile-papered residence. **Ask the client to name them**,
+then fill in the four fields and they become links like the rest — no other
+code has to change.
 
 **The three artisan walls still repeat the same photographs.** `/about`,
 `/our-work` and `/our-craft` each render `<ArtisanWall />` from the one shared
