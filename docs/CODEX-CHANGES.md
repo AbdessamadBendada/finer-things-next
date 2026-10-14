@@ -37,6 +37,60 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-10-14: The nineteen project photographs from the second handover
+
+**Codex change**
+
+- Commit: `7d2970d` import the nineteen photographs, `1931f99` put them on the
+  wall, `4fedcce` the docs. Pushed as `c54f68a..4fedcce`.
+- Changed: `/projects` goes from twenty tiles to thirty-nine. The client
+  handover `wetransfer_…_2026-10-04_0735` contains nineteen files named
+  `Project 1` to `Project 19` that had **never been imported** — every
+  photograph on the site came from the earlier drop. Converted to webp at
+  quality 82, capped at 2560px, named for subject rather than handover number.
+- Finding: they cannot be credited. The handover supplies no property names,
+  and neither `website - final comments.ppt` nor `Overall Company Details…xls`
+  in the same folder names them; the deck's only line about the section is
+  "Some of the most wonderful and loved projects, carry her signature touch."
+  So `property`, `location`, `path` and `space` are now optional on
+  `WallTile`, and `ProjectsPage` renders a tile without them as a plain
+  photograph: no link, no hover credit, alt text only. **Twenty of thirty-nine
+  tiles are links.** Filling the four fields in turns any of the nineteen into
+  a link with no other code change.
+- Finding: they are visibly not Marsa Al Arab or Waldorf Astoria Osaka. One
+  reads as The Puli, one as a Tokyo property, four as a single toile-papered
+  residence. They run after the hotel work rather than interleaved with it.
+- Finding, costly: **do not model CSS grid auto-placement — measure it.** A
+  hand-written model of the four-column wall disagreed with the browser in
+  both directions, predicting holes that did not exist and missing ones that
+  did. Measure `offsetLeft`/`offsetTop` on the rendered page with the rise
+  transform neutralised, and derive the row unit from **non-tall tiles only**;
+  the minimum height across all tiles skews it and reports phantom holes. Two
+  intermediate runs were also measured against a stale server — an unchanged
+  `document.body.scrollHeight` is the tell.
+- Sizes: every landscape frame takes `wide`, because a landscape photograph
+  forced into the default 3/4 tile loses both its ends; `tall` goes only to the
+  2:3 frames that can carry it. Thirteen rows, no gaps, full last row.
+- Files: `public/assets/new-work-*.webp` (19 new, 3.3MB),
+  `src/shared/config/image-registry.ts`,
+  `src/features/projects/content/wall.content.ts`,
+  `src/features/projects/ui/ProjectsPage.tsx`, `docs/HANDOFF.md`.
+- Verified: `pnpm typecheck`, `pnpm lint`, `pnpm build` clean. 75 passed across
+  `tests/forms`, `tests/seo`, `headings.spec.ts` and
+  `project-gallery-alignment.spec.ts`. Full `pnpm parity` passed; the three
+  `/projects` baselines were regenerated deliberately, the page being
+  `baseline: 'current'` and intentionally longer.
+- Pre-existing failures, confirmed by stashing and re-running on clean `main` —
+  **not caused by this change, and not fixed by it**: `seo.spec.ts:356`
+  contextual links, which wants the link _text_ "Jumeirah Marsa Al Arab" on
+  `/projects` although the captions carrying it were removed in review; and
+  `headings.spec.ts` on `/our-services/bespoke-accessories` and
+  `styling-curation` @ mobile.
+- Follow-up: **ask the client to name the nineteen properties.** Recorded in
+  docs/HANDOFF.md under "Waiting on the client" and "Started and unfinished".
+  If any turn out to be a property worth its own page, that is a new entry in
+  `project.registry.ts` plus a component, not a change to the wall.
+
 ## 2026-10-14: Distinct artisan photographs per wall — investigated, not started
 
 **Codex change**
