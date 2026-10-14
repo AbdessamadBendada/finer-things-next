@@ -56,17 +56,32 @@ export function ProjectsPage() {
                * property and space still supply its accessible name, so the
                * destination is announced even though nothing is printed.
                */}
-              <Link
-                className="wall-tile-link"
-                href={tile.path}
-                aria-label={`${tile.property}: ${tile.space}`}
-              >
+              {/*
+               * A tile only becomes a link once it has a property to credit
+               * and a project page to credit it to. The nineteen photographs
+               * in the second handover have neither yet, so they render as
+               * photographs: still in the wall, still described by their alt
+               * text, but not pretending to lead anywhere. See wall.content.ts.
+               */}
+              {tile.path && tile.property ? (
+                <Link
+                  className="wall-tile-link"
+                  href={tile.path}
+                  aria-label={`${tile.property}: ${tile.space}`}
+                >
+                  <Media
+                    src={tile.image}
+                    alt={tile.alt}
+                    sizes="(max-width: 720px) 100vw, (max-width: 860px) 70vw, 50vw"
+                  />
+                </Link>
+              ) : (
                 <Media
                   src={tile.image}
                   alt={tile.alt}
                   sizes="(max-width: 720px) 100vw, (max-width: 860px) 70vw, 50vw"
                 />
-              </Link>
+              )}
             </figure>
           ))}
         </section>
