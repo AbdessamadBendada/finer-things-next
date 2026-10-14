@@ -55,12 +55,19 @@ pnpm verify      # typecheck + lint + build + visual parity
 ```
 
 Baselines are not committed — run `pnpm parity:baseline` once per machine
-first (it captures them from `legacy/`, which is committed).
+first.
 
-The parity suite compares every route against a screenshot of the original
-site at three viewports. **If it fails, you changed the design.** Either that
-was unintended — fix it — or it was deliberate, in which case regenerate the
-affected baseline explicitly and say so in the commit message. Do not raise
+**It no longer captures from `legacy/`.** `baseline.spec.ts` reads
+`baselineSourceFor` per page, and every entry in `tests/visual/pages.ts` now
+carries `baseline: 'current'`, so the baselines are screenshots of **the
+running Next app**, not of the original documents. The gate therefore asks
+"has anything moved since the last approved build", not "does this still match
+`legacy/`". Note the helper still _defaults_ to `'legacy'`, so a newly added
+page opts into the original unless it says otherwise.
+
+**If it fails, you changed the design.** Either that was unintended — fix it —
+or it was deliberate, in which case regenerate the affected baseline
+explicitly and say so in the commit message. Do not raise
 `maxDiffPixelRatio` to make a failure go away.
 
 ## Where things live
@@ -142,6 +149,14 @@ in a shared layer instead.
 - **Motion must fail open.** Anything that starts hidden needs a selector in
   the `GROUPS` table in `useFailOpenReveal.ts`, so a broken observer can never
   leave a section blank.
+- **The artisan wall's tile count lives in two files.** `TILE_SHAPES` in
+  `shared/ui/ArtisanWall.tsx` is mirrored by `nth-child(2)` and `nth-child(4)`
+  rules in `brand.css`, and the grid must consume a **multiple of four cells**
+  or the last row gains a visible hole. Ten tiles is twelve cells, because one
+  runs double width and one double height. Change one file without the other
+  and the wall breaks quietly. If you need a second wall with different
+  photographs, give the component a `pool` prop — do not copy it, or this
+  coupling exists twice.
 
 ## Forbidden
 
@@ -186,6 +201,9 @@ docs/FEEDBACK.md.
   text around it.
 - **No em dashes in site copy.** Enforced by lint. Comments are exempt.
 - **One closing CTA** (`shared/layout/SiteCta.tsx`), on every page but Contact.
+- **The home hero carries no call to action.** Removed at the client's request
+  on 2026-10-14. Home reaches `/contact` through `SiteCta` at the foot of the
+  page and through the masthead; do not reinstate a hero button.
 
 ## Open decisions
 
@@ -194,7 +212,10 @@ Recorded rather than hidden. Each is a deliberate deferral with an ADR:
 1. Consent checkbox and newsletter double opt-in — **blocks live delivery**
 2. Bot protection — deferred to the Cloudflare edge
 3. Error monitoring — port in place, no backend attached
-4. Legal page copy — placeholder text, `noindex`
+4. Legal page copy — Privacy and Terms are still placeholder text. Imprint
+   carries real company data as of 2026-10-10 but lists all three Finer Things
+   entities as peers, because naming the one that operates the site is a legal
+   call. All three pages stay `noindex` until counsel has reviewed them
 5. `script-src 'unsafe-inline'` — the price of keeping the pages static
 
 <!-- BEGIN:nextjs-agent-rules -->

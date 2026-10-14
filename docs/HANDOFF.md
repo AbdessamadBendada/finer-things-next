@@ -1,6 +1,6 @@
 # Where the project is
 
-Last updated **2026-10-10**, after the round 7 client review.
+Last updated **2026-10-14**, after the round 7 client review.
 
 Read this first if you are picking the project up. It is the state of play:
 what is settled, what is waiting on the client, and what is known to be broken.
@@ -46,6 +46,11 @@ their own section, with her name corrected to **Malika Yilmaz**. The invented
 contact block is gone, replaced by the real email, two telephone numbers and
 the IFZA address. And the imprint is rebuilt around the three real legal
 entities. Between them these clear the two oldest placeholders on the site.
+
+Two later comments followed on 2026-10-14, recorded as FEEDBACK.md 56 and 57.
+The home hero's call to action is removed. The request that the artisan walls
+stop repeating the same photographs is **started but not done** — see below;
+it is waiting on photography, not on code.
 
 ## What changed in review, in brief
 
@@ -97,11 +102,38 @@ Nothing here is a bug. Each is a placeholder that ships until they answer.
 | Opening hours            | `shared/config/site.ts`                          | Still invented, `hoursPlaceholder: true`, renders on `/contact` |
 | The LinkedIn URL         | `shared/config/site.ts`                          | Still `#`, `linkedInPlaceholder: true`                          |
 | The operating entity     | `features/legal/content/entities.content.ts`     | Three companies listed as peers; counsel must name one          |
+| ~15 more artisan photos  | `shared/content/artisans.content.ts`             | Blocks the per-wall split. 23 usable against 30 needed          |
 | All real photography     | everywhere                                       | 34 distinct images across 81 placements                         |
 
 An email has gone to the client asking them to walk the site and say what
 replaces what. An upload app was built for this and then scrapped as
 overkill; do not rebuild it without being asked.
+
+## Started and unfinished
+
+**The three artisan walls still repeat the same photographs.** `/about`,
+`/our-work` and `/our-craft` each render `<ArtisanWall />` from the one shared
+`ARTISAN_WALL` pool. The client asked on 2026-10-14 that they stop doubling
+up. **No code has been written. Do not start until the photographs arrive** —
+the blocker is the library, not the implementation:
+
+- 27 artisan photographs exist, 4 were cut by the client on 2026-10-09, so
+  **23 are usable**
+- three walls at `TILES = 10` need **30** distinct images, before any
+  rotation headroom at all
+- there is no further artisan photography on disk; both the delivery folder
+  and the older `alex-mockups/assets` set were searched and neither holds any
+
+Roughly 15 more photographs makes three pools of ten work. Shrinking the wall
+to six tiles would fit three disjoint pools inside 23, but the design is
+approved and the client declined that. He is sourcing more images and will
+pick the work up himself.
+
+When it is built: **one component taking a `pool` prop**, not two or three
+copies of `ArtisanWall.tsx`. `TILE_SHAPES` there is manually mirrored by
+`nth-child` rules in `brand.css` and the two must change together, so a fork
+duplicates that coupling — which is exactly how `/our-work` and `/our-craft`
+came to disagree about the materials. See FEEDBACK.md 57.
 
 ## Known and unfixed
 

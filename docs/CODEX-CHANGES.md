@@ -37,6 +37,63 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-10-14: Distinct artisan photographs per wall — investigated, not started
+
+**Codex change**
+
+- Commit: `none, no code changed`
+- Changed: nothing. Recorded here because the next person will otherwise
+  repeat the search.
+- Finding: there are **three** artisan walls, not two. `/about`, `/our-work`
+  and `/our-craft` each render `<ArtisanWall />` from the one shared
+  `ARTISAN_WALL` pool, so all three show the same photographs.
+- Finding: giving each wall its own photographs does not fit the library. 27
+  artisan images exist; 4 were cut by the client on 2026-10-09 (`wood-12`,
+  `fl-13`, `fl-33`, `ceramics-29`); **23 are usable**. Three walls at
+  `TILES = 10` need **30** distinct images before rotation headroom.
+- Finding: no further artisan photography exists on disk. The delivery folder
+  `wetransfer_…_2026-10-04_0735` holds 33 files whose only artisan entries are
+  `Our Artisans 1-4`, and the 2026-10-09 entry below records two of those four
+  as pixel-identical to `glass-26` and `ft-08`. The older
+  `alex-mockups/assets` folder is the pre-delivery set: 50 files, all hotel
+  interiors, heroes, fonts and product shots. Twelve of its files are **not**
+  in `public/assets` (`0665`, `0666`, `0668`, `0671`, `0673`, `0675`, `0677`,
+  `0683`, `0684`, `0688`, `0690`, `0704`) but every one is a Marsa Al Arab
+  interior or a product shot, so they are candidates for `/projects`, not for
+  the wall.
+- Decided: shrinking the wall to six tiles would fit three disjoint pools
+  inside 23, but the design is approved as it stands and the client declined
+  to change it. Parked until he supplies more photographs; roughly 15 more
+  makes three pools of ten work.
+- Follow-up: implement as one component taking a `pool` prop. Do **not** fork
+  `ArtisanWall.tsx`: its `TILE_SHAPES` is manually mirrored by `nth-child`
+  rules in `brand.css` and the two must change together. See FEEDBACK.md 57.
+
+## 2026-10-14: Remove the main CTA from the home hero
+
+**Codex change**
+
+- Commit: `43cca13 Home: remove the call to action from the hero`
+- Changed: dropped the "Let's tell your story" button and its `.cta-wrap`
+  from the home hero at the client's request. The hero now ends on the
+  subheading.
+- Changed: removed the five CSS rules left unable to match anything —
+  `.hero-copy .cta-wrap` at three breakpoints, `.hero-copy .btn` and its
+  `:hover` — and narrowed one shared font-size rule to `.closing .btn` alone.
+  The `.btn` base rules stay: `SiteCta` uses them on the same page.
+- Files: `src/features/home/ui/HomePage.tsx`,
+  `src/features/home/styles/home.module.css`, `docs/FEEDBACK.md`
+- Verified: `pnpm typecheck` and `pnpm lint` clean. SEO, headings,
+  mobile-readiness and masthead suites: 117 passed, 4 failed, all four
+  reproduced on a stashed clean tree. Rendered the hero at 1440px and 390px.
+  `/contact` is still linked from home by `SiteCta` and the masthead, so the
+  internal link is not orphaned.
+- Follow-up: FEEDBACK.md 4 made the masthead contact button outlined rather
+  than solid specifically because the hero carried a solid CTA on the same
+  screen. That reason is now gone and the first screen's only call to action
+  is the quieter treatment. One line in `brand.css` flips it. See
+  FEEDBACK.md 56.
+
 ## 2026-10-10: Company registrations on the imprint
 
 **Codex change**
