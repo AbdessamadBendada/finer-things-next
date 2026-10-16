@@ -37,6 +37,31 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-10-16: Documentation caught up with two client answers
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: docs only, no code. HANDOFF's header date and Status section
+  still described the artisan walls as started-but-not-done and waiting on
+  photography; both now reflect the offsets shipped in `3c7b57a`, and the
+  wall section moved out of "Started and unfinished" into a new "Recently
+  done".
+- Changed: the client said on 2026-10-16 that the projects are not to carry
+  names. HANDOFF told the next reader to "ask the client to name them" and
+  listed the nineteen missing properties as outstanding; uncredited is the
+  finished state for those tiles. Recorded as FEEDBACK 58, which also flags
+  the part that is genuinely open — whether the **first twenty** tiles lose
+  their credits too, which would take their project-page links with them.
+- Changed: the gate section now warns that the offsets add About, What we do
+  and Our craft to the stale-baseline list. `--frozen` stops the rotation
+  but not the opening set, so those three paint a different ten images than
+  their baselines hold.
+- Files: `docs/HANDOFF.md`, `docs/FEEDBACK.md`
+- Verified: read back; no source files touched, so no build needed.
+- Follow-up: the first-twenty question above. The baseline work carried over
+  from the previous entry is unchanged.
+
 ## 2026-10-16: The three artisan walls open on different photographs
 
 **Codex change**

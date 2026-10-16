@@ -1,6 +1,7 @@
 # Where the project is
 
-Last updated **2026-10-14**, after the round 7 client review.
+Last updated **2026-10-16**. The body is the state after the round 7 client
+review; the artisan walls moved on 2026-10-16.
 
 Read this first if you are picking the project up. It is the state of play:
 what is settled, what is waiting on the client, and what is known to be broken.
@@ -49,8 +50,10 @@ entities. Between them these clear the two oldest placeholders on the site.
 
 Two later comments followed on 2026-10-14, recorded as FEEDBACK.md 56 and 57.
 The home hero's call to action is removed. The request that the artisan walls
-stop repeating the same photographs is **started but not done** — see below;
-it is waiting on photography, not on code.
+stop repeating the same photographs is **done, on 2026-10-16**: the three
+walls now enter the shared pool at different offsets and open on different
+arrangements. It spent two days recorded as blocked on roughly fifteen more
+photographs, which was a misreading of the comment — see below, and FEEDBACK 57. No new photography was needed.
 
 ## What changed in review, in brief
 
@@ -97,7 +100,7 @@ Nothing here is a bug. Each is a placeholder that ships until they answer.
 | What                         | Where                                            | Notes                                                                                                             |
 | ---------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | ~~Remaining project images~~ | `features/projects/content`                      | Resolved 2026-10-14. The wall is 39 tiles: 20 of the 22 from the first handover, plus all 19 from the second      |
-| Properties for 19 tiles      | `features/projects/content/wall.content.ts`      | The second handover arrived with no property names. Those 19 tiles render uncredited and unlinked; see below      |
+| ~~Properties for 19 tiles~~  | `features/projects/content/wall.content.ts`      | Closed 2026-10-16. The client does not want the projects named; uncredited is the finished state, not a gap       |
 | ~~A sixth material~~         | `features/our-work/content/materials.content.ts` | Resolved 2026-10-09. Seven real materials now, no placeholder                                                     |
 | ~~Contact details~~          | `shared/config/site.ts`                          | Resolved 2026-10-10. Real email, two numbers, IFZA address                                                        |
 | Opening hours                | `shared/config/site.ts`                          | Still invented, `hoursPlaceholder: true`, renders on `/contact`                                                   |
@@ -129,13 +132,20 @@ So `property`, `location`, `path` and `space` are optional on `WallTile`, and
 `ProjectsPage` renders a tile without them as a plain photograph — no link,
 no hover credit, alt text only. The images are clearly not Marsa Al Arab or
 Waldorf Astoria Osaka: one reads as The Puli, one as a Tokyo property, and
-four as a single toile-papered residence. **Ask the client to name them**,
-then fill in the four fields and they become links like the rest — no other
-code has to change.
+four as a single toile-papered residence.
+
+**Do not chase the client for those names.** He said on 2026-10-16 that he
+does not want the projects carrying names. Uncredited is the finished state
+for these nineteen, not a gap, and this entry previously said the opposite.
+The optional fields stay on `WallTile` because the first twenty tiles still
+use them; if he later extends that to the whole wall, the credits and links
+come out of those twenty rather than going on to these nineteen. Confirm
+which he means before touching the first twenty.
+
+## Recently done
 
 **The artisan walls now open on different photographs.** Done 2026-10-16;
-this section is kept because the earlier reading of the request is the
-interesting part. `/about`, `/our-work` and `/our-craft` still render one
+the earlier reading of the request is the part worth keeping. `/about`, `/our-work` and `/our-craft` still render one
 `<ArtisanWall />` from the one shared `ARTISAN_WALL` pool, but each enters the
 pool at a different point: `useImageRotation` takes an `offset` and the three
 pages pass 0, 5 and 11. Measured in a browser, each opens on a different
@@ -318,6 +328,12 @@ regenerated: that wants a diff review first, and the decisions still open
 above may move things again. The artisan wall is frozen for the gate through
 `--frozen`, so the wall edits themselves do not show up as diffs; the tall
 tile does, because it changes the grid.
+
+**The 2026-10-16 wall offsets add About, What we do and Our craft to that
+list.** `--frozen` stops the rotation; it does not change the opening set, so
+each of those three pages now paints a different ten photographs than its
+baseline holds. Expect a large diff on all three and re-baseline rather than
+reading it closely, as with Imprint below.
 
 Imprint is the one to look at least hard at: round 7 replaced its placeholder
 body wholesale with real company data, so its diff is expected to be total

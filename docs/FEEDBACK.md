@@ -1219,6 +1219,25 @@ Between them they clear the oldest placeholder on the site.
   repository already has `/our-work` and `/our-craft` holding separate copies
   of the materials content and disagreeing as a result (comment 47).
 
+### 58. The projects are not to carry names
+
+- **Page:** `/projects`
+- **Asked:** "the projects, they do not want them with names", 2026-10-16.
+- **Status:** ✅ Done for the nineteen, open for the first twenty
+- **Done:** nothing in the code. The nineteen tiles from the second handover
+  already render uncredited and unlinked, so the request is satisfied for
+  them. What changed is the documentation: HANDOFF listed the missing
+  property names as something to chase the client for, and that is now
+  recorded as the finished state rather than a gap.
+- **Open:** the **first twenty** tiles still name their property and link to
+  a project page. Whether this comment extends to them was not asked, and it
+  is not a safe guess: removing their credits would also remove the links to
+  the individual project pages, which are real pages with real content.
+  Confirm before touching them.
+- **Note:** `property`, `location`, `path` and `space` stay optional on
+  `WallTile` either way. The component already renders a tile with or
+  without them, so going further needs content edits, not code.
+
 ---
 
 ## Cross-cutting notes
