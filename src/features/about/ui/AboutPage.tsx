@@ -108,7 +108,9 @@ export function AboutPage() {
               </p>
             </div>
 
-            <ArtisanWall />
+            {/* See the offset note in ArtisanWall: 0, 5 and 11 are the three
+                starting points that share the fewest opening photographs. */}
+            <ArtisanWall offset={5} />
 
             <p className="artisans-foot rise">
               Ceramics, glass, wood, leather and metal, worked by hand in small workshops across

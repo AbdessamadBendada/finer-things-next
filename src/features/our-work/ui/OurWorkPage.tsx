@@ -113,7 +113,9 @@ export function OurWorkPage() {
                 </p>
               </div>
             </div>
-            <ArtisanWall />
+            {/* See the offset note in ArtisanWall: 0, 5 and 11 are the three
+                starting points that share the fewest opening photographs. */}
+            <ArtisanWall offset={11} />
           </div>
         </section>
 

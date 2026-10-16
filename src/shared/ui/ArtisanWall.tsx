@@ -81,16 +81,42 @@ const TALL_SLOT = TILE_SHAPES.indexOf('tall');
  */
 const OPENING_TALL_IMAGE = '/assets/new-artisan-ft-05.webp';
 
-export function ArtisanWall() {
+type ArtisanWallProps = {
+  /**
+   * Where this wall starts reading the shared pool. Defaults to the top.
+   *
+   * Three pages render this wall from one pool of eighteen photographs, and
+   * with all of them starting at the top they opened on the same ten. The
+   * client asked on 2026-10-14 that they stop doubling up. The pool is not
+   * split — eighteen will not make three disjoint sets of ten — so instead
+   * each wall enters it at a different point and opens on a different
+   * arrangement. After the first swap the rotation is random anyway, so the
+   * walls go on differing on their own.
+   *
+   * Keep the offsets spread: at ten tiles against eighteen images, two walls
+   * fewer than eight apart share most of their opening set.
+   */
+  offset?: number;
+};
+
+export function ArtisanWall({ offset = 0 }: ArtisanWallProps) {
   const imageShapes = useMemo(() => ARTISAN_WALL.map((shot) => shapeOf(shot.image)), []);
 
+  /*
+   * The door is pinned on the default wall only. It is the tallest, most
+   * recognisable tile, so pinning it everywhere would leave the three walls
+   * opening on the same photograph in the one slot that most draws the eye,
+   * which is the doubling up the client asked us to stop. An offset wall
+   * takes the first portrait photograph its offset reaches instead.
+   */
   const initial = useMemo(() => {
+    if (offset !== 0) return undefined;
     const door = ARTISAN_WALL.findIndex((shot) => shot.image === OPENING_TALL_IMAGE);
     if (door < 0 || TALL_SLOT < 0) return undefined;
     const set: number[] = [];
     set[TALL_SLOT] = door;
     return set;
-  }, []);
+  }, [offset]);
 
   const { indices, fading, arriving, root } = useImageRotation({
     tiles: TILES,
@@ -100,6 +126,7 @@ export function ArtisanWall() {
     initial,
     tileShapes: TILE_SHAPES,
     imageShapes,
+    offset,
   });
 
   return (

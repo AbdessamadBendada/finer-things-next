@@ -134,6 +134,9 @@ export function OurCraftPage() {
                 </p>
               </div>
             </div>
+            {/* Offset 0: the wall that keeps the reviewed opening, workshop
+                door in the tall slot. /about and /our-work enter the pool
+                further along so the three no longer open alike. */}
             <ArtisanWall />
             <p className="artisans-foot rise">
               Ceramics, glass, wood, leather and metal, worked by hand in small workshops across

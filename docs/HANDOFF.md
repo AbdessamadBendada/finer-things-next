@@ -94,17 +94,17 @@ deliberately unchanged.
 
 Nothing here is a bug. Each is a placeholder that ships until they answer.
 
-| What                         | Where                                            | Notes                                                                                                        |
-| ---------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| ~~Remaining project images~~ | `features/projects/content`                      | Resolved 2026-10-14. The wall is 39 tiles: 20 of the 22 from the first handover, plus all 19 from the second |
-| Properties for 19 tiles      | `features/projects/content/wall.content.ts`      | The second handover arrived with no property names. Those 19 tiles render uncredited and unlinked; see below |
-| ~~A sixth material~~         | `features/our-work/content/materials.content.ts` | Resolved 2026-10-09. Seven real materials now, no placeholder                                                |
-| ~~Contact details~~          | `shared/config/site.ts`                          | Resolved 2026-10-10. Real email, two numbers, IFZA address                                                   |
-| Opening hours                | `shared/config/site.ts`                          | Still invented, `hoursPlaceholder: true`, renders on `/contact`                                              |
-| The LinkedIn URL             | `shared/config/site.ts`                          | Still `#`, `linkedInPlaceholder: true`                                                                       |
-| The operating entity         | `features/legal/content/entities.content.ts`     | Three companies listed as peers; counsel must name one                                                       |
-| ~15 more artisan photos      | `shared/content/artisans.content.ts`             | Blocks the per-wall split. 23 usable against 30 needed                                                       |
-| All real photography         | everywhere                                       | 53 distinct images across 100 placements, after the 19 added 2026-10-14                                      |
+| What                         | Where                                            | Notes                                                                                                             |
+| ---------------------------- | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| ~~Remaining project images~~ | `features/projects/content`                      | Resolved 2026-10-14. The wall is 39 tiles: 20 of the 22 from the first handover, plus all 19 from the second      |
+| Properties for 19 tiles      | `features/projects/content/wall.content.ts`      | The second handover arrived with no property names. Those 19 tiles render uncredited and unlinked; see below      |
+| ~~A sixth material~~         | `features/our-work/content/materials.content.ts` | Resolved 2026-10-09. Seven real materials now, no placeholder                                                     |
+| ~~Contact details~~          | `shared/config/site.ts`                          | Resolved 2026-10-10. Real email, two numbers, IFZA address                                                        |
+| Opening hours                | `shared/config/site.ts`                          | Still invented, `hoursPlaceholder: true`, renders on `/contact`                                                   |
+| The LinkedIn URL             | `shared/config/site.ts`                          | Still `#`, `linkedInPlaceholder: true`                                                                            |
+| The operating entity         | `features/legal/content/entities.content.ts`     | Three companies listed as peers; counsel must name one                                                            |
+| ~~~15 more artisan photos~~  | `shared/content/artisans.content.ts`             | Not needed. The walls were asked to _start_ differently, not to hold disjoint pools; done 2026-10-16 with offsets |
+| All real photography         | everywhere                                       | 53 distinct images across 100 placements, after the 19 added 2026-10-14                                           |
 
 An email has gone to the client asking them to walk the site and say what
 replaces what. An upload app was built for this and then scrapped as
@@ -133,26 +133,30 @@ four as a single toile-papered residence. **Ask the client to name them**,
 then fill in the four fields and they become links like the rest — no other
 code has to change.
 
-**The three artisan walls still repeat the same photographs.** `/about`,
-`/our-work` and `/our-craft` each render `<ArtisanWall />` from the one shared
-`ARTISAN_WALL` pool. The client asked on 2026-10-14 that they stop doubling
-up. **No code has been written. Do not start until the photographs arrive** —
-the blocker is the library, not the implementation:
+**The artisan walls now open on different photographs.** Done 2026-10-16;
+this section is kept because the earlier reading of the request is the
+interesting part. `/about`, `/our-work` and `/our-craft` still render one
+`<ArtisanWall />` from the one shared `ARTISAN_WALL` pool, but each enters the
+pool at a different point: `useImageRotation` takes an `offset` and the three
+pages pass 0, 5 and 11. Measured in a browser, each opens on a different
+first tile and a different tall tile and any two share 4 of their 10.
 
-- 27 artisan photographs exist, 4 were cut by the client on 2026-10-09, so
-  **23 are usable**
-- three walls at `TILES = 10` need **30** distinct images, before any
-  rotation headroom at all
-- there is no further artisan photography on disk; both the delivery folder
-  and the older `alex-mockups/assets` set were searched and neither holds any
+**The request was misread for two days as "three disjoint pools"**, which the
+library cannot supply and which was never what was asked. What the client
+wanted was different _starting_ images, and to change the starting images and
+the order where the photographs run short. That needs no new photography at
+all. If a future comment sounds like it needs 30 distinct images, check which
+of the two is being asked for before declaring a blocker.
 
-Roughly 15 more photographs makes three pools of ten work. Shrinking the wall
-to six tiles would fit three disjoint pools inside 23, but the design is
-approved and the client declined that. He is sourcing more images and will
-pick the work up himself.
+Counts, if the disjoint reading ever comes back: 27 photographs exist, 4 were
+cut by the client on 2026-10-09, **23 are usable and only 18 are in the pool**
+— the other five were curated out and still sit in `public/assets`. Three
+walls at `TILES = 10` would need 30. There is no further artisan photography
+on disk; the delivery folder and the older `alex-mockups/assets` set were both
+searched.
 
-When it is built: **one component taking a `pool` prop**, not two or three
-copies of `ArtisanWall.tsx`. `TILE_SHAPES` there is manually mirrored by
+Still true, for anyone extending this: **one component, a prop**, not two or
+three copies of `ArtisanWall.tsx`. `TILE_SHAPES` there is manually mirrored by
 `nth-child` rules in `brand.css` and the two must change together, so a fork
 duplicates that coupling — which is exactly how `/our-work` and `/our-craft`
 came to disagree about the materials. See FEEDBACK.md 57.

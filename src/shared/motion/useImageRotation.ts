@@ -41,6 +41,17 @@ export type ImageRotationOptions = {
   tileShapes?: readonly Shape[];
   /** The shape of each pool image, in order. Required with `tileShapes`. */
   imageShapes?: readonly Shape[];
+  /**
+   * Where in the pool the opening set starts reading. Defaults to the top.
+   *
+   * Three pages render the same wall from the same pool, and with every one
+   * of them starting at index 0 they all opened on the same ten photographs.
+   * An offset walks each wall into the pool at a different point, so the
+   * first paints differ. It only moves the starting position: the pool, the
+   * rotation and the shape rules are unchanged, and a wall still never shows
+   * the same photograph twice at once.
+   */
+  offset?: number;
 };
 
 /**
@@ -68,17 +79,23 @@ function openingSet(
   initial: readonly number[] | undefined,
   tileShapes: readonly Shape[] | undefined,
   imageShapes: readonly Shape[] | undefined,
+  offset: number,
 ): number[] {
+  const size = Math.max(poolSize, 1);
+  /* Read the pool from `offset`, wrapping, so each wall opens elsewhere. */
+  const at = (i: number) => (((offset + i) % size) + size) % size;
+
   if (!tileShapes || !imageShapes) {
-    return Array.from({ length: tiles }, (_, i) => initial?.[i] ?? i % Math.max(poolSize, 1));
+    return Array.from({ length: tiles }, (_, i) => initial?.[i] ?? at(i));
   }
 
   const used = new Set<number>();
   const take = (slot: Shape) => {
     for (let i = 0; i < poolSize; i += 1) {
-      if (!used.has(i) && fits(imageShapes[i] ?? 'square', slot)) return i;
+      const index = at(i);
+      if (!used.has(index) && fits(imageShapes[index] ?? 'square', slot)) return index;
     }
-    for (let i = 0; i < poolSize; i += 1) if (!used.has(i)) return i;
+    for (let i = 0; i < poolSize; i += 1) if (!used.has(at(i))) return at(i);
     return 0;
   };
 
@@ -110,7 +127,9 @@ function openingSet(
  *   currently on screen. The same photograph appearing twice at once is the
  *   thing that would make it look broken rather than alive.
  * - **Deterministic first paint.** The server and client must agree, so the
- *   opening set is simply the first `tiles` images. Shuffling starts on mount.
+ *   opening set is simply the first `tiles` images from `offset`. Shuffling
+ *   starts on mount, and is random, so two walls sharing a pool diverge after
+ *   the first swap whatever they opened on.
  * - **It stops when nobody is watching** — scrolled out of view, or a
  *   backgrounded tab — and never starts at all under reduced motion.
  *
@@ -125,9 +144,10 @@ export function useImageRotation({
   initial,
   tileShapes,
   imageShapes,
+  offset = 0,
 }: ImageRotationOptions) {
   const [indices, setIndices] = useState(() =>
-    openingSet(tiles, poolSize, initial, tileShapes, imageShapes),
+    openingSet(tiles, poolSize, initial, tileShapes, imageShapes, offset),
   );
   const [fading, setFading] = useState<number | null>(null);
   const [arriving, setArriving] = useState<number | null>(null);

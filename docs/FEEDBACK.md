@@ -1170,13 +1170,37 @@ Between them they clear the oldest placeholder on the site.
 - **Page:** `/about`, `/our-work`, `/our-craft`
 - **Asked:** "just about not to double up images — I believe we have a good
   selection — so that way we can choose some that we do not have yet".
-- **Status:** ⏸️ Deferred, waiting on photographs
-- **Read as:** each wall gets its own set, with no photograph appearing on
-  more than one page.
+- **Status:** ✅ Done, 2026-10-16
+- **Read as, originally:** each wall gets its own set, with no photograph
+  appearing on more than one page. **That reading was wrong**, and it is what
+  stalled the comment for two days against a library that cannot supply 30
+  distinct images. The client clarified on 2026-10-16: he wants the walls to
+  **start** on different photographs, not to own disjoint pools. Where the
+  images run short, change the starting images and the order.
+- **Done:** `useImageRotation` takes an `offset`, the point in the pool its
+  opening set starts reading from, and `ArtisanWall` exposes it as a prop.
+  `/our-craft` stays at 0, `/about` opens at 5 and `/our-work` at 11. One
+  shared pool, one component, no fork. The rotation after mount was already
+  random, so the three walls go on diverging by themselves.
+- **Done:** the workshop door is pinned to the tall slot on `/our-craft`
+  only. Pinned everywhere it would have left all three walls opening on the
+  same photograph in the most prominent tile, which is the doubling up being
+  complained about. The other two take the first portrait their offset
+  reaches: `glass-20` on `/about`, `fl-16` on `/our-work`.
+- **Measured in the browser**, not simulated: each wall opens on a different
+  first tile and a different tall tile, and any two share **4 of 10**. That
+  is the floor, not a shortfall — 30 slots drawn from 18 photographs must
+  repeat at least 12 times. The offsets 0, 5 and 11 were chosen by searching
+  all pairs for the least overlap.
 - **Note:** there are **three** walls, not two. `/about`, `/our-work` and
   `/our-craft` all render the same `<ArtisanWall />` from the same pool, so
   all three show the same photographs.
-- **Note, the blocker:** the library does not stretch to it. 27 artisan
+- **Note, the blocker that was not one:** disjoint pools are still out of
+  reach, and the counts below still hold if anyone revives that reading. The
+  pool is 18, not the 23 this entry originally said: of the 23 usable
+  photographs only 18 were ever curated into `ARTISAN_WALL`. The remaining
+  five sit unused in `public/assets`. None of this blocks the offsets.
+- **Note, the original count:** the library does not stretch to it. 27 artisan
   photographs exist, **4 of which the client himself cut** on 2026-10-09
   (`wood-12`, `fl-13`, `fl-33`, `ceramics-29`), leaving **23 usable**. Three
   walls at ten tiles need **30** distinct images before any rotation headroom

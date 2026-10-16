@@ -37,6 +37,43 @@ Do not record personal data, secrets, speculative work or a copy of the full
 Git diff. If a change updates an architectural rule, security posture or open
 decision, update its authoritative document too and link it from the entry.
 
+## 2026-10-16: The three artisan walls open on different photographs
+
+**Codex change**
+
+- Commit: `uncommitted`
+- Changed: `useImageRotation` gained an `offset` — where in the pool the
+  opening set starts reading, wrapping — and `ArtisanWall` exposes it as a
+  prop. `/our-craft` keeps 0, `/about` passes 5, `/our-work` passes 11. One
+  pool, one component, no fork: the pool is **not** split, because 18
+  photographs cannot make three disjoint sets of 10. The workshop door is now
+  pinned to the tall slot on the offset-0 wall only; pinning it on all three
+  left them opening on the same picture in the most prominent tile.
+- Changed: this closes FEEDBACK 57, which had been deferred since 2026-10-14
+  as "waiting on ~15 more photographs". That was a misreading. The client
+  wants the walls to **start** on different images, not to own disjoint
+  pools, and said to change the starting images and the order where the
+  library runs short. No new photography is needed.
+- Files: `src/shared/motion/useImageRotation.ts`,
+  `src/shared/ui/ArtisanWall.tsx`, the three page shells under
+  `src/features/{about,our-work,our-craft}/ui/`, `docs/FEEDBACK.md`,
+  `docs/HANDOFF.md`
+- Verified: `pnpm typecheck` clean; `pnpm lint` clean bar the pre-existing
+  `_meta` warning in `mailerlite.provider.ts`; `pnpm build` succeeded. Then
+  measured in Chromium against `pnpm start`, reading the rendered `img`
+  sources on all three pages rather than simulating the placement: each wall
+  opens on a different first tile and a different tall tile, and every pair
+  shares 4 of 10. Four is the floor — 30 slots drawn from 18 images must
+  repeat 12 times — and the offsets 0/5/11 were picked by searching every
+  pair for the least overlap.
+- Follow-up: the parity baselines for `/about`, `/our-work` and `/our-craft`
+  now show different opening photographs. The walls are frozen for the gate
+  through `--frozen`, which stops the rotation but does **not** change the
+  first paint, so those three pages need re-baselining after a diff review.
+  They were already stale from rounds 6 and 7. Five usable artisan
+  photographs remain curated out of `ARTISAN_WALL`; adding them would widen
+  the spread if the client ever wants it.
+
 ## 2026-10-14: The nineteen project photographs from the second handover
 
 **Codex change**
